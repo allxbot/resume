@@ -2,440 +2,212 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>徐咏智 Yongzhi Xu - Resume</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <title>个人简历导航</title>
+    
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline';">
+    
     <style>
-        :root {
-            --primary-color: #2c3e50;
-            --accent-color: #3498db;
-            --text-color: #333;
-            --text-light: #666;
-            --bg-color: #f8f9fa;
-            --card-bg: #ffffff;
-            --border-color: #e1e4e8;
-        }
-
+        /* --- 全局样式 --- */
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--bg-color);
-            -webkit-font-smoothing: antialiased;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 40px auto;
-            background: var(--card-bg);
-            padding: 40px 60px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-            border-radius: 8px;
-        }
-
-        /* 顶部导航与语言切换 */
-        .toolbar {
+            background-color: #f2f2f7;
+            background-image: radial-gradient(circle at 50% 50%, #ffffff 0%, #f2f2f7 100%);
+            height: 100vh;
+            width: 100vw;
             display: flex;
-            justify-content: flex-end;
-            margin-bottom: 20px;
-        }
-
-        .lang-switch {
-            background: none;
-            border: 1px solid var(--accent-color);
-            color: var(--accent-color);
-            padding: 5px 15px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            font-size: 14px;
-        }
-
-        .lang-switch:hover {
-            background: var(--accent-color);
-            color: white;
-        }
-
-        /* 简历头部 */
-        header {
-            border-bottom: 2px solid var(--border-color);
-            padding-bottom: 30px;
-            margin-bottom: 30px;
-        }
-
-        h1 {
-            font-size: 2.2rem;
-            color: var(--primary-color);
-            margin-bottom: 10px;
-        }
-
-        .job-title {
-            font-size: 1.2rem;
-            color: var(--text-light);
-            font-weight: 500;
-            margin-bottom: 15px;
-        }
-
-        .contact-info {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            font-size: 0.95rem;
-            color: var(--text-light);
-        }
-
-        .contact-info i {
-            margin-right: 6px;
-            color: var(--accent-color);
-        }
-
-        /* 章节通用样式 */
-        section {
-            margin-bottom: 30px;
-        }
-
-        h2 {
-            font-size: 1.4rem;
-            color: var(--primary-color);
-            border-left: 4px solid var(--accent-color);
-            padding-left: 12px;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        /* 经历列表 */
-        .experience-item {
-            margin-bottom: 25px;
-        }
-
-        .exp-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            margin-bottom: 5px;
-        }
-
-        .company {
-            font-weight: 700;
-            font-size: 1.1rem;
-            color: var(--primary-color);
-        }
-
-        .role {
-            font-style: italic;
-            color: var(--text-light);
-            margin-bottom: 8px;
-            display: block;
-        }
-
-        .date, .location {
-            font-size: 0.9rem;
-            color: #888;
-            font-weight: 500;
-        }
-
-        ul {
-            list-style-type: none;
-            padding-left: 0;
-        }
-
-        ul li {
+            justify-content: center;
+            align-items: center;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            overflow: hidden;
             position: relative;
-            padding-left: 18px;
-            margin-bottom: 6px;
-            font-size: 0.95rem;
         }
 
-        ul li::before {
-            content: "•";
-            color: var(--accent-color);
-            font-weight: bold;
+        /* --- 右上角语言切换按钮 --- */
+        .lang-switch-container {
             position: absolute;
-            left: 0;
+            top: max(24px, env(safe-area-inset-top)); 
+            right: max(24px, env(safe-area-inset-right));
+            z-index: 100;
+            animation: fadeInDown 0.8s ease-out;
         }
 
-        strong {
-            color: #2c3e50; /* 强调数据的颜色 */
+        .lang-btn {
+            /* 磨砂玻璃质感 */
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 8px 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px; /* 稍微缩小图标和文字的间距 */
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+            outline: none;
         }
 
-        /* 表格样式 (用于技能) */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
+        .lang-btn:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+        }
+        .lang-btn:active {
+            transform: scale(0.95);
+            background: rgba(230, 230, 230, 0.8);
+        }
+
+        /* Emoji 图标样式调整 */
+        .lang-icon-emoji {
+            font-size: 16px;
+            line-height: 1;
+            margin-top: 1px; /* 微调垂直对齐 */
+        }
+
+        /* --- 主容器 --- */
+        .container {
+            text-align: center;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        /* --- 链接整体 --- */
+        .app-link {
+            text-decoration: none;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
-        .skill-category {
-            background: #fdfdfd;
-            border: 1px solid #eee;
-            padding: 15px;
-            border-radius: 6px;
+        /* 语言切换时的文字过渡 */
+        .app-name.fade-changing {
+            opacity: 0.5;
+            transform: scale(0.98);
+        }
+        .app-name {
+            transition: opacity 0.2s ease, transform 0.2s ease;
         }
 
-        .skill-title {
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: var(--primary-color);
-            display: block;
+        .app-link:hover { transform: translateY(-5px); }
+        .app-link:active { transform: scale(0.92); filter: brightness(0.9); }
+
+        /* --- App 图标样式 --- */
+        .app-icon {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(180deg, #007AFF 0%, #0055b3 100%);
+            border-radius: 22px; 
+            box-shadow: 0 10px 25px rgba(0, 85, 179, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            position: relative;
         }
 
-        /* 打印样式 */
-        @media print {
-            body { background: white; }
-            .container { box-shadow: none; margin: 0; padding: 0; width: 100%; max-width: 100%; }
-            .toolbar { display: none; }
-            h2 { border-left: none; border-bottom: 2px solid #ccc; padding-left: 0; }
-            a { text-decoration: none; color: black; }
+        .app-icon svg {
+            width: 50px;
+            height: 50px;
+            fill: white;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
         }
 
-        /* 手机适配 */
-        @media (max-width: 600px) {
-            .container { padding: 20px; margin: 0; border-radius: 0; }
-            .exp-header { flex-direction: column; }
-            .date { margin-top: 2px; }
-            h1 { font-size: 1.8rem; }
+        /* --- App 名称 --- */
+        .app-name {
+            color: #333;
+            font-size: 15px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            text-shadow: 0 1px 2px rgba(255,255,255,0.5);
+        }
+
+        /* --- 进场动画 --- */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: scale(0.9) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .app-icon { width: 80px; height: 80px; border-radius: 18px; }
+            .app-icon svg { width: 40px; height: 40px; }
+            .app-name { font-size: 14px; }
+            .lang-btn { padding: 6px 12px; font-size: 13px; }
+            .lang-icon-emoji { font-size: 14px; }
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="toolbar">
-        <button class="lang-switch" onclick="toggleLanguage()">Switch to English</button>
+    <div class="lang-switch-container">
+        <button id="langToggleBtn" class="lang-btn" aria-label="Toggle Language">
+            <span class="lang-icon-emoji">🌐</span>
+            <span id="langText" data-en="EN" data-cn="中">中</span>
+        </button>
     </div>
 
-    <div id="cv-cn">
-        <header>
-            <h1>徐咏智</h1>
-            <div class="job-title">研发制造总监 / 智能制造工艺专家 / 供应链制程架构师</div>
-            <div class="contact-info">
-                <span><i class="fas fa-map-marker-alt"></i> 成都 / 深圳</span>
-                <span><i class="fas fa-briefcase"></i> 16年经验</span>
-                <span><i class="fas fa-envelope"></i> (请填写邮箱)</span>
-            </div>
-        </header>
-
-        <section>
-            <h2>个人概述</h2>
-            <p><strong>16年高精智能制造专家</strong>，深耕 3C消费电子（Apple核心供应链）与半导体后道封装领域。主导50+条高精密自动化产线量产导入。通过DFM优化与精益生产，实现 <strong>OEE >85%</strong>、<strong>产能提升90%+</strong>、<strong>良率稳定在99.6%+</strong>。擅长协同跨国（中/新/德）研发团队与供应商解决制造瓶颈，精通从战略规划到量产交付的全链条管控。</p>
-        </section>
-
-        <section>
-            <h2>核心能力</h2>
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <span class="skill-title">精密工艺</span>
-                    激光切割, PVD, HAF贴合, Wire Bonding, SMT, 20g+高加速度运动控制
-                </div>
-                <div class="skill-category">
-                    <span class="skill-title">智能制造</span>
-                    智能工厂0-1规划, KISS原则(简化设计), 模块化设计, 自动化产线开发
-                </div>
-                <div class="skill-category">
-                    <span class="skill-title">数据驱动</span>
-                    SPC(统计过程控制), JMP, Tableau, Python, 闭环数据系统
-                </div>
-                <div class="skill-category">
-                    <span class="skill-title">工程方法</span>
-                    DFM/DFMA, GD&T公差分析, DOE验证, FAT/SAT, NUDD风险分析
-                </div>
-            </div>
-        </section>
-
-        <section>
-            <h2>工作经历</h2>
+    <div class="container">
+        <a href="https://cv.allxbot.com" class="app-link" title="View Resume">
             
-            <div class="experience-item">
-                <div class="exp-header">
-                    <span class="company">苹果公司 (Apple)</span>
-                    <span class="date">2017.07 - 至今</span>
-                </div>
-                <span class="role">制造设计工程师 (MDE) | 成都 / 深圳</span>
-                <ul>
-                    <li>统筹3大工厂50+生产线设备开发，协同硬件工程团队及供应商进行同步工程，支撑日产能百万级交付。</li>
-                    <li><strong>光固化低压注塑产线 (首创)：</strong> 主导行业首个LPM自动化产线开发。应用KISS原则进行模块化设计，<strong>设备成本及占地减少80%+</strong>。</li>
-                    <li><strong>组装标准化产线：</strong> 牵头框架组装产线研发，实现 <strong>50μm</strong> 组装精度，<strong>CT提升76%</strong>，<strong>产能提升90%</strong>。</li>
-                    <li><strong>数字化良率爬坡：</strong> 搭建基于SPC的闭环数据系统（OEE+自动FACA）。将产能爬坡周期从4周<strong>缩短至4天</strong>，良率从95%<strong>提升至99.6%</strong>。</li>
-                    <li><strong>脆性材料工艺：</strong> 研发蓝宝石激光成丝切割工艺（热影响区≤0.1mm），主导全自动产线搭建，<strong>人力成本降低80%+</strong>。</li>
-                </ul>
+            <div class="app-icon">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M14 2H6C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V8L14 2ZM16 18H8V16H16V18ZM16 14H8V12H16V14ZM13 9V3.5L18.5 9H13Z"/>
+                </svg>
             </div>
-
-            <div class="experience-item">
-                <div class="exp-header">
-                    <span class="company">成都圭目机器人</span>
-                    <span class="date">2017.02 - 2017.06</span>
-                </div>
-                <span class="role">研发经理 | 成都</span>
-                <ul>
-                    <li>主导道路探伤机器人初代底盘和探伤模块开发，完成上路测试验证。</li>
-                    <li>推动集装箱爬壁、探雷机器人等多项核心技术专利申请与商业立项。</li>
-                </ul>
-            </div>
-
-            <div class="experience-item">
-                <div class="exp-header">
-                    <span class="company">先进科技太平洋 (ASMPT)</span>
-                    <span class="date">2009.10 - 2017.02</span>
-                </div>
-                <span class="role">机械工程师 / 研发经理 | 成都 / 新加坡</span>
-                <ul>
-                    <li><strong>独立研发项目组 (2014-2017)：</strong> 带领跨职能团队，推行 Agile + Stage-Gate 流程。开发SIPLACE贴片机组件（<strong>30μm精度</strong>、<strong>4g加速度</strong>）。</li>
-                    <li><strong>新加坡研发中心 (2011-2014)：</strong> 主导半导体焊线机AOI设备开发；协作开发晶圆曝光设备，达成 <strong>1μm超精密对位</strong>。</li>
-                    <li><strong>成都研发中心 (2009-2011)：</strong> 负责CO₂/光纤激光器整机系统设计，攻克热学结构难点。</li>
-                </ul>
-            </div>
-        </section>
-
-        <section>
-            <h2>教育经历</h2>
-            <div class="experience-item">
-                <div class="exp-header">
-                    <span class="company">西南科技大学</span>
-                    <span class="date">2009年毕业</span>
-                </div>
-                <span class="role">机械设计制造及其自动化 | 学士</span>
-            </div>
-        </section>
-        
-        <section>
-            <h2>工具与技能</h2>
-            <p>UG NX, SolidWorks, AutoCAD, Python, JMP, Agile PLM, Office Suite, English (Professional Working)</p>
-        </section>
-    </div>
-
-    <div id="cv-en" style="display: none;">
-        <header>
-            <h1>Yongzhi Xu</h1>
-            <div class="job-title">R&D Manufacturing Director / Smart Manufacturing Expert</div>
-            <div class="contact-info">
-                <span><i class="fas fa-map-marker-alt"></i> Chengdu / Shenzhen, China</span>
-                <span><i class="fas fa-briefcase"></i> 16 Years Exp</span>
-                <span><i class="fas fa-envelope"></i> (Email Here)</span>
-            </div>
-        </header>
-
-        <section>
-            <h2>Professional Summary</h2>
-            <p><strong>Senior Intelligent Manufacturing Expert with 16 years of experience</strong>, specializing in <strong>Consumer Electronics (Apple Supply Chain)</strong> and <strong>Semiconductor Backend Packaging</strong>. Proven track record in NPI management and "0-to-1" smart factory planning. Led the mass production launch of 50+ high-precision automated lines. Achieved <strong>OEE >85%</strong> and stable <strong>Yield 99.6%</strong> through Lean and DFM principles.</p>
-        </section>
-
-        <section>
-            <h2>Core Competencies</h2>
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <span class="skill-title">Precision Process</span>
-                    Laser Cutting, PVD, HAF Lamination, Wire Bonding, SMT, Motion control (1-2μm accuracy)
-                </div>
-                <div class="skill-category">
-                    <span class="skill-title">Smart Mfg</span>
-                    Smart Factory Planning, KISS Principle, Modular Design, Automated Line Development
-                </div>
-                <div class="skill-category">
-                    <span class="skill-title">Data-Driven</span>
-                    Closed-loop data systems, SPC (Statistical Process Control), JMP, Tableau, Python
-                </div>
-                <div class="skill-category">
-                    <span class="skill-title">Engineering</span>
-                    DFM/DFMA, GD&T Analysis, DOE, FAT/SAT Validation, NUDD Risk Assessment
-                </div>
-            </div>
-        </section>
-
-        <section>
-            <h2>Professional Experience</h2>
             
-            <div class="experience-item">
-                <div class="exp-header">
-                    <span class="company">Apple</span>
-                    <span class="date">Jul 2017 - Present</span>
-                </div>
-                <span class="role">Manufacturing Design Engineer (MDE) | Chengdu / Shenzhen</span>
-                <ul>
-                    <li>Orchestrated equipment development for 50+ production lines. Collaborated with Hardware Engineering and suppliers to deliver million-level daily capacity.</li>
-                    <li><strong>LPM Automation Line (Industry First):</strong> Pioneered the UV-curing Low-Pressure Molding automated line. <strong>Reduced equipment cost and footprint by 80%+</strong> via modular design.</li>
-                    <li><strong>Standardized Assembly Line:</strong> Integrated filming/dispensing, achieving <strong><50μm accuracy</strong>, <strong>76% CT reduction</strong>, and <strong>90% capacity increase</strong>.</li>
-                    <li><strong>Data-Driven Yield Ramp:</strong> Built an SPC-based closed-loop data system. <strong>Shortened ramp-up cycle from 4 weeks to 4 days</strong> and boosted yield to <strong>99.6%</strong>.</li>
-                    <li><strong>Brittle Material Process:</strong> Developed laser filamentation cutting for sapphire (HAZ ≤0.1mm), reducing <strong>labor costs by 80%+</strong>.</li>
-                </ul>
-            </div>
-
-            <div class="experience-item">
-                <div class="exp-header">
-                    <span class="company">Guimu Robot</span>
-                    <span class="date">Feb 2017 - Jun 2017</span>
-                </div>
-                <span class="role">R&D Manager | Chengdu</span>
-                <ul>
-                    <li>Led the development of the first-generation road inspection robot chassis and detection modules.</li>
-                    <li>Directed system design for wall-climbing and mine-detection robots.</li>
-                </ul>
-            </div>
-
-            <div class="experience-item">
-                <div class="exp-header">
-                    <span class="company">ASMPT</span>
-                    <span class="date">Oct 2009 - Feb 2017</span>
-                </div>
-                <span class="role">Mechanical Engineer / R&D Manager | Chengdu / Singapore</span>
-                <ul>
-                    <li><strong>Independent R&D Team (2014-2017):</strong> Led a cross-functional team implementing Agile workflows. Delivered components for SIPLACE machines (<strong>30μm accuracy</strong>, <strong>4g acceleration</strong>).</li>
-                    <li><strong>Singapore R&D Center (2011-2014):</strong> Led mechanical design for Semiconductor Wire Bonder AOI; Collaborated on Micro-Wafer exposure equipment (<strong>1μm precision</strong>).</li>
-                    <li><strong>Chengdu R&D Center (2009-2011):</strong> Designed CO₂/Fiber laser systems, solving thermal and optical challenges.</li>
-                </ul>
-            </div>
-        </section>
-
-        <section>
-            <h2>Education</h2>
-            <div class="experience-item">
-                <div class="exp-header">
-                    <span class="company">Southwest University of Science and Technology</span>
-                    <span class="date">Graduated 2009</span>
-                </div>
-                <span class="role">B.Eng. in Mechanical Design, Manufacturing and Automation</span>
-            </div>
-        </section>
-
-        <section>
-            <h2>Skills & Interests</h2>
-            <p>UG NX, SolidWorks, AutoCAD, Python, JMP, Agile PLM, Electro-mechanical DIY, 3D Printing, Coding.</p>
-        </section>
+            <span class="app-name" id="appName" data-en="Resume" data-cn="个人简历">个人简历</span>
+        </a>
     </div>
-</div>
 
-<script>
-    let currentLang = 'zh';
+    <script>
+        // 获取 DOM 元素
+        const langBtn = document.getElementById('langToggleBtn');
+        const langTextDisplay = document.getElementById('langText');
+        const appNameDisplay = document.getElementById('appName');
 
-    function toggleLanguage() {
-        const cnDiv = document.getElementById('cv-cn');
-        const enDiv = document.getElementById('cv-en');
-        const btn = document.querySelector('.lang-switch');
+        // 默认语言为 'cn'
+        let currentLang = 'cn';
 
-        if (currentLang === 'zh') {
-            cnDiv.style.display = 'none';
-            enDiv.style.display = 'block';
-            btn.innerText = '切换至中文';
-            currentLang = 'en';
-            document.title = 'Yongzhi Xu - Resume';
-        } else {
-            cnDiv.style.display = 'block';
-            enDiv.style.display = 'none';
-            btn.innerText = 'Switch to English';
-            currentLang = 'zh';
-            document.title = '徐咏智 - 个人简历';
-        }
-        
-        window.scrollTo(0, 0);
-    }
-</script>
+        langBtn.addEventListener('click', () => {
+            // 切换语言状态
+            currentLang = currentLang === 'en' ? 'cn' : 'en';
+
+            // 添加过渡类
+            appNameDisplay.classList.add('fade-changing');
+            langTextDisplay.classList.add('fade-changing');
+
+            // 短暂延迟后更新文字
+            setTimeout(() => {
+                appNameDisplay.textContent = appNameDisplay.getAttribute(`data-${currentLang}`);
+                langTextDisplay.textContent = langTextDisplay.getAttribute(`data-${currentLang}`);
+                
+                // 更新 HTML lang 属性
+                document.documentElement.lang = currentLang === 'en' ? 'en' : 'zh-CN';
+
+                // 移除过渡类
+                appNameDisplay.classList.remove('fade-changing');
+                langTextDisplay.classList.remove('fade-changing');
+            }, 150);
+        });
+    </script>
 
 </body>
 </html>
