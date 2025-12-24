@@ -2,212 +2,318 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    
-    <title>个人简历导航</title>
-    
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline';">
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>徐咏智 - 供应链基础工程师简历</title>
     <style>
-        /* --- 全局样式 --- */
+        /* --- 基础样式 --- */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
         }
-
         body {
-            background-color: #f2f2f7;
-            background-image: radial-gradient(circle at 50% 50%, #ffffff 0%, #f2f2f7 100%);
-            height: 100vh;
-            width: 100vw;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            overflow: hidden;
-            position: relative;
-        }
-
-        /* --- 右上角语言切换按钮 --- */
-        .lang-switch-container {
-            position: absolute;
-            top: max(24px, env(safe-area-inset-top)); 
-            right: max(24px, env(safe-area-inset-right));
-            z-index: 100;
-            animation: fadeInDown 0.8s ease-out;
-        }
-
-        .lang-btn {
-            /* 磨砂玻璃质感 */
-            background: rgba(255, 255, 255, 0.65);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 20px;
-            padding: 8px 14px;
-            display: flex;
-            align-items: center;
-            gap: 6px; /* 稍微缩小图标和文字的间距 */
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            background-color: #f5f7fa;
             color: #333;
-            font-weight: 600;
-            font-size: 14px;
-            outline: none;
+            line-height: 1.6;
+            scroll-behavior: smooth; /* 平滑滚动 */
         }
-
-        .lang-btn:hover {
-            background: rgba(255, 255, 255, 0.9);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.12);
-        }
-        .lang-btn:active {
-            transform: scale(0.95);
-            background: rgba(230, 230, 230, 0.8);
-        }
-
-        /* Emoji 图标样式调整 */
-        .lang-icon-emoji {
-            font-size: 16px;
-            line-height: 1;
-            margin-top: 1px; /* 微调垂直对齐 */
-        }
-
-        /* --- 主容器 --- */
         .container {
-            text-align: center;
-            animation: fadeInUp 0.8s ease-out;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            transition: margin-left 0.3s;
         }
 
-        /* --- 链接整体 --- */
-        .app-link {
-            text-decoration: none;
-            display: inline-flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
+        /* --- 侧边导航栏样式 --- */
+        #sidebar {
+            position: fixed;
+            left: -260px; /* 默认完全隐藏 */
+            top: 0;
+            width: 260px;
+            height: 100%;
+            background-color: #fff;
+            box-shadow: 4px 0 15px rgba(0,0,0,0.1);
+            z-index: 2000;
+            transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 60px 15px 20px;
+            overflow-y: auto;
+        }
+
+        /* 侧边栏展开状态 */
+        #sidebar.active {
+            left: 0;
+        }
+
+        /* 浮动目录标签 */
+        .sidebar-toggle {
+            position: fixed;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #0066cc;
+            color: white;
+            padding: 15px 8px;
             cursor: pointer;
-            transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 0 8px 8px 0;
+            font-size: 13px;
+            font-weight: bold;
+            writing-mode: vertical-lr;
+            z-index: 2001;
+            box-shadow: 2px 0 8px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+        .sidebar-toggle:hover {
+            background-color: #004999;
+            padding-left: 12px;
+        }
+
+        /* 导航项目样式 */
+        .nav-item {
+            display: block;
+            padding: 12px 10px;
+            color: #444;
+            text-decoration: none;
+            font-size: 14px;
+            border-bottom: 1px solid #f0f0f0;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+        }
+        .nav-item:hover {
+            background-color: #f0f7ff;
+            color: #0066cc;
+            padding-left: 15px;
+        }
+        .nav-level-2 {
+            padding-left: 25px;
+            font-size: 13px;
+            color: #666;
+            background-color: #fafafa;
+        }
+        .nav-item.active-scroll {
+            color: #0066cc;
+            border-left-color: #0066cc;
+            background-color: #f0f7ff;
+            font-weight: bold;
+        }
+
+        /* 遮罩层：展开导航时点击空白处关闭 */
+        #overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.2);
+            z-index: 1999;
+        }
+        #overlay.active { display: block; }
+
+        /* --- 简历正文样式 --- */
+        .lang-switch { text-align: right; margin-bottom: 20px; }
+        .lang-btn {
+            padding: 8px 16px; background-color: #0066cc; color: #fff;
+            border: none; border-radius: 4px; cursor: pointer; margin-left: 10px;
+        }
+        .header { text-align: center; margin-bottom: 40px; padding-bottom: 20px; border-bottom: 2px solid #0066cc; }
+        .header h1 { font-size: 28px; color: #0066cc; margin-bottom: 10px; }
+        
+        .section {
+            margin-bottom: 30px; background-color: #fff; padding: 25px;
+            border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            scroll-margin-top: 30px;
+        }
+        .section h2 {
+            font-size: 22px; color: #0066cc; margin-bottom: 20px;
+            padding-bottom: 10px; border-bottom: 1px solid #eee;
         }
         
-        /* 语言切换时的文字过渡 */
-        .app-name.fade-changing {
-            opacity: 0.5;
-            transform: scale(0.98);
+        .ability-table, .skill-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        .ability-table th, .ability-table td, .skill-table th, .skill-table td {
+            padding: 12px 15px; border: 1px solid #eee; text-align: left;
         }
-        .app-name {
-            transition: opacity 0.2s ease, transform 0.2s ease;
-        }
+        .ability-table th, .skill-table th { background-color: #f0f7ff; color: #0066cc; }
 
-        .app-link:hover { transform: translateY(-5px); }
-        .app-link:active { transform: scale(0.92); filter: brightness(0.9); }
-
-        /* --- App 图标样式 --- */
-        .app-icon {
-            width: 100px;
-            height: 100px;
-            background: linear-gradient(180deg, #007AFF 0%, #0055b3 100%);
-            border-radius: 22px; 
-            box-shadow: 0 10px 25px rgba(0, 85, 179, 0.3);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            position: relative;
-        }
-
-        .app-icon svg {
-            width: 50px;
-            height: 50px;
-            fill: white;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
-        }
-
-        /* --- App 名称 --- */
-        .app-name {
-            color: #333;
-            font-size: 15px;
-            font-weight: 500;
-            letter-spacing: 0.3px;
-            text-shadow: 0 1px 2px rgba(255,255,255,0.5);
-        }
-
-        /* --- 进场动画 --- */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: scale(0.9) translateY(20px); }
-            to { opacity: 1; transform: scale(1) translateY(0); }
-        }
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        .work-experience .company { font-size: 18px; color: #333; margin: 25px 0 10px; font-weight: 600; scroll-margin-top: 30px; }
+        .work-experience .position { font-size: 16px; color: #666; margin-bottom: 10px; }
+        .work-experience .project { font-size: 16px; color: #0066cc; margin: 15px 0 10px; font-weight: 600; }
+        .work-experience ul { margin-left: 20px; margin-bottom: 20px; }
+        .work-experience li { margin-bottom: 8px; font-size: 15px; }
 
         @media (max-width: 768px) {
-            .app-icon { width: 80px; height: 80px; border-radius: 18px; }
-            .app-icon svg { width: 40px; height: 40px; }
-            .app-name { font-size: 14px; }
-            .lang-btn { padding: 6px 12px; font-size: 13px; }
-            .lang-icon-emoji { font-size: 14px; }
+            .container { padding: 15px; }
+            #sidebar, .sidebar-toggle { display: none; } /* 移动端隐藏导航 */
         }
     </style>
 </head>
 <body>
 
-    <div class="lang-switch-container">
-        <button id="langToggleBtn" class="lang-btn" aria-label="Toggle Language">
-            <span class="lang-icon-emoji">🌐</span>
-            <span id="langText" data-en="EN" data-cn="中">中</span>
-        </button>
-    </div>
+    <div id="overlay"></div>
+    <nav id="sidebar"></nav>
+    <div class="sidebar-toggle" id="toggleLabel">目录 MENU</div>
 
     <div class="container">
-        <a href="https://cv.allxbot.com" class="app-link" title="View Resume">
+        <div class="lang-switch">
+            <button class="lang-btn" id="cnBtn">中文</button>
+            <button class="lang-btn" id="enBtn">English</button>
+        </div>
+
+        <div class="header">
+            <h1 data-cn="徐咏智" data-en="Xu Yongzhi">徐咏智</h1>
+            <div class="job-intent" data-cn="求职意向：Supply Base Engineer（供应链基础工程师）/ 消费电子NPI工艺负责人" data-en="Job Objective: Supply Base Engineer / Consumer Electronics NPI Process Leader">求职意向：Supply Base Engineer（供应链基础工程师）/ 消费电子NPI工艺负责人</div>
+            <div class="location" data-cn="所在地：成都 / 深圳" data-en="Location: Chengdu / Shenzhen">所在地：成都 / 深圳</div>
+        </div>
+
+        <div class="section" id="sec-overview">
+            <h2 data-cn="个人概述" data-en="Personal Overview">个人概述</h2>
+            <p data-cn="16年高精智能制造专家，深耕3C消费电子（苹果核心供应链）与半导体后道封装领域，兼具消费类产品NPI全流程管控、DFM/MFD工艺优化、智能工厂规划落地、跨国跨职能团队协作能力。主导50+条高精密自动化产线NPI量产导入，推动2个智能工厂从0到1筹建，实现OEE提升至85%+、产能提升90%+、良率稳定99.6%+。" 
+               data-en="16-year expert in high-precision intelligent manufacturing, deeply engaged in 3C consumer electronics and semiconductor backend packaging. Led NPI mass production of 50+ automated lines, promoted construction of 2 intelligent factories, achieving OEE 85%+, capacity +90%, and yield 99.6%+.">
+               16年高精智能制造专家，深耕3C消费电子（苹果核心供应链）与半导体后道封装领域，兼具消费类产品NPI全流程管控、DFM/MFD工艺优化、智能工厂规划落地、跨国跨职能团队协作能力。主导50+条高精密自动化产线NPI量产导入，推动2个智能工厂从0到1筹建，实现OEE提升至85%+、产能提升90%+、良率稳定99.6%+。
+            </p>
+        </div>
+
+        <div class="section" id="sec-matrix">
+            <h2 data-cn="核心能力矩阵" data-en="Core Competence Matrix">核心能力矩阵</h2>
+            <table class="ability-table">
+                <tr><th data-cn="能力类别" data-en="Category">能力类别</th><th data-cn="内容" data-en="Content">内容</th></tr>
+                <tr>
+                    <td data-cn="技术能力" data-en="Technical">技术能力</td>
+                    <td data-cn="3C/半导体精密工艺（激光、PVD、SMT、Wire Bonding等）；DFM/DFMA设计、DOE工艺优化；GD&T公差分析。" data-en="3C/Semiconductor precision processes; DFM/DFMA, DOE, GD&T.">3C/半导体精密工艺（激光、PVD、SMT、Wire Bonding等）；DFM/DFMA设计、DOE工艺优化；GD&T公差分析。</td>
+                </tr>
+                <tr>
+                    <td data-cn="项目能力" data-en="Project">项目能力</td>
+                    <td data-cn="智能工厂0-1筹建；自动化量产导入；OEE/良率优化；SPC数据驱动控制。" data-en="Smart factory construction; Automation NPI; OEE/Yield optimization; SPC data-driven.">智能工厂0-1筹建；自动化量产导入；OEE/良率优化；SPC数据驱动控制。</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section work-experience" id="sec-experience">
+            <h2 data-cn="工作经历" data-en="Work Experience">工作经历</h2>
             
-            <div class="app-icon">
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M14 2H6C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V8L14 2ZM16 18H8V16H16V18ZM16 14H8V12H16V14ZM13 9V3.5L18.5 9H13Z"/>
-                </svg>
-            </div>
-            
-            <span class="app-name" id="appName" data-en="Resume" data-cn="个人简历">个人简历</span>
-        </a>
+            <div class="company" data-cn="苹果公司 (Apple Inc.)" data-en="Apple Inc." id="work-apple">苹果公司 (Apple Inc.)</div>
+            <div class="position" data-cn="制造设计工程师 | 2017.07 - 至今" data-en="Manufacturing Design Engineer | 2017.07 - Present">制造设计工程师 | 2017.07 - 至今</div>
+            <div class="project" data-cn="手机 / 手表制造 (2019 - 至今)" data-en="iPhone / Watch Manufacturing (2019 - Present)">手机 / 手表制造 (2019 - 至今)</div>
+            <ul>
+                <li data-cn="主导行业首个光固化低压注塑成型自动化产线开发，设备成本、占地面积及治具用量下降80%+。" data-en="Led industry's 1st light-curing low-pressure injection molding line, reducing costs and space by 80%+.">主导行业首个光固化低压注塑成型自动化产线开发，设备成本、占地面积及治具用量下降80%+。</li>
+                <li data-cn="牵头框架组装标准化产线研发，实现50μm内组装精度，产能提升90%，良率稳定99.6%+。" data-en="Led frame assembly line R&D, 50μm precision, 90% capacity increase, 99.6% yield.">牵头框架组装标准化产线研发，实现50μm内组装精度，产能提升90%，良率稳定99.6%+。</li>
+            </ul>
+
+            <div class="company" data-cn="成都圭目机器人" data-en="Guimu Robot" id="work-guimu">成都圭目机器人</div>
+            <div class="position" data-cn="研发经理 | 2017.02 - 2017.06" data-en="R&D Manager | 2017.02 - 2017.06">研发经理 | 2017.02 - 2017.06</div>
+            <ul>
+                <li data-cn="主导道路探伤机器人初代底盘和探伤模块开发，完成上路测试验证。" data-en="Led development of 1st-gen road inspection robot chassis and modules.">主导道路探伤机器人初代底盘和探伤模块开发，完成上路测试验证。</li>
+            </ul>
+
+            <div class="company" data-cn="先进科技太平洋 (ASMPT)" data-en="ASMPT" id="work-asmpt">先进科技太平洋 (ASMPT)</div>
+            <div class="position" data-cn="机械工程师 / 研发经理 | 2009.10 - 2017.02" data-en="Mechanical Engineer / R&D Manager | 2009.10 - 2017.02">机械工程师 / 研发经理 | 2009.10 - 2017.02</div>
+            <ul>
+                <li data-cn="组建并领导7+人跨职能团队，支援德/新团队完成SIPLACE贴片机核心组件开发。" data-en="Led 7+ cross-functional team, supported German/Singapore teams on SIPLACE components.">组建并领导7+人跨职能团队，支援德/新团队完成SIPLACE贴片机核心组件开发。</li>
+            </ul>
+        </div>
+
+        <div class="section" id="sec-education">
+            <h2 data-cn="教育经历" data-en="Education">教育经历</h2>
+            <div style="font-weight: bold;" data-cn="西南科技大学" data-en="Southwest University of Science and Technology">西南科技大学</div>
+            <p data-cn="机械设计制造及其自动化 | 学士 | 2009年" data-en="Mechanical Design, Manufacturing and Automation | Bachelor | 2009">机械设计制造及其自动化 | 学士 | 2009年</p>
+        </div>
+
+        <div class="section" id="sec-skills">
+            <h2 data-cn="技能清单" data-en="Skills">技能清单</h2>
+            <table class="skill-table">
+                <tr><td data-cn="设计工具" data-en="Design">设计工具</td><td>UG NX, Solid Edge, SolidWorks, AutoCAD, GD&T</td></tr>
+                <tr><td data-cn="数据分析" data-en="Data">数据分析</td><td>Agile PLM, JMP, Tableau, SPC, Python</td></tr>
+            </table>
+        </div>
+
+        <div class="section" id="sec-hobbies">
+            <h2 data-cn="兴趣爱好" data-en="Hobbies">兴趣爱好</h2>
+            <p data-cn="徒步爬山、电子机械DIY、3D打印、木工雕刻。" data-en="Hiking, DIY, 3D Printing, Wood Carving.">徒步爬山、电子机械DIY、3D打印、木工雕刻。</p>
+        </div>
     </div>
 
     <script>
-        // 获取 DOM 元素
-        const langBtn = document.getElementById('langToggleBtn');
-        const langTextDisplay = document.getElementById('langText');
-        const appNameDisplay = document.getElementById('appName');
+        // --- 核心逻辑 ---
+        const sidebar = document.getElementById('sidebar');
+        const toggleBtn = document.getElementById('toggleLabel');
+        const overlay = document.getElementById('overlay');
+        const cnBtn = document.getElementById('cnBtn');
+        const enBtn = document.getElementById('enBtn');
 
-        // 默认语言为 'cn'
-        let currentLang = 'cn';
+        // 1. 切换导航栏开关
+        function toggleSidebar() {
+            const isActive = sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+            toggleBtn.style.left = isActive ? '260px' : '0';
+        }
 
-        langBtn.addEventListener('click', () => {
-            // 切换语言状态
-            currentLang = currentLang === 'en' ? 'cn' : 'en';
+        toggleBtn.addEventListener('click', toggleSidebar);
+        overlay.addEventListener('click', toggleSidebar);
 
-            // 添加过渡类
-            appNameDisplay.classList.add('fade-changing');
-            langTextDisplay.classList.add('fade-changing');
+        // 2. 动态生成目录
+        function buildNav() {
+            const sections = document.querySelectorAll('.section');
+            let navHtml = '';
+            
+            sections.forEach(sec => {
+                const title = sec.querySelector('h2');
+                if (title) {
+                    const cn = title.getAttribute('data-cn');
+                    const en = title.getAttribute('data-en');
+                    navHtml += `<a href="#${sec.id}" class="nav-item nav-level-1" data-cn="${cn}" data-en="${en}">${cn}</a>`;
+                    
+                    // 针对工作经历添加公司二级目录
+                    if (sec.id === 'sec-experience') {
+                        sec.querySelectorAll('.company').forEach(comp => {
+                            const cCn = comp.getAttribute('data-cn');
+                            const cEn = comp.getAttribute('data-en');
+                            navHtml += `<a href="#${comp.id}" class="nav-item nav-level-2" data-cn="${cCn}" data-en="${cEn}">${cCn}</a>`;
+                        });
+                    }
+                }
+            });
+            sidebar.innerHTML = navHtml;
 
-            // 短暂延迟后更新文字
-            setTimeout(() => {
-                appNameDisplay.textContent = appNameDisplay.getAttribute(`data-${currentLang}`);
-                langTextDisplay.textContent = langTextDisplay.getAttribute(`data-${currentLang}`);
-                
-                // 更新 HTML lang 属性
-                document.documentElement.lang = currentLang === 'en' ? 'en' : 'zh-CN';
+            // 点击导航项后自动关闭
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    if (window.innerWidth <= 768 || sidebar.classList.contains('active')) {
+                        toggleSidebar();
+                    }
+                });
+            });
+        }
 
-                // 移除过渡类
-                appNameDisplay.classList.remove('fade-changing');
-                langTextDisplay.classList.remove('fade-changing');
-            }, 150);
+        // 3. 语言切换
+        function setLanguage(lang) {
+            const isEn = lang === 'en';
+            document.querySelectorAll('[data-cn]').forEach(el => {
+                el.textContent = el.getAttribute(isEn ? 'data-en' : 'data-cn');
+            });
+            document.documentElement.lang = isEn ? 'en-US' : 'zh-CN';
+            buildNav(); // 刷新导航文字
+        }
+
+        cnBtn.addEventListener('click', () => setLanguage('cn'));
+        enBtn.addEventListener('click', () => setLanguage('en'));
+
+        // 初始化
+        window.onload = () => {
+            buildNav();
+            setLanguage('cn');
+        };
+
+        // 滚动高亮（可选增强）
+        window.addEventListener('scroll', () => {
+            let current = '';
+            document.querySelectorAll('.section, .company').forEach(sec => {
+                const top = sec.offsetTop;
+                if (pageYOffset >= top - 100) current = sec.id;
+            });
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active-scroll');
+                if (item.getAttribute('href') === `#${current}`) {
+                    item.classList.add('active-scroll');
+                }
+            });
         });
     </script>
-
 </body>
 </html>
