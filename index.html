@@ -6,7 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     
     <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline'; img-src 'self' data:;">
+    
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta name="description" content="徐咏智 - 供应链基础工程师个人简历">
+    <meta name="author" content="Xu Yongzhi">
     
     <title>徐咏智 - 供应链基础工程师简历</title>
     <style>
@@ -211,13 +214,11 @@
             scroll-margin-top: 80px; 
         }
         
-        /* 修复：圆点完美居中
-           线宽2px，中心在padding-left(30px) + 1px的位置，即31px处。
-           使用 transform: translateX(-50%) 让圆点自身的中心对齐到 left 的位置。
-        */
+        /* 时间轴节点圆点 (精准对齐修正版) */
         .company-block::before {
             content: '';
             position: absolute;
+            /* 计算公式： -(padding-left) - (圆点宽度的一半) + (线宽的一半) */
             left: -31px; /* 30px padding + 1px line center */
             top: 6px;
             width: 14px;
@@ -251,15 +252,13 @@
             border-radius: 4px;
         }
 
-        /* 修复：项目标题位置 
-           改为块级元素，增加顶部距离，确保字体加粗并与上下文对齐
-        */
+        /* 项目标题位置 */
         .project {
             font-size: 16px;
             color: #0066cc;
-            margin: 25px 0 10px 0; /* 增加上间距，更清晰 */
+            margin: 25px 0 10px 0;
             font-weight: 600;
-            display: block; /* 占满一行，防止位置跑偏 */
+            display: block; 
             line-height: 1.4;
         }
 
