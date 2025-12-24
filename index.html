@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline'; img-src 'self' data:;">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    
+    <title>徐咏智 - 供应链基础工程师简历</title>
+    <style>
+        /* --- 全局重置 --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            padding-bottom: 50px;
+            padding-top: 60px; /* 顶部栏占位 */
+            overflow-x: hidden;
+        }
+
+        /* --- 顶部固定导航栏 --- */
+        .top-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            background-color: #fff;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 15px;
+            z-index: 2000;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+        }
+
+        .bar-btn {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            padding: 0 10px;
+            transition: background-color 0.2s;
+            color: #0066cc;
+            outline: none;
+        }
+        .bar-btn:hover {
+            background-color: #f5f7fa;
+        }
+
+        .nav-icon { font-size: 24px; }
+        .lang-icon-wrapper { display: flex; align-items: center; gap: 5px; }
+        .lang-icon { font-size: 20px; }
+        .lang-text { font-size: 14px; font-weight: bold; }
+
+        /* --- 侧边栏 --- */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 50px;
+            width: 260px;
+            height: calc(100% - 50px);
+            background-color: #fff;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            z-index: 1500;
+            transform: translateX(-100%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            border-right: 1px solid #eee;
+        }
+        .sidebar.active { transform: translateX(0); }
+
+        .sidebar ul { list-style: none; padding: 10px 0; }
+        .sidebar a {
+            display: block;
+            padding: 12px 30px;
+            text-decoration: none;
+            color: #333;
+            font-size: 16px;
+            border-left: 5px solid transparent;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .sidebar a:hover {
+            background-color: #f0f7ff;
+            color: #0066cc;
+            border-left-color: #0066cc;
+        }
+
+        /* 二级菜单 */
+        .sidebar .submenu {
+            padding: 0;
+            background-color: #fafafa;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+        }
+        .sidebar .submenu li a {
+            padding-left: 50px;
+            font-size: 14px;
+            color: #666;
+            padding-top: 8px;
+            padding-bottom: 8px;
+            border-left: 5px solid transparent;
+        }
+        .sidebar .submenu li a:hover {
+            color: #0066cc;
+            background-color: #eef6ff;
+            border-left-color: transparent;
+        }
+
+        /* 遮罩层 (全透明) */
+        .overlay {
+            position: fixed;
+            top: 50px;
+            left: 0;
+            width: 100%;
+            height: calc(100% - 50px);
+            background: rgba(0,0,0,0);
+            z-index: 1400;
+            display: none;
+        }
+        .overlay.active { display: block; }
+
+        /* --- 简历容器 & 微交互 --- */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #0066cc;
+            scroll-margin-top: 80px;
+        }
+        .header h1 {
+            font-size: 28px;
+            color: #0066cc;
+            margin-bottom: 15px;
+        }
+
+        /* 模块卡片样式 + 悬浮微交互 */
+        .section {
+            margin-bottom: 30px;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            scroll-margin-top: 70px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .section h2 {
+            font-size: 22px;
+            color: #0066cc;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+        }
+        .section h2::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 24px;
+            background-color: #0066cc;
+            margin-right: 10px;
+            border-radius: 3px;
+        }
+
+        /* --- UI优化：垂直时间轴 (Timeline) --- */
+        .timeline-container {
+            position: relative;
+            padding-left: 30px; /* 左侧留出线的空间 */
+            border-left: 2px solid #e0e0e0; /* 贯穿线 */
+            margin-left: 5px;
+        }
+        
+        .company-block {
+            position: relative;
+            margin-bottom: 40px;
+            scroll-margin-top: 80px; 
+        }
+        
+        /* 修复：圆点完美居中
+           线宽2px，中心在padding-left(30px) + 1px的位置，即31px处。
+           使用 transform: translateX(-50%) 让圆点自身的中心对齐到 left 的位置。
+        */
+        .company-block::before {
+            content: '';
+            position: absolute;
+            left: -31px; /* 30px padding + 1px line center */
+            top: 6px;
+            width: 14px;
+            height: 14px;
+            background-color: #fff;
+            border: 3px solid #0066cc;
+            border-radius: 50%;
+            z-index: 2;
+            transition: background-color 0.3s;
+            transform: translateX(-50%); /* 自身居中 */
+        }
+        .company-block:hover::before {
+            background-color: #0066cc;
+        }
+
+        .company {
+            font-size: 19px;
+            color: #2c3e50;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .position {
+            font-size: 15px;
+            color: #666;
+            margin-bottom: 15px;
+            font-style: italic;
+            background: #f9f9f9;
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        /* 修复：项目标题位置 
+           改为块级元素，增加顶部距离，确保字体加粗并与上下文对齐
+        */
+        .project {
+            font-size: 16px;
+            color: #0066cc;
+            margin: 25px 0 10px 0; /* 增加上间距，更清晰 */
+            font-weight: 600;
+            display: block; /* 占满一行，防止位置跑偏 */
+            line-height: 1.4;
+        }
+
+        .work-experience ul {
+            padding-left: 18px;
+            margin-top: 0;
+        }
+        .work-experience li {
+            margin-bottom: 8px;
+            color: #444;
+        }
+
+        /* --- UI优化：技能胶囊 --- */
+        .skill-group {
+            margin-bottom: 25px;
+        }
+        .skill-category-title {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 12px;
+            display: block;
+            font-size: 16px;
+        }
+        
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .skill-tag {
+            background-color: #f0f7ff;
+            color: #0066cc;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            border: 1px solid rgba(0, 102, 204, 0.15);
+            transition: all 0.2s;
+            cursor: default;
+        }
+        
+        .skill-tag:hover {
+            background-color: #0066cc;
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 102, 204, 0.2);
+        }
+
+        /* 核心能力表格优化 */
+        .ability-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .ability-table th {
+            background-color: #f0f7ff;
+            color: #0066cc;
+            font-weight: 600;
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+            width: 140px;
+        }
+        .ability-table td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            color: #444;
+        }
+        .ability-table tr:last-child td { border-bottom: none; }
+
+        /* --- 打印样式优化 --- */
+        @media print {
+            .top-bar, .sidebar, .overlay { display: none !important; }
+            body { padding-top: 0; background-color: #fff; font-size: 12pt; color: #000; }
+            .container { width: 100%; max-width: none; padding: 0; margin: 0; }
+            .section { box-shadow: none; border: none; padding: 10px 0; margin-bottom: 20px; page-break-inside: avoid; }
+            .section:hover { transform: none; box-shadow: none; }
+            .skill-tag { border: 1px solid #ccc; background: #fff; color: #000; }
+            h1, h2, .company, .project { color: #000 !important; }
+            .timeline-container { border-left-color: #ccc; }
+            .company-block::before { border-color: #000; }
+            a { text-decoration: none; color: #000; }
+        }
+
+        /* 响应式适配 */
+        @media (max-width: 768px) {
+            .container { padding: 15px; }
+            .section { padding: 20px; }
+            .ability-table, tbody, tr, td, th { display: block; width: 100%; }
+            .ability-table thead { display: none; }
+            .ability-table td { padding: 10px 0; border: none; border-bottom: 1px solid #eee; }
+            .ability-table tr { margin-bottom: 15px; }
+            .ability-table td:first-child { 
+                font-weight: bold; color: #0066cc; padding-top: 10px; background: #f9f9f9; padding-left: 10px; border-radius: 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <button class="bar-btn" id="navToggle" title="菜单" aria-label="打开菜单">
+            <span class="nav-icon" id="navIcon">☰</span>
+        </button>
+
+        <button class="bar-btn" id="langBtn" title="切换语言 / Switch Language" aria-label="切换语言">
+            <div class="lang-icon-wrapper">
+                <span class="lang-icon">🌐</span>
+                <span class="lang-text" id="langText">EN</span>
+            </div>
+        </button>
+    </div>
+
+    <nav class="sidebar" id="sidebar">
+        <ul>
+            <li><a onclick="window.scrollTo(0,0); toggleMenu(); return false;" data-cn="顶部信息" data-en="Top Info">顶部信息</a></li>
+            <li><a href="#overview" data-cn="个人概述" data-en="Overview">个人概述</a></li>
+            <li><a href="#competence" data-cn="核心能力" data-en="Competence">核心能力</a></li>
+            <li>
+                <a href="#experience" data-cn="工作经历" data-en="Experience">工作经历</a>
+                <ul class="submenu">
+                    <li><a href="#apple" data-cn="苹果公司" data-en="Apple Inc.">苹果公司</a></li>
+                    <li><a href="#guimu" data-cn="圭目机器人" data-en="Guimu Robot">圭目机器人</a></li>
+                    <li><a href="#asmpt" data-cn="ASMPT" data-en="ASMPT">ASMPT</a></li>
+                    <li><a href="#ctri" data-cn="工具研究所" data-en="CTRI">工具研究所</a></li>
+                </ul>
+            </li>
+            <li><a href="#education" data-cn="教育经历" data-en="Education">教育经历</a></li>
+            <li><a href="#skills" data-cn="技能清单" data-en="Skills">技能清单</a></li>
+            <li><a href="#hobbies" data-cn="兴趣爱好" data-en="Hobbies">兴趣爱好</a></li>
+        </ul>
+    </nav>
+
+    <div class="overlay" id="overlay"></div>
+
+    <div class="container">
+        
+        <div class="header" id="header">
+            <h1 data-cn="徐咏智" data-en="Xu Yongzhi">徐咏智</h1>
+            <div class="job-intent" data-cn="求职意向：Supply Base Engineer（供应链基础工程师）/ 消费电子NPI工艺负责人 / 智能制造工艺设备开发优化专家" data-en="Job Objective: Supply Base Engineer / Consumer Electronics NPI Process Leader / Intelligent Manufacturing Process & Equipment Development Optimization Expert">求职意向：Supply Base Engineer（供应链基础工程师）/ 消费电子NPI工艺负责人 / 智能制造工艺设备开发优化专家</div>
+            <div class="location" data-cn="所在地：成都 / 深圳" data-en="Location: Chengdu / Shenzhen">所在地：成都 / 深圳</div>
+        </div>
+
+        <div class="section overview" id="overview">
+            <h2 data-cn="个人概述" data-en="Personal Overview">个人概述</h2>
+            <p data-cn="16年高精智能制造专家，深耕3C消费电子（苹果核心供应链）与半导体后道封装领域，兼具消费类产品NPI全流程管控、DFM/MFD工艺优化、智能工厂规划落地、跨国跨职能团队协作能力。主导50+条高精密自动化产线（含机械/电子组件）NPI量产导入，推动2个智能工厂从0到1筹建，通过DFM优化、模块化设计与精益生产，实现OEE提升至85%+、产能提升90%+、良率稳定99.6%+，擅长协同研发与供应商团队解决制造瓶颈，确保设计与制造无缝衔接。具备跨学科、跨地域团队管理经验，精通从战略规划到量产交付的全链条管控。" data-en="16-year expert in high-precision intelligent manufacturing, deeply engaged in 3C consumer electronics (Apple's core supply chain) and semiconductor backend packaging fields. Possessing comprehensive capabilities in full-process management of consumer product NPI, DFM/MFD process optimization, intelligent factory planning and implementation, and cross-border & cross-functional team collaboration. Led NPI mass production introduction of over 50 high-precision automated production lines (including mechanical/electronic components), promoted the construction of 2 intelligent factories from scratch. Through DFM optimization, modular design and lean production, achieved OEE improvement to 85%+, production capacity increase by 90%+, and yield rate stabilized at 99.6%+. Proficient in collaborating with R&D and supplier teams to solve manufacturing bottlenecks, ensuring seamless connection between design and manufacturing. Equipped with cross-disciplinary and cross-regional team management experience, and proficient in full-chain management from strategic planning to mass production delivery.">16年高精智能制造专家，深耕3C消费电子（苹果核心供应链）与半导体后道封装领域，兼具消费类产品NPI全流程管控、DFM/MFD工艺优化、智能工厂规划落地、跨国跨职能团队协作能力。主导50+条高精密自动化产线（含机械/电子组件）NPI量产导入，推动2个智能工厂从0到1筹建，通过DFM优化、模块化设计与精益生产，实现OEE提升至85%+、产能提升90%+、良率稳定99.6%+，擅长协同研发与供应商团队解决制造瓶颈，确保设计与制造无缝衔接。具备跨学科、跨地域团队管理经验，精通从战略规划到量产交付的全链条管控。</p>
+        </div>
+
+        <div class="section" id="competence">
+            <h2 data-cn="核心能力矩阵" data-en="Core Competence Matrix">核心能力矩阵</h2>
+            <table class="ability-table">
+                <tbody>
+                    <tr>
+                        <td data-cn="技术能力" data-en="Technical Capabilities">技术能力</td>
+                        <td data-cn="3C/半导体精密工艺（激光切割、PVD、HAF贴合、Wire Bonding、SMT、激光器应用等）；智能产线全流程规划设计；设备高精度控制（定位精度1-2μm、运动系统20g+加速度）；DFM/DFMA设计、MFD（制造为设计）解决方案开发、FAT/SAT验证、DOE工艺优化；热学组件装配工艺优化及散热结构DFM分析；系统装配公差分析（GD&T深化应用）、产品外观（cosmetic）质量管控。" data-en="3C/Semiconductor precision processes (laser cutting, PVD, HAF lamination, Wire Bonding, SMT, laser application, etc.); Full-process planning and design of intelligent production lines; High-precision equipment control (positioning accuracy 1-2μm, motion system 20g+ acceleration); DFM/DFMA design, MFD (Manufacturing for Design) solution development, FAT/SAT verification, DOE process optimization; Thermal component assembly process optimization and thermal structure DFM analysis; System assembly tolerance analysis (in-depth application of GD&T), product cosmetic quality control.">3C/半导体精密工艺（激光切割、PVD、HAF贴合、Wire Bonding、SMT、激光器应用等）；智能产线全流程规划设计；设备高精度控制（定位精度1-2μm、运动系统20g+加速度）；DFM/DFMA设计、MFD（制造为设计）解决方案开发、FAT/SAT验证、DOE工艺优化；热学组件装配工艺优化及散热结构DFM分析；系统装配公差分析（GD&T深化应用）、产品外观（cosmetic）质量管控。</td>
+                    </tr>
+                    <tr>
+                        <td data-cn="项目能力" data-en="Project Capabilities">项目能力</td>
+                        <td data-cn="智能工厂0-1筹建；自动化产线规划与量产导入；闭环数据管理系统搭建；OEE/良率/成本优化；产能爬坡加速；KISS原则落地（简化设计与制造流程）；SPC（统计过程控制）数据驱动的良率与成本优化等。" data-en="Intelligent factory construction from scratch; Automated production line planning and mass production introduction; Closed-loop data management system construction; OEE/yield/cost optimization; Production capacity ramp-up acceleration; KISS principle implementation (simplifying design and manufacturing processes); SPC (Statistical Process Control) data-driven yield and cost optimization, etc.">智能工厂0-1筹建；自动化产线规划与量产导入；闭环数据管理系统搭建；OEE/良率/成本优化；产能爬坡加速；KISS原则落地（简化设计与制造流程）；SPC（统计过程控制）数据驱动的良率与成本优化等。</td>
+                    </tr>
+                    <tr>
+                        <td data-cn="管理能力" data-en="Management Capabilities">管理能力</td>
+                        <td data-cn="跨国跨职能团队（中/新/德）管理；敏捷开发+Stage-Gate流程推行；供应商标准化开发体系构建；精益生产（单线流/模块化）落地；跨文化协同研发与供应商协作。" data-en="Cross-border and cross-functional team (China/Singapore/Germany) management; Agile development + Stage-Gate process implementation; Supplier standardized development system construction; Lean production (single-line flow/modular) implementation; Cross-cultural collaborative R&D and supplier collaboration.">跨国跨职能团队（中/新/德）管理；敏捷开发+Stage-Gate流程推行；供应商标准化开发体系构建；精益生产（单线流/模块化）落地；跨文化协同研发与供应商协作。</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section work-experience" id="experience">
+            <h2 data-cn="工作经历" data-en="Work Experience">工作经历</h2>
+            
+            <div class="timeline-container">
+                <div class="company-block" id="apple">
+                    <div class="company" data-cn="供应链管理 - 苹果公司" data-en="Supply Chain Management - Apple Inc.">供应链管理 - 苹果公司</div>
+                    <div class="position" data-cn="制造设计工程师 | 成都 / 深圳 | 2017.07 - 至今" data-en="Manufacturing Design Engineer | Chengdu / Shenzhen | Jul. 2017 - Present">制造设计工程师 | 成都 / 深圳 | 2017.07 - 至今</div>
+                    
+                    <div class="project" data-cn="手机 / 手表制造（2019 - 至今）" data-en="Mobile Phone / Watch Manufacturing (2019 - Present)">手机 / 手表制造（2019 - 至今）</div>
+                    <ul>
+                        <li data-cn="主导行业首个光固化低压注塑成型自动化产线开发，遵循KISS原则采用模块化+单线流简化设计，减少冗余工站，设备成本、占地面积及治具用量下降80%+，成功量产导入；" data-en="Led the development of the industry's first automated production line for light-curing low-pressure injection molding. Adopted modular + single-line flow simplified design in accordance with KISS principle, reduced redundant workstations, decreased equipment cost, floor space and fixture usage by over 80%, and successfully introduced mass production;">主导行业首个光固化低压注塑成型自动化产线开发，遵循KISS原则采用模块化+单线流简化设计，减少冗余工站，设备成本、占地面积及治具用量下降80%+，成功量产导入；</li>
+                        <li data-cn="牵头框架组装标准化产线研发，集成贴膜、点胶等工艺，实现50μm内组装精度，CT提升76%、产能提升90%，自动化率90%+，良率稳定99.6%+；" data-en="Led the R&D of standardized frame assembly production lines, integrated film pasting, dispensing and other processes, achieved assembly accuracy within 50μm, CT increased by 76%, production capacity increased by 90%, automation rate over 90%, and yield rate stabilized at 99.6%+;">牵头框架组装标准化产线研发，集成贴膜、点胶等工艺，实现50μm内组装精度，CT提升76%、产能提升90%，自动化率90%+，良率稳定99.6%+；</li>
+                        <li data-cn="主导光固化模块设计，通过光学结构优化与散热冷却系统精准匹配，实现光强均匀性与热能平衡控制，保障高效固化效果，稳定量产阶段产品热性能一致性；" data-en="Led the design of light-curing modules, achieved precise matching between optical structure optimization and heat dissipation cooling system, realized light intensity uniformity and thermal energy balance control, ensured efficient curing effect, and stabilized the thermal performance consistency of products during mass production;">主导光固化模块设计，通过光学结构优化与散热冷却系统精准匹配，实现光强均匀性与热能平衡控制，保障高效固化效果，稳定量产阶段产品热性能一致性；</li>
+                        <li data-cn="搭建基于SPC（统计过程控制）逻辑的闭环数据系统（OEE采集+自动FACA分析），推动设备预测性维护，通过数据追溯快速定位制造缺陷，产能爬坡周期从3-4周缩短至4天，良率从95%提升至99.6%；" data-en="Built a closed-loop data system (OEE collection + automatic FACA analysis) based on SPC (Statistical Process Control) logic, promoted predictive equipment maintenance, quickly located manufacturing defects through data traceability, shortened the production capacity ramp-up cycle from 3-4 weeks to 4 days, and increased yield rate from 95% to 99.6%;">搭建基于SPC（统计过程控制）逻辑的闭环数据系统（OEE采集+自动FACA分析），推动设备预测性维护，通过数据追溯快速定位制造缺陷，产能爬坡周期从3-4周缩短至4天，良率从95%提升至99.6%；</li>
+                        <li data-cn="统筹3大工厂50+生产线设备开发，协同硬件工程团队、热学/机械供应商开展同步工程，从产品概念阶段介入，提供DFM可行性分析与制造风险评估，输出30+项设计优化建议（如公差调整、工艺简化），管理单产线超百工站，支撑日产能百万级交付；" data-en="Coordinated the equipment development of over 50 production lines in 3 major factories, carried out concurrent engineering with hardware engineering teams and thermal/mechanical suppliers, intervened from the product concept stage, provided DFM feasibility analysis and manufacturing risk assessment, output over 30 design optimization suggestions (such as tolerance adjustment, process simplification), managed single production lines with over 100 workstations, and supported daily production capacity of millions;">统筹3大工厂50+生产线设备开发，协同硬件工程团队、热学/机械供应商开展同步工程，从产品概念阶段介入，提供DFM可行性分析与制造风险评估，输出30+项设计优化建议（如公差调整、工艺简化），管理单产线超百工站，支撑日产能百万级交付；</li>
+                        <li data-cn="参与手表FATP全流程开发与验证，优化组装工站结构动作及公差控制，迭代油墨喷印固化方案；建立PCBA至成品的全链路问题追溯生产过程优化，保障产品顺利迭代量产。" data-en="Participated in the full-process development and verification of watch FATP, optimized the structure and movement of assembly workstations and tolerance control, iterated the ink jet printing and curing scheme; established the full-link problem traceability and production process optimization from PCBA to finished products, ensuring the smooth iterative mass production of products.">参与手表FATP全流程开发与验证，优化组装工站结构动作及公差控制，迭代油墨喷印固化方案；建立PCBA至成品的全链路问题追溯生产过程优化，保障产品顺利迭代量产。</li>
+                    </ul>
+
+                    <div class="project" data-cn="脆性材料精密工艺与自动化开发（2017-2019）" data-en="Precision Process and Automation Development for Brittle Materials (2017-2019)">脆性材料精密工艺与自动化开发（2017-2019）</div>
+                    <ul>
+                        <li data-cn="创新研发蓝宝石带油墨镀膜激光切割工艺，通过独特光学结构和工艺流程实现激光成丝切割，精准控制受热断裂油墨区域≤0.1mm；主导搭建全自动化产线，人力成本降低80%+，树立行业精密加工标杆；" data-en="Innovatively developed the laser cutting process for sapphire with ink coating, realized laser filament cutting through unique optical structure and process flow, precisely controlled the heat-affected fracture ink area ≤0.1mm; led the construction of a fully automated production line, reduced labor costs by over 80%, and established an industry benchmark for precision processing;">创新研发蓝宝石带油墨镀膜激光切割工艺，通过独特光学结构和工艺流程实现激光成丝切割，精准控制受热断裂油墨区域≤0.1mm；主导搭建全自动化产线，人力成本降低80%+，树立行业精密加工标杆；</li>
+                        <li data-cn="主导2个工厂超百条玻璃盖板产线自动化升级，创新20余种设备，人力节省10%+，生产一致性显著提升；" data-en="Led the automation upgrade of over 100 glass cover production lines in 2 factories, innovated more than 20 types of equipment, saved labor by over 10%, and significantly improved production consistency;">主导2个工厂超百条玻璃盖板产线自动化升级，创新20余种设备，人力节省10%+，生产一致性显著提升；</li>
+                        <li data-cn="开发蓝宝石自动化移印工艺及转运托盘/夹持机构，人力节省60%+，自动化不良率控制在0.1%以下；" data-en="Developed the automated pad printing process for sapphire and the transfer tray/clamping mechanism, saved labor by over 60%, and controlled the automation defect rate below 0.1%;">开发蓝宝石自动化移印工艺及转运托盘/夹持机构，人力节省60%+，自动化不良率控制在0.1%以下；</li>
+                        <li data-cn="攻克蓝宝石组装工艺缺陷与产能瓶颈，通过优化热传递结构设计及工艺参数迭代，实现产能提升20%+，良率稳定至99%以上。" data-en="Overcame the defects and production capacity bottlenecks of the sapphire assembly process, achieved a production capacity increase of over 20% and a yield rate stabilized above 99% through optimizing the thermal transfer structure design and iterating process parameters.">攻克蓝宝石组装工艺缺陷与产能瓶颈，通过优化热传递结构设计及工艺参数迭代，实现产能提升20%+，良率稳定至99%以上。</li>
+                    </ul>
+                </div>
+
+                <div class="company-block" id="guimu">
+                    <div class="company" data-cn="设备研发 - 成都圭目机器人" data-en="Equipment R&D - Chengdu Guimu Robot Co., Ltd.">设备研发 - 成都圭目机器人</div>
+                    <div class="position" data-cn="研发经理 | 成都 | 2017.02 - 2017.06" data-en="R&D Manager | Chengdu | Feb. 2017 - Jun. 2017">研发经理 | 成都 | 2017.02 - 2017.06</div>
+                    <ul>
+                        <li data-cn="主导道路探伤机器人初代底盘和探伤模块开发，完成上路测试验证，奠定系列化产品技术基础；" data-en="Led the development of the first-generation chassis and flaw detection module of the road flaw detection robot, completed road test verification, and laid the technical foundation for serialized products;">主导道路探伤机器人初代底盘和探伤模块开发，完成上路测试验证，奠定系列化产品技术基础；</li>
+                        <li data-cn="负责集装箱爬壁、道路修补、探雷机器人等复杂系统设计，推动多项核心技术专利申请；" data-en="Responsible for the design of complex systems such as container wall-climbing robots, road repair robots, and mine detection robots, and promoted the application of multiple core technology patents;">负责集装箱爬壁、道路修补、探雷机器人等复杂系统设计，推动多项核心技术专利申请；</li>
+                        <li data-cn="通过技术展示与客户洽谈，成功获取多个项目立项，实现技术到商业应用的转化。" data-en="Successfully obtained project approval for multiple projects through technical demonstrations and customer negotiations, realizing the transformation from technology to commercial application.">通过技术展示与客户洽谈，成功获取多个项目立项，实现技术到商业应用的转化。</li>
+                    </ul>
+                </div>
+
+                <div class="company-block" id="asmpt">
+                    <div class="company" data-cn="设备研发 - 先进科技太平洋（ASMPT）" data-en="Equipment R&D - Advanced Semiconductor Materials Polishing Technology (ASMPT)">设备研发 - 先进科技太平洋（ASMPT）</div>
+                    <div class="position" data-cn="机械工程师 / 研发经理 | 成都 / 新加坡 | 2009.10 - 2017.02" data-en="Mechanical Engineer / R&D Manager | Chengdu / Singapore | Oct. 2009 - Feb. 2017">机械工程师 / 研发经理 | 成都 / 新加坡 | 2009.10 - 2017.02</div>
+                    
+                    <div class="project" data-cn="独立研发项目组（成都，2014-2017）" data-en="Independent R&D Project Team (Chengdu, 2014-2017)">独立研发项目组（成都，2014-2017）</div>
+                    <ul>
+                        <li data-cn="组建并领导7+人跨职能（机械/电子/软件/测试）团队，推行敏捷开发+Stage-Gate流程，关键节点交付率100%；" data-en="Established and led a 7+ person cross-functional (mechanical/electronic/software/testing) team, implemented agile development + Stage-Gate process, and achieved 100% key node delivery rate;">组建并领导7+人跨职能（机械/电子/软件/测试）团队，推行敏捷开发+Stage-Gate流程，关键节点交付率100%；</li>
+                        <li data-cn="主导JEDEC喂料器、自动化NG流水线、物料仓储设备研发交付，建立标准化知识库加速团队产出；" data-en="Led the R&D and delivery of JEDEC feeders, automated NG assembly lines, and material storage equipment, and established a standardized knowledge base to accelerate team output;">主导JEDEC喂料器、自动化NG流水线、物料仓储设备研发交付，建立标准化知识库加速团队产出；</li>
+                        <li data-cn="支援德/新团队完成SIPLACE E/TX贴片机核心组件开发，实现30μm定位精度、4g加速度性能突破；" data-en="Supported the German/Singaporean team to complete the development of core components of the SIPLACE E/TX placement machine, achieving a positioning accuracy of 30μm and an acceleration performance breakthrough of 4g;">支援德/新团队完成SIPLACE E/TX贴片机核心组件开发，实现30μm定位精度、4g加速度性能突破；</li>
+                        <li data-cn="协作开发TCB/Laser Dicing设备对位系统，达成2μm超高对位精度；推动直线电机本地化量产，完成结构与电气绕线工艺开发。" data-en="Collaborated in the development of the alignment system for TCB/Laser Dicing equipment, achieving ultra-high alignment accuracy of 2μm; promoted the localized mass production of linear motors and completed the development of structure and electrical winding processes.">协作开发TCB/Laser Dicing设备对位系统，达成2μm超高对位精度；推动直线电机本地化量产，完成结构与电气绕线工艺开发。</li>
+                    </ul>
+
+                    <div class="project" data-cn="新加坡研发中心（2011-2014）" data-en="Singapore R&D Center (2011-2014)">新加坡研发中心（2011-2014）</div>
+                    <ul>
+                        <li data-cn="负责SMT锡膏检测设备机械设计，主导机架及流水线开发，协作完成15μm精度龙门对位系统和光学系统设计；" data-en="Responsible for the mechanical design of SMT solder paste inspection equipment, led the development of racks and assembly lines, and collaborated in the design of 15μm precision gantry alignment system and optical system;">负责SMT锡膏检测设备机械设计，主导机架及流水线开发，协作完成15μm精度龙门对位系统和光学系统设计；</li>
+                        <li data-cn="主导半导体焊线机自动化光学检测设备开发，为马来西亚客户定制交付，负责光学系统与XY平台设计；" data-en="Led the development of automated optical inspection equipment for semiconductor wire bonders, customized delivery for Malaysian customers, and responsible for the design of optical systems and XY platforms;">主导半导体焊线机自动化光学检测设备开发，为马来西亚客户定制交付，负责光学系统与XY平台设计；</li>
+                        <li data-cn="协作开发SMT锡膏印刷设备，实现15μm级高精度对位；主导半导体封装微型晶圆曝光设备开发，达成1μm超精密对位；" data-en="Collaborated in the development of SMT solder paste printing equipment, achieving 15μm level high-precision alignment; led the development of micro-wafer exposure equipment for semiconductor packaging, achieving 1μm ultra-precision alignment;">协作开发SMT锡膏印刷设备，实现15μm级高精度对位；主导半导体封装微型晶圆曝光设备开发，达成1μm超精密对位；</li>
+                        <li data-cn="参与半导体晶圆搬运机械手开发，完成锡线设备XY平台20g加速度升级。" data-en="Participated in the development of semiconductor wafer handling robots and completed the 20g acceleration upgrade of the XY platform of the wire bonding equipment.">参与半导体晶圆搬运机械手开发，完成锡线设备XY平台20g加速度升级。</li>
+                    </ul>
+
+                    <div class="project" data-cn="成都研发中心（2009-2011）" data-en="Chengdu R&D Center (2009-2011)">成都研发中心（2009-2011）</div>
+                    <ul>
+                        <li data-cn="负责CO₂/光纤激光器整机系统设计，攻克热学结构与精密光学装配难点，实现微米级激光打标工艺；" data-en="Responsible for the overall system design of CO₂/fiber lasers, overcame the difficulties of thermal structure and precision optical assembly, and realized the micro-level laser marking process;">负责CO₂/光纤激光器整机系统设计，攻克热学结构与精密光学装配难点，实现微米级激光打标工艺；</li>
+                        <li data-cn="协作开发40吨/80吨封装注塑压力机，负责底盘结构与铰链设计；" data-en="Collaborated in the development of 40-ton/80-ton packaging injection molding presses, responsible for the design of chassis structures and hinges;">协作开发40吨/80吨封装注塑压力机，负责底盘结构与铰链设计；</li>
+                        <li data-cn="引入自上而下的结构设计与参数化方法，实现多产品系列设计标准化，提升开发效率。" data-en="Introduced top-down structural design and parameterization methods, realized the design standardization of multiple product series, and improved development efficiency.">引入自上而下的结构设计与参数化方法，实现多产品系列设计标准化，提升开发效率。</li>
+                    </ul>
+                </div>
+
+                <div class="company-block" id="ctri">
+                    <div class="company" data-cn="刀具开发制造 - 成都工具研究所 (CTRI)" data-en="Tool Development and Manufacturing - Chengdu Tool Research Institute (CTRI)">刀具开发制造 - 成都工具研究所 (CTRI)</div>
+                    <div class="position" data-cn="机械工程师 | 成都 | 2009.07 - 2009.10" data-en="Mechanical Engineer | Chengdu | Jul. 2009 - Oct. 2009">机械工程师 | 成都 | 2009.07 - 2009.10</div>
+                    <ul>
+                        <li data-cn="主导定制化特种切削刀具设计，独立完成零件图、装配图及工艺图纸全流程绘制，保障刀具设计精准匹配生产需求；" data-en="Led the design of customized special cutting tools, independently completed the full-process drawing of part drawings, assembly drawings and process drawings, ensuring that the tool design accurately matches production needs;">主导定制化特种切削刀具设计，独立完成零件图、装配图及工艺图纸全流程绘制，保障刀具设计精准匹配生产需求；</li>
+                        <li data-cn="参与从客户需求沟通到生产交付的全流程管理，开发新生产工艺与工装夹具，提升生产效率；" data-en="Participated in the full-process management from customer demand communication to production delivery, developed new production processes and tooling fixtures, and improved production efficiency;">参与从客户需求沟通到生产交付的全流程管理，开发新生产工艺与工装夹具，提升生产效率；</li>
+                        <li data-cn="掌握产品研发至交付的全生命周期管理流程，奠定精密制造领域基础。" data-en="Mastered the full-life cycle management process from product R&D to delivery, laying the foundation in the field of precision manufacturing.">掌握产品研发至交付的全生命周期管理流程，奠定精密制造领域基础。</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section education" id="education">
+            <h2 data-cn="教育经历" data-en="Education Experience">教育经历</h2>
+            <div class="school" data-cn="西南科技大学" data-en="Southwest University of Science and Technology">西南科技大学</div>
+            <p data-cn="机械设计制造及其自动化 | 学士 | 绵阳 | 2009年" data-en="Mechanical Design, Manufacturing and Automation | Bachelor's Degree | Mianyang | 2009">机械设计制造及其自动化 | 学士 | 绵阳 | 2009年</p>
+        </div>
+
+        <div class="section" id="skills">
+            <h2 data-cn="技能清单" data-en="Skill List">技能清单</h2>
+            
+            <div class="skill-group">
+                <span class="skill-category-title" data-cn="设计工具" data-en="Design Tools">设计工具</span>
+                <div class="tags-container">
+                    <span class="skill-tag">UG NX</span>
+                    <span class="skill-tag">Solid Edge</span>
+                    <span class="skill-tag">SolidWorks</span>
+                    <span class="skill-tag">AutoCAD</span>
+                    <span class="skill-tag">CAE</span>
+                    <span class="skill-tag">E-Plan</span>
+                    <span class="skill-tag">GD&T standard</span>
+                </div>
+            </div>
+
+            <div class="skill-group">
+                <span class="skill-category-title" data-cn="项目与数据工具" data-en="Project & Data Tools">项目与数据工具</span>
+                <div class="tags-container">
+                    <span class="skill-tag">Agile PLM</span>
+                    <span class="skill-tag">SharePoint</span>
+                    <span class="skill-tag">Office</span>
+                    <span class="skill-tag">JMP</span>
+                    <span class="skill-tag">Tableau</span>
+                    <span class="skill-tag">Python</span>
+                    <span class="skill-tag">HTML</span>
+                    <span class="skill-tag" data-cn="SPC（统计过程控制）" data-en="SPC (Statistical Process Control)">SPC</span>
+                    <span class="skill-tag">NUDD</span>
+                </div>
+            </div>
+
+            <div class="skill-group">
+                <span class="skill-category-title" data-cn="跨学科技术" data-en="Interdisciplinary Technologies">跨学科技术</span>
+                <ul style="margin-left: 20px; color: #444;">
+                    <li data-cn="机械设计+电气设计+软件设计复合能力，机器人与视觉应用" data-en="Composite capabilities of mechanical design + electrical design + software design, robot and vision application">机械设计+电气设计+软件设计复合能力，机器人与视觉应用</li>
+                    <li data-cn="热学组件装配工艺优化、散热结构DFM分析" data-en="Thermal component assembly process optimization, thermal structure DFM analysis">热学组件装配工艺优化、散热结构DFM分析</li>
+                    <li data-cn="系统装配公差分析、产品外观（cosmetic）质量管控" data-en="System assembly tolerance analysis, product cosmetic quality control">系统装配公差分析、产品外观（cosmetic）质量管控</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section hobby" id="hobbies">
+            <h2 data-cn="兴趣爱好" data-en="Hobbies">兴趣爱好</h2>
+            <p data-cn="徒步爬山、电子机械DIY、3D打印、木工雕刻、装修设计，爱好动手实践，持续将DIY创新思维融入精密制造工艺优化。" data-en="Hiking, electronic and mechanical DIY, 3D printing, wood carving, decoration design. Enjoy hands-on practice and continuously integrate DIY innovative thinking into precision manufacturing process optimization.">徒步爬山、电子机械DIY、3D打印、木工雕刻、装修设计，爱好动手实践，持续将DIY创新思维融入精密制造工艺优化。</p>
+        </div>
+    </div>
+
+    <script>
+        const getElements = () => document.querySelectorAll('[data-cn]');
+        
+        let currentLang = 'cn';
+        const langBtn = document.getElementById('langBtn');
+        const langText = document.getElementById('langText');
+
+        function toggleLanguage() {
+            const newLang = currentLang === 'cn' ? 'en' : 'cn';
+
+            getElements().forEach(element => {
+                element.textContent = element.getAttribute(newLang === 'cn' ? 'data-cn' : 'data-en');
+            });
+
+            document.documentElement.lang = newLang === 'cn' ? 'zh-CN' : 'en-US';
+            langText.textContent = newLang === 'cn' ? 'EN' : '中';
+            currentLang = newLang;
+
+            window.scrollTo(0, 0);
+        }
+
+        langBtn.addEventListener('click', toggleLanguage);
+
+        window.onload = function() {
+            getElements().forEach(element => {
+                element.textContent = element.getAttribute('data-cn');
+            });
+            langText.textContent = 'EN';
+        };
+
+        const navToggle = document.getElementById('navToggle');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+        const navLinks = sidebar.querySelectorAll('a');
+        const navIcon = document.getElementById('navIcon');
+
+        function toggleMenu() {
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+            
+            if(sidebar.classList.contains('active')) {
+                navIcon.innerHTML = "×";
+            } else {
+                navIcon.innerHTML = "☰";
+            }
+        }
+
+        navToggle.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', toggleMenu);
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                if (!link.hasAttribute('onclick')) {
+                    toggleMenu();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
