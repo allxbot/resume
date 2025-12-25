@@ -97,4 +97,4 @@
 * **Design Tools**: UG NX, Solid Edge, SolidWorks, AutoCAD, CAE, E-Plan, GD&T standard
 * **Project & Data Tools**: Agile PLM, SharePoint, Office, JMP, Tableau, Python, HTML, SPC (Statistical Process Control), NUDD
 * **Interdisciplinary Skills**: Composite capabilities in Mechanical + Electrical + Software Design; Robotics & Vision Applications; Thermal component assembly optimization & Thermal structure DFM analysis; System assembly tolerance analysis, Product Cosmetic quality control.
-* **Interests**: Hiking, DIY Electronics/Mechanics, 3D Printing, Wood Carving, Interior Design.
+* **Interests**: Hiking, DIY Electronics/Mechanics, 3D Printing, Wood Carving, Interior Design. Dedicated to hands-on innovation and applying maker-mindset to precision process optimization.
