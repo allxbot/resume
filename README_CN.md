@@ -96,4 +96,4 @@
 * **设计工具**：UG NX, Solid Edge, SolidWorks, AutoCAD, CAE, E-Plan, GD&T standard
 * **项目与数据工具**：Agile PLM, SharePoint, Office, JMP, Tableau, Python, HTML, SPC（统计过程控制）, NUDD
 * **跨学科技术**：机械+电气+软件设计复合能力；机器人与视觉应用；热学组件装配工艺优化、散热结构 DFM 分析；系统装配公差分析、产品外观（cosmetic）质量管控
-* **兴趣爱好**：徒步爬山、电子机械 DIY、3D 打印、木工雕刻、装修设计
+* **兴趣爱好**：徒步爬山、电子机械DIY、3D打印、木工雕刻、装修设计，爱好动手实践，持续将DIY创新思维融入精密制造工艺优化。
