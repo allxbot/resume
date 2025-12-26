@@ -599,7 +599,7 @@
         <i class="fa fa-linkedin"></i>
     </a>
     
-    <a href="#" title="WeChat ID: xj_xyz" class="bg-gray-600 hover:bg-primary w-10 h-10 rounded-full flex items-center justify-center transition-colors">
+    <a href="javascript:void(0)" onclick="toggleWechatModal()" title="点击扫码添加微信" class="bg-gray-600 hover:bg-primary w-10 h-10 rounded-full flex items-center justify-center transition-colors">
         <i class="fa fa-wechat"></i>
     </a>
     
@@ -993,5 +993,41 @@
             });
         });
     </script>
+    /*微信添加，这段代码使用 Tailwind CSS 构建，默认是隐藏的（hidden），点击图标后会显示在屏幕最前端*/
+<script>
+    function toggleWechatModal() {
+        const modal = document.getElementById('wechatModal');
+        if (modal.classList.contains('hidden')) {
+            modal.classList.remove('hidden');
+            // 禁止背景滚动 (可选)
+            document.body.style.overflow = 'hidden';
+        } else {
+            modal.classList.add('hidden');
+            // 恢复背景滚动 (可选)
+            document.body.style.overflow = 'auto';
+        }
+    }
+
+    // 点击弹窗背景处也可以关闭
+    window.onclick = function(event) {
+        const modal = document.getElementById('wechatModal');
+        if (event.target == modal) {
+            toggleWechatModal();
+        }
+    }
+</script>
+    
+<div id="wechatModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 transition-opacity">
+    <div class="bg-white p-6 rounded-lg shadow-xl max-w-sm w-full mx-4 relative text-center">
+        <button onclick="toggleWechatModal()" class="absolute top-2 right-2 text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
+        
+        <h3 class="text-lg font-bold mb-4 text-gray-800">扫码添加我的微信</h3>
+        
+        <img src="path/to/your/wechat-qr.jpg" alt="WeChat QR Code" class="w-64 h-64 mx-auto mb-4 border border-gray-100">
+        
+        <p class="text-gray-600">微信号: <span class="font-mono font-semibold">xj_xyz</span></p>
+    </div>
+</div>
+    
 </body>
 </html>
