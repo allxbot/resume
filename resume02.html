@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>徐咏智 - 个人简历 / Xu Yongzhi - Resume</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                        secondary: '#36CFC9',
+                        dark: '#1D2129',
+                        light: '#F2F3F5',
+                        gray: {
+                            100: '#F7F8FA',
+                            200: '#E5E6EB',
+                            300: '#C9CDD4',
+                            400: '#86909C',
+                            500: '#4E5969',
+                            600: '#272E3B',
+                            700: '#1D2129',
+                        }
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .card-hover {
+                transition: all 0.3s ease;
+            }
+            .card-hover:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            }
+            .progress-bar {
+                height: 8px;
+                background: linear-gradient(90deg, #165DFF var(--progress), #E5E6EB var(--progress));
+                border-radius: 4px;
+            }
+        }
+    </style>
+    
+    <!-- 打印样式优化 -->
+    <style media="print">
+        @page {
+            size: A4;
+            margin: 2cm;
+        }
+        body {
+            font-size: 12px !important;
+            line-height: 1.4 !important;
+        }
+        #navbar, #mobileMenu, #menuBtn, #backToTop, .card-hover, footer, form, .no-print {
+            display: none !important;
+        }
+        section {
+            padding: 1rem 0 !important;
+        }
+        .container {
+            width: 100% !important;
+            max-width: 100% !important;
+            padding: 0 !important;
+        }
+        .bg-gray-50, .bg-white {
+            background: white !important;
+        }
+        .rounded-xl, .rounded-lg {
+            border-radius: 0 !important;
+        }
+        .shadow-sm, .shadow-lg {
+            box-shadow: none !important;
+        }
+        canvas {
+            max-height: 200px !important;
+        }
+    </style>
+</head>
+<body class="font-inter bg-gray-100 text-gray-700 opacity-0 transition-opacity duration-500">
+    <!-- 导航栏 -->
+    <header id="navbar" class="fixed w-full bg-white/90 backdrop-blur-sm shadow-sm z-50 transition-all duration-300">
+        <div class="container mx-auto px-4 md:px-6 py-3">
+            <div class="flex justify-between items-center">
+                <a href="#" class="text-xl font-bold text-primary" data-lang="zh">徐咏智</a>
+                <a href="#" class="text-xl font-bold text-primary hidden" data-lang="en">Xu Yongzhi</a>
+                
+                <!-- 语言切换按钮 -->
+                <div class="flex items-center mr-4">
+                    <button id="langCn" class="px-2 py-1 rounded bg-primary text-white mr-2">
+                        <i class="fa fa-language"></i> 中
+                    </button>
+                    <button id="langEn" class="px-2 py-1 rounded bg-gray-200 text-gray-700">
+                        <i class="fa fa-language"></i> En
+                    </button>
+                </div>
+                
+                <!-- 桌面导航 -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#profile" class="text-gray-500 hover:text-primary transition-colors" data-lang="zh">个人概述</a>
+                    <a href="#profile" class="text-gray-500 hover:text-primary transition-colors hidden" data-lang="en">Profile</a>
+                    
+                    <a href="#skills" class="text-gray-500 hover:text-primary transition-colors" data-lang="zh">核心能力</a>
+                    <a href="#skills" class="text-gray-500 hover:text-primary transition-colors hidden" data-lang="en">Core Skills</a>
+                    
+                    <a href="#experience" class="text-gray-500 hover:text-primary transition-colors" data-lang="zh">工作经历</a>
+                    <a href="#experience" class="text-gray-500 hover:text-primary transition-colors hidden" data-lang="en">Experience</a>
+                    
+                    <a href="#education" class="text-gray-500 hover:text-primary transition-colors" data-lang="zh">教育背景</a>
+                    <a href="#education" class="text-gray-500 hover:text-primary transition-colors hidden" data-lang="en">Education</a>
+                    
+                    <a href="#contact" class="text-gray-500 hover:text-primary transition-colors" data-lang="zh">联系方式</a>
+                    <a href="#contact" class="text-gray-500 hover:text-primary transition-colors hidden" data-lang="en">Contact</a>
+                </nav>
+                
+                <!-- 移动端菜单按钮 -->
+                <button id="menuBtn" class="md:hidden text-gray-500 hover:text-primary">
+                    <i class="fa fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- 移动端导航菜单 -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white border-t">
+            <div class="container mx-auto px-4 py-3 flex flex-col space-y-3">
+                <a href="#profile" class="text-gray-500 hover:text-primary py-2 transition-colors" data-lang="zh">个人概述</a>
+                <a href="#profile" class="text-gray-500 hover:text-primary py-2 transition-colors hidden" data-lang="en">Profile</a>
+                
+                <a href="#skills" class="text-gray-500 hover:text-primary py-2 transition-colors" data-lang="zh">核心能力</a>
+                <a href="#skills" class="text-gray-500 hover:text-primary py-2 transition-colors hidden" data-lang="en">Core Skills</a>
+                
+                <a href="#experience" class="text-gray-500 hover:text-primary py-2 transition-colors" data-lang="zh">工作经历</a>
+                <a href="#experience" class="text-gray-500 hover:text-primary py-2 transition-colors hidden" data-lang="en">Experience</a>
+                
+                <a href="#education" class="text-gray-500 hover:text-primary py-2 transition-colors" data-lang="zh">教育背景</a>
+                <a href="#education" class="text-gray-500 hover:text-primary py-2 transition-colors hidden" data-lang="en">Education</a>
+                
+                <a href="#contact" class="text-gray-500 hover:text-primary py-2 transition-colors" data-lang="zh">联系方式</a>
+                <a href="#contact" class="text-gray-500 hover:text-primary py-2 transition-colors hidden" data-lang="en">Contact</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 英雄区域 -->
+    <section class="pt-32 pb-20 bg-gradient-to-br from-primary/5 to-secondary/5">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-bold text-gray-700 leading-tight mb-4" data-lang="zh">
+                        徐咏智
+                    </h1>
+                    <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-bold text-gray-700 leading-tight mb-4 hidden" data-lang="en">
+                        Xu Yongzhi
+                    </h1>
+                    
+                    <p class="text-[clamp(1.1rem,2vw,1.3rem)] text-gray-500 mb-6" data-lang="zh">
+                        研发制造总监 | 供应链技术总监 | 智能制造设备工艺专家
+                    </p>
+                    <p class="text-[clamp(1.1rem,2vw,1.3rem)] text-gray-500 mb-6 hidden" data-lang="en">
+                        R&D Manufacturing Director | Supply Chain Technical Director | Smart Manufacturing Expert
+                    </p>
+                    
+                    <div class="flex flex-wrap gap-3 mb-8">
+                        <span class="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium" data-lang="zh">16年高精智能制造经验</span>
+                        <span class="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium hidden" data-lang="en">16 years of precision smart manufacturing experience</span>
+                        
+                        <span class="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium" data-lang="zh">3C消费电子</span>
+                        <span class="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium hidden" data-lang="en">3C Consumer Electronics</span>
+                        
+                        <span class="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium" data-lang="zh">半导体后道封装</span>
+                        <span class="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium hidden" data-lang="en">Semiconductor Backend Packaging</span>
+                        
+                        <span class="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium" data-lang="zh">智能工厂规划</span>
+                        <span class="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium hidden" data-lang="en">Smart Factory Planning</span>
+                    </div>
+                    
+                    <div class="flex space-x-4">
+                        <a href="#contact" class="bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-lg transition-colors flex items-center gap-2" data-lang="zh">
+                            <i class="fa fa-envelope"></i> 联系我
+                        </a>
+                        <a href="#contact" class="bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-lg transition-colors flex items-center gap-2 hidden" data-lang="en">
+                            <i class="fa fa-envelope"></i> Contact Me
+                        </a>
+                        
+                        <a href="#experience" class="bg-white border border-gray-200 hover:border-primary hover:text-primary px-6 py-3 rounded-lg transition-colors flex items-center gap-2" data-lang="zh">
+                            <i class="fa fa-briefcase"></i> 查看经历
+                        </a>
+                        <a href="#experience" class="bg-white border border-gray-200 hover:border-primary hover:text-primary px-6 py-3 rounded-lg transition-colors flex items-center gap-2 hidden" data-lang="en">
+                            <i class="fa fa-briefcase"></i> View Experience
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <div class="relative">
+                        <div class="w-64 h-64 md:w-80 md:h-80 rounded-full bg-gradient-to-br from-primary to-secondary p-1">
+                            <div class="w-full h-full rounded-full bg-white flex items-center justify-center overflow-hidden">
+                                <img src="https://picsum.photos/id/1005/400/400" alt="徐咏智照片 / Xu Yongzhi Photo" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+                        <div class="absolute -bottom-4 -right-4 bg-white p-3 rounded-lg shadow-lg">
+                            <div class="flex items-center gap-2">
+                                <i class="fa fa-map-marker text-primary text-xl"></i>
+                                <span class="text-gray-600" data-lang="zh">成都 / 深圳</span>
+                                <span class="text-gray-600 hidden" data-lang="en">Chengdu / Shenzhen</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 个人概述 -->
+    <section id="profile" class="py-20 bg-white">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="max-w-3xl mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-gray-700 mb-4" data-lang="zh">个人概述</h2>
+                    <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-gray-700 mb-4 hidden" data-lang="en">Professional Profile</h2>
+                    <div class="w-20 h-1 bg-primary mx-auto"></div>
+                </div>
+                
+                <div class="bg-gray-50 p-8 rounded-xl shadow-sm">
+                    <p class="text-gray-600 mb-6 leading-relaxed" data-lang="zh">
+                        16年高精智能制造专家，深耕3C消费电子（苹果核心供应链）与半导体后道封装领域。兼具消费类产品NPI全流程管控、DFM/MFD工艺优化、智能工厂规划落地及跨国跨职能团队管理经验。
+                    </p>
+                    <p class="text-gray-600 mb-6 leading-relaxed hidden" data-lang="en">
+                        16 years of experience as a precision smart manufacturing expert, specializing in 3C consumer electronics (Apple core supply chain) and semiconductor backend packaging. Experienced in NPI full-process control, DFM/MFD process optimization, smart factory planning and cross-border team management.
+                    </p>
+                    
+                    <div class="grid md:grid-cols-3 gap-6 mt-8">
+                        <div class="bg-white p-6 rounded-lg shadow-sm card-hover">
+                            <div class="text-primary text-3xl mb-4">
+                                <i class="fa fa-cogs"></i>
+                            </div>
+                            <h3 class="font-semibold text-lg mb-2" data-lang="zh">技术统筹</h3>
+                            <h3 class="font-semibold text-lg mb-2 hidden" data-lang="en">Technical Management</h3>
+                            <p class="text-gray-500 text-sm" data-lang="zh">主导50+条高精密自动化产线NPI量产导入，推动2个智能工厂从0到1筹建。</p>
+                            <p class="text-gray-500 text-sm hidden" data-lang="en">Led NPI mass production of 50+ high-precision automated production lines, promoted 2 smart factories from scratch.</p>
+                        </div>
+                        
+                        <div class="bg-white p-6 rounded-lg shadow-sm card-hover">
+                            <div class="text-primary text-3xl mb-4">
+                                <i class="fa fa-line-chart"></i>
+                            </div>
+                            <h3 class="font-semibold text-lg mb-2" data-lang="zh">核心业绩</h3>
+                            <h3 class="font-semibold text-lg mb-2 hidden" data-lang="en">Key Achievements</h3>
+                            <p class="text-gray-500 text-sm" data-lang="zh">通过DFM优化、模块化设计与精益生产，实现OEE提升至85%+、产能提升90%+、良率稳定99.6%+。</p>
+                            <p class="text-gray-500 text-sm hidden" data-lang="en">Through DFM optimization, modular design and lean production, achieved OEE up to 85%+, capacity increased by 90%+, yield stabilized at 99.6%+.</p>
+                        </div>
+                        
+                        <div class="bg-white p-6 rounded-lg shadow-sm card-hover">
+                            <div class="text-primary text-3xl mb-4">
+                                <i class="fa fa-sitemap"></i>
+                            </div>
+                            <h3 class="font-semibold text-lg mb-2" data-lang="zh">战略管理</h3>
+                            <h3 class="font-semibold text-lg mb-2 hidden" data-lang="en">Strategic Management</h3>
+                            <p class="text-gray-500 text-sm" data-lang="zh">擅长协同研发与供应商团队突破制造瓶颈，确保设计与制造无缝衔接。</p>
+                            <p class="text-gray-500 text-sm hidden" data-lang="en">Good at coordinating R&D and supplier teams to break manufacturing bottlenecks, ensuring seamless connection between design and manufacturing.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 核心能力 -->
+    <section id="skills" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-gray-700 mb-4" data-lang="zh">核心能力矩阵</h2>
+                <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-gray-700 mb-4 hidden" data-lang="en">Core Competencies</h2>
+                <div class="w-20 h-1 bg-primary mx-auto"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- 技术专家视点 -->
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden card-hover">
+                    <div class="bg-primary/10 px-6 py-4 border-b border-gray-100">
+                        <h3 class="font-semibold text-xl text-primary flex items-center gap-2" data-lang="zh">
+                            <i class="fa fa-flask"></i> 技术专家视点
+                        </h3>
+                        <h3 class="font-semibold text-xl text-primary flex items-center gap-2 hidden" data-lang="en">
+                            <i class="fa fa-flask"></i> Technical Expertise
+                        </h3>
+                    </div>
+                    <div class="p-6">
+                        <ul class="space-y-4">
+                            <li class="flex items-start gap-3">
+                                <i class="fa fa-check-circle text-secondary mt-1"></i>
+                                <span data-lang="zh">3C / 半导体精密工艺（激光切割、PVD、HAF贴合等）</span>
+                                <span hidden data-lang="en">3C / Semiconductor precision processes (laser cutting, PVD, HAF bonding, etc.)</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa fa-check-circle text-secondary mt-1"></i>
+                                <span data-lang="zh">智能产线全流程架构设计</span>
+                                <span hidden data-lang="en">Smart production line full-process architecture design</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa fa-check-circle text-secondary mt-1"></i>
+                                <span data-lang="zh">设备定位精度1-2μm、运动系统20g+加速度</span>
+                                <span hidden data-lang="en">Equipment positioning accuracy 1-2μm, motion system 20g+ acceleration</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa fa-check-circle text-secondary mt-1"></i>
+                                <span data-lang="zh">DFM/DFMA设计、MFD解决方案开发</span>
+                                <span hidden data-lang="en">DFM/DFMA design, MFD solution development</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa fa-check-circle text-secondary mt-1"></i>
+                                <span data-lang="zh">热学组件装配工艺优化、散热结构DFM分析</span>
+                                <span hidden data-lang="en">Thermal component assembly process optimization, heat dissipation structure DFM analysis</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa fa-check-circle text-secondary mt-1"></i>
+                                <span data-lang="zh">系统装配公差分析（GD&T深化应用）</span>
+                                <span hidden data-lang="en">System assembly tolerance analysis (GD&T advanced application)</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- 项目与运营 -->
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden card-hover">
+                    <div class="bg-primary/10 px-6 py-4 border-b border-gray-100">
+                        <h3 class="font-semibold text-xl text-primary flex items-center gap-2" data-lang="zh">
+                            <i class="fa fa-tasks"></i> 项目与运营
+                        </h3>
+                        <h3 class="font-semibold text-xl text-primary flex items-center gap-2 hidden" data-lang="en">
+                            <i class="fa fa-tasks"></i> Project & Operations
+                        </h3>
+                    </div>
+                    <div class="p-6">
+                        <ul class="space-y-4">
+                            <li class="flex items-start gap-3">
+                                <i class="fa fa-check-circle text-secondary mt-1"></i>
+                                <span data-lang="zh">智能工厂0-1筹建</span>
+                                <span hidden data-lang="en">Smart factory from 0 to 1 establishment</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa fa-check-circle text-secondary mt-1"></i>
+                                <span data-lang="zh">自动化产线规划与量产导入</span>
+                                <span hidden data-lang="en">Automated production line planning and mass production introduction</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa fa-check-circle text-secondary mt-1"></i>
+                                <span data-lang="zh">闭环数据管理系统搭建</span>
+                                <span hidden data-lang="en">Closed-loop data management system construction</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa fa-check-circle text-secondary mt-1"></i>
+                                <span data-lang="zh">OEE / 良率 / 成本优化</span>
+                                <span hidden data-lang="en">OEE / Yield / Cost optimization</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa fa-check-circle text-secondary mt-1"></i>
+                                <span data-lang="zh">KISS原则落地（简化设计与制造流程）</span>
+                                <span hidden data-lang="en">KISS principle implementation (simplify design and manufacturing processes)</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa fa-check-circle text-secondary mt-1"></i>
+                                <span data-lang="zh">SPC数据驱动的良率与成本优化</span>
+                                <span hidden data-lang="en">SPC data-driven yield and cost optimization</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- 团队与领导力 -->
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden card-hover">
+                    <div class="bg-primary/10 px-6 py-4 border-b border-gray-100">
+                        <h3 class="font-semibold text-xl text-primary flex items-center gap-2" data-lang="zh">
+                            <i class="fa fa-users"></i> 团队与领导力
+                        </h3>
+                        <h3 class="font-semibold text-xl text-primary flex items-center gap-2 hidden" data-lang="en">
+                            <i class="fa fa-users"></i> Team & Leadership
+                        </h3>
+                    </div>
+                    <div class="p-6">
+                        <ul class="space-y-4">
+                            <li class="flex items-start gap-3">
+                                <i class="fa fa-check-circle text-secondary mt-1"></i>
+                                <span data-lang="zh">跨国跨职能团队管理（中/新/德）</span>
+                                <span hidden data-lang="en">Cross-border cross-functional team management (CN/SG/DE)</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa fa-check-circle text-secondary mt-1"></i>
+                                <span data-lang="zh">敏捷开发 + Stage-Gate流程推行</span>
+                                <span hidden data-lang="en">Agile development + Stage-Gate process implementation</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa fa-check-circle text-secondary mt-1"></i>
+                                <span data-lang="zh">供应商标准化开发体系构建</span>
+                                <span hidden data-lang="en">Supplier standardized development system construction</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa fa-check-circle text-secondary mt-1"></i>
+                                <span data-lang="zh">精益生产（单线流/模块化）落地</span>
+                                <span hidden data-lang="en">Lean production (single line/modular) implementation</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa fa-check-circle text-secondary mt-1"></i>
+                                <span data-lang="zh">跨文化协同研发与供应商协作</span>
+                                <span hidden data-lang="en">Cross-cultural collaborative R&D and supplier cooperation</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa fa-check-circle text-secondary mt-1"></i>
+                                <span data-lang="zh">组建并领导7+人跨职能团队</span>
+                                <span hidden data-lang="en">Established and led 7+ person cross-functional teams</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 技能图表 -->
+            <div class="mt-16 bg-white p-8 rounded-xl shadow-sm">
+                <h3 class="font-semibold text-xl text-gray-700 mb-6 text-center" data-lang="zh">专业技能熟练度</h3>
+                <h3 class="font-semibold text-xl text-gray-700 mb-6 text-center hidden" data-lang="en">Professional Skill Proficiency</h3>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <canvas id="skillsChart"></canvas>
+                    </div>
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium" data-lang="zh">自动化产线设计</span>
+                                <span class="font-medium hidden" data-lang="en">Automated Line Design</span>
+                                <span>95%</span>
+                            </div>
+                            <div class="progress-bar" style="--progress: 95%"></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium" data-lang="zh">DFM/MFD工艺优化</span>
+                                <span class="font-medium hidden" data-lang="en">DFM/MFD Process Optimization</span>
+                                <span>90%</span>
+                            </div>
+                            <div class="progress-bar" style="--progress: 90%"></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium" data-lang="zh">智能工厂规划</span>
+                                <span class="font-medium hidden" data-lang="en">Smart Factory Planning</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="progress-bar" style="--progress: 85%"></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium" data-lang="zh">跨国团队管理</span>
+                                <span class="font-medium hidden" data-lang="en">Cross-border Team Management</span>
+                                <span>88%</span>
+                            </div>
+                            <div class="progress-bar" style="--progress: 88%"></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium" data-lang="zh">半导体封装工艺</span>
+                                <span class="font-medium hidden" data-lang="en">Semiconductor Packaging</span>
+                                <span>82%</span>
+                            </div>
+                            <div class="progress-bar" style="--progress: 82%"></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium" data-lang="zh">数据分析与优化</span>
+                                <span class="font-medium hidden" data-lang="en">Data Analysis & Optimization</span>
+                                <span>80%</span>
+                            </div>
+                            <div class="progress-bar" style="--progress: 80%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 工作经历 -->
+    <section id="experience" class="py-20 bg-white">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-gray-700 mb-4" data-lang="zh">工作经历</h2>
+                <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-gray-700 mb-4 hidden" data-lang="en">Work Experience</h2>
+                <div class="w-20 h-1 bg-primary mx-auto"></div>
+            </div>
+            
+            <!-- 时间线容器 -->
+            <div class="max-w-4xl mx-auto">
+                <!-- 苹果公司 -->
+                <div class="mb-12 relative">
+                    <div class="flex flex-col md:flex-row gap-6">
+                        <div class="md:w-1/4">
+                            <div class="bg-primary/10 p-4 rounded-lg text-center sticky top-24">
+                                <h3 class="font-bold text-primary text-lg mb-1">Apple Inc.</h3>
+                                <p class="text-gray-500 text-sm">2017.07 - Present</p>
+                                <p class="text-gray-600 mt-2" data-lang="zh">制造设计工程师 / 供应链技术负责人</p>
+                                <p class="text-gray-600 mt-2 hidden" data-lang="en">Manufacturing Design Engineer / Supply Chain Technical Lead</p>
+                                <p class="text-gray-500 text-sm mt-1" data-lang="zh">成都 / 深圳</p>
+                                <p class="text-gray-500 text-sm mt-1 hidden" data-lang="en">Chengdu / Shenzhen</p>
+                            </div>
+                        </div>
+                        
+                        <div class="md:w-3/4">
+                            <div class="bg-gray-50 p-6 rounded-lg mb-6">
+                                <h4 class="font-semibold text-lg mb-3 text-gray-700" data-lang="zh">阶段一：手机 / 手表制造（2019 - 至今）</h4>
+                                <h4 class="font-semibold text-lg mb-3 text-gray-700 hidden" data-lang="en">Phase 1: Mobile / Watch Manufacturing (2019 - Present)</h4>
+                                <ul class="space-y-3 text-gray-600">
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa fa-angle-right text-primary mt-1"></i>
+                                        <span data-lang="zh">主导行业首个光固化低压注塑成型自动化产线开发，遵循KISS原则采用模块化+单线流简化设计，减少冗余工站，设备成本、占地面积及治具用量下降80%+，成功量产导入。</span>
+                                        <span hidden data-lang="en">Led the industry's first automated production line for light-cured low-pressure injection molding, adopted modular + single-line flow design following KISS principle, reduced redundant stations, equipment cost, floor space and fixture usage by 80%+, successfully introduced mass production.</span>
+                                    </li>
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa fa-angle-right text-primary mt-1"></i>
+                                        <span data-lang="zh">牵头框架组装标准化产线研发，集成贴膜、点胶等工艺，实现50μm内组装精度，CT提升76%、产能提升90%，自动化率90%+，良率稳定99.6%+。</span>
+                                        <span hidden data-lang="en">Led the R&D of standardized frame assembly production line, integrated film application, dispensing and other processes, achieved assembly accuracy within 50μm, CT increased by 76%, capacity increased by 90%, automation rate 90%+, yield stabilized at 99.6%+.</span>
+                                    </li>
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa fa-angle-right text-primary mt-1"></i>
+                                        <span data-lang="zh">主导光固化模块设计，通过光学结构优化与散热冷却系统精准匹配，实现光强均匀性与热能平衡控制，保障高效固化效果。</span>
+                                        <span hidden data-lang="en">Led the design of light-curing module, achieved light intensity uniformity and thermal energy balance control through optical structure optimization and precise matching of heat dissipation cooling system, ensuring efficient curing effect.</span>
+                                    </li>
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa fa-angle-right text-primary mt-1"></i>
+                                        <span data-lang="zh">搭建基于SPC逻辑的闭环数据系统，推动设备预测性维护，产能爬坡周期从3-4周缩短至4天，良率从95%提升至99.6%。</span>
+                                        <span hidden data-lang="en">Built a closed-loop data system based on SPC logic, promoted predictive maintenance of equipment, reduced capacity ramp-up cycle from 3-4 weeks to 4 days, increased yield from 95% to 99.6%.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <div class="bg-gray-50 p-6 rounded-lg">
+                                <h4 class="font-semibold text-lg mb-3 text-gray-700" data-lang="zh">阶段二：脆性材料精密工艺与自动化开发（2017 - 2019）</h4>
+                                <h4 class="font-semibold text-lg mb-3 text-gray-700 hidden" data-lang="en">Phase 2: Brittle Material Precision Process & Automation (2017 - 2019)</h4>
+                                <ul class="space-y-3 text-gray-600">
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa fa-angle-right text-primary mt-1"></i>
+                                        <span data-lang="zh">创新研发蓝宝石带油墨镀膜激光切割工艺，通过独特光学结构和工艺流程实现激光成丝切割，精准控制受热断裂油墨区域≤0.1mm；主导搭建全自动化产线，人力节省80%+。</span>
+                                        <span hidden data-lang="en">Innovated and developed laser cutting process for sapphire with ink coating, achieved laser filament cutting through unique optical structure and process flow, precisely controlled heated fracture ink area ≤0.1mm; led the construction of fully automated production line, saved 80%+ manpower.</span>
+                                    </li>
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa fa-angle-right text-primary mt-1"></i>
+                                        <span data-lang="zh">主导2个工厂超百条玻璃盖板产线自动化升级，创新20余种设备，人力节省10%+，生产一致性显著提升。</span>
+                                        <span hidden data-lang="en">Led the automation upgrade of over 100 glass cover production lines in 2 factories, innovated more than 20 kinds of equipment, saved 10%+ manpower, significantly improved production consistency.</span>
+                                    </li>
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa fa-angle-right text-primary mt-1"></i>
+                                        <span data-lang="zh">攻克蓝宝石组装工艺缺陷与产能瓶颈，通过优化热传递结构设计及工艺参数迭代，产能提升20%+，良率稳定至99%以上。</span>
+                                        <span hidden data-lang="en">Overcame sapphire assembly process defects and capacity bottlenecks, increased capacity by 20%+ and stabilized yield above 99% through optimizing heat transfer structure design and process parameter iteration.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 连接线 -->
+                    <div class="hidden md:block absolute left-1/4 top-0 bottom-0 w-0.5 bg-gray-200 -translate-x-1/2"></div>
+                </div>
+                
+                <!-- 成都圭目机器人 -->
+                <div class="mb-12 relative">
+                    <div class="flex flex-col md:flex-row gap-6">
+                        <div class="md:w-1/4">
+                            <div class="bg-gray-100 p-4 rounded-lg text-center sticky top-24">
+                                <h3 class="font-bold text-gray-700 text-lg mb-1" data-lang="zh">成都圭目机器人</h3>
+                                <h3 class="font-bold text-gray-700 text-lg mb-1 hidden" data-lang="en">Chengdu Guimu Robotics</h3>
+                                <p class="text-gray-500 text-sm">2017.02 - 2017.06</p>
+                                <p class="text-gray-600 mt-2" data-lang="zh">研发经理</p>
+                                <p class="text-gray-600 mt-2 hidden" data-lang="en">R&D Manager</p>
+                                <p class="text-gray-500 text-sm mt-1" data-lang="zh">成都</p>
+                                <p class="text-gray-500 text-sm mt-1 hidden" data-lang="en">Chengdu</p>
+                            </div>
+                        </div>
+                        
+                        <div class="md:w-3/4">
+                            <div class="bg-gray-50 p-6 rounded-lg">
+                                <ul class="space-y-3 text-gray-600">
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa fa-angle-right text-primary mt-1"></i>
+                                        <span data-lang="zh">主导道路探伤机器人初代底盘和探伤模块开发，完成上路测试验证，奠定系列化产品技术基础。</span>
+                                        <span hidden data-lang="en">Led the development of the first-generation chassis and flaw detection module of road flaw detection robot, completed road test verification, laid the technical foundation for serialized products.</span>
+                                    </li>
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa fa-angle-right text-primary mt-1"></i>
+                                        <span data-lang="zh">负责集装箱爬壁、道路修补、探雷机器人等复杂系统设计，推动多项核心技术专利申请。</span>
+                                        <span hidden data-lang="en">Responsible for the design of complex systems such as container wall-climbing, road repair, mine detection robots, promoted the application for multiple core technology patents.</span>
+                                    </li>
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa fa-angle-right text-primary mt-1"></i>
+                                        <span data-lang="zh">通过技术展示与客户洽谈，成功获取多个项目立项，实现技术到商业的转化。</span>
+                                        <span hidden data-lang="en">Successfully obtained multiple project approvals through technical demonstrations and customer negotiations, realizing the transformation from technology to business.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 连接线 -->
+                    <div class="hidden md:block absolute left-1/4 top-0 bottom-0 w-0.5 bg-gray-200 -translate-x-1/2"></div>
+                </div>
+                
+                <!-- 先进科技太平洋 -->
+                <div class="mb-12 relative">
+                    <div class="flex flex-col md:flex-row gap-6">
+                        <div class="md:w-1/4">
+                            <div class="bg-gray-100 p-4 rounded-lg text-center sticky top-24">
+                                <h3 class="font-bold text-gray-700 text-lg mb-1">ASMPT Pacific</h3>
+                                <p class="text-gray-500 text-sm">2009.10 - 2017.02</p>
