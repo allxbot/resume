@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>徐咏智 - 个人简历</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                        secondary: '#36CFC9',
+                        dark: '#1D2129',
+                        light: '#F2F3F5',
+                        gray: {
+                            100: '#F7F8FA',
+                            200: '#E5E6EB',
+                            300: '#C9CDD4',
+                            400: '#86909C',
+                            500: '#4E5969',
+                            600: '#272E3B',
+                            700: '#1D2129',
+                        }
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .card-hover {
+                transition: all 0.3s ease;
+            }
+            .card-hover:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            }
+            .progress-bar {
+                height: 8px;
+                background: linear-gradient(90deg, #165DFF var(--progress), #E5E6EB var(--progress));
+                border-radius: 4px;
+            }
+        }
+    </style>
+</head>
+<body class="font-inter bg-gray-100 text-gray-700">
+    <!-- 导航栏 -->
+    <header id="navbar" class="fixed w-full bg-white/90 backdrop-blur-sm shadow-sm z-50 transition-all duration-300">
+        <div class="container mx-auto px-4 md:px-6 py-3">
+            <div class="flex justify-between items-center">
+                <a href="#" class="text-xl font-bold text-primary">徐咏智</a>
+                
+                <!-- 桌面导航 -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#profile" class="text-gray-500 hover:text-primary transition-colors">个人概述</a>
+                    <a href="#skills" class="text-gray-500 hover:text-primary transition-colors">核心能力</a>
+                    <a href="#experience" class="text-gray-500 hover:text-primary transition-colors">工作经历</a>
+                    <a href="#education" class="text-gray-500 hover:text-primary transition-colors">教育背景</a>
+                    <a href="#contact" class="text-gray-500 hover:text-primary transition-colors">联系方式</a>
+                </nav>
+                
+                <!-- 移动端菜单按钮 -->
+                <button id="menuBtn" class="md:hidden text-gray-500 hover:text-primary">
+                    <i class="fa fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- 移动端导航菜单 -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white border-t">
+            <div class="container mx-auto px-4 py-3 flex flex-col space-y-3">
+                <a href="#profile" class="text-gray-500 hover:text-primary py-2 transition-colors">个人概述</a>
+                <a href="#skills" class="text-gray-500 hover:text-primary py-2 transition-colors">核心能力</a>
+                <a href="#experience" class="text-gray-500 hover:text-primary py-2 transition-colors">工作经历</a>
+                <a href="#education" class="text-gray-500 hover:text-primary py-2 transition-colors">教育背景</a>
+                <a href="#contact" class="text-gray-500 hover:text-primary py-2 transition-colors">联系方式</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 英雄区域 -->
+    <section class="pt-32 pb-20 bg-gradient-to-br from-primary/5 to-secondary/5">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-bold text-gray-700 leading-tight mb-4">
+                        徐咏智
+                    </h1>
+                    <p class="text-[clamp(1.1rem,2vw,1.3rem)] text-gray-500 mb-6">
+                        研发制造总监 | 供应链技术总监 | 智能制造设备工艺专家
+                    </p>
+                    <div class="flex flex-wrap gap-3 mb-8">
+                        <span class="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium">16年高精智能制造经验</span>
+                        <span class="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium">3C消费电子</span>
+                        <span class="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium">半导体后道封装</span>
+                        <span class="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium">智能工厂规划</span>
+                    </div>
+                    <div class="flex space-x-4">
+                        <a href="#contact" class="bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-lg transition-colors flex items-center gap-2">
+                            <i class="fa fa-envelope"></i> 联系我
+                        </a>
+                        <a href="#experience" class="bg-white border border-gray-200 hover:border-primary hover:text-primary px-6 py-3 rounded-lg transition-colors flex items-center gap-2">
+                            <i class="fa fa-briefcase"></i> 查看经历
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <div class="relative">
+                        <div class="w-64 h-64 md:w-80 md:h-80 rounded-full bg-gradient-to-br from-primary to-secondary p-1">
+                            <div class="w-full h-full rounded-full bg-white flex items-center justify-center overflow-hidden">
+                                <img src="https://picsum.photos/id/1005/400/400" alt="徐咏智照片" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+                        <div class="absolute -bottom-4 -right-4 bg-white p-3 rounded-lg shadow-lg">
+                            <div class="flex items-center gap-2">
+                                <i class="fa fa-map-marker text-primary text-xl"></i>
+                                <span class="text-gray-600">成都 / 深圳</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 个人概述 -->
+    <section id="profile" class="py-20 bg-white">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="max-w-3xl mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-gray-700 mb-4">个人概述</h2>
+                    <div class="w-20 h-1 bg-primary mx-auto"></div>
+                </div>
+                
+                <div class="bg-gray-50 p-8 rounded-xl shadow-sm">
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        16年高精智能制造专家，深耕3C消费电子（苹果核心供应链）与半导体后道封装领域。兼具消费类产品NPI全流程管控、DFM/MFD工艺优化、智能工厂规划落地及跨国跨职能团队管理经验。
+                    </p>
+                    
+                    <div class="grid md:grid-cols-3 gap-6 mt-8">
+                        <div class="bg-white p-6 rounded-lg shadow-sm card-hover">
+                            <div class="text-primary text-3xl mb-4">
+                                <i class="fa fa-cogs"></i>
+                            </div>
+                            <h3 class="font-semibold text-lg mb-2">技术统筹</h3>
+                            <p class="text-gray-500 text-sm">主导50+条高精密自动化产线NPI量产导入，推动2个智能工厂从0到1筹建。</p>
+                        </div>
+                        
+                        <div class="bg-white p-6 rounded-lg shadow-sm card-hover">
+                            <div class="text-primary text-3xl mb-4">
+                                <i class="fa fa-line-chart"></i>
+                            </div>
+                            <h3 class="font-semibold text-lg mb-2">核心业绩</h3>
+                            <p class="text-gray-500 text-sm">通过DFM优化、模块化设计与精益生产，实现OEE提升至85%+、产能提升90%+、良率稳定99.6%+。</p>
+                        </div>
+                        
+                        <div class="bg-white p-6 rounded-lg shadow-sm card-hover">
+                            <div class="text-primary text-3xl mb-4">
+                                <i class="fa fa-sitemap"></i>
+                            </div>
+                            <h3 class="font-semibold text-lg mb-2">战略管理</h3>
+                            <p class="text-gray-500 text-sm">擅长协同研发与供应商团队突破制造瓶颈，确保设计与制造无缝衔接。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 核心能力 -->
+    <section id="skills" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-gray-700 mb-4">核心能力矩阵</h2>
+                <div class="w-20 h-1 bg-primary mx-auto"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- 技术专家视点 -->
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden card-hover">
+                    <div class="bg-primary/10 px-6 py-4 border-b border-gray-100">
+                        <h3 class="font-semibold text-xl text-primary flex items-center gap-2">
+                            <i class="fa fa-flask"></i> 技术专家视点
+                        </h3>
+                    </div>
+                    <div class="p-6">
+                        <ul class="space-y-4">
+                            <li class="flex items-start gap-3">
+                                <i class="fa fa-check-circle text-secondary mt-1"></i>
+                                <span>3C / 半导体精密工艺（激光切割、PVD、HAF贴合等）</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa fa-check-circle text-secondary mt-1"></i>
+                                <span>智能产线全流程架构设计</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa fa-check-circle text-secondary mt-1"></i>
+                                <span>设备定位精度1-2μm、运动系统20g+加速度</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa fa-check-circle text-secondary mt-1"></i>
+                                <span>DFM/DFMA设计、MFD解决方案开发</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa fa-check-circle text-secondary mt-1"></i>
+                                <span>热学组件装配工艺优化、散热结构DFM分析</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa fa-check-circle text-secondary mt-1"></i>
+                                <span>系统装配公差分析（GD&T深化应用）</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- 项目与运营 -->
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden card-hover">
+                    <div class="bg-primary/10 px-6 py-4 border-b border-gray-100">
+                        <h3 class="font-semibold text-xl text-primary flex items-center gap-2">
+                            <i class="fa fa-tasks"></i> 项目与运营
+                        </h3>
+                    </div>
+                    <div class="p-6">
+                        <ul class="space-y-4">
+                            <li class="flex items-start gap-3">
+                                <i class="fa fa-check-circle text-secondary mt-1"></i>
+                                <span>智能工厂0-1筹建</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa fa-check-circle text-secondary mt-1"></i>
+                                <span>自动化产线规划与量产导入</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa fa-check-circle text-secondary mt-1"></i>
+                                <span>闭环数据管理系统搭建</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa fa-check-circle text-secondary mt-1"></i>
+                                <span>OEE / 良率 / 成本优化</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa fa-check-circle text-secondary mt-1"></i>
+                                <span>KISS原则落地（简化设计与制造流程）</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa fa-check-circle text-secondary mt-1"></i>
+                                <span>SPC数据驱动的良率与成本优化</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- 团队与领导力 -->
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden card-hover">
+                    <div class="bg-primary/10 px-6 py-4 border-b border-gray-100">
+                        <h3 class="font-semibold text-xl text-primary flex items-center gap-2">
+                            <i class="fa fa-users"></i> 团队与领导力
+                        </h3>
+                    </div>
+                    <div class="p-6">
+                        <ul class="space-y-4">
+                            <li class="flex items-start gap-3">
+                                <i class="fa fa-check-circle text-secondary mt-1"></i>
+                                <span>跨国跨职能团队管理（中/新/德）</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa fa-check-circle text-secondary mt-1"></i>
+                                <span>敏捷开发 + Stage-Gate流程推行</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa fa-check-circle text-secondary mt-1"></i>
+                                <span>供应商标准化开发体系构建</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa fa-check-circle text-secondary mt-1"></i>
+                                <span>精益生产（单线流/模块化）落地</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa fa-check-circle text-secondary mt-1"></i>
+                                <span>跨文化协同研发与供应商协作</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa fa-check-circle text-secondary mt-1"></i>
+                                <span>组建并领导7+人跨职能团队</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 技能图表 -->
+            <div class="mt-16 bg-white p-8 rounded-xl shadow-sm">
+                <h3 class="font-semibold text-xl text-gray-700 mb-6 text-center">专业技能熟练度</h3>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <canvas id="skillsChart"></canvas>
+                    </div>
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">自动化产线设计</span>
+                                <span>95%</span>
+                            </div>
+                            <div class="progress-bar" style="--progress: 95%"></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">DFM/MFD工艺优化</span>
+                                <span>90%</span>
+                            </div>
+                            <div class="progress-bar" style="--progress: 90%"></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">智能工厂规划</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="progress-bar" style="--progress: 85%"></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">跨国团队管理</span>
+                                <span>88%</span>
+                            </div>
+                            <div class="progress-bar" style="--progress: 88%"></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">半导体封装工艺</span>
+                                <span>82%</span>
+                            </div>
+                            <div class="progress-bar" style="--progress: 82%"></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">数据分析与优化</span>
+                                <span>80%</span>
+                            </div>
+                            <div class="progress-bar" style="--progress: 80%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 工作经历 -->
+    <section id="experience" class="py-20 bg-white">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-gray-700 mb-4">工作经历</h2>
+                <div class="w-20 h-1 bg-primary mx-auto"></div>
+            </div>
+            
+            <!-- 时间线容器 -->
+            <div class="max-w-4xl mx-auto">
+                <!-- 苹果公司 -->
+                <div class="mb-12 relative">
+                    <div class="flex flex-col md:flex-row gap-6">
+                        <div class="md:w-1/4">
+                            <div class="bg-primary/10 p-4 rounded-lg text-center sticky top-24">
+                                <h3 class="font-bold text-primary text-lg mb-1">苹果公司 (Apple)</h3>
+                                <p class="text-gray-500 text-sm">2017.07 - 至今</p>
+                                <p class="text-gray-600 mt-2">制造设计工程师 / 供应链技术负责人</p>
+                                <p class="text-gray-500 text-sm mt-1">成都 / 深圳</p>
+                            </div>
+                        </div>
+                        
+                        <div class="md:w-3/4">
+                            <div class="bg-gray-50 p-6 rounded-lg mb-6">
+                                <h4 class="font-semibold text-lg mb-3 text-gray-700">阶段一：手机 / 手表制造（2019 - 至今）</h4>
+                                <ul class="space-y-3 text-gray-600">
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa fa-angle-right text-primary mt-1"></i>
+                                        <span>主导行业首个光固化低压注塑成型自动化产线开发，遵循KISS原则采用模块化+单线流简化设计，减少冗余工站，设备成本、占地面积及治具用量下降80%+，成功量产导入。</span>
+                                    </li>
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa fa-angle-right text-primary mt-1"></i>
+                                        <span>牵头框架组装标准化产线研发，集成贴膜、点胶等工艺，实现50μm内组装精度，CT提升76%、产能提升90%，自动化率90%+，良率稳定99.6%+。</span>
+                                    </li>
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa fa-angle-right text-primary mt-1"></i>
+                                        <span>主导光固化模块设计，通过光学结构优化与散热冷却系统精准匹配，实现光强均匀性与热能平衡控制，保障高效固化效果。</span>
+                                    </li>
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa fa-angle-right text-primary mt-1"></i>
+                                        <span>搭建基于SPC逻辑的闭环数据系统，推动设备预测性维护，产能爬坡周期从3-4周缩短至4天，良率从95%提升至99.6%。</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <div class="bg-gray-50 p-6 rounded-lg">
+                                <h4 class="font-semibold text-lg mb-3 text-gray-700">阶段二：脆性材料精密工艺与自动化开发（2017 - 2019）</h4>
+                                <ul class="space-y-3 text-gray-600">
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa fa-angle-right text-primary mt-1"></i>
+                                        <span>创新研发蓝宝石带油墨镀膜激光切割工艺，通过独特光学结构和工艺流程实现激光成丝切割，精准控制受热断裂油墨区域≤0.1mm；主导搭建全自动化产线，人力节省80%+。</span>
+                                    </li>
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa fa-angle-right text-primary mt-1"></i>
+                                        <span>主导2个工厂超百条玻璃盖板产线自动化升级，创新20余种设备，人力节省10%+，生产一致性显著提升。</span>
+                                    </li>
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa fa-angle-right text-primary mt-1"></i>
+                                        <span>攻克蓝宝石组装工艺缺陷与产能瓶颈，通过优化热传递结构设计及工艺参数迭代，产能提升20%+，良率稳定至99%以上。</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 连接线 -->
+                    <div class="hidden md:block absolute left-1/4 top-0 bottom-0 w-0.5 bg-gray-200 -translate-x-1/2"></div>
+                </div>
+                
+                <!-- 成都圭目机器人 -->
+                <div class="mb-12 relative">
+                    <div class="flex flex-col md:flex-row gap-6">
+                        <div class="md:w-1/4">
+                            <div class="bg-gray-100 p-4 rounded-lg text-center sticky top-24">
+                                <h3 class="font-bold text-gray-700 text-lg mb-1">成都圭目机器人</h3>
+                                <p class="text-gray-500 text-sm">2017.02 - 2017.06</p>
+                                <p class="text-gray-600 mt-2">研发经理</p>
+                                <p class="text-gray-500 text-sm mt-1">成都</p>
+                            </div>
+                        </div>
+                        
+                        <div class="md:w-3/4">
+                            <div class="bg-gray-50 p-6 rounded-lg">
+                                <ul class="space-y-3 text-gray-600">
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa fa-angle-right text-primary mt-1"></i>
+                                        <span>主导道路探伤机器人初代底盘和探伤模块开发，完成上路测试验证，奠定系列化产品技术基础。</span>
+                                    </li>
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa fa-angle-right text-primary mt-1"></i>
+                                        <span>负责集装箱爬壁、道路修补、探雷机器人等复杂系统设计，推动多项核心技术专利申请。</span>
+                                    </li>
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa fa-angle-right text-primary mt-1"></i>
+                                        <span>通过技术展示与客户洽谈，成功获取多个项目立项，实现技术到商业的转化。</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 连接线 -->
+                    <div class="hidden md:block absolute left-1/4 top-0 bottom-0 w-0.5 bg-gray-200 -translate-x-1/2"></div>
+                </div>
+                
+                <!-- 先进科技太平洋 -->
+                <div class="mb-12 relative">
+                    <div class="flex flex-col md:flex-row gap-6">
+                        <div class="md:w-1/4">
+                            <div class="bg-gray-100 p-4 rounded-lg text-center sticky top-24">
+                                <h3 class="font-bold text-gray-700 text-lg mb-1">先进科技太平洋 (ASMPT)</h3>
+                                <p class="text-gray-500 text-sm">2009.10 - 2017.02</p>
+                                <p class="text-gray-600 mt-2">机械工程师 / 研发经理</p>
+                                <p class="text-gray-500 text-sm mt-1">成都 / 新加坡</p>
+                            </div>
+                        </div>
+                        
+                        <div class="md:w-3/4">
+                            <div class="bg-gray-50 p-6 rounded-lg mb-6">
+                                <h4 class="font-semibold text-lg mb-3 text-gray-700">阶段一：独立研发项目组（成都，2014 - 2017）</h4>
+                                <ul class="space-y-3 text-gray-600">
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa fa-angle-right text-primary mt-1"></i>
+                                        <span>组建并领导7+人跨职能团队，推行敏捷开发+Stage-Gate流程，关键节点交付率100%。</span>
+                                    </li>
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa fa-angle-right text-primary mt-1"></i>
+                                        <span>支援德/新团队完成SIPLACE E/TX贴片机核心组件开发，实现30μm定位精度、4g加速度性能突破。</span>
+                                    </li>
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa fa-angle-right text-primary mt-1"></i>
+                                        <span>协作开发TCB/Laser Dicing设备对位系统，达成2μm超高对位精度。</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <div class="bg-gray-50 p-6 rounded-lg mb-6">
+                                <h4 class="font-semibold text-lg mb-3 text-gray-700">阶段二：新加坡研发中心（2011 - 2014）</h4>
+                                <ul class="space-y-3 text-gray-600">
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa fa-angle-right text-primary mt-1"></i>
+                                        <span>负责SMT锡膏检测设备机械设计，主导机架及流水线开发，协作完成15μm精度龙门对位系统和光学系统设计。</span>
+                                    </li>
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa fa-angle-right text-primary mt-1"></i>
+                                        <span>主导半导体焊线机自动化光学检测设备开发，为马来西亚客户定制交付。</span>
+                                    </li>
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa fa-angle-right text-primary mt-1"></i>
+                                        <span>协作开发SMT锡膏印刷设备，实现15μm级高精度对位；主导半导体封装微型晶圆曝光设备开发，达成1μm超精密对位。</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <div class="bg-gray-50 p-6 rounded-lg">
+                                <h4 class="font-semibold text-lg mb-3 text-gray-700">阶段三：成都研发中心（2009 - 2011）</h4>
+                                <ul class="space-y-3 text-gray-600">
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa fa-angle-right text-primary mt-1"></i>
+                                        <span>负责CO₂/光纤激光器整机系统设计，攻克热学结构与精密光学装配难点，实现微米级激光打标工艺。</span>
+                                    </li>
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa fa-angle-right text-primary mt-1"></i>
+                                        <span>协作开发40吨/80吨封装注塑压力机，负责底盘结构与铰链设计。</span>
+                                    </li>
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa fa-angle-right text-primary mt-1"></i>
+                                        <span>引入自上而下的结构设计与参数化方法，实现多产品系列设计标准化，提升开发效率。</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 连接线 -->
+                    <div class="hidden md:block absolute left-1/4 top-0 bottom-0 w-0.5 bg-gray-200 -translate-x-1/2"></div>
+                </div>
+                
+                <!-- 成都工具研究所 -->
+                <div class="relative">
+                    <div class="flex flex-col md:flex-row gap-6">
+                        <div class="md:w-1/4">
+                            <div class="bg-gray-100 p-4 rounded-lg text-center sticky top-24">
+                                <h3 class="font-bold text-gray-700 text-lg mb-1">成都工具研究所 (CTRI)</h3>
+                                <p class="text-gray-500 text-sm">2009.07 - 2009.10</p>
+                                <p class="text-gray-600 mt-2">机械工程师</p>
+                                <p class="text-gray-500 text-sm mt-1">成都</p>
+                            </div>
+                        </div>
+                        
+                        <div class="md:w-3/4">
+                            <div class="bg-gray-50 p-6 rounded-lg">
+                                <ul class="space-y-3 text-gray-600">
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa fa-angle-right text-primary mt-1"></i>
+                                        <span>负责定制化特种切削刀具设计，独立完成零件图、装配图及工艺图纸全流程绘制。</span>
+                                    </li>
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa fa-angle-right text-primary mt-1"></i>
+                                        <span>参与从客户需求沟通到生产交付的全流程管理，开发新生产工艺与工装夹具，提升生产效率。</span>
+                                    </li>
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa fa-angle-right text-primary mt-1"></i>
+                                        <span>掌握产品研发至交付的全生命周期管理流程，奠定精密制造领域基础。</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 教育背景和技能 -->
+    <section id="education" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-gray-700 mb-4">教育背景与技能</h2>
+                <div class="w-20 h-1 bg-primary mx-auto"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- 教育背景 -->
+                <div class="bg-white p-8 rounded-xl shadow-sm">
+                    <h3 class="font-semibold text-xl text-gray-700 mb-6 flex items-center gap-2">
+                        <i class="fa fa-graduation-cap text-primary"></i> 教育背景
+                    </h3>
+                    
+                    <div class="border-l-2 border-primary/30 pl-6 pb-2">
+                        <div class="mb-6">
+                            <h4 class="font-medium text-lg text-gray-700">西南科技大学</h4>
+                            <p class="text-gray-500">机械设计制造及其自动化 | 学士</p>
+                            <p class="text-gray-500 text-sm mt-1">绵阳 | 2009年</p>
+                        </div>
+                    </div>
+                    
+                    <h3 class="font-semibold text-xl text-gray-700 mt-10 mb-6 flex items-center gap-2">
+                        <i class="fa fa-heart text-primary"></i> 兴趣爱好
+                    </h3>
+                    
+                    <div class="flex flex-wrap gap-3">
+                        <span class="bg-gray-100 text-gray-600 px-4 py-2 rounded-full text-sm">徒步爬山</span>
+                        <span class="bg-gray-100 text-gray-600 px-4 py-2 rounded-full text-sm">电子机械DIY</span>
+                        <span class="bg-gray-100 text-gray-600 px-4 py-2 rounded-full text-sm">3D打印</span>
+                        <span class="bg-gray-100 text-gray-600 px-4 py-2 rounded-full text-sm">木工雕刻</span>
+                        <span class="bg-gray-100 text-gray-600 px-4 py-2 rounded-full text-sm">装修设计</span>
+                    </div>
+                    <p class="mt-4 text-gray-600 text-sm">爱好动手实践，持续将DIY创新思维融入精密制造工艺优化。</p>
+                </div>
+                
+                <!-- 技能工具 -->
+                <div class="bg-white p-8 rounded-xl shadow-sm">
+                    <h3 class="font-semibold text-xl text-gray-700 mb-6 flex items-center gap-2">
+                        <i class="fa fa-wrench text-primary"></i> 设计工具
+                    </h3>
+                    
+                    <div class="grid grid-cols-2 gap-3 mb-8">
+                        <div class="flex items-center gap-2 bg-gray-50 p-3 rounded-lg">
+                            <i class="fa fa-cube text-primary"></i>
+                            <span>UG NX</span>
+                        </div>
+                        <div class="flex items-center gap-2 bg-gray-50 p-3 rounded-lg">
+                            <i class="fa fa-cube text-primary"></i>
+                            <span>Solid Edge</span>
+                        </div>
+                        <div class="flex items-center gap-2 bg-gray-50 p-3 rounded-lg">
+                            <i class="fa fa-cube text-primary"></i>
+                            <span>SolidWorks</span>
+                        </div>
+                        <div class="flex items-center gap-2 bg-gray-50 p-3 rounded-lg">
+                            <i class="fa fa-file-drawing-o text-primary"></i>
+                            <span>AutoCAD</span>
+                        </div>
+                        <div class="flex items-center gap-2 bg-gray-50 p-3 rounded-lg">
+                            <i class="fa fa-line-chart text-primary"></i>
+                            <span>CAE</span>
+                        </div>
+                        <div class="flex items-center gap-2 bg-gray-50 p-3 rounded-lg">
+                            <i class="fa fa-sitemap text-primary"></i>
+                            <span>E-Plan</span>
+                        </div>
+                        <div class="flex items-center gap-2 bg-gray-50 p-3 rounded-lg">
+                            <i class="fa fa-calculator text-primary"></i>
+                            <span>GD&T standard</span>
+                        </div>
+                    </div>
+                    
+                    <h3 class="font-semibold text-xl text-gray-700 mb-6 flex items-center gap-2">
+                        <i class="fa fa-tasks text-primary"></i> 项目与数据工具
+                    </h3>
+                    
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="flex items-center gap-2 bg-gray-50 p-3 rounded-lg">
+                            <i class="fa fa-database text-primary"></i>
+                            <span>Agile PLM</span>
+                        </div>
+                        <div class="flex items-center gap-2 bg-gray-50 p-3 rounded-lg">
+                            <i class="fa fa-share-alt text-primary"></i>
+                            <span>SharePoint</span>
+                        </div>
+                        <div class="flex items-center gap-2 bg-gray-50 p-3 rounded-lg">
+                            <i class="fa fa-file-excel-o text-primary"></i>
+                            <span>Office</span>
+                        </div>
+                        <div class="flex items-center gap-2 bg-gray-50 p-3 rounded-lg">
+                            <i class="fa fa-bar-chart text-primary"></i>
+                            <span>JMP</span>
+                        </div>
+                        <div class="flex items-center gap-2 bg-gray-50 p-3 rounded-lg">
+                            <i class="fa fa-pie-chart text-primary"></i>
+                            <span>Tableau</span>
+                        </div>
+                        <div class="flex items-center gap-2 bg-gray-50 p-3 rounded-lg">
+                            <i class="fa fa-code text-primary"></i>
+                            <span>Python</span>
+                        </div>
+                        <div class="flex items-center gap-2 bg-gray-50 p-3 rounded-lg">
+                            <i class="fa fa-html5 text-primary"></i>
+                            <span>HTML</span>
+                        </div>
+                        <div class="flex items-center gap-2 bg-gray-50 p-3 rounded-lg">
+                            <i class="fa fa-line-chart text-primary"></i>
+                            <span>SPC</span>
+                        </div>
+                        <div class="flex items-center gap-2 bg-gray-50 p-3 rounded-lg">
+                            <i class="fa fa-shield text-primary"></i>
+                            <span>NUDD</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系方式 -->
+    <section id="contact" class="py-20 bg-white">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-gray-700 mb-4">联系方式</h2>
+                <div class="w-20 h-1 bg-primary mx-auto"></div>
+            </div>
+            
+            <div class="max-w-3xl mx-auto bg-gray-50 p-8 rounded-xl shadow-sm">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="font-semibold text-xl text-gray-700 mb-6">联系信息</h3>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-start gap-4">
+                                <div class="bg-primary/10 p-3 rounded-full text-primary">
+                                    <i class="fa fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-700">邮箱</h4>
+                                    <p class="text-gray-500">xuyongzhi@antmy.com</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start gap-4">
+                                <div class="bg-primary/10 p-3 rounded-full text-primary">
+                                    <i class="fa fa-map-marker"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-700">所在地</h4>
+                                    <p class="text-gray-500">成都 / 深圳</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start gap-4">
+                                <div class="bg-primary/10 p-3 rounded-full text-primary">
+                                    <i class="fa fa-briefcase"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-700">求职意向</h4>
+                                    <p class="text-gray-500">研发制造总监 | 供应链技术总监</p>
+                                    <p class="text-gray-500">智能制造设备工艺专家 | 消费电子 NPI 负责人</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="font-semibold text-xl text-gray-700 mb-6">发送消息</h3>
+                        
+                        <form class="space-y-4">
+                            <div>
+                                <label for="name" class="block text-gray-600 mb-2 text-sm">您的姓名</label>
+                                <input type="text" id="name" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors" placeholder="请输入您的姓名">
+                            </div>
+                            
+                            <div>
+                                <label for="email" class="block text-gray-600 mb-2 text-sm">您的邮箱</label>
+                                <input type="email" id="email" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors" placeholder="请输入您的邮箱">
+                            </div>
+                            
+                            <div>
+                                <label for="message" class="block text-gray-600 mb-2 text-sm">消息内容</label>
+                                <textarea id="message" rows="4" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors" placeholder="请输入您想传达的消息"></textarea>
+                            </div>
+                            
+                            <button type="submit" class="w-full bg-primary hover:bg-primary/90 text-white py-3 rounded-lg transition-colors flex items-center justify-center gap-2">
+                                <i class="fa fa-paper-plane"></i> 发送消息
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-gray-700 text-white py-10">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="text-center">
+                <h3 class="text-xl font-bold mb-4">徐咏智</h3>
+                <p class="text-gray-300 mb-6">高精智能制造专家 | 16年行业经验</p>
+                
+                <div class="flex justify-center space-x-4 mb-6">
+                    <a href="#" class="bg-gray-600 hover:bg-primary w-10 h-10 rounded-full flex items-center justify-center transition-colors">
+                        <i class="fa fa-linkedin"></i>
+                    </a>
+                    <a href="#" class="bg-gray-600 hover:bg-primary w-10 h-10 rounded-full flex items-center justify-center transition-colors">
+                        <i class="fa fa-github"></i>
+                    </a>
+                    <a href="#" class="bg-gray-600 hover:bg-primary w-10 h-10 rounded-full flex items-center justify-center transition-colors">
+                        <i class="fa fa-envelope"></i>
+                    </a>
+                </div>
+                
+                <p class="text-gray-400 text-sm">© 2023 徐咏智 - 个人简历. 保留所有权利.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 返回顶部按钮 -->
+    <button id="backToTop" class="fixed bottom-6 right-6 bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg opacity-0 invisible transition-all duration-300">
+        <i class="fa fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // 移动端菜单切换
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                // 关闭移动端菜单
+                mobileMenu.classList.add('hidden');
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // 导航栏滚动效果
+        const navbar = document.getElementById('navbar');
+        const backToTop = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                navbar.classList.add('py-2', 'shadow');
+                navbar.classList.remove('py-3');
+                
+                backToTop.classList.remove('opacity-0', 'invisible');
+                backToTop.classList.add('opacity-100', 'visible');
+            } else {
+                navbar.classList.add('py-3');
+                navbar.classList.remove('py-2', 'shadow');
+                
+                backToTop.classList.add('opacity-0', 'invisible');
+                backToTop.classList.remove('opacity-100', 'visible');
+            }
+        });
+        
+        // 返回顶部按钮
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // 技能图表
+        const ctx = document.getElementById('skillsChart').getContext('2d');
+        const skillsChart = new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: [
+                    '自动化产线设计',
+                    'DFM/MFD工艺优化',
+                    '智能工厂规划',
+                    '跨国团队管理',
+                    '半导体封装工艺',
+                    '数据分析与优化'
+                ],
+                datasets: [{
+                    label: '技能熟练度',
+                    data: [95, 90, 85, 88, 82, 80],
+                    backgroundColor: 'rgba(22, 93, 255, 0.2)',
+                    borderColor: 'rgba(22, 93, 255, 1)',
+                    pointBackgroundColor: 'rgba(22, 93, 255, 1)',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'rgba(22, 93, 255, 1)'
+                }]
+            },
+            options: {
+                scales: {
+                    r: {
+                        angleLines: {
+                            display: true
+                        },
+                        suggestedMin: 50,
+                        suggestedMax: 100
+                    }
+                }
+            }
+        });
+        
+        // 页面加载动画
+        document.addEventListener('DOMContentLoaded', () => {
+            document.body.classList.add('opacity-100');
+            document.body.classList.remove('opacity-0');
+        });
+    </script>
+</body>
+</html>
