@@ -37,52 +37,63 @@
             }
         }
     </script>
-    
+
 <style type="text/tailwindcss">
         @layer utilities {
             .card-hover { transition: all 0.3s ease; }
             .card-hover:hover { transform: translateY(-5px); box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); }
-            .progress-bar { height: 8px; background: linear-gradient(90deg, #165DFF var(--progress), #E5E6EB var(--progress)); border-radius: 4px; }
         }
 
         /* 网页模式下隐藏打印容器 */
-        #print-resume-container { display: none; }
+        #print-resume-content { display: none; }
 
-        /* 打印模式样式 */
+        /* 打印模式：强制显示打印容器，隐藏所有网页 UI */
         @media print {
-            @page { size: A4; margin: 1.5cm; }
-            
-            /* 隐藏网页所有交互 UI */
+            @page { size: A4; margin: 1cm 1.5cm; }
             header, footer, section, #backToTop, .no-print { display: none !important; }
             
-            /* 显示并格式化打印容器 */
-            #print-resume-container { 
+            #print-resume-content { 
                 display: block !important; 
                 background: white; 
                 color: black;
-                font-family: "SimSun", "STSong", serif;
+                font-family: "SimSun", "STSong", "Inter", serif;
                 line-height: 1.5;
             }
-
-            .print-section { page-break-after: always; }
-            .print-section:last-child { page-break-after: auto; }
-
-            h2 { font-size: 18pt; font-weight: bold; border-bottom: 1.5pt solid #333; margin: 15pt 0 10pt; padding-bottom: 3pt; }
+            .page-break { page-break-before: always; }
+            h1 { font-size: 24pt; font-weight: bold; text-align: center; margin-bottom: 5pt; }
+            h2 { font-size: 16pt; font-weight: bold; border-bottom: 1pt solid #000; margin: 15pt 0 8pt; padding-bottom: 2pt; }
             h3 { font-size: 13pt; font-weight: bold; margin: 12pt 0 5pt; }
             p, li { font-size: 10.5pt; margin-bottom: 4pt; text-align: justify; }
-            ul { list-style-type: disc; margin-left: 18pt; }
+            ul { list-style-type: disc; margin-left: 20pt; }
             hr { border: none; border-top: 0.5pt solid #ccc; margin: 10pt 0; }
-            
             table { width: 100%; border-collapse: collapse; margin: 10pt 0; }
-            table, th, td { border: 0.5pt solid #333; }
-            th, td { padding: 6pt; font-size: 9.5pt; vertical-align: top; }
-            th { background-color: #f2f2f2; font-bold: true; }
-            
-            .contact-header { text-align: center; margin-bottom: 20pt; }
-            .contact-header h1 { font-size: 24pt; font-weight: bold; margin-bottom: 5pt; }
-            .contact-header p { text-align: center; font-size: 10pt; }
+            th, td { border: 0.5pt solid #000; padding: 6pt; font-size: 9.5pt; vertical-align: top; text-align: left; }
+            th { background-color: #f2f2f2; font-weight: bold; width: 22%; }
         }
     </style>
+</head>
+<body class="font-inter bg-gray-100 text-gray-700">
+
+    <header class="fixed w-full bg-white/90 backdrop-blur-sm shadow-sm z-50 transition-all no-print">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <a href="#" class="text-xl font-bold text-[#165DFF]">徐咏智 / Xu Yongzhi</a>
+            <button onclick="window.print()" class="bg-[#165DFF] text-white px-5 py-2 rounded-lg hover:bg-opacity-90 transition-all flex items-center gap-2">
+                <i class="fa fa-print"></i> 打印完整简历 (Markdown版)
+            </button>
+        </div>
+    </header>
+
+    <section class="pt-32 pb-20 bg-gradient-to-br from-primary/5 to-secondary/5 no-print">
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-4xl font-bold text-gray-800 mb-4">16年高精智能制造专家</h1>
+            <p class="text-xl text-gray-500 max-w-2xl mx-auto">深耕 3C 消费电子与半导体后道封装，兼具 NPI 管理与智能工厂规划经验。</p>
+            <div class="mt-8 flex justify-center gap-4">
+                <button onclick="window.print()" class="bg-white border border-gray-200 px-6 py-3 rounded-lg hover:border-[#165DFF] hover:text-[#165DFF] transition-all">预览打印效果</button>
+            </div>
+        </div>
+    </section>
+
+    
 </head>
 <body class="font-inter bg-gray-100 text-gray-700">
     <header id="navbar" class="fixed w-full bg-white/90 backdrop-blur-sm shadow-sm z-50 transition-all duration-300 print:hidden">
