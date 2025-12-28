@@ -3,340 +3,228 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>高级简历编辑器</title>
+    <title>GitHub 简历后台管理</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <style>
-        .icon-select option { font-family: 'FontAwesome', sans-serif; }
-    </style>
 </head>
-<body class="bg-gray-100 font-sans pb-20">
-    <div class="fixed top-0 w-full bg-white shadow z-50 px-6 py-3 flex justify-between items-center">
-        <h1 class="font-bold text-gray-800">简历后台 (动态版)</h1>
-        <div class="flex gap-2">
-            <select id="langSelect" class="border rounded px-2 py-1 text-sm bg-gray-50" onchange="switchLang()">
-                <option value="zh">中文 (ZH)</option>
-                <option value="en">English (EN)</option>
-            </select>
-            <button onclick="saveToGitHub()" class="bg-green-600 text-white px-4 py-1 rounded text-sm hover:bg-green-700">提交到 GitHub</button>
+<body class="bg-gray-100 font-sans">
+    <div class="fixed top-0 left-0 w-full bg-white shadow-sm z-50 px-6 py-4">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+            <h1 class="text-xl font-bold text-gray-800">简历后台 (GitHub Pages 版)</h1>
+            <div class="flex gap-2">
+                <a href="./index.html" target="_blank" class="text-blue-600 hover:underline flex items-center text-sm">
+                    预览页面 <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                </a>
+                <button onclick="saveToGitHub()" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg transition-colors flex items-center gap-2 text-sm">
+                    <span id="saveIcon">☁️</span> 提交更新到 GitHub
+                </button>
+            </div>
         </div>
+        
+        <div class="mt-4 p-4 bg-gray-50 border border-gray-200 rounded text-sm grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+                <label class="block text-gray-500 mb-1">GitHub 用户名</label>
+                <input type="text" id="gh_owner" placeholder="例如: xuyongzhi" class="w-full border p-2 rounded">
+            </div>
+            <div>
+                <label class="block text-gray-500 mb-1">仓库名称</label>
+                <input type="text" id="gh_repo" placeholder="例如: resume" class="w-full border p-2 rounded">
+            </div>
+            <div>
+                <label class="block text-gray-500 mb-1">Personal Access Token (PAT)</label>
+                <input type="password" id="gh_token" placeholder="ghp_xxxx..." class="w-full border p-2 rounded">
+            </div>
+        </div>
+        <div class="mt-2 text-xs text-red-500 text-center">* 为了安全，Token 仅保存在您的浏览器缓存中，不会发送给第三方。请确保 Token 勾选了 'repo' 权限。</div>
     </div>
 
-    <div class="container mx-auto mt-20 px-4 max-w-4xl">
-        <details class="bg-white border rounded mb-6 p-4">
-            <summary class="font-medium cursor-pointer text-gray-700">GitHub 配置 (点击展开)</summary>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-                <input type="text" id="gh_owner" placeholder="用户名" class="border p-2 rounded text-sm">
-                <input type="text" id="gh_repo" placeholder="仓库名" class="border p-2 rounded text-sm">
-                <input type="password" id="gh_token" placeholder="GitHub Token" class="border p-2 rounded text-sm">
+    <div class="container mx-auto mt-64 px-4 pb-20 max-w-5xl">
+        <div id="statusMsg" class="text-center mb-4 text-gray-600 font-medium"></div>
+        <div id="editor-container" class="space-y-6">
+            <div class="text-center py-10 text-gray-500">
+                <button onclick="loadData()" class="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 transition-colors">
+                    点击加载数据
+                </button>
             </div>
-            <button onclick="loadData()" class="mt-3 bg-blue-500 text-white px-4 py-2 rounded text-sm w-full">加载数据</button>
-            <p id="statusMsg" class="text-center text-xs mt-2 text-gray-500"></p>
-        </details>
-
-        <div id="editor-area" class="space-y-8 hidden">
-            
-            <div class="bg-white p-6 rounded shadow">
-                <h3 class="text-lg font-bold mb-4 border-b pb-2">基础信息 (Basics)</h3>
-                <div id="basics-form" class="grid gap-4"></div>
-            </div>
-
-            <div class="bg-white p-6 rounded shadow">
-                <div class="flex justify-between items-center mb-4 border-b pb-2">
-                    <h3 class="text-lg font-bold">个人概述卡片 (Profile)</h3>
-                    <button onclick="addItem('profile_cards')" class="text-blue-600 text-sm">+ 添加卡片</button>
-                </div>
-                <div id="profile_cards-list" class="space-y-4"></div>
-            </div>
-
-            <div class="bg-white p-6 rounded shadow">
-                <div class="flex justify-between items-center mb-4 border-b pb-2">
-                    <h3 class="text-lg font-bold">核心能力矩阵 (Skills Matrix)</h3>
-                    <button onclick="addItem('skills_matrix')" class="text-blue-600 text-sm">+ 添加分类列</button>
-                </div>
-                <div id="skills_matrix-list" class="space-y-4"></div>
-            </div>
-
-            <div class="bg-white p-6 rounded shadow">
-                <div class="flex justify-between items-center mb-4 border-b pb-2">
-                    <h3 class="text-lg font-bold">工作经历 (Experience)</h3>
-                    <button onclick="addItem('experience')" class="text-blue-600 text-sm">+ 添加经历</button>
-                </div>
-                <div id="experience-list" class="space-y-6"></div>
-            </div>
-
-            <div class="bg-white p-6 rounded shadow">
-                <div class="flex justify-between items-center mb-4 border-b pb-2">
-                    <h3 class="text-lg font-bold">技能图表 (Chart)</h3>
-                    <button onclick="addItem('chart_data')" class="text-blue-600 text-sm">+ 添加维度</button>
-                </div>
-                <div id="chart_data-list" class="space-y-2"></div>
-            </div>
-
         </div>
     </div>
 
     <script>
         let fullData = {};
-        let currentData = {}; // 当前语言的数据引用
-        let sha = "";
-        
-        // 常用图标列表
-        const icons = [
-            "fa-cogs", "fa-line-chart", "fa-sitemap", "fa-flask", "fa-tasks", "fa-users", 
-            "fa-code", "fa-database", "fa-cloud", "fa-wrench", "fa-leaf", "fa-lightbulb-o",
-            "fa-graduation-cap", "fa-briefcase", "fa-globe", "fa-rocket"
-        ];
+        let sha = ""; // GitHub API 更新文件需要提供文件的 SHA 指纹
 
+        // 页面加载时恢复配置
         document.addEventListener('DOMContentLoaded', () => {
-            const stored = ['gh_owner', 'gh_repo', 'gh_token'];
-            stored.forEach(k => document.getElementById(k).value = localStorage.getItem(k) || '');
+            document.getElementById('gh_owner').value = localStorage.getItem('gh_owner') || '';
+            document.getElementById('gh_repo').value = localStorage.getItem('gh_repo') || '';
+            document.getElementById('gh_token').value = localStorage.getItem('gh_token') || '';
         });
 
+        // 1. 加载数据 (优先尝试 GitHub API 获取最新 SHA，失败则加载本地 JSON)
         async function loadData() {
-            const [owner, repo, token] = ['gh_owner', 'gh_repo', 'gh_token'].map(id => document.getElementById(id).value);
+            const owner = document.getElementById('gh_owner').value;
+            const repo = document.getElementById('gh_repo').value;
+            const token = document.getElementById('gh_token').value;
+
+            // 保存配置到本地
             localStorage.setItem('gh_owner', owner);
             localStorage.setItem('gh_repo', repo);
             localStorage.setItem('gh_token', token);
 
-            const msg = document.getElementById('statusMsg');
-            msg.innerText = "加载中...";
+            const status = document.getElementById('statusMsg');
+            status.textContent = "正在读取数据...";
+            status.className = "text-center mb-4 text-blue-600 font-medium";
 
-            try {
-                // 尝试 API 加载
-                if(token) {
-                    const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/data.json`, {
-                        headers: { Authorization: `token ${token}`, 'Cache-Control': 'no-cache' }
+            // 如果配置了 Token，尝试从 API 获取以拿到 SHA
+            if (owner && repo && token) {
+                const url = `https://api.github.com/repos/${owner}/${repo}/contents/data.json`;
+                try {
+                    const response = await fetch(url, { 
+                        headers: { 'Authorization': `token ${token}` },
+                        cache: 'no-store' 
                     });
-                    if(!res.ok) throw new Error("API Error");
-                    const json = await res.json();
-                    sha = json.sha;
-                    fullData = JSON.parse(decodeURIComponent(escape(window.atob(json.content.replace(/\n/g, "")))));
-                    msg.innerText = "API 数据加载成功";
-                    msg.className = "text-center text-xs mt-2 text-green-600";
-                } else {
-                    // 本地回退
-                    const res = await fetch('./data.json');
-                    fullData = await res.json();
-                    msg.innerText = "本地数据加载 (无法保存)";
+                    
+                    if (!response.ok) throw new Error('GitHub API 请求失败: ' + response.status);
+                    
+                    const data = await response.json();
+                    sha = data.sha; 
+                    
+                    // 解码 Base64 (支持中文 UTF-8)
+                    const content = decodeURIComponent(escape(window.atob(data.content.replace(/\n/g, ""))));
+                    fullData = JSON.parse(content);
+                    
+                    renderEditor();
+                    status.textContent = "已加载 GitHub 最新数据 (Ready to Edit)";
+                    status.className = "text-center mb-4 text-green-600 font-medium";
+                    return;
+                } catch (e) {
+                    console.warn("API 加载失败，尝试本地加载", e);
                 }
-                
-                document.getElementById('editor-area').classList.remove('hidden');
-                switchLang();
-            } catch(e) {
-                msg.innerText = "加载失败: " + e.message;
-                msg.className = "text-center text-xs mt-2 text-red-600";
             }
-        }
 
-        function switchLang() {
-            const lang = document.getElementById('langSelect').value;
-            currentData = fullData[lang];
-            renderEditors();
-        }
-
-        // --- 核心渲染逻辑 ---
-
-        function renderEditors() {
-            renderBasics();
-            renderList('profile_cards', renderProfileCardItem);
-            renderList('skills_matrix', renderSkillMatrixItem);
-            renderList('experience', renderExperienceItem);
-            renderList('chart_data', renderChartItem);
-        }
-
-        function renderBasics() {
-            const container = document.getElementById('basics-form');
-            container.innerHTML = '';
-            const fields = [
-                {k: 'name', l: '姓名'}, {k: 'titles', l: '头衔 (用 | 分隔)'}, 
-                {k: 'email', l: '邮箱'}, {k: 'location', l: '地址'},
-                {k: 'summary', l: '个人简介', type: 'textarea'}
-            ];
-            
-            fields.forEach(f => {
-                const val = currentData.basics[f.k] || '';
-                const html = f.type === 'textarea' 
-                    ? `<textarea class="w-full border p-2 rounded text-sm" rows="3" onchange="updateBasic('${f.k}', this.value)">${val}</textarea>`
-                    : `<input type="text" class="w-full border p-2 rounded text-sm" value="${val}" onchange="updateBasic('${f.k}', this.value)">`;
-                
-                container.innerHTML += `<div><label class="text-xs text-gray-500 font-bold">${f.l}</label>${html}</div>`;
-            });
-        }
-
-        function updateBasic(key, val) { currentData.basics[key] = val; }
-
-        // --- 通用列表渲染器 ---
-        function renderList(key, itemRenderer) {
-            const list = currentData[key] || [];
-            const container = document.getElementById(`${key}-list`);
-            container.innerHTML = '';
-            list.forEach((item, index) => {
-                const div = document.createElement('div');
-                div.className = "border border-gray-200 p-4 rounded bg-gray-50 relative group";
-                // 删除按钮
-                div.innerHTML = `<button onclick="removeItem('${key}', ${index})" class="absolute top-2 right-2 text-red-400 hover:text-red-600 text-xs">删除</button>`;
-                // 内容
-                div.appendChild(itemRenderer(item, index));
-                container.appendChild(div);
-            });
-        }
-
-        // --- 具体 Item 渲染器 ---
-
-        function createIconSelect(currentIcon, onChangeCode) {
-            let opts = icons.map(i => `<option value="${i}" ${i===currentIcon?'selected':''}>${i.replace('fa-','')}</option>`).join('');
-            return `<div class="flex items-center gap-2">
-                <i class="fa ${currentIcon} text-xl w-6"></i>
-                <select class="border p-1 rounded text-xs w-full" onchange="${onChangeCode}">${opts}</select>
-            </div>`;
-        }
-
-        function renderProfileCardItem(item, idx) {
-            const wrapper = document.createElement('div');
-            wrapper.className = "grid gap-2";
-            wrapper.innerHTML = `
-                <div class="flex gap-2">
-                    <div class="w-1/4">${createIconSelect(item.icon, `updateArrayItem('profile_cards', ${idx}, 'icon', this.value)`)}</div>
-                    <input class="w-3/4 border p-2 rounded text-sm" value="${item.title}" placeholder="标题" onchange="updateArrayItem('profile_cards', ${idx}, 'title', this.value)">
-                </div>
-                <textarea class="w-full border p-2 rounded text-sm" rows="2" placeholder="描述" onchange="updateArrayItem('profile_cards', ${idx}, 'desc', this.value)">${item.desc}</textarea>
-            `;
-            return wrapper;
-        }
-
-        function renderSkillMatrixItem(item, idx) {
-            const wrapper = document.createElement('div');
-            wrapper.className = "grid gap-2";
-            wrapper.innerHTML = `
-                <div class="flex gap-2 mb-2">
-                     <div class="w-1/4">${createIconSelect(item.icon, `updateArrayItem('skills_matrix', ${idx}, 'icon', this.value)`)}</div>
-                     <input class="w-3/4 border p-2 rounded text-sm font-bold" value="${item.title}" placeholder="分类标题" onchange="updateArrayItem('skills_matrix', ${idx}, 'title', this.value)">
-                </div>
-                <div>
-                    <label class="text-xs text-gray-500">技能点 (每行一个)</label>
-                    <textarea class="w-full border p-2 rounded text-sm" rows="4" onchange="updateArrayList('skills_matrix', ${idx}, 'items', this.value)">${item.items.join('\n')}</textarea>
-                </div>
-            `;
-            return wrapper;
-        }
-
-        function renderChartItem(item, idx) {
-            const wrapper = document.createElement('div');
-            wrapper.className = "flex gap-2 items-center";
-            wrapper.innerHTML = `
-                <input class="w-2/3 border p-2 rounded text-sm" value="${item.label}" placeholder="技能名" onchange="updateArrayItem('chart_data', ${idx}, 'label', this.value)">
-                <input class="w-1/3 border p-2 rounded text-sm" type="number" value="${item.value}" placeholder="%" onchange="updateArrayItem('chart_data', ${idx}, 'value', this.value)">
-            `;
-            return wrapper;
-        }
-
-        function renderExperienceItem(item, idx) {
-            const wrapper = document.createElement('div');
-            wrapper.innerHTML = `
-                <div class="grid grid-cols-2 gap-2 mb-2">
-                    <input class="border p-2 rounded text-sm font-bold" value="${item.company}" placeholder="公司" onchange="updateArrayItem('experience', ${idx}, 'company', this.value)">
-                    <input class="border p-2 rounded text-sm" value="${item.role}" placeholder="职位" onchange="updateArrayItem('experience', ${idx}, 'role', this.value)">
-                    <input class="border p-2 rounded text-sm text-gray-500" value="${item.date}" placeholder="时间" onchange="updateArrayItem('experience', ${idx}, 'date', this.value)">
-                    <input class="border p-2 rounded text-sm text-gray-500" value="${item.location}" placeholder="地点" onchange="updateArrayItem('experience', ${idx}, 'location', this.value)">
-                </div>
-                <div class="bg-white border p-3 rounded mt-2">
-                    <div class="flex justify-between mb-2">
-                        <label class="text-xs font-bold text-gray-500">项目/阶段 (Phases)</label>
-                        <button onclick="addPhase(${idx})" class="text-xs text-blue-500">+ 添加阶段</button>
-                    </div>
-                    <div id="exp-${idx}-phases" class="space-y-3">
-                        ${item.phases.map((p, pIdx) => `
-                            <div class="border-l-2 border-blue-200 pl-3 relative">
-                                <button onclick="removePhase(${idx}, ${pIdx})" class="absolute top-0 right-0 text-red-400 text-xs">x</button>
-                                <input class="w-full border-b p-1 text-sm font-medium mb-1" value="${p.title}" placeholder="阶段标题" onchange="updatePhase(${idx}, ${pIdx}, 'title', this.value)">
-                                <textarea class="w-full border p-1 rounded text-xs bg-gray-50" rows="3" placeholder="详情(每行一条)" onchange="updatePhaseList(${idx}, ${pIdx}, this.value)">${p.items.join('\n')}</textarea>
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-            `;
-            return wrapper;
-        }
-
-        // --- 数据更新工具函数 ---
-
-        function addItem(key) {
-            // 定义新对象的模板
-            const templates = {
-                'profile_cards': { title: "新标题", icon: "fa-cogs", desc: "描述..." },
-                'skills_matrix': { title: "新分类", icon: "fa-code", items: ["技能1", "技能2"] },
-                'chart_data': { label: "新技能", value: 50 },
-                'experience': { company: "新公司", role: "职位", date: "时间", location: "地点", phases: [] }
-            };
-            currentData[key].push(templates[key]);
-            renderEditors(); // 重新渲染
-        }
-
-        function removeItem(key, idx) {
-            if(confirm('确定删除吗？')) {
-                currentData[key].splice(idx, 1);
-                renderEditors();
-            }
-        }
-
-        // 更新简单属性
-        function updateArrayItem(key, idx, field, val) {
-            currentData[key][idx][field] = val;
-            // 如果是图标改变，重新渲染该部分以更新预览（可选，这里简化不重绘整个列表）
-            if(field === 'icon') {
-                const iconI = document.querySelector(`#${key}-list > div:nth-child(${idx+1}) i`);
-                if(iconI) iconI.className = `fa ${val} text-xl w-6`;
-            }
-        }
-
-        // 更新列表属性 (Textarea split by newline)
-        function updateArrayList(key, idx, field, val) {
-            // 过滤空行
-            currentData[key][idx][field] = val.split('\n').filter(line => line.trim() !== '');
-        }
-
-        // 经历 - 阶段特殊处理
-        function addPhase(expIdx) {
-            currentData.experience[expIdx].phases.push({ title: "新项目/阶段", items: [] });
-            renderEditors();
-        }
-        function removePhase(expIdx, pIdx) {
-            currentData.experience[expIdx].phases.splice(pIdx, 1);
-            renderEditors();
-        }
-        function updatePhase(expIdx, pIdx, field, val) {
-            currentData.experience[expIdx].phases[pIdx][field] = val;
-        }
-        function updatePhaseList(expIdx, pIdx, val) {
-            currentData.experience[expIdx].phases[pIdx].items = val.split('\n').filter(l => l.trim());
-        }
-
-        // --- 保存 ---
-        async function saveToGitHub() {
-            const [owner, repo, token] = ['gh_owner', 'gh_repo', 'gh_token'].map(id => document.getElementById(id).value);
-            if(!sha) return alert('请先加载数据！');
-            
-            const btn = document.querySelector('button[onclick="saveToGitHub()"]');
-            btn.innerText = "提交中...";
-            
-            // 编码
-            const content = window.btoa(unescape(encodeURIComponent(JSON.stringify(fullData, null, 2))));
-            
+            // 降级方案：直接读取本地文件 (仅供预览，无法保存回 GitHub，因为没有 SHA)
             try {
-                const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/data.json`, {
+                const localRes = await fetch('./data.json');
+                fullData = await localRes.json();
+                renderEditor();
+                status.textContent = "注意：当前加载的是静态缓存数据 (未连接 GitHub API)，无法保存修改。请检查上方的 Token 配置。";
+                status.className = "text-center mb-4 text-orange-600 font-bold";
+            } catch (e) {
+                status.textContent = "加载失败，请检查网络或配置。";
+                status.className = "text-center mb-4 text-red-600 font-bold";
+            }
+        }
+
+        // 2. 渲染编辑器
+        function renderEditor() {
+            const container = document.getElementById('editor-container');
+            container.innerHTML = '';
+            
+            if (!fullData.zh) return;
+
+            const zhKeys = Object.keys(fullData.zh);
+
+            zhKeys.forEach(key => {
+                const card = document.createElement('div');
+                card.className = "bg-white p-6 rounded-lg shadow-sm border border-gray-200 hover:border-blue-300 transition-colors";
+                
+                const title = document.createElement('div');
+                title.className = "text-xs font-mono text-gray-400 mb-3 uppercase tracking-wider";
+                title.textContent = `Field Key: ${key}`;
+                card.appendChild(title);
+
+                const grid = document.createElement('div');
+                grid.className = "grid md:grid-cols-2 gap-6";
+
+                // 中文
+                const zhGroup = document.createElement('div');
+                zhGroup.innerHTML = `
+                    <label class="block text-sm font-medium text-gray-700 mb-1">中文 (ZH)</label>
+                    <textarea class="w-full p-3 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 outline-none text-sm" 
+                        rows="${(fullData.zh[key]||'').length > 50 ? 4 : 2}" onchange="updateField('zh', '${key}', this.value)">${fullData.zh[key] || ''}</textarea>
+                `;
+
+                // 英文
+                const enGroup = document.createElement('div');
+                enGroup.innerHTML = `
+                    <label class="block text-sm font-medium text-gray-700 mb-1">英文 (EN)</label>
+                    <textarea class="w-full p-3 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 outline-none text-sm bg-gray-50" 
+                        rows="${(fullData.en[key]||'').length > 50 ? 4 : 2}" onchange="updateField('en', '${key}', this.value)">${fullData.en[key] || ''}</textarea>
+                `;
+
+                grid.appendChild(zhGroup);
+                grid.appendChild(enGroup);
+                card.appendChild(grid);
+                container.appendChild(card);
+            });
+        }
+
+        function updateField(lang, key, value) {
+            if (!fullData[lang]) fullData[lang] = {};
+            fullData[lang][key] = value;
+        }
+
+        // 3. 保存回 GitHub
+        async function saveToGitHub() {
+            const owner = document.getElementById('gh_owner').value;
+            const repo = document.getElementById('gh_repo').value;
+            const token = document.getElementById('gh_token').value;
+            const status = document.getElementById('statusMsg');
+
+            if (!token || !owner || !repo) {
+                alert('保存必须填写完整的 GitHub 配置（用户名、仓库名、Token）！');
+                return;
+            }
+            if (!sha) {
+                alert('未获取到文件 SHA，请先点击“加载数据”并确保 API 连接成功。');
+                return;
+            }
+
+            const btn = document.querySelector('button[onclick="saveToGitHub()"]');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '⏳ 正在提交...';
+            btn.disabled = true;
+
+            // 编码 Base64 (支持中文 UTF-8)
+            const contentString = JSON.stringify(fullData, null, 2);
+            const contentBase64 = window.btoa(unescape(encodeURIComponent(contentString)));
+
+            const url = `https://api.github.com/repos/${owner}/${repo}/contents/data.json`;
+
+            const body = {
+                message: "Update resume content via Admin Panel",
+                content: contentBase64,
+                sha: sha
+            };
+
+            try {
+                const response = await fetch(url, {
                     method: 'PUT',
-                    headers: { Authorization: `token ${token}`, 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: "Update via Admin", content: content, sha: sha })
+                    headers: {
+                        'Authorization': `token ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(body)
                 });
-                if(!res.ok) throw new Error("GitHub API Error");
-                const json = await res.json();
-                sha = json.content.sha;
-                alert('保存成功！请等待 1-2 分钟 GitHub Actions 部署。');
-                btn.innerText = "提交到 GitHub";
-            } catch(e) {
-                alert('保存失败: ' + e.message);
-                btn.innerText = "重试";
+
+                if (response.ok) {
+                    const resData = await response.json();
+                    sha = resData.content.sha; // 更新 SHA
+                    btn.innerHTML = '✅ 更新成功';
+                    status.textContent = "更新成功！GitHub Pages 重新部署通常需要 1-2 分钟，请稍后刷新简历页面。";
+                    status.className = "text-center mb-4 text-green-600 font-bold";
+                } else {
+                    const err = await response.json();
+                    throw new Error(err.message);
+                }
+            } catch (error) {
+                alert('保存失败: ' + error.message);
+                status.textContent = "保存失败: " + error.message;
+                status.className = "text-center mb-4 text-red-600 font-bold";
+            } finally {
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                }, 3000);
             }
         }
     </script>
