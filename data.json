@@ -232,6 +232,22 @@
             ]
           }
         ]
+      },
+      {
+        "company": "超级公司",
+        "role": "工程师",
+        "date": "2021-2019",
+        "location": "成都",
+        "projects": [
+          {
+            "title": "测试",
+            "details": [
+              "测试2",
+              "",
+              ""
+            ]
+          }
+        ]
       }
     ],
     "education": [
@@ -249,7 +265,8 @@
         "电子机械DIY",
         "3D打印",
         "木工雕刻",
-        "装修设计"
+        "装修设计",
+        "徒步爬山"
       ]
     },
     "tools": [
@@ -516,6 +533,22 @@
             ]
           }
         ]
+      },
+      {
+        "company": "supper company",
+        "role": "engineer",
+        "date": "2011-2019",
+        "location": "chengdu",
+        "projects": [
+          {
+            "title": "test",
+            "details": [
+              "test2",
+              "",
+              ""
+            ]
+          }
+        ]
       }
     ],
     "education": [
@@ -533,7 +566,8 @@
         "Mechatronics DIY",
         "3D Printing",
         "Wood Carving",
-        "Interior Design"
+        "Interior Design",
+        "徒步爬山"
       ]
     },
     "tools": [
