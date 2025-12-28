@@ -3,172 +3,264 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resume CMS</title>
+    <title>简历双语后台 (Split View)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <style>
-        .json-editor-input { width: 100%; padding: 0.5rem; border: 1px solid #e2e8f0; border-radius: 0.375rem; font-size: 0.875rem; transition: all 0.2s; }
+        /* 基础样式 */
+        body { background-color: #f3f4f6; }
+        .json-editor-input { width: 100%; padding: 0.5rem; border: 1px solid #e2e8f0; border-radius: 0.375rem; font-size: 0.875rem; transition: border 0.2s; }
         .json-editor-input:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
-        .array-group { border: 1px dashed #cbd5e1; background-color: #f8fafc; padding: 1rem; border-radius: 0.5rem; position: relative; margin-bottom: 1rem; }
-        .field-label { display: block; font-size: 0.75rem; font-weight: 700; color: #64748b; text-transform: uppercase; margin-bottom: 0.25rem; }
-        .delete-btn { position: absolute; top: 0.5rem; right: 0.5rem; color: #ef4444; opacity: 0.6; cursor: pointer; }
-        .delete-btn:hover { opacity: 1; }
+        
+        .field-label { display: block; font-size: 0.7rem; font-weight: 700; color: #64748b; text-transform: uppercase; margin-bottom: 0.25rem; letter-spacing: 0.05em; }
+        
+        /* 数组卡片样式 */
+        .array-group { border: 1px dashed #cbd5e1; background-color: #fff; padding: 0.75rem; border-radius: 0.5rem; position: relative; margin-bottom: 0.75rem; transition: all 0.2s; }
+        .array-group:hover { border-color: #94a3b8; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        
+        /* 左右分栏标题吸顶 */
+        .col-header { position: sticky; top: 0; z-index: 10; background: #f3f4f6; padding-bottom: 1rem; border-bottom: 1px solid #e5e7eb; margin-bottom: 1rem; }
+        
+        /* 滚动条 */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
     </style>
 </head>
-<body class="bg-gray-100 min-h-screen">
+<body class="h-screen flex flex-col overflow-hidden">
 
-    <div class="fixed top-0 w-full bg-white shadow-sm z-50 px-6 py-3 border-b flex justify-between items-center">
-        <h1 class="font-bold text-gray-800"><i class="fa fa-edit text-blue-600"></i> Resume Admin</h1>
-        <div class="flex gap-3">
-             <input id="gh_token" type="password" placeholder="GitHub Token (Required)" class="border p-1.5 rounded text-sm w-64">
-             <button onclick="loadData()" class="bg-blue-600 text-white px-4 py-1.5 rounded text-sm font-medium hover:bg-blue-700">Load Data</button>
-             <button onclick="saveToGitHub()" class="bg-green-600 text-white px-4 py-1.5 rounded text-sm font-medium hover:bg-green-700">Save Changes</button>
-        </div>
-        <div class="hidden">
-            <input id="gh_owner" value=""> <input id="gh_repo" value="">
-        </div>
-    </div>
+    <div class="bg-white shadow-sm z-50 px-6 py-3 border-b border-gray-200 shrink-0">
+        <div class="flex flex-col md:flex-row justify-between items-center max-w-[1920px] mx-auto gap-4">
+            <h1 class="font-bold text-gray-800 text-lg flex items-center gap-2">
+                <i class="fa fa-columns text-blue-600"></i> 双语对照后台
+            </h1>
+            
+            <div class="flex items-center gap-2 text-sm bg-blue-50 px-3 py-1 rounded text-blue-700 border border-blue-100">
+                <input type="checkbox" id="sync-structure" checked class="cursor-pointer text-blue-600 focus:ring-blue-500 rounded">
+                <label for="sync-structure" class="cursor-pointer font-medium select-none" title="开启后，在一侧添加或删除数组项（如工作经历），另一侧会自动同步操作，保持结构对齐">同步增删结构 (Sync Add/Del)</label>
+            </div>
 
-    <div class="max-w-7xl mx-auto mt-20 px-4 flex gap-8 pb-20">
-        <div class="w-64 shrink-0">
-            <div class="sticky top-24 space-y-4">
-                <div class="bg-white p-4 rounded shadow-sm">
-                    <h3 class="field-label mb-3">Language</h3>
-                    <div class="space-y-1">
-                        <button onclick="switchLang('zh')" id="btn-zh" class="w-full text-left px-3 py-2 rounded text-sm font-medium bg-blue-50 text-blue-600 border-l-4 border-blue-600">Chinese (中文)</button>
-                        <button onclick="switchLang('en')" id="btn-en" class="w-full text-left px-3 py-2 rounded text-sm font-medium text-gray-600 hover:bg-gray-50 border-l-4 border-transparent">English</button>
-                    </div>
-                </div>
-                <div class="text-xs text-gray-400 px-2">
-                    Tip: 输入 "fa-user" 等图标名可自动预览。数组项点击底部 "Add" 按钮新增。
-                </div>
+            <div class="flex flex-wrap gap-2 items-center">
+                <input id="gh_owner" type="text" placeholder="GitHub 用户名" class="border border-gray-300 p-1.5 rounded text-sm w-28 focus:border-blue-500 outline-none">
+                <input id="gh_repo" type="text" placeholder="仓库名称" class="border border-gray-300 p-1.5 rounded text-sm w-28 focus:border-blue-500 outline-none">
+                <input id="gh_token" type="password" placeholder="Token" class="border border-gray-300 p-1.5 rounded text-sm w-32 focus:border-blue-500 outline-none">
+                
+                <button onclick="loadData()" id="btn-load" class="bg-gray-700 text-white px-3 py-1.5 rounded text-sm hover:bg-gray-800 transition flex items-center gap-1">
+                    <i class="fa fa-refresh"></i> 读取
+                </button>
+                <button onclick="saveToGitHub()" id="btn-save" class="bg-green-600 text-white px-4 py-1.5 rounded text-sm font-bold hover:bg-green-700 transition shadow flex items-center gap-1">
+                    <i class="fa fa-save"></i> 保存 (Save)
+                </button>
             </div>
         </div>
+        <div id="status-msg" class="text-center text-xs mt-1 font-mono h-4 text-gray-500"></div>
+    </div>
 
-        <div class="flex-1 bg-white p-8 rounded shadow-sm min-h-[500px]" id="editor-container">
-            <div class="flex items-center justify-center h-full text-gray-400">Please enter Token and click "Load Data"</div>
+    <div class="flex-1 overflow-hidden">
+        <div class="h-full flex max-w-[1920px] mx-auto">
+            
+            <div class="w-1/2 flex flex-col border-r border-gray-200 bg-white">
+                <div class="p-4 bg-gray-50 border-b flex justify-between items-center shrink-0">
+                    <h2 class="font-bold text-gray-700 flex items-center gap-2"><span class="bg-blue-600 text-white text-xs px-2 py-0.5 rounded">ZH</span> 中文内容</h2>
+                </div>
+                <div id="editor-zh" class="flex-1 overflow-y-auto p-6 pb-20">
+                    <div class="text-center text-gray-400 mt-20"><i class="fa fa-arrow-up"></i> 请先点击上方“读取”</div>
+                </div>
+            </div>
+
+            <div class="w-1/2 flex flex-col bg-white">
+                 <div class="p-4 bg-gray-50 border-b flex justify-between items-center shrink-0">
+                    <h2 class="font-bold text-gray-700 flex items-center gap-2"><span class="bg-purple-600 text-white text-xs px-2 py-0.5 rounded">EN</span> English Content</h2>
+                </div>
+                <div id="editor-en" class="flex-1 overflow-y-auto p-6 pb-20">
+                    <div class="text-center text-gray-400 mt-20">数据加载后将在此显示</div>
+                </div>
+            </div>
+            
         </div>
     </div>
 
     <script>
         let fullData = {};
-        let sha = "";
-        let currentLang = 'zh';
+        let sha = ""; 
+
+        // 常用图标
+        const ICON_OPTS = [
+            "", "fa-cogs", "fa-user", "fa-briefcase", "fa-graduation-cap", "fa-wrench", 
+            "fa-leaf", "fa-line-chart", "fa-users", "fa-flask", "fa-tasks", 
+            "fa-heart", "fa-star", "fa-check", "fa-envelope", "fa-phone", 
+            "fa-linkedin", "fa-github", "fa-wechat", "fa-facebook", "fa-sitemap"
+        ];
 
         document.addEventListener('DOMContentLoaded', () => {
-             document.getElementById('gh_owner').value = localStorage.getItem('gh_owner') || '';
-             document.getElementById('gh_repo').value = localStorage.getItem('gh_repo') || '';
-             document.getElementById('gh_token').value = localStorage.getItem('gh_token') || '';
+            ['gh_owner', 'gh_repo', 'gh_token'].forEach(id => {
+                document.getElementById(id).value = localStorage.getItem(id) || '';
+            });
         });
 
+        // --- 1. 读取数据 ---
         async function loadData() {
-            const token = document.getElementById('gh_token').value;
-            const owner = localStorage.getItem('gh_owner'); // 假设之前已经存过，或者你可以加 Input
-            const repo = localStorage.getItem('gh_repo');
+            const owner = document.getElementById('gh_owner').value.trim();
+            const repo = document.getElementById('gh_repo').value.trim();
+            const token = document.getElementById('gh_token').value.trim();
+
+            if (!owner || !repo) return showStatus("请填写完整配置", "text-red-500");
             
-            // 简单处理：如果本地有 input 则保存
-            if(token) localStorage.setItem('gh_token', token);
+            localStorage.setItem('gh_owner', owner);
+            localStorage.setItem('gh_repo', repo);
+            localStorage.setItem('gh_token', token);
+
+            showStatus("正在连接 GitHub...", "text-blue-500");
+            const btn = document.getElementById('btn-load');
+            btn.disabled = true;
 
             try {
-                // 这里为了演示，假设直接 fetch 本地，真实环境请用 GitHub API
-                // const url = `https://api.github.com/repos/${owner}/${repo}/contents/data.json`;
-                // const res = await fetch(url, { headers: { Authorization: `token ${token}` } });
-                // const data = await res.json();
-                // sha = data.sha;
-                // fullData = JSON.parse(decodeURIComponent(escape(window.atob(data.content.replace(/\n/g, "")))));
-                
-                // 模拟加载本地
-                if(!fullData.zh) {
+                let dataStr = "";
+                if (token) {
+                    const url = `https://api.github.com/repos/${owner}/${repo}/contents/data.json`;
+                    const res = await fetch(url, { headers: { 'Authorization': `token ${token}` }, cache: 'no-store' });
+                    if (!res.ok) throw new Error(`API Error: ${res.status}`);
+                    const json = await res.json();
+                    sha = json.sha; 
+                    dataStr = decodeURIComponent(escape(window.atob(json.content.replace(/\n/g, ""))));
+                    showStatus("数据已加载 (Connected)", "text-green-600 font-bold");
+                } else {
                     const res = await fetch('./data.json');
-                    fullData = await res.json();
+                    dataStr = await res.text();
+                    sha = ""; 
+                    showStatus("预览模式 (无 Token)", "text-orange-500");
                 }
 
-                renderForm();
-            } catch(e) { alert("Load Failed: " + e.message); }
+                fullData = JSON.parse(dataStr);
+                // 确保结构存在
+                if(!fullData.zh) fullData.zh = {};
+                if(!fullData.en) fullData.en = {};
+                
+                renderSplitView();
+                
+            } catch (e) {
+                console.error(e);
+                showStatus(`加载失败: ${e.message}`, "text-red-600");
+            } finally {
+                btn.disabled = false;
+            }
         }
 
-        function switchLang(lang) {
-            currentLang = lang;
-            document.querySelectorAll('button[id^="btn-"]').forEach(b => b.className = "w-full text-left px-3 py-2 rounded text-sm font-medium text-gray-600 hover:bg-gray-50 border-l-4 border-transparent");
-            document.getElementById(`btn-${lang}`).className = "w-full text-left px-3 py-2 rounded text-sm font-medium bg-blue-50 text-blue-600 border-l-4 border-blue-600";
-            renderForm();
+        // --- 2. 渲染双栏视图 ---
+        function renderSplitView() {
+            const zhContainer = document.getElementById('editor-zh');
+            const enContainer = document.getElementById('editor-en');
+            
+            zhContainer.innerHTML = '';
+            enContainer.innerHTML = '';
+
+            // 分别构建两棵树
+            zhContainer.appendChild(buildRecursive(fullData.zh, ['zh']));
+            enContainer.appendChild(buildRecursive(fullData.en, ['en']));
         }
 
-        function renderForm() {
-            const container = document.getElementById('editor-container');
-            container.innerHTML = '';
-            if(!fullData[currentLang]) return;
-            container.appendChild(buildRecursive(fullData[currentLang], [currentLang]));
-        }
-
+        // --- 3. 递归构建器 ---
         function buildRecursive(data, path) {
             const wrapper = document.createElement('div');
             wrapper.className = "space-y-4";
 
+            // A. 数组处理 (增删同步逻辑核心)
             if (Array.isArray(data)) {
-                // 数组处理
                 data.forEach((item, idx) => {
                     const group = document.createElement('div');
-                    group.className = "array-group";
-                    
+                    group.className = "array-group group relative";
+
+                    // 头部
                     const header = document.createElement('div');
-                    header.className = "flex justify-between items-center mb-2";
-                    header.innerHTML = `<span class="text-xs font-bold text-blue-500">ITEM #${idx+1}</span>`;
-                    
-                    const del = document.createElement('button');
-                    del.className = "text-red-500 hover:text-red-700 text-xs";
-                    del.innerHTML = '<i class="fa fa-trash"></i> Remove';
-                    del.onclick = () => { data.splice(idx, 1); renderForm(); };
-                    
-                    header.appendChild(del);
+                    header.className = "flex justify-between items-center mb-2 pb-1 border-b border-dashed border-gray-200";
+                    header.innerHTML = `<span class="text-[10px] font-bold text-gray-400">#${idx + 1}</span>`;
+
+                    const delBtn = document.createElement('button');
+                    delBtn.className = "text-gray-300 hover:text-red-500 transition text-xs";
+                    delBtn.innerHTML = '<i class="fa fa-times"></i>';
+                    delBtn.title = "删除此项";
+                    delBtn.onclick = () => handleArrayAction('delete', path, idx);
+
+                    header.appendChild(delBtn);
                     group.appendChild(header);
+                    
                     group.appendChild(buildRecursive(item, [...path, idx]));
                     wrapper.appendChild(group);
                 });
-                
+
                 const addBtn = document.createElement('button');
-                addBtn.className = "w-full py-2 border-2 border-dashed border-gray-300 rounded text-gray-500 hover:border-blue-500 hover:text-blue-500 font-medium text-sm transition";
-                addBtn.innerText = "+ Add New Item";
-                addBtn.onclick = () => {
-                    // 复制第一个元素结构，或创建空对象
-                    const template = data.length ? JSON.parse(JSON.stringify(data[0])) : {};
-                    cleanObj(template);
-                    data.push(template);
-                    renderForm();
-                };
+                addBtn.className = "w-full py-2 border border-dashed border-gray-300 rounded text-gray-400 hover:border-blue-500 hover:text-blue-600 hover:bg-blue-50 text-xs font-bold transition uppercase tracking-wider";
+                addBtn.innerText = "+ Add Item";
+                addBtn.onclick = () => handleArrayAction('add', path);
                 wrapper.appendChild(addBtn);
 
-            } else if (typeof data === 'object' && data !== null) {
-                // 对象处理
+            } 
+            // B. 对象处理
+            else if (typeof data === 'object' && data !== null) {
+                const isRoot = path.length === 1;
+                const container = isRoot ? wrapper : document.createElement('div');
+                if(!isRoot) container.className = "pl-2 border-l-2 border-gray-100 ml-1";
+
                 Object.keys(data).forEach(key => {
-                    const fieldDiv = document.createElement('div');
-                    
-                    // 如果是对象容器，加个标题
-                    if(typeof data[key] === 'object' && data[key] !== null) {
+                    const fieldWrapper = document.createElement('div');
+                    fieldWrapper.className = "mb-3";
+
+                    // 标题/Label
+                    if (typeof data[key] === 'object' && data[key] !== null && !Array.isArray(data[key])) {
                         const title = document.createElement('h4');
-                        title.className = "font-bold text-gray-800 border-b pb-1 mb-2 mt-4 capitalize";
+                        title.className = "text-xs font-bold text-blue-800 bg-blue-50/50 p-1 rounded mb-2 mt-4 uppercase";
                         title.innerText = key.replace(/_/g, ' ');
-                        fieldDiv.appendChild(title);
-                        fieldDiv.className = "pl-2"; // 缩进
+                        fieldWrapper.appendChild(title);
                     } else {
                         const label = document.createElement('label');
                         label.className = "field-label";
                         label.innerText = key.replace(/_/g, ' ');
-                        fieldDiv.appendChild(label);
+                        fieldWrapper.appendChild(label);
                     }
-                    
-                    fieldDiv.appendChild(buildRecursive(data[key], [...path, key]));
-                    wrapper.appendChild(fieldDiv);
+
+                    fieldWrapper.appendChild(buildRecursive(data[key], [...path, key]));
+                    container.appendChild(fieldWrapper);
                 });
-            } else {
-                // 基础值处理 (String, Number)
-                const input = document.createElement(data.length > 60 ? 'textarea' : 'input');
-                input.className = "json-editor-input";
-                if(input.tagName === 'TEXTAREA') input.rows = 4;
-                input.value = data;
+                
+                if(!isRoot) wrapper.appendChild(container);
+            } 
+            // C. 基础值 (String/Number)
+            else {
+                const keyName = path[path.length - 1];
+                let input;
+
+                // C1. 图标选择
+                if (keyName === 'icon') {
+                    input = document.createElement('select');
+                    input.className = "json-editor-input bg-gray-50 cursor-pointer text-xs";
+                    ICON_OPTS.forEach(icon => {
+                        const opt = document.createElement('option');
+                        opt.value = icon;
+                        opt.text = icon || "无图标";
+                        if (data === icon) opt.selected = true;
+                        input.appendChild(opt);
+                    });
+                }
+                // C2. 长文本 (自动检测)
+                else if (typeof data === 'string' && (data.length > 50 || ['desc','summary','items'].some(k=>keyName.includes(k)))) {
+                    input = document.createElement('textarea');
+                    input.className = "json-editor-input";
+                    input.rows = 4;
+                    input.value = data;
+                } 
+                // C3. 普通文本
+                else {
+                    input = document.createElement('input');
+                    input.type = typeof data === 'number' ? 'number' : 'text';
+                    input.className = "json-editor-input";
+                    input.value = data;
+                }
+
+                // 绑定更新
                 input.onchange = (e) => {
                     let val = e.target.value;
-                    if(typeof data === 'number') val = Number(val);
+                    if (typeof data === 'number') val = Number(val);
                     updateData(path, val);
                 };
                 wrapper.appendChild(input);
@@ -176,25 +268,128 @@
             return wrapper;
         }
 
+        // --- 4. 核心逻辑：处理数组的同步增删 ---
+        function handleArrayAction(action, path, idx) {
+            const isSync = document.getElementById('sync-structure').checked;
+            
+            // 1. 执行当前侧的操作
+            performAction(fullData, path, action, idx);
+
+            // 2. 如果开启同步，尝试执行另一侧的操作
+            if (isSync) {
+                // 路径转换: ['zh', 'experience'] -> ['en', 'experience']
+                const mirrorPath = [...path];
+                if (mirrorPath[0] === 'zh') mirrorPath[0] = 'en';
+                else if (mirrorPath[0] === 'en') mirrorPath[0] = 'zh';
+
+                // 检查镜像路径是否存在
+                if (checkPathExists(fullData, mirrorPath)) {
+                    performAction(fullData, mirrorPath, action, idx);
+                }
+            }
+
+            renderSplitView(); // 重绘双侧
+        }
+
+        function performAction(root, path, action, idx) {
+            // 找到目标数组
+            let target = root;
+            for (let i = 0; i < path.length; i++) {
+                target = target[path[i]];
+            }
+
+            if (action === 'delete') {
+                if(target[idx]) target.splice(idx, 1);
+            } else if (action === 'add') {
+                // 智能克隆模板
+                let template = {};
+                if (target.length > 0) {
+                    template = JSON.parse(JSON.stringify(target[0]));
+                    cleanObj(template); // 清空内容保留Key
+                } else {
+                    // 默认空对象 (简单兜底)
+                    template = { title: "New Item", desc: "" };
+                }
+                target.push(template);
+            }
+        }
+
+        function checkPathExists(root, path) {
+            let current = root;
+            for (let k of path) {
+                if (current[k] === undefined) return false;
+                current = current[k];
+            }
+            return Array.isArray(current);
+        }
+
+        // --- 5. 辅助函数 ---
         function updateData(path, val) {
             let obj = fullData;
-            for(let i=0; i<path.length-1; i++) obj = obj[path[i]];
-            obj[path[path.length-1]] = val;
+            for (let i = 0; i < path.length - 1; i++) obj = obj[path[i]];
+            obj[path[path.length - 1]] = val;
         }
 
         function cleanObj(obj) {
-            if(typeof obj !== 'object' || obj === null) return;
+            if (typeof obj !== 'object' || obj === null) return;
             Object.keys(obj).forEach(k => {
-                if(typeof obj[k] === 'string') obj[k] = "";
-                else if(typeof obj[k] === 'number') obj[k] = 0;
-                else if(Array.isArray(obj[k])) obj[k] = [];
+                if (typeof obj[k] === 'string') obj[k] = "";
+                else if (typeof obj[k] === 'number') obj[k] = 0;
+                else if (Array.isArray(obj[k])) obj[k] = [];
                 else cleanObj(obj[k]);
             });
         }
-        
+
+        function showStatus(msg, cls) {
+            const el = document.getElementById('status-msg');
+            el.textContent = msg;
+            el.className = `text-center text-xs mt-1 font-mono h-4 ${cls}`;
+            if(cls.includes('green')) setTimeout(()=>el.textContent='', 5000);
+        }
+
+        // --- 6. 保存 (PUT) ---
         async function saveToGitHub() {
-            // 这里的逻辑和之前一样，调用 GitHub API PUT data.json
-            alert("Save logic triggered (check console/code for API details)");
+            const owner = document.getElementById('gh_owner').value;
+            const repo = document.getElementById('gh_repo').value;
+            const token = document.getElementById('gh_token').value;
+
+            if (!owner || !repo || !token) return alert("配置缺失");
+            if (!sha) return alert("请先读取数据");
+
+            const btn = document.getElementById('btn-save');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Saving...';
+            btn.disabled = true;
+
+            try {
+                const contentStr = JSON.stringify(fullData, null, 2);
+                const contentBase64 = window.btoa(unescape(encodeURIComponent(contentStr)));
+
+                const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/data.json`, {
+                    method: 'PUT',
+                    headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        message: "Update via Split-View Admin",
+                        content: contentBase64,
+                        sha: sha
+                    })
+                });
+
+                if (res.ok) {
+                    const json = await res.json();
+                    sha = json.content.sha;
+                    showStatus("保存成功! (Saved)", "text-green-600 font-bold");
+                    alert("保存成功！");
+                } else {
+                    const err = await res.json();
+                    throw new Error(err.message);
+                }
+            } catch (e) {
+                alert("Error: " + e.message);
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
         }
     </script>
 </body>
