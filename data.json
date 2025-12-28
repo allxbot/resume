@@ -1,289 +1,252 @@
 {
   "zh": {
-    "basics": {
-      "name": "徐咏智",
-      "titles": "研发制造总监 | 供应链技术总监 | 智能制造设备工艺专家",
-      "tags": [
-        "16年高精智能制造经验",
-        "3C消费电子",
-        "半导体后道封装",
-        "智能工厂规划"
-      ],
-      "location": "成都 / 深圳",
-      "email": "xuyongzhi@antmy.com",
-      "summary": "16年高精智能制造专家，深耕3C消费电子（苹果核心供应链）与半导体后道封装领域。兼具消费类产品NPI全流程管控、DFM/MFD工艺优化、智能工厂规划落地及跨国跨职能团队管理经验。"
-    },
-    "profile_cards": [
-      {
-        "title": "技术统筹",
-        "icon": "fa-cogs",
-        "desc": "主导50+条高精密自动化产线NPI量产导入，推动2个智能工厂从0到1筹建。"
-      },
-      {
-        "title": "核心业绩",
-        "icon": "fa-line-chart",
-        "desc": "通过DFM优化、模块化设计与精益生产，实现OEE提升至85%+、产能提升90%+、良率稳定99.6%+。"
-      },
-      {
-        "title": "战略管理",
-        "icon": "fa-sitemap",
-        "desc": "擅长协同研发与供应商团队突破制造瓶颈，确保设计与制造无缝衔接。"
-      }
-    ],
-    "skills_matrix": [
-      {
-        "title": "技术专家视点",
-        "icon": "fa-flask",
-        "items": [
-          "3C / 半导体精密工艺（激光切割、PVD、HAF贴合等）",
-          "智能产线全流程架构设计",
-          "设备定位精度1-2μm、运动系统20g+加速度",
-          "DFM/DFMA设计、MFD解决方案开发",
-          "热学组件装配工艺优化、散热结构DFM分析",
-          "系统装配公差分析（GD&T深化应用）"
-        ]
-      },
-      {
-        "title": "项目与运营",
-        "icon": "fa-tasks",
-        "items": [
-          "智能工厂0-1筹建",
-          "自动化产线规划与量产导入",
-          "闭环数据管理系统搭建",
-          "OEE / 良率 / 成本优化",
-          "KISS原则落地（简化设计与制造流程）",
-          "SPC数据驱动的良率与成本优化"
-        ]
-      },
-      {
-        "title": "团队与领导力",
-        "icon": "fa-users",
-        "items": [
-          "跨国跨职能团队管理（中/新/德）",
-          "敏捷开发 + Stage-Gate流程推行",
-          "供应商标准化开发体系构建",
-          "精益生产（单线流/模块化）落地",
-          "跨文化协同研发与供应商协作",
-          "组建并领导7+人跨职能团队"
-        ]
-      }
-    ],
-    "chart_data": [
-      { "label": "自动化产线设计", "value": 95 },
-      { "label": "DFM/MFD工艺优化", "value": 90 },
-      { "label": "智能工厂规划", "value": 85 },
-      { "label": "跨国团队管理", "value": 88 },
-      { "label": "半导体封装工艺", "value": 82 },
-      { "label": "数据分析与优化", "value": 80 }
-    ],
-    "experience": [
-      {
-        "company": "苹果公司 (Apple)",
-        "date": "2017.07 - 至今",
-        "role": "制造设计工程师 / 供应链技术负责人",
-        "location": "成都 / 深圳",
-        "phases": [
-          {
-            "title": "阶段一：手机 / 手表制造（2019 - 至今）",
-            "items": [
-              "主导行业首个光固化低压注塑成型自动化产线开发，遵循KISS原则采用模块化+单线流简化设计，减少冗余工站，设备成本、占地面积及治具用量下降80%+，成功量产导入。",
-              "牵头框架组装标准化产线研发，集成贴膜、点胶等工艺，实现50μm内组装精度，CT提升76%、产能提升90%，自动化率90%+，良率稳定99.6%+。",
-              "主导光固化模块设计，通过光学结构优化与散热冷却系统精准匹配，实现光强均匀性与热能平衡控制，保障高效固化效果。",
-              "搭建基于SPC逻辑的闭环数据系统，推动设备预测性维护，产能爬坡周期从3-4周缩短至4天，良率从95%提升至99.6%。"
-            ]
-          },
-          {
-            "title": "阶段二：脆性材料精密工艺与自动化开发（2017 - 2019）",
-            "items": [
-              "创新研发蓝宝石带油墨镀膜激光切割工艺，通过独特光学结构和工艺流程实现激光成丝切割，精准控制受热断裂油墨区域≤0.1mm；主导搭建全自动化产线，人力节省80%+。",
-              "主导2个工厂超百条玻璃盖板产线自动化升级，创新20余种设备，人力节省10%+，生产一致性显著提升。",
-              "攻克蓝宝石组装工艺缺陷与产能瓶颈，通过优化热传递结构设计及工艺参数迭代，产能提升20%+，良率稳定至99%以上。"
-            ]
-          }
-        ]
-      },
-      {
-        "company": "成都圭目机器人",
-        "date": "2017.02 - 2017.06",
-        "role": "研发经理",
-        "location": "成都",
-        "phases": [
-           {
-            "title": "核心研发项目",
-            "items": [
-              "主导道路探伤机器人初代底盘和探伤模块开发，完成上路测试验证，奠定系列化产品技术基础。",
-              "负责集装箱爬壁、道路修补、探雷机器人等复杂系统设计，推动多项核心技术专利申请。",
-              "通过技术展示与客户洽谈，成功获取多个项目立项，实现技术到商业的转化。"
-            ]
-           }
-        ]
-      },
-      {
-        "company": "先进科技太平洋 (ASMPT)",
-        "date": "2009.10 - 2017.02",
-        "role": "机械工程师 / 研发经理",
-        "location": "成都 / 新加坡",
-        "phases": [
-           {
-            "title": "阶段一：独立研发项目组（成都，2014 - 2017）",
-            "items": [
-              "组建并领导7+人跨职能团队，推行敏捷开发+Stage-Gate流程，关键节点交付率100%。",
-              "支援德/新团队完成SIPLACE E/TX贴片机核心组件开发，实现30μm定位精度、4g加速度性能突破。",
-              "协作开发TCB/Laser Dicing设备对位系统，达成2μm超高对位精度。"
-            ]
-           },
-           {
-            "title": "阶段二：新加坡研发中心（2011 - 2014）",
-            "items": [
-              "负责SMT锡膏检测设备机械设计，主导机架及流水线开发，协作完成15μm精度龙门对位系统和光学系统设计。",
-              "主导半导体焊线机自动化光学检测设备开发，为马来西亚客户定制交付。",
-              "协作开发SMT锡膏印刷设备，实现15μm级高精度对位；主导半导体封装微型晶圆曝光设备开发，达成1μm超精密对位。"
-            ]
-           },
-           {
-            "title": "阶段三：成都研发中心（2009 - 2011）",
-            "items": [
-              "负责CO₂/光纤激光器整机系统设计，攻克热学结构与精密光学装配难点，实现微米级激光打标工艺。",
-              "协作开发40吨/80吨封装注塑压力机，负责底盘结构与铰链设计。",
-              "引入自上而下的结构设计与参数化方法，实现多产品系列设计标准化，提升开发效率。"
-            ]
-           }
-        ]
-      },
-      {
-        "company": "成都工具研究所 (CTRI)",
-        "date": "2009.07 - 2009.10",
-        "role": "机械工程师",
-        "location": "成都",
-        "phases": [
-           {
-            "title": "核心职责",
-            "items": [
-              "负责定制化特种切削刀具设计，独立完成零件图、装配图及工艺图纸全流程绘制。",
-              "参与从客户需求沟通到生产交付的全流程管理，开发新生产工艺与工装夹具，提升生产效率。",
-              "掌握产品研发至交付的全生命周期管理流程，奠定精密制造领域基础。"
-            ]
-           }
-        ]
-      }
-    ],
-    "education": [
-      {
-        "school": "西南科技大学",
-        "degree": "机械设计制造及其自动化 | 学士",
-        "date_loc": "绵阳 | 2009年"
-      }
-    ],
-    "hobbies": ["徒步爬山", "电子机械DIY", "3D打印", "木工雕刻", "装修设计"],
-    "tools": {
-      "design": ["UG NX", "Solid Edge", "SolidWorks", "AutoCAD", "CAE", "E-Plan", "GD&T"],
-      "data": ["Agile PLM", "SharePoint", "Office", "JMP", "Tableau", "Python", "HTML", "SPC", "NUDD"]
-    }
+    "name": "徐咏智",
+    "nav_profile": "个人概述",
+    "nav_skills": "核心能力",
+    "nav_experience": "工作经历",
+    "nav_education": "教育背景",
+    "nav_contact": "联系方式",
+    "hero_titles": "研发制造总监 | 供应链技术总监 | 智能制造设备工艺专家",
+    "tag_exp": "16年高精智能制造经验",
+    "tag_3c": "3C消费电子",
+    "tag_semi": "半导体后道封装",
+    "tag_smart": "智能工厂规划",
+    "btn_contact": "联系我",
+    "btn_exp": "查看经历",
+    "btn_print": "打印简历",
+    "location": "成都 / 深圳",
+    "section_profile": "个人概述",
+    "profile_desc": "16年高精智能制造专家，深耕3C消费电子（苹果核心供应链）与半导体后道封装领域。兼具消费类产品NPI全流程管控、DFM/MFD工艺优化、智能工厂规划落地及跨国跨职能团队管理经验。",
+    "profile_c1_title": "技术统筹",
+    "profile_c1_desc": "主导50+条高精密自动化产线NPI量产导入，推动2个智能工厂从0到1筹建。",
+    "profile_c2_title": "核心业绩",
+    "profile_c2_desc": "通过DFM优化、模块化设计与精益生产，实现OEE提升至85%+、产能提升90%+、良率稳定99.6%+。",
+    "profile_c3_title": "战略管理",
+    "profile_c3_desc": "擅长协同研发与供应商团队突破制造瓶颈，确保设计与制造无缝衔接。",
+    "section_skills": "核心能力矩阵",
+    "skill_t1_title": "技术专家视点",
+    "skill_t1_1": "3C / 半导体精密工艺（激光切割、PVD、HAF贴合等）",
+    "skill_t1_2": "智能产线全流程架构设计",
+    "skill_t1_3": "设备定位精度1-2μm、运动系统20g+加速度",
+    "skill_t1_4": "DFM/DFMA设计、MFD解决方案开发",
+    "skill_t1_5": "热学组件装配工艺优化、散热结构DFM分析",
+    "skill_t1_6": "系统装配公差分析（GD&T深化应用）",
+    "skill_t2_title": "项目与运营",
+    "skill_t2_1": "智能工厂0-1筹建",
+    "skill_t2_2": "自动化产线规划与量产导入",
+    "skill_t2_3": "闭环数据管理系统搭建",
+    "skill_t2_4": "OEE / 良率 / 成本优化",
+    "skill_t2_5": "KISS原则落地（简化设计与制造流程）",
+    "skill_t2_6": "SPC数据驱动的良率与成本优化",
+    "skill_t3_title": "团队与领导力",
+    "skill_t3_1": "跨国跨职能团队管理（中/新/德）",
+    "skill_t3_2": "敏捷开发 + Stage-Gate流程推行",
+    "skill_t3_3": "供应商标准化开发体系构建",
+    "skill_t3_4": "精益生产（单线流/模块化）落地",
+    "skill_t3_5": "跨文化协同研发与供应商协作",
+    "skill_t3_6": "组建并领导7+人跨职能团队",
+    "chart_title": "专业技能熟练度",
+    "bar_1": "自动化产线设计",
+    "bar_2": "DFM/MFD工艺优化",
+    "bar_3": "智能工厂规划",
+    "bar_4": "跨国团队管理",
+    "bar_5": "半导体封装工艺",
+    "bar_6": "数据分析与优化",
+    "section_exp": "工作经历",
+    "exp_1_company": "苹果公司 (Apple)",
+    "exp_1_date": "2017.07 - 至今",
+    "exp_1_role": "制造设计工程师 / 供应链技术负责人",
+    "exp_1_loc": "成都 / 深圳",
+    "exp_1_p1_title": "阶段一：手机 / 手表制造（2019 - 至今）",
+    "exp_1_p1_1": "主导行业首个光固化低压注塑成型自动化产线开发，遵循KISS原则采用模块化+单线流简化设计，减少冗余工站，设备成本、占地面积及治具用量下降80%+，成功量产导入。",
+    "exp_1_p1_2": "牵头框架组装标准化产线研发，集成贴膜、点胶等工艺，实现50μm内组装精度，CT提升76%、产能提升90%，自动化率90%+，良率稳定99.6%+。",
+    "exp_1_p1_3": "主导光固化模块设计，通过光学结构优化与散热冷却系统精准匹配，实现光强均匀性与热能平衡控制，保障高效固化效果。",
+    "exp_1_p1_4": "搭建基于SPC逻辑的闭环数据系统，推动设备预测性维护，产能爬坡周期从3-4周缩短至4天，良率从95%提升至99.6%。",
+    "exp_1_p2_title": "阶段二：脆性材料精密工艺与自动化开发（2017 - 2019）",
+    "exp_1_p2_1": "创新研发蓝宝石带油墨镀膜激光切割工艺，通过独特光学结构和工艺流程实现激光成丝切割，精准控制受热断裂油墨区域≤0.1mm；主导搭建全自动化产线，人力节省80%+。",
+    "exp_1_p2_2": "主导2个工厂超百条玻璃盖板产线自动化升级，创新20余种设备，人力节省10%+，生产一致性显著提升。",
+    "exp_1_p2_3": "攻克蓝宝石组装工艺缺陷与产能瓶颈，通过优化热传递结构设计及工艺参数迭代，产能提升20%+，良率稳定至99%以上。",
+    "exp_2_company": "成都圭目机器人",
+    "exp_2_date": "2017.02 - 2017.06",
+    "exp_2_role": "研发经理",
+    "exp_2_loc": "成都",
+    "exp_2_1": "主导道路探伤机器人初代底盘和探伤模块开发，完成上路测试验证，奠定系列化产品技术基础。",
+    "exp_2_2": "负责集装箱爬壁、道路修补、探雷机器人等复杂系统设计，推动多项核心技术专利申请。",
+    "exp_2_3": "通过技术展示与客户洽谈，成功获取多个项目立项，实现技术到商业的转化。",
+    "exp_3_company": "先进科技太平洋 (ASMPT)",
+    "exp_3_date": "2009.10 - 2017.02",
+    "exp_3_role": "机械工程师 / 研发经理",
+    "exp_3_loc": "成都 / 新加坡",
+    "exp_3_p1_title": "阶段一：独立研发项目组（成都，2014 - 2017）",
+    "exp_3_p1_1": "组建并领导7+人跨职能团队，推行敏捷开发+Stage-Gate流程，关键节点交付率100%。",
+    "exp_3_p1_2": "支援德/新团队完成SIPLACE E/TX贴片机核心组件开发，实现30μm定位精度、4g加速度性能突破。",
+    "exp_3_p1_3": "协作开发TCB/Laser Dicing设备对位系统，达成2μm超高对位精度。",
+    "exp_3_p2_title": "阶段二：新加坡研发中心（2011 - 2014）",
+    "exp_3_p2_1": "负责SMT锡膏检测设备机械设计，主导机架及流水线开发，协作完成15μm精度龙门对位系统和光学系统设计。",
+    "exp_3_p2_2": "主导半导体焊线机自动化光学检测设备开发，为马来西亚客户定制交付。",
+    "exp_3_p2_3": "协作开发SMT锡膏印刷设备，实现15μm级高精度对位；主导半导体封装微型晶圆曝光设备开发，达成1μm超精密对位。",
+    "exp_3_p3_title": "阶段三：成都研发中心（2009 - 2011）",
+    "exp_3_p3_1": "负责CO₂/光纤激光器整机系统设计，攻克热学结构与精密光学装配难点，实现微米级激光打标工艺。",
+    "exp_3_p3_2": "协作开发40吨/80吨封装注塑压力机，负责底盘结构与铰链设计。",
+    "exp_3_p3_3": "引入自上而下的结构设计与参数化方法，实现多产品系列设计标准化，提升开发效率。",
+    "exp_4_company": "成都工具研究所 (CTRI)",
+    "exp_4_date": "2009.07 - 2009.10",
+    "exp_4_role": "机械工程师",
+    "exp_4_loc": "成都",
+    "exp_4_1": "负责定制化特种切削刀具设计，独立完成零件图、装配图及工艺图纸全流程绘制。",
+    "exp_4_2": "参与从客户需求沟通到生产交付的全流程管理，开发新生产工艺与工装夹具，提升生产效率。",
+    "exp_4_3": "掌握产品研发至交付的全生命周期管理流程，奠定精密制造领域基础。",
+    "section_edu": "教育背景与技能",
+    "edu_title": "教育背景",
+    "edu_school": "西南科技大学",
+    "edu_degree": "机械设计制造及其自动化 | 学士",
+    "edu_loc": "绵阳 | 2009年",
+    "hobby_title": "兴趣爱好",
+    "hobby_1": "徒步爬山",
+    "hobby_2": "电子机械DIY",
+    "hobby_3": "3D打印",
+    "hobby_4": "木工雕刻",
+    "hobby_5": "装修设计",
+    "hobby_desc": "爱好动手实践，持续将DIY创新思维融入精密制造工艺优化。",
+    "tool_design": "设计工具",
+    "tool_data": "项目与数据工具",
+    "section_contact": "联系方式",
+    "contact_info_title": "联系信息",
+    "contact_email": "邮箱",
+    "contact_loc": "所在地",
+    "contact_obj": "求职意向",
+    "contact_obj_1": "研发制造总监 | 供应链技术总监",
+    "contact_obj_2": "智能制造设备工艺专家 | 消费电子 NPI 负责人",
+    "msg_title": "发送消息",
+    "msg_name": "您的姓名",
+    "msg_email": "您的邮箱",
+    "msg_content": "消息内容",
+    "msg_send": "发送消息",
+    "footer_desc": "高精智能制造专家 | 16年行业经验"
   },
   "en": {
-    "basics": {
-      "name": "Xu Yongzhi",
-      "titles": "R&D Manufacturing Director | Supply Chain Technical Director | Smart Manufacturing Expert",
-      "tags": ["16 Years in Smart Mfg", "3C Consumer Electronics", "Semiconductor Packaging", "Smart Factory Planning"],
-      "location": "Chengdu / Shenzhen",
-      "email": "xuyongzhi@antmy.com",
-      "summary": "16-year expert in high-precision smart manufacturing, specializing in 3C consumer electronics (Apple Core Supply Chain) and semiconductor backend packaging. Extensive experience in NPI lifecycle management, DFM/MFD process optimization, smart factory planning, and leading cross-functional international teams."
-    },
-    "profile_cards": [
-      { "title": "Technical Leadership", "icon": "fa-cogs", "desc": "Led NPI and mass production for 50+ high-precision automated lines; spearheaded the 0-to-1 establishment of two smart factories." },
-      { "title": "Key Achievements", "icon": "fa-line-chart", "desc": "Optimized OEE to >85%, increased capacity by 90%, and stabilized yield at 99.6% through DFM, modular design, and Lean manufacturing." },
-      { "title": "Strategic Management", "icon": "fa-sitemap", "desc": "Expert in bridging R&D and supplier teams to resolve manufacturing bottlenecks, ensuring seamless design-to-manufacturing transition." }
-    ],
-    "skills_matrix": [
-      { "title": "Technical Expertise", "icon": "fa-flask", "items": ["3C / Semi Precision Process (Laser Cutting, PVD, HAF Lamination)", "Full-cycle Smart Production Line Architecture", "High Precision (1-2μm) & High Speed (20g+) Motion Systems", "DFM/DFMA Design & MFD Solutions", "Thermal Assembly Optimization", "System Assembly Tolerance Analysis (GD&T)"] },
-      { "title": "Project & Operations", "icon": "fa-tasks", "items": ["Smart Factory 0-to-1 Establishment", "Automated Line Planning & NPI Ramp-up", "Closed-loop Data Management System", "OEE / Yield / Cost Optimization", "KISS Principle Implementation", "SPC Data-Driven Optimization"] },
-      { "title": "Leadership", "icon": "fa-users", "items": ["Cross-National Team Management (CN/SG/DE)", "Agile Development & Stage-Gate Process", "Supplier Standardization System", "Lean Manufacturing Implementation", "Cross-Cultural Collaboration", "Leading 7+ Member Cross-Functional Teams"] }
-    ],
-    "chart_data": [
-      { "label": "Auto Line Design", "value": 95 },
-      { "label": "DFM/MFD Optimization", "value": 90 },
-      { "label": "Smart Factory", "value": 85 },
-      { "label": "Global Team Mgmt", "value": 88 },
-      { "label": "Semi Packaging Process", "value": 82 },
-      { "label": "Data Analysis & Opt", "value": 80 }
-    ],
-    "experience": [
-      {
-        "company": "Apple Inc.",
-        "date": "2017.07 - Present",
-        "role": "Manufacturing Design Engineer / Supply Chain Tech Lead",
-        "location": "Chengdu / Shenzhen",
-        "phases": [
-          { "title": "Phase I: iPhone / Apple Watch Mfg (2019 - Present)", "items": [
-            "Led the industry's first UV low-pressure molding automation line. Applied KISS principle with modular & one-piece flow design, reducing redundancy. Cut equipment cost/footprint by 80%+.",
-            "Spearheaded frame assembly standardization (lamination/dispensing), achieving <50μm accuracy. Increased CT by 76%, capacity by 90%, automation >90%, and yield to 99.6%.",
-            "Led UV curing module design, optimizing optical structure and cooling systems to ensure uniform intensity and thermal balance.",
-            "Built an SPC-based closed-loop data system for predictive maintenance, shortening ramp-up from 3-4 weeks to 4 days and boosting yield from 95% to 99.6%."
-          ] },
-          { "title": "Phase II: Brittle Material Precision Process (2017 - 2019)", "items": [
-            "Innovated sapphire laser cutting process with ink coating. Achieved filament cutting with <0.1mm heat-affected zone. Automated line reduced labor by 80%.",
-            "Led automation upgrades for 100+ glass cover lines across 2 factories, innovating 20+ equipment types and improving consistency while cutting labor by 10%.",
-            "Resolved sapphire assembly defects and bottlenecks. Optimized thermal transfer structure and process parameters, boosting capacity by 20% and yield to >99%."
-          ] }
-        ]
-      },
-      {
-        "company": "Chengdu Gwrobot",
-        "date": "2017.02 - 2017.06",
-        "role": "R&D Manager",
-        "location": "Chengdu",
-        "phases": [
-          { "title": "Key Projects", "items": [
-            "Led development of road inspection robot chassis and detection modules, completing road tests and establishing the technical foundation for the product series.",
-            "Designed complex systems including container wall-climbing, road repair, and mine-detection robots. Drove key patent applications.",
-            "Successfully secured multiple project initiations through technical demonstrations and client negotiations, converting technology into business value."
-          ] }
-        ]
-      },
-      {
-        "company": "ASMPT (Advanced Semiconductor Materials Pacific Technology)",
-        "date": "2009.10 - 2017.02",
-        "role": "Mechanical Engineer / R&D Manager",
-        "location": "Chengdu / Singapore",
-        "phases": [
-          { "title": "Phase I: Independent R&D Team (Chengdu, 2014 - 2017)", "items": [
-            "Built and led a 7+ member cross-functional team, implementing Agile + Stage-Gate processes with 100% key milestone delivery rate.",
-            "Supported German/Singapore teams on SIPLACE E/TX core component development, achieving 30μm accuracy and 4g acceleration.",
-            "Collaborated on TCB/Laser Dicing equipment alignment systems, achieving 2μm ultra-high precision."
-          ] },
-          { "title": "Phase II: Singapore R&D Center (2011 - 2014)", "items": [
-            "Responsible for SMT SPI equipment mechanical design (frame & conveyor) and collaborated on 15μm gantry alignment and optical systems.",
-            "Led development of automated optical inspection for semiconductor wire bonders, delivering customized solutions for Malaysian clients.",
-            "Collaborated on SMT printing equipment (15μm alignment) and led micro-wafer exposure equipment development (1μm precision)."
-          ] },
-          { "title": "Phase III: Chengdu R&D Center (2009 - 2011)", "items": [
-            "Designed CO₂/Fiber laser marking systems, resolving thermal structure and precision optical assembly challenges for micron-level marking.",
-            "Collaborated on 40T/80T encapsulation molding press development (chassis & toggle design).",
-            "Introduced top-down design and parametric methods, standardizing product series design and improving efficiency."
-          ] }
-        ]
-      },
-      {
-        "company": "Chengdu Tool Research Institute (CTRI)",
-        "date": "2009.07 - 2009.10",
-        "role": "Mechanical Engineer",
-        "location": "Chengdu",
-        "phases": [
-          { "title": "Core Responsibilities", "items": [
-            "Designed customized special cutting tools, drafting full sets of part, assembly, and process drawings.",
-            "Managed full lifecycle from client communication to delivery, developing new processes and fixtures to improve efficiency.",
-            "Mastered the full R&D-to-delivery lifecycle, laying the foundation for precision manufacturing."
-          ] }
-        ]
-      }
-    ],
-    "education": [
-      { "school": "Southwest University of Science and Technology", "degree": "B.Eng in Mechanical Design & Automation", "date_loc": "Mianyang | 2009" }
-    ],
-    "hobbies": ["Hiking", "Mechatronics DIY", "3D Printing", "Wood Carving", "Interior Design"],
-    "tools": {
-      "design": ["UG NX", "Solid Edge", "SolidWorks", "AutoCAD", "CAE", "E-Plan", "GD&T"],
-      "data": ["Agile PLM", "SharePoint", "Office", "JMP", "Tableau", "Python", "HTML", "SPC", "NUDD"]
-    }
+    "name": "Xu Yongzhi",
+    "nav_profile": "Profile",
+    "nav_skills": "Core Competencies",
+    "nav_experience": "Experience",
+    "nav_education": "Education",
+    "nav_contact": "Contact",
+    "hero_titles": "R&D Manufacturing Director | Supply Chain Technical Director | Smart Manufacturing Expert",
+    "tag_exp": "16 Years in Smart Mfg",
+    "tag_3c": "3C Consumer Electronics",
+    "tag_semi": "Semiconductor Packaging",
+    "tag_smart": "Smart Factory Planning",
+    "btn_contact": "Contact Me",
+    "btn_exp": "View Experience",
+    "btn_print": "Print Resume",
+    "location": "Chengdu / Shenzhen",
+    "section_profile": "Professional Summary",
+    "profile_desc": "16-year expert in high-precision smart manufacturing, specializing in 3C consumer electronics (Apple Core Supply Chain) and semiconductor backend packaging. Extensive experience in NPI lifecycle management, DFM/MFD process optimization, smart factory planning, and leading cross-functional international teams.",
+    "profile_c1_title": "Technical Leadership",
+    "profile_c1_desc": "Led NPI and mass production for 50+ high-precision automated lines; spearheaded the 0-to-1 establishment of two smart factories.",
+    "profile_c2_title": "Key Achievements",
+    "profile_c2_desc": "Optimized OEE to >85%, increased capacity by 90%, and stabilized yield at 99.6% through DFM, modular design, and Lean manufacturing.",
+    "profile_c3_title": "Strategic Management",
+    "profile_c3_desc": "Expert in bridging R&D and supplier teams to resolve manufacturing bottlenecks, ensuring seamless design-to-manufacturing transition.",
+    "section_skills": "Core Competencies",
+    "skill_t1_title": "Technical Expertise",
+    "skill_t1_1": "3C / Semi Precision Process (Laser Cutting, PVD, HAF Lamination)",
+    "skill_t1_2": "Full-cycle Smart Production Line Architecture",
+    "skill_t1_3": "High Precision (1-2μm) & High Speed (20g+) Motion Systems",
+    "skill_t1_4": "DFM/DFMA Design & MFD Solutions",
+    "skill_t1_5": "Thermal Assembly Optimization & Heat Dissipation DFM",
+    "skill_t1_6": "System Assembly Tolerance Analysis (GD&T Application)",
+    "skill_t2_title": "Project & Operations",
+    "skill_t2_1": "Smart Factory 0-to-1 Establishment",
+    "skill_t2_2": "Automated Line Planning & NPI Ramp-up",
+    "skill_t2_3": "Closed-loop Data Management System Implementation",
+    "skill_t2_4": "OEE / Yield / Cost Optimization",
+    "skill_t2_5": "KISS Principle Implementation (Simplification)",
+    "skill_t2_6": "SPC Data-Driven Yield & Cost Optimization",
+    "skill_t3_title": "Leadership",
+    "skill_t3_1": "Cross-National Team Management (CN/SG/DE)",
+    "skill_t3_2": "Agile Development & Stage-Gate Process",
+    "skill_t3_3": "Supplier Standardization Development System",
+    "skill_t3_4": "Lean Manufacturing (One-Piece Flow/Modular) Implementation",
+    "skill_t3_5": "Cross-Cultural R&D Collaboration",
+    "skill_t3_6": "Leading 7+ Member Cross-Functional Teams",
+    "chart_title": "Skill Proficiency",
+    "bar_1": "Auto Line Design",
+    "bar_2": "DFM/MFD Optimization",
+    "bar_3": "Smart Factory Planning",
+    "bar_4": "Global Team Mgmt",
+    "bar_5": "Semi Packaging Process",
+    "bar_6": "Data Analysis & Opt",
+    "section_exp": "Work Experience",
+    "exp_1_company": "Apple Inc.",
+    "exp_1_date": "2017.07 - Present",
+    "exp_1_role": "Manufacturing Design Engineer / Supply Chain Tech Lead",
+    "exp_1_loc": "Chengdu / Shenzhen",
+    "exp_1_p1_title": "Phase I: iPhone / Apple Watch Mfg (2019 - Present)",
+    "exp_1_p1_1": "Led the industry's first UV low-pressure molding automation line. Applied KISS principle with modular & one-piece flow design, reducing redundancy. Cut equipment cost/footprint by 80%+.",
+    "exp_1_p1_2": "Spearheaded frame assembly standardization (lamination/dispensing), achieving <50μm accuracy. Increased CT by 76%, capacity by 90%, automation >90%, and yield to 99.6%.",
+    "exp_1_p1_3": "Led UV curing module design, optimizing optical structure and cooling systems to ensure uniform intensity and thermal balance.",
+    "exp_1_p1_4": "Built an SPC-based closed-loop data system for predictive maintenance, shortening ramp-up from 3-4 weeks to 4 days and boosting yield from 95% to 99.6%.",
+    "exp_1_p2_title": "Phase II: Brittle Material Precision Process (2017 - 2019)",
+    "exp_1_p2_1": "Innovated sapphire laser cutting process with ink coating. Achieved filament cutting with <0.1mm heat-affected zone. Automated line reduced labor by 80%.",
+    "exp_1_p2_2": "Led automation upgrades for 100+ glass cover lines across 2 factories, innovating 20+ equipment types and improving consistency while cutting labor by 10%.",
+    "exp_1_p2_3": "Resolved sapphire assembly defects and bottlenecks. Optimized thermal transfer structure and process parameters, boosting capacity by 20% and yield to >99%.",
+    "exp_2_company": "Chengdu Gwrobot",
+    "exp_2_date": "2017.02 - 2017.06",
+    "exp_2_role": "R&D Manager",
+    "exp_2_loc": "Chengdu",
+    "exp_2_1": "Led development of road inspection robot chassis and detection modules, completing road tests and establishing the technical foundation for the product series.",
+    "exp_2_2": "Designed complex systems including container wall-climbing, road repair, and mine-detection robots. Drove key patent applications.",
+    "exp_2_3": "Successfully secured multiple project initiations through technical demonstrations and client negotiations, converting technology into business value.",
+    "exp_3_company": "ASMPT (Advanced Semiconductor Materials Pacific Technology)",
+    "exp_3_date": "2009.10 - 2017.02",
+    "exp_3_role": "Mechanical Engineer / R&D Manager",
+    "exp_3_loc": "Chengdu / Singapore",
+    "exp_3_p1_title": "Phase I: Independent R&D Team (Chengdu, 2014 - 2017)",
+    "exp_3_p1_1": "Built and led a 7+ member cross-functional team, implementing Agile + Stage-Gate processes with 100% key milestone delivery rate.",
+    "exp_3_p1_2": "Supported German/Singapore teams on SIPLACE E/TX core component development, achieving 30μm accuracy and 4g acceleration.",
+    "exp_3_p1_3": "Collaborated on TCB/Laser Dicing equipment alignment systems, achieving 2μm ultra-high precision.",
+    "exp_3_p2_title": "Phase II: Singapore R&D Center (2011 - 2014)",
+    "exp_3_p2_1": "Responsible for SMT SPI equipment mechanical design (frame & conveyor) and collaborated on 15μm gantry alignment and optical systems.",
+    "exp_3_p2_2": "Led development of automated optical inspection for semiconductor wire bonders, delivering customized solutions for Malaysian clients.",
+    "exp_3_p2_3": "Collaborated on SMT printing equipment (15μm alignment) and led micro-wafer exposure equipment development (1μm precision).",
+    "exp_3_p3_title": "Phase III: Chengdu R&D Center (2009 - 2011)",
+    "exp_3_p3_1": "Designed CO₂/Fiber laser marking systems, resolving thermal structure and precision optical assembly challenges for micron-level marking.",
+    "exp_3_p3_2": "Collaborated on 40T/80T encapsulation molding press development (chassis & toggle design).",
+    "exp_3_p3_3": "Introduced top-down design and parametric methods, standardizing product series design and improving efficiency.",
+    "exp_4_company": "Chengdu Tool Research Institute (CTRI)",
+    "exp_4_date": "2009.07 - 2009.10",
+    "exp_4_role": "Mechanical Engineer",
+    "exp_4_loc": "Chengdu",
+    "exp_4_1": "Designed customized special cutting tools, drafting full sets of part, assembly, and process drawings.",
+    "exp_4_2": "Managed full lifecycle from client communication to delivery, developing new processes and fixtures to improve efficiency.",
+    "exp_4_3": "Mastered the full R&D-to-delivery lifecycle, laying the foundation for precision manufacturing.",
+    "section_edu": "Education & Skills",
+    "edu_title": "Education",
+    "edu_school": "Southwest University of Science and Technology",
+    "edu_degree": "B.Eng in Mechanical Design & Automation",
+    "edu_loc": "Mianyang | 2009",
+    "hobby_title": "Interests",
+    "hobby_1": "Hiking",
+    "hobby_2": "Mechatronics DIY",
+    "hobby_3": "3D Printing",
+    "hobby_4": "Wood Carving",
+    "hobby_5": "Interior Design",
+    "hobby_desc": "Passionate about hands-on practice, continuously integrating DIY innovative thinking into precision manufacturing process optimization.",
+    "tool_design": "Design Tools",
+    "tool_data": "Project & Data Tools",
+    "section_contact": "Contact",
+    "contact_info_title": "Information",
+    "contact_email": "Email",
+    "contact_loc": "Location",
+    "contact_obj": "Career Objective",
+    "contact_obj_1": "R&D Manufacturing Director | Supply Chain Technical Director",
+    "contact_obj_2": "Smart Mfg Equipment Expert | Consumer Electronics NPI Lead",
+    "msg_title": "Send Message",
+    "msg_name": "Name",
+    "msg_email": "Email",
+    "msg_content": "Message",
+    "msg_send": "Send Message",
+    "footer_desc": "High-Precision Smart Manufacturing Expert | 16 Years Exp."
   }
 }
