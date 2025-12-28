@@ -3,22 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>简历双语后台 (V3 Stable)</title>
+    <title>简历双语后台 (V4 Ultimate)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <style>
-        /* 样式优化 */
+        /* 样式保持不变 */
         body { background-color: #f8fafc; color: #334155; }
         .json-editor-input { width: 100%; padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 0.375rem; font-size: 0.875rem; transition: all 0.2s; background: #fff; }
         .json-editor-input:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
-        
         .field-label { display: block; font-size: 0.7rem; font-weight: 700; color: #64748b; text-transform: uppercase; margin-bottom: 0.35rem; letter-spacing: 0.05em; }
-        
-        /* 数组容器 */
         .array-container { border: 1px solid #e2e8f0; background-color: #f1f5f9; padding: 0.75rem; border-radius: 0.5rem; margin-bottom: 0.75rem; position: relative; }
         .array-container:hover { border-color: #94a3b8; box-shadow: 0 2px 5px rgba(0,0,0,0.05); background-color: #fff; }
-        
-        /* 滚动条美化 */
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
@@ -30,7 +25,7 @@
     <div class="bg-white shadow-sm z-50 px-6 py-3 border-b border-gray-200 shrink-0">
         <div class="flex flex-col md:flex-row justify-between items-center max-w-[1920px] mx-auto gap-4">
             <h1 class="font-bold text-gray-800 text-lg flex items-center gap-2">
-                <i class="fa fa-database text-blue-600"></i> Resume CMS <span class="text-xs font-normal text-gray-400 bg-gray-100 px-2 rounded">V3.0</span>
+                <i class="fa fa-database text-blue-600"></i> Resume CMS <span class="text-xs font-normal text-gray-400 bg-gray-100 px-2 rounded">V4.0</span>
             </h1>
             
             <div class="flex items-center gap-2 text-sm bg-blue-50 px-3 py-1.5 rounded text-blue-800 border border-blue-100">
@@ -43,10 +38,10 @@
                 <input id="gh_repo" type="text" placeholder="仓库名称" class="border border-gray-300 p-1.5 rounded text-sm w-32 focus:border-blue-500 outline-none placeholder-gray-400">
                 <input id="gh_token" type="password" placeholder="Token" class="border border-gray-300 p-1.5 rounded text-sm w-40 focus:border-blue-500 outline-none placeholder-gray-400">
                 
-                <button onclick="initLoad()" id="btn-load" class="bg-slate-700 text-white px-4 py-1.5 rounded text-sm hover:bg-slate-800 transition flex items-center gap-2 shadow-sm">
+                <button id="btn-load" class="bg-slate-700 text-white px-4 py-1.5 rounded text-sm hover:bg-slate-800 transition flex items-center gap-2 shadow-sm cursor-pointer">
                     <i class="fa fa-download"></i> 读取
                 </button>
-                <button onclick="commitChanges()" id="btn-save" class="bg-green-600 text-white px-5 py-1.5 rounded text-sm font-bold hover:bg-green-700 transition shadow-sm flex items-center gap-2">
+                <button id="btn-save" class="bg-green-600 text-white px-5 py-1.5 rounded text-sm font-bold hover:bg-green-700 transition shadow-sm flex items-center gap-2 cursor-pointer">
                     <i class="fa fa-floppy-o"></i> 保存
                 </button>
             </div>
@@ -96,4 +91,357 @@
         let fileSha = ""; 
         const STORAGE_KEYS = ['gh_owner', 'gh_repo', 'gh_token'];
 
-        //
+        // 常用图标库
+        const ICON_LIST = [
+            "", "fa-cogs", "fa-user", "fa-briefcase", "fa-graduation-cap", "fa-wrench", 
+            "fa-leaf", "fa-line-chart", "fa-users", "fa-flask", "fa-tasks", 
+            "fa-heart", "fa-star", "fa-check", "fa-envelope", "fa-phone", 
+            "fa-linkedin", "fa-github", "fa-wechat", "fa-facebook", "fa-sitemap",
+            "fa-file-text-o", "fa-calendar", "fa-map-marker"
+        ];
+
+        // 初始化
+        window.onload = function() {
+            console.log("Admin Panel Loaded");
+            
+            // 恢复配置
+            STORAGE_KEYS.forEach(key => {
+                const val = localStorage.getItem(key);
+                if(val) document.getElementById(key).value = val;
+            });
+
+            // 绑定按钮事件 (比 onclick 更稳定)
+            const loadBtn = document.getElementById('btn-load');
+            const saveBtn = document.getElementById('btn-save');
+
+            if(loadBtn) {
+                loadBtn.addEventListener('click', initLoad);
+                console.log("Load button bound");
+            }
+            if(saveBtn) {
+                saveBtn.addEventListener('click', commitChanges);
+                console.log("Save button bound");
+            }
+        };
+
+        // --- 1. 读取数据 (Load) ---
+        async function initLoad() {
+            console.log("Button Clicked: Init Load"); // 调试日志
+            
+            const owner = document.getElementById('gh_owner').value.trim();
+            const repo = document.getElementById('gh_repo').value.trim();
+            const token = document.getElementById('gh_token').value.trim();
+
+            // 保存配置
+            if(owner) localStorage.setItem('gh_owner', owner);
+            if(repo) localStorage.setItem('gh_repo', repo);
+            if(token) localStorage.setItem('gh_token', token);
+
+            updateStatus("正在连接...", "text-blue-600");
+            setLoading(true);
+
+            try {
+                let jsonContent = "";
+                
+                // 优先尝试 GitHub API
+                if (owner && repo && token) {
+                    console.log(`Fetching from GitHub: ${owner}/${repo}`);
+                    // 添加时间戳防止缓存
+                    const url = `https://api.github.com/repos/${owner}/${repo}/contents/data.json?t=${new Date().getTime()}`;
+                    const res = await fetch(url, { 
+                        headers: { 
+                            'Authorization': `token ${token}`,
+                            'Accept': 'application/vnd.github.v3+json'
+                        } 
+                    });
+                    
+                    if (!res.ok) {
+                        if(res.status === 404) throw new Error("GitHub 上未找到 data.json");
+                        if(res.status === 401) throw new Error("Token 无效");
+                        throw new Error(`API 错误 (${res.status})`);
+                    }
+
+                    const data = await res.json();
+                    fileSha = data.sha;
+                    jsonContent = decodeURIComponent(escape(window.atob(data.content.replace(/\n/g, ""))));
+                    updateStatus("✅ GitHub 数据加载成功", "text-green-600 font-bold");
+                } 
+                // 回退到本地 data.json
+                else {
+                    console.log("Fetching local data.json");
+                    const res = await fetch('./data.json');
+                    if(!res.ok) throw new Error("无法读取本地 data.json，且未提供 GitHub 配置");
+                    jsonContent = await res.text();
+                    fileSha = ""; 
+                    updateStatus("⚠️ 预览模式 (本地数据)", "text-orange-500 font-bold");
+                }
+
+                try {
+                    appData = JSON.parse(jsonContent);
+                } catch(e) {
+                    throw new Error("JSON 格式错误，无法解析");
+                }
+
+                // 确保根节点存在
+                if(!appData.zh) appData.zh = {};
+                if(!appData.en) appData.en = {};
+
+                refreshUI();
+
+            } catch (e) {
+                console.error(e);
+                updateStatus(`❌ 加载失败: ${e.message}`, "text-red-600 font-bold");
+                alert(`加载失败:\n${e.message}`);
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        // --- 2. 界面刷新 ---
+        function refreshUI() {
+            const zhBox = document.getElementById('container-zh');
+            const enBox = document.getElementById('container-en');
+            
+            zhBox.innerHTML = '';
+            enBox.innerHTML = '';
+
+            zhBox.appendChild(renderFieldRecursive(appData.zh, ['zh']));
+            enBox.appendChild(renderFieldRecursive(appData.en, ['en']));
+        }
+
+        // --- 3. 递归渲染核心 (安全版) ---
+        function renderFieldRecursive(data, path) {
+            const wrapper = document.createElement('div');
+            wrapper.className = "space-y-4";
+
+            // A. 数组 (Array)
+            if (Array.isArray(data)) {
+                data.forEach((item, idx) => {
+                    const card = document.createElement('div');
+                    card.className = "array-container group";
+
+                    const header = document.createElement('div');
+                    header.className = "flex justify-between items-center mb-3 pb-2 border-b border-gray-200 border-dashed";
+                    header.innerHTML = `<span class="text-[10px] font-bold text-gray-400 bg-white px-2 py-0.5 rounded border">ITEM #${idx + 1}</span>`;
+
+                    const delBtn = document.createElement('button');
+                    delBtn.className = "text-gray-400 hover:text-red-600 transition text-xs font-bold px-2 py-1 rounded hover:bg-red-50";
+                    delBtn.innerHTML = '<i class="fa fa-trash-o"></i> 删除';
+                    delBtn.onclick = () => modifyArray('delete', path, idx);
+
+                    header.appendChild(delBtn);
+                    card.appendChild(header);
+                    card.appendChild(renderFieldRecursive(item, [...path, idx]));
+                    wrapper.appendChild(card);
+                });
+
+                const addBtn = document.createElement('button');
+                addBtn.className = "w-full py-2.5 border-2 border-dashed border-gray-300 rounded-lg text-gray-400 hover:border-blue-500 hover:text-blue-600 hover:bg-blue-50 text-xs font-bold transition uppercase tracking-wider flex items-center justify-center gap-2";
+                addBtn.innerHTML = '<i class="fa fa-plus"></i> Add New Item';
+                addBtn.onclick = () => modifyArray('add', path);
+                wrapper.appendChild(addBtn);
+            } 
+            
+            // B. 对象 (Object)
+            else if (typeof data === 'object' && data !== null) {
+                const isRoot = path.length === 1;
+                const container = isRoot ? wrapper : document.createElement('div');
+                if (!isRoot) container.className = "pl-3 border-l-2 border-gray-200 ml-1";
+
+                Object.keys(data).forEach(key => {
+                    const fieldGroup = document.createElement('div');
+                    fieldGroup.className = "mb-4";
+
+                    if (typeof data[key] === 'object' && data[key] !== null && !Array.isArray(data[key])) {
+                        const title = document.createElement('h4');
+                        title.className = "text-xs font-bold text-blue-800 bg-blue-50/80 p-1.5 rounded mb-3 mt-5 uppercase tracking-wide border-l-4 border-blue-500";
+                        title.innerText = formatKey(key);
+                        fieldGroup.appendChild(title);
+                    } else {
+                        const label = document.createElement('label');
+                        label.className = "field-label";
+                        label.innerText = formatKey(key);
+                        fieldGroup.appendChild(label);
+                    }
+
+                    fieldGroup.appendChild(renderFieldRecursive(data[key], [...path, key]));
+                    container.appendChild(fieldGroup);
+                });
+
+                if (!isRoot) wrapper.appendChild(container);
+            } 
+            
+            // C. 基础类型 (String / Number)
+            else {
+                // *** 绝对安全：将 key 转为字符串 ***
+                const rawKey = path[path.length - 1];
+                const keyStr = String(rawKey).toLowerCase(); 
+
+                let input;
+
+                // C1. 图标
+                if (keyStr === 'icon') {
+                    input = document.createElement('select');
+                    input.className = "json-editor-input bg-gray-50 cursor-pointer text-xs h-9";
+                    ICON_LIST.forEach(icon => {
+                        const opt = document.createElement('option');
+                        opt.value = icon;
+                        opt.text = icon || "No Icon";
+                        if (data === icon) opt.selected = true;
+                        input.appendChild(opt);
+                    });
+                }
+                // C2. 长文本
+                else if (typeof data === 'string' && (data.length > 50 || ['desc', 'summary', 'items', 'details', 'list'].some(k => keyStr.includes(k)))) {
+                    input = document.createElement('textarea');
+                    input.className = "json-editor-input leading-relaxed";
+                    input.rows = 5;
+                    input.value = data || "";
+                } 
+                // C3. 普通输入
+                else {
+                    input = document.createElement('input');
+                    input.type = typeof data === 'number' ? 'number' : 'text';
+                    input.className = "json-editor-input h-9";
+                    input.value = (data === null || data === undefined) ? "" : data;
+                }
+
+                input.onchange = (e) => {
+                    let val = e.target.value;
+                    if (typeof data === 'number') val = Number(val);
+                    updateDataByPath(path, val);
+                };
+                wrapper.appendChild(input);
+            }
+            return wrapper;
+        }
+
+        // --- 4. 数组增删逻辑 ---
+        function modifyArray(action, path, idx) {
+            const syncMode = document.getElementById('sync-structure').checked;
+            executeAction(appData, path, action, idx);
+
+            if (syncMode) {
+                const mirrorPath = [...path];
+                mirrorPath[0] = (mirrorPath[0] === 'zh') ? 'en' : 'zh';
+                if (isValidArrayPath(appData, mirrorPath)) {
+                    executeAction(appData, mirrorPath, action, idx);
+                }
+            }
+            refreshUI();
+        }
+
+        function executeAction(root, path, action, idx) {
+            let target = root;
+            for (let k of path) target = target[k];
+
+            if (action === 'delete') {
+                if (target[idx] !== undefined) target.splice(idx, 1);
+            } else if (action === 'add') {
+                let template = {};
+                if (target.length > 0) {
+                    template = JSON.parse(JSON.stringify(target[0]));
+                    clearValues(template);
+                } else {
+                    template = { title: "New Item", desc: "" };
+                }
+                target.push(template);
+            }
+        }
+
+        // --- 5. 保存数据 (Commit) ---
+        async function commitChanges() {
+            const owner = document.getElementById('gh_owner').value.trim();
+            const repo = document.getElementById('gh_repo').value.trim();
+            const token = document.getElementById('gh_token').value.trim();
+
+            if (!owner || !repo || !token) return alert("配置缺失: 请检查 Github 设置");
+            if (!fileSha) return alert("请先读取数据再保存");
+
+            updateStatus("提交中...", "text-blue-600");
+            setLoading(true);
+
+            try {
+                const contentStr = JSON.stringify(appData, null, 2);
+                const contentBase64 = window.btoa(unescape(encodeURIComponent(contentStr)));
+                const url = `https://api.github.com/repos/${owner}/${repo}/contents/data.json`;
+                
+                const body = {
+                    message: "Update via Admin V4",
+                    content: contentBase64,
+                    sha: fileSha
+                };
+
+                const res = await fetch(url, {
+                    method: 'PUT',
+                    headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body)
+                });
+
+                if (res.ok) {
+                    const data = await res.json();
+                    fileSha = data.content.sha;
+                    updateStatus("✅ 保存成功", "text-green-600 font-bold");
+                    alert("保存成功！请等待 GitHub Pages 构建更新。");
+                } else {
+                    const err = await res.json();
+                    throw new Error(err.message);
+                }
+            } catch (e) {
+                console.error(e);
+                updateStatus(`❌ 保存失败: ${e.message}`, "text-red-600");
+                alert(`保存失败: ${e.message}`);
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        // --- 辅助函数 ---
+        function updateDataByPath(path, val) {
+            let target = appData;
+            for (let i = 0; i < path.length - 1; i++) target = target[path[i]];
+            target[path[path.length - 1]] = val;
+        }
+
+        function clearValues(obj) {
+            if (typeof obj !== 'object' || obj === null) return;
+            Object.keys(obj).forEach(k => {
+                if (typeof obj[k] === 'string') obj[k] = "";
+                else if (typeof obj[k] === 'number') obj[k] = 0;
+                else if (Array.isArray(obj[k])) obj[k] = [];
+                else clearValues(obj[k]);
+            });
+        }
+
+        function isValidArrayPath(root, path) {
+            let t = root;
+            for (let k of path) {
+                if (t[k] === undefined) return false;
+                t = t[k];
+            }
+            return Array.isArray(t);
+        }
+
+        function formatKey(key) { return key.replace(/_/g, ' '); }
+
+        function updateStatus(msg, cls) {
+            const el = document.getElementById('status-bar');
+            el.textContent = msg;
+            el.className = `text-center text-xs mt-1 font-mono h-4 transition-all ${cls}`;
+            if (!cls.includes('red')) setTimeout(() => { el.textContent = "Ready"; el.className = "text-center text-xs mt-1 font-mono h-4 text-gray-400"; }, 5000);
+        }
+
+        function setLoading(isLoading) {
+            const loadBtn = document.getElementById('btn-load');
+            const saveBtn = document.getElementById('btn-save');
+            if(isLoading) {
+                loadBtn.disabled = true; loadBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                saveBtn.disabled = true; saveBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            } else {
+                loadBtn.disabled = false; loadBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                saveBtn.disabled = false; saveBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+        }
+    </script>
+</body>
+</html>
