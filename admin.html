@@ -3,56 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>简历双语后台 (V5 对齐同步版)</title>
+    <title>简历双语后台 (V6 折叠增强版)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <style>
-        /* 全局样式 */
-        body { background-color: #f1f5f9; color: #334155; height: 100vh; display: flex; flex-direction: column; }
+        /* 全局设定 */
+        body { background-color: #eef2f6; color: #334155; height: 100vh; display: flex; flex-direction: column; font-family: 'Segoe UI', Roboto, sans-serif; }
         
-        /* 输入框样式 */
-        .json-input { width: 100%; padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 0.25rem; font-size: 0.875rem; background: #fff; transition: all 0.2s; }
-        .json-input:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 2px rgba(59,130,246,0.1); }
-        textarea.json-input { min-height: 80px; line-height: 1.5; resize: vertical; }
-
-        /* 布局网格 */
-        .dual-row { display: flex; width: 100%; border-bottom: 1px solid #e2e8f0; background: #fff; }
-        .dual-row:last-child { border-bottom: none; }
-        .dual-row:hover { background-color: #f8fafc; }
-        
-        .col-left { width: 50%; padding: 1rem; border-right: 1px solid #e2e8f0; position: relative; }
-        .col-right { width: 50%; padding: 1rem; position: relative; }
-
-        /* 标签 */
-        .field-label { display: block; font-size: 0.7rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; margin-bottom: 0.4rem; letter-spacing: 0.05em; }
-
-        /* 数组容器 */
-        .array-wrapper { margin: 1rem 0; border: 1px solid #cbd5e1; border-radius: 0.5rem; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
-        .array-header { background: #e2e8f0; padding: 0.5rem 1rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; font-weight: bold; color: #475569; }
-
-        /* 滚动条 */
+        /* 滚动条美化 */
         ::-webkit-scrollbar { width: 10px; height: 10px; }
-        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 5px; border: 2px solid #f1f1f1; }
         ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        /* 输入框样式 */
+        .json-input { width: 100%; padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 14px; background: #fff; transition: all 0.2s; }
+        .json-input:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 2px rgba(59,130,246,0.1); }
+        textarea.json-input { min-height: 60px; resize: vertical; line-height: 1.4; }
+
+        /* 基础行布局 (Leaf Node) */
+        .leaf-row { display: flex; width: 100%; border-bottom: 1px solid #f1f5f9; background: #fff; align-items: flex-start; }
+        .leaf-row:hover { background-color: #f8fafc; }
+        .col-left, .col-right { width: 50%; padding: 8px 12px; position: relative; }
+        .col-left { border-right: 1px solid #f1f5f9; }
+        
+        /* 标签样式 */
+        .field-key { display: block; font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.5px; }
+
+        /* 容器/节点样式 (Container Node) */
+        .node-container { border: 1px solid #e2e8f0; border-radius: 6px; margin-bottom: 10px; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.03); overflow: hidden; }
+        
+        /* 节点头部 (Header) */
+        .node-header { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 8px 12px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; 
+            cursor: pointer; user-select: none; transition: background 0.2s;
+        }
+        .node-header:hover { background: #f1f5f9; }
+        .node-title { font-weight: 600; font-size: 13px; color: #475569; display: flex; align-items: center; gap: 8px; }
+        .node-meta { font-size: 12px; color: #94a3b8; font-weight: normal; margin-left: 8px; }
+        
+        /* 节点内容区 (Body) */
+        .node-body { padding: 0; display: block; }
+        .node-body.collapsed { display: none; }
+
+        /* 层级缩进视觉 */
+        .depth-0 { margin: 10px; }
+        .depth-1 { margin: 8px 10px; border-left: 3px solid #3b82f6; } /* 蓝色左边条 */
+        .depth-2 { margin: 8px 0px 8px 12px; border-left: 3px solid #10b981; } /* 绿色左边条 */
+        .depth-3 { margin: 8px 0px 8px 12px; border-left: 3px solid #8b5cf6; } /* 紫色左边条 */
+
+        /* 按钮 */
+        .btn-icon { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; border-radius: 4px; color: #64748b; transition: all 0.2s; }
+        .btn-icon:hover { background: #e2e8f0; color: #334155; }
+        .btn-add { width: 100%; padding: 8px; text-align: center; font-size: 12px; font-weight: bold; color: #3b82f6; background: #feffff; border-top: 1px dashed #cbd5e1; transition: background 0.2s; }
+        .btn-add:hover { background: #eff6ff; }
+
     </style>
 </head>
-<body class="font-sans">
+<body>
 
-    <div class="bg-white shadow z-50 px-6 py-3 border-b border-gray-200 shrink-0">
+    <div class="bg-white shadow z-50 px-4 py-3 border-b border-gray-200 shrink-0">
         <div class="flex flex-col md:flex-row justify-between items-center max-w-[1920px] mx-auto gap-4">
             <h1 class="font-bold text-gray-800 text-lg flex items-center gap-2">
-                <i class="fa fa-columns text-blue-600"></i> 双语后台 <span class="text-xs bg-blue-100 text-blue-700 px-2 rounded">V5 Sync</span>
+                <i class="fa fa-folder-open text-blue-600"></i> 双语后台 <span class="text-xs bg-blue-100 text-blue-700 px-2 rounded">V6 Foldable</span>
             </h1>
             
-            <div class="flex items-center gap-2 text-sm bg-yellow-50 px-3 py-1 rounded text-yellow-800 border border-yellow-200" title="在此模式下，两边结构强制锁定，确保高度对齐">
-                <i class="fa fa-lock"></i>
-                <span class="font-bold text-xs">结构同步锁定 (Structure Locked)</span>
+            <div class="flex items-center gap-4 text-xs">
+                 <button onclick="toggleAll(true)" class="text-gray-500 hover:text-blue-600 font-medium"><i class="fa fa-expand"></i> 全部展开</button>
+                 <button onclick="toggleAll(false)" class="text-gray-500 hover:text-blue-600 font-medium"><i class="fa fa-compress"></i> 全部折叠</button>
             </div>
 
             <div class="flex flex-wrap gap-2 items-center">
-                <input id="gh_owner" type="text" placeholder="GitHub User" class="border border-gray-300 p-1.5 rounded text-sm w-28 focus:border-blue-500 outline-none">
-                <input id="gh_repo" type="text" placeholder="Repo Name" class="border border-gray-300 p-1.5 rounded text-sm w-28 focus:border-blue-500 outline-none">
+                <input id="gh_owner" type="text" placeholder="GitHub User" class="border border-gray-300 p-1.5 rounded text-sm w-24 focus:border-blue-500 outline-none">
+                <input id="gh_repo" type="text" placeholder="Repo Name" class="border border-gray-300 p-1.5 rounded text-sm w-24 focus:border-blue-500 outline-none">
                 <input id="gh_token" type="password" placeholder="Token" class="border border-gray-300 p-1.5 rounded text-sm w-32 focus:border-blue-500 outline-none">
                 
                 <button id="btn-load" class="bg-slate-700 text-white px-4 py-1.5 rounded text-sm hover:bg-slate-800 transition flex items-center gap-2 shadow-sm cursor-pointer">
@@ -66,34 +90,32 @@
         <div id="status-bar" class="text-center text-xs mt-1 font-mono h-4 text-transparent transition-colors duration-300">Ready</div>
     </div>
 
-    <div class="flex w-full max-w-[1920px] mx-auto bg-gray-50 border-b border-gray-200 shrink-0 text-sm font-bold text-gray-600">
-        <div class="w-1/2 px-6 py-2 border-r border-gray-200 flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-blue-500"></span> 中文 (Chinese)
+    <div class="flex w-full max-w-[1920px] mx-auto bg-gray-50 border-b border-gray-200 shrink-0 text-xs font-bold text-gray-500 uppercase tracking-wider sticky top-0 z-10 shadow-sm">
+        <div class="w-1/2 px-4 py-2 border-r border-gray-200 text-center">
+            <span class="inline-block w-2 h-2 rounded-full bg-blue-500 mr-1"></span> 中文 (ZH)
         </div>
-        <div class="w-1/2 px-6 py-2 flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-purple-500"></span> 英文 (English)
+        <div class="w-1/2 px-4 py-2 text-center">
+            <span class="inline-block w-2 h-2 rounded-full bg-green-500 mr-1"></span> 英文 (EN)
         </div>
     </div>
 
-    <div class="flex-1 overflow-y-auto bg-gray-100 scroll-smooth">
-        <div class="max-w-[1920px] mx-auto bg-white shadow-sm min-h-full pb-32" id="editor-root">
-            <div class="flex flex-col items-center justify-center h-96 text-gray-400">
-                <i class="fa fa-cloud-download text-5xl mb-4 opacity-30"></i>
-                <p>请配置 GitHub 信息并点击“读取”</p>
+    <div class="flex-1 overflow-y-auto bg-gray-100/50">
+        <div class="max-w-[1920px] mx-auto min-h-full pb-32 p-4" id="editor-root">
+            <div class="flex flex-col items-center justify-center h-80 text-gray-400">
+                <i class="fa fa-cube text-4xl mb-3 opacity-20"></i>
+                <p>等待读取数据...</p>
             </div>
         </div>
     </div>
 
     <script>
-        // --- Global State ---
+        // --- 核心状态 ---
         let appData = {};
         let fileSha = "";
         const STORAGE_KEYS = ['gh_owner', 'gh_repo', 'gh_token'];
-
-        // Icons
         const ICON_LIST = ["", "fa-cogs", "fa-user", "fa-briefcase", "fa-graduation-cap", "fa-wrench", "fa-leaf", "fa-line-chart", "fa-users", "fa-flask", "fa-tasks", "fa-heart", "fa-star", "fa-check", "fa-envelope", "fa-phone", "fa-linkedin", "fa-github", "fa-wechat", "fa-facebook", "fa-sitemap", "fa-file-text-o", "fa-calendar", "fa-map-marker"];
 
-        // --- Initialization ---
+        // --- 初始化 ---
         window.onload = function() {
             STORAGE_KEYS.forEach(k => {
                 const v = localStorage.getItem(k);
@@ -103,7 +125,7 @@
             document.getElementById('btn-save').addEventListener('click', commitChanges);
         };
 
-        // --- 1. Load Data ---
+        // --- 1. 读取数据 ---
         async function initLoad() {
             const owner = document.getElementById('gh_owner').value.trim();
             const repo = document.getElementById('gh_repo').value.trim();
@@ -128,293 +150,326 @@
                     updateStatus("✅ Loaded from GitHub", "text-green-600 font-bold");
                 } else {
                     const res = await fetch('./data.json');
-                    if(!res.ok) throw new Error("Local file not found");
+                    if(!res.ok) throw new Error("Local file error");
                     jsonContent = await res.text();
                     fileSha = "";
-                    updateStatus("⚠️ Preview Mode (Local)", "text-orange-500 font-bold");
+                    updateStatus("⚠️ Preview Mode", "text-orange-500 font-bold");
                 }
 
                 appData = JSON.parse(jsonContent);
+                // 确保根结构
                 if(!appData.zh) appData.zh = {};
                 if(!appData.en) appData.en = {};
 
                 renderUI();
             } catch (e) {
                 console.error(e);
-                updateStatus(`❌ Error: ${e.message}`, "text-red-600 font-bold");
+                updateStatus(`Error: ${e.message}`, "text-red-600 font-bold");
                 alert(e.message);
             } finally {
                 setLoading(false);
             }
         }
 
-        // --- 2. Render UI (The V5 Logic) ---
+        // --- 2. 渲染 UI (递归生成器) ---
         function renderUI() {
             const root = document.getElementById('editor-root');
             root.innerHTML = '';
-            
-            // 我们不分别渲染两棵树，而是调用“双路渲染器”
-            // 它会同时遍历 ZH 和 EN 对象，生成对齐的行
-            root.appendChild(renderDualRecursive(appData.zh, appData.en, []));
+            // 从根节点开始，深度为 0
+            root.appendChild(renderRecursive(appData.zh, appData.en, [], 0));
         }
 
-        // --- 3. Dual Recursive Renderer (The Magic) ---
-        // 同时接收 zhData 和 enData，生成一个 DOM 节点
-        function renderDualRecursive(zhData, enData, path) {
+        /**
+         * 递归渲染核心函数
+         * @param {any} zh - 中文数据片段
+         * @param {any} en - 英文数据片段
+         * @param {Array} path - 当前数据路径 key 数组
+         * @param {Number} depth - 当前嵌套深度 (用于样式缩进)
+         */
+        function renderRecursive(zh, en, path, depth) {
+            // 1. 如果是基础值 (字符串/数字)，渲染双栏输入行
+            if (isPrimitive(zh) || isPrimitive(en)) {
+                return renderLeafRow(zh, en, path);
+            }
+
+            // 2. 如果是数组，渲染可增删的列表容器
+            if (Array.isArray(zh) || Array.isArray(en)) {
+                return renderArrayContainer(zh, en, path, depth);
+            }
+
+            // 3. 如果是对象，渲染可折叠的对象容器
+            if (isObject(zh) || isObject(en)) {
+                return renderObjectContainer(zh, en, path, depth);
+            }
+
+            return document.createElement('div'); // 空回退
+        }
+
+        // --- A. 渲染对象容器 (Object) ---
+        function renderObjectContainer(zhObj = {}, enObj = {}, path, depth) {
             const container = document.createElement('div');
-            container.className = "w-full";
-
-            // Case A: 数组 (Array)
-            // 假设 zhData 和 enData 都是数组 (或者其中一个是 undefined)
-            if (Array.isArray(zhData) || Array.isArray(enData)) {
-                const zhArr = Array.isArray(zhData) ? zhData : [];
-                const enArr = Array.isArray(enData) ? enData : [];
-                
-                // 取最大长度，确保显示所有项
-                const maxLen = Math.max(zhArr.length, enArr.length);
-
-                for (let i = 0; i < maxLen; i++) {
-                    const wrapper = document.createElement('div');
-                    wrapper.className = "array-wrapper mx-4";
-                    
-                    // 数组项 Header (横跨整行)
-                    const header = document.createElement('div');
-                    header.className = "array-header";
-                    header.innerHTML = `<span>ITEM #${i + 1}</span>`;
-                    
-                    const delBtn = document.createElement('button');
-                    delBtn.className = "text-red-500 hover:text-red-700 hover:bg-red-50 px-2 rounded transition";
-                    delBtn.innerHTML = '<i class="fa fa-trash"></i> 删除 (Delete)';
-                    delBtn.onclick = () => {
-                        if(confirm('确定删除此项吗? (Delete this item?)')) {
-                            modifyDualArray('delete', path, i);
-                        }
-                    };
-                    header.appendChild(delBtn);
-                    wrapper.appendChild(header);
-
-                    // 递归渲染内部内容 (zhArr[i] vs enArr[i])
-                    // 这里不需要 padding，因为内部的 renderDualRecursive 会生成 dual-row
-                    const contentBox = document.createElement('div');
-                    contentBox.appendChild(renderDualRecursive(zhArr[i], enArr[i], [...path, i]));
-                    
-                    wrapper.appendChild(contentBox);
-                    container.appendChild(wrapper);
-                }
-
-                // 添加按钮 (横跨整行)
-                const addRow = document.createElement('div');
-                addRow.className = "p-4 flex justify-center border-b border-dashed border-gray-300";
-                const addBtn = document.createElement('button');
-                addBtn.className = "bg-blue-50 text-blue-600 border border-blue-200 px-6 py-2 rounded-full text-sm font-bold hover:bg-blue-100 transition shadow-sm";
-                addBtn.innerHTML = '<i class="fa fa-plus-circle"></i> 添加新项 (Add New Item)';
-                addBtn.onclick = () => modifyDualArray('add', path);
-                addRow.appendChild(addBtn);
-                container.appendChild(addRow);
+            // 根对象(depth 0)不需要外框，直接渲染内容
+            if (depth === 0) {
+                 const keys = getCombinedKeys(zhObj, enObj);
+                 keys.forEach(key => {
+                     // 递归渲染每一个 key
+                     container.appendChild(renderRecursive(zhObj[key], enObj[key], [...path, key], depth + 1));
+                 });
+                 return container;
             }
 
-            // Case B: 对象 (Object)
-            else if (isObject(zhData) || isObject(enData)) {
-                const zhObj = isObject(zhData) ? zhData : {};
-                const enObj = isObject(enData) ? enData : {};
-                
-                // 获取所有 Key 的并集
-                const keys = new Set([...Object.keys(zhObj), ...Object.keys(enObj)]);
-                
-                keys.forEach(key => {
-                    // 1. 如果子项是深层结构（对象或数组），渲染为标题区域
-                    const isComplex = isComplexStructure(zhObj[key]) || isComplexStructure(enObj[key]);
-                    
-                    if (isComplex) {
-                        const titleRow = document.createElement('div');
-                        titleRow.className = "bg-gray-100 p-2 font-bold text-xs text-gray-500 uppercase tracking-widest border-b border-t border-gray-200 text-center mt-2";
-                        titleRow.innerText = formatKey(key);
-                        container.appendChild(titleRow);
-                        
-                        container.appendChild(renderDualRecursive(zhObj[key], enObj[key], [...path, key]));
-                    } 
-                    // 2. 如果是基础值，渲染为左右对照行
-                    else {
-                        const row = document.createElement('div');
-                        row.className = "dual-row";
+            // 非根对象，渲染为折叠卡片
+            container.className = `node-container depth-${Math.min(depth, 3)}`;
 
-                        // 左侧 (ZH)
-                        const leftCol = document.createElement('div');
-                        leftCol.className = "col-left";
-                        leftCol.appendChild(createLabel(key));
-                        leftCol.appendChild(createInput(zhObj[key], [...path, key], 'zh')); // 标记源是 zh
-                        row.appendChild(leftCol);
-
-                        // 右侧 (EN)
-                        const rightCol = document.createElement('div');
-                        rightCol.className = "col-right";
-                        rightCol.appendChild(createLabel(key));
-                        rightCol.appendChild(createInput(enObj[key], [...path, key], 'en')); // 标记源是 en
-                        row.appendChild(rightCol);
-
-                        container.appendChild(row);
-                    }
-                });
-            }
+            // 头部
+            const header = document.createElement('div');
+            header.className = "node-header";
+            const currentKey = path[path.length - 1];
+            const titleText = formatKey(currentKey);
             
-            // Case C: 基础值混入 (Fallback)
-            // 通常不会直接走到这，除非结构定义不规范，忽略即可
+            // 默认展开状态
+            let isCollapsed = false; 
+
+            header.innerHTML = `
+                <div class="node-title">
+                    <i class="fa fa-folder-open text-blue-500 icon-state"></i> 
+                    <span>${titleText}</span>
+                </div>
+                <div class="node-meta text-xs text-gray-400">Object</div>
+            `;
             
+            // 内容体
+            const body = document.createElement('div');
+            body.className = "node-body";
+            
+            // 填充内容
+            const keys = getCombinedKeys(zhObj, enObj);
+            keys.forEach(key => {
+                body.appendChild(renderRecursive(zhObj[key], enObj[key], [...path, key], depth + 1));
+            });
+
+            // 点击折叠/展开
+            header.onclick = (e) => {
+                // 如果点击的是按钮等交互元素，不触发折叠
+                if(e.target.tagName === 'BUTTON' || e.target.closest('button')) return;
+                
+                isCollapsed = !isCollapsed;
+                body.classList.toggle('collapsed', isCollapsed);
+                const icon = header.querySelector('.icon-state');
+                icon.className = isCollapsed ? 'fa fa-folder text-gray-400 icon-state' : 'fa fa-folder-open text-blue-500 icon-state';
+            };
+
+            container.appendChild(header);
+            container.appendChild(body);
             return container;
         }
 
-        // --- 4. Input Generators ---
-        function createLabel(text) {
-            const label = document.createElement('label');
-            label.className = "field-label";
-            label.innerText = formatKey(text);
-            return label;
+        // --- B. 渲染数组容器 (Array) ---
+        function renderArrayContainer(zhArr = [], enArr = [], path, depth) {
+            const container = document.createElement('div');
+            container.className = `node-container depth-${Math.min(depth, 3)}`;
+            
+            const currentKey = path[path.length - 1] || "List";
+            let isCollapsed = false;
+
+            // Header
+            const header = document.createElement('div');
+            header.className = "node-header";
+            header.innerHTML = `
+                <div class="node-title">
+                    <i class="fa fa-list text-purple-500 icon-state"></i>
+                    <span>${formatKey(currentKey)}</span>
+                    <span class="bg-gray-200 text-gray-600 px-2 py-0.5 rounded-full text-[10px] ml-2">${Math.max(zhArr.length, enArr.length)} Items</span>
+                </div>
+                <div class="flex gap-2">
+                    <button class="btn-icon text-gray-400 hover:text-blue-500 toggle-btn"><i class="fa fa-chevron-up"></i></button>
+                </div>
+            `;
+
+            // Body
+            const body = document.createElement('div');
+            body.className = "node-body";
+
+            const maxLen = Math.max(zhArr.length, enArr.length);
+            for (let i = 0; i < maxLen; i++) {
+                const itemContainer = document.createElement('div');
+                itemContainer.className = "border-b border-gray-100 last:border-0";
+                
+                // --- 数组项的折叠头部 (Item Header) ---
+                // 这里做一个微型头部，方便折叠具体某一项工作经历
+                const itemHeader = document.createElement('div');
+                itemHeader.className = "flex justify-between items-center bg-gray-50 px-3 py-1 border-b border-gray-100 cursor-pointer hover:bg-gray-100";
+                
+                // 智能获取标题 (尝试找 company, title, name, school 等字段)
+                const labelZh = getSmartLabel(zhArr[i]);
+                const labelEn = getSmartLabel(enArr[i]);
+                const itemTitle = labelZh || labelEn || `Item #${i+1}`;
+
+                itemHeader.innerHTML = `
+                    <div class="text-xs font-bold text-gray-500 flex items-center gap-2">
+                        <i class="fa fa-caret-down transition-transform item-caret"></i> 
+                        ${itemTitle}
+                    </div>
+                    <button class="text-red-400 hover:text-red-600 text-xs px-2 py-1" title="Delete">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                `;
+
+                const itemBody = document.createElement('div');
+                // 递归渲染内容
+                itemBody.appendChild(renderRecursive(zhArr[i], enArr[i], [...path, i], depth + 1));
+
+                // 数组单项折叠逻辑
+                let itemCollapsed = false;
+                itemHeader.onclick = (e) => {
+                    if(e.target.closest('button')) { // 删除按钮逻辑
+                         if(confirm(`Delete ${itemTitle}?`)) modifyDualArray('delete', path, i);
+                         return;
+                    }
+                    itemCollapsed = !itemCollapsed;
+                    itemBody.style.display = itemCollapsed ? 'none' : 'block';
+                    itemHeader.querySelector('.item-caret').style.transform = itemCollapsed ? 'rotate(-90deg)' : 'rotate(0deg)';
+                };
+
+                itemContainer.appendChild(itemHeader);
+                itemContainer.appendChild(itemBody);
+                body.appendChild(itemContainer);
+            }
+
+            // Add Button
+            const addBtn = document.createElement('button');
+            addBtn.className = "btn-add";
+            addBtn.innerHTML = `<i class="fa fa-plus-circle"></i> Add New Item to ${formatKey(currentKey)}`;
+            addBtn.onclick = () => modifyDualArray('add', path);
+
+            // 容器折叠逻辑
+            header.onclick = (e) => {
+                if(e.target.closest('button')) return; // ignore buttons
+                isCollapsed = !isCollapsed;
+                body.classList.toggle('collapsed', isCollapsed);
+                addBtn.style.display = isCollapsed ? 'none' : 'block';
+                const icon = header.querySelector('.icon-state');
+                icon.className = isCollapsed ? 'fa fa-list text-gray-400 icon-state' : 'fa fa-list text-purple-500 icon-state';
+                header.querySelector('.toggle-btn').innerHTML = isCollapsed ? '<i class="fa fa-chevron-down"></i>' : '<i class="fa fa-chevron-up"></i>';
+            };
+
+            container.appendChild(header);
+            container.appendChild(body);
+            container.appendChild(addBtn);
+            return container;
         }
 
-        function createInput(value, path, lang) {
-            const rawKey = path[path.length - 1];
-            const keyStr = String(rawKey).toLowerCase();
+        // --- C. 渲染叶子节点 (Leaf Input Row) ---
+        function renderLeafRow(zhVal, enVal, path) {
+            const row = document.createElement('div');
+            row.className = "leaf-row";
+            const key = path[path.length - 1];
+
+            // Left Col (ZH)
+            const left = document.createElement('div');
+            left.className = "col-left";
+            left.appendChild(createLabel(key));
+            left.appendChild(createInput(zhVal, [...path], 'zh'));
+            
+            // Right Col (EN)
+            const right = document.createElement('div');
+            right.className = "col-right";
+            right.appendChild(createLabel(key));
+            right.appendChild(createInput(enVal, [...path], 'en'));
+
+            row.appendChild(left);
+            row.appendChild(right);
+            return row;
+        }
+
+        // --- Helper Components ---
+        function createLabel(key) {
+            const el = document.createElement('span');
+            el.className = "field-key";
+            el.innerText = formatKey(key);
+            return el;
+        }
+
+        function createInput(val, fullPath, lang) {
+            const key = String(fullPath[fullPath.length - 1]).toLowerCase();
             let input;
 
-            // Type 1: Icon Select
-            if (keyStr === 'icon') {
+            // Icon Select
+            if (key === 'icon') {
                 input = document.createElement('select');
                 input.className = "json-input cursor-pointer bg-gray-50";
                 ICON_LIST.forEach(ic => {
                     const opt = document.createElement('option');
                     opt.value = ic;
                     opt.text = ic || "No Icon";
-                    if (value === ic) opt.selected = true;
+                    if (val === ic) opt.selected = true;
                     input.appendChild(opt);
                 });
             } 
-            // Type 2: Textarea
-            else if (typeof value === 'string' && (value.length > 40 || ['desc', 'summary', 'items', 'list', 'details'].some(k => keyStr.includes(k)))) {
+            // Textarea
+            else if (typeof val === 'string' && (val.length > 40 || ['desc','summary','items','list','details'].some(k => key.includes(k)))) {
                 input = document.createElement('textarea');
                 input.className = "json-input";
-                input.value = value || "";
-            }
-            // Type 3: Standard Input
+                input.value = val || "";
+            } 
+            // Input
             else {
                 input = document.createElement('input');
-                input.type = typeof value === 'number' ? 'number' : 'text';
+                input.type = typeof val === 'number' ? 'number' : 'text';
                 input.className = "json-input";
-                input.value = (value === undefined || value === null) ? "" : value;
+                input.value = (val === undefined || val === null) ? "" : val;
             }
 
-            // Bind Change Event
             input.onchange = (e) => {
-                let val = e.target.value;
-                if (typeof value === 'number') val = Number(val);
-                
-                // Update Global Data
-                // 注意：这里我们需要根据 lang 决定去更新 appData.zh 还是 appData.en
-                // path 现在的结构是 [key1, key2...] (不包含 'zh'/'en' 前缀)
-                // 所以我们需要构造完整路径
-                const fullPath = [lang, ...path];
-                updateDataByPath(fullPath, val);
+                let v = e.target.value;
+                if(typeof val === 'number') v = Number(v);
+                // 这里我们要根据 lang 找到 appData.zh 或 appData.en
+                // fullPath 不包含 'zh'/'en'，所以要组合
+                updateData([lang, ...fullPath], v);
             };
-
             return input;
         }
 
-        // --- 5. Logic: Array Sync Add/Delete ---
+        // --- Logic Helpers ---
         function modifyDualArray(action, path, idx) {
-            // 对 appData.zh 和 appData.en 同时操作
-            const zhTarget = getTarget(appData.zh, path);
-            const enTarget = getTarget(appData.en, path);
-
-            // 必须确保两边都是数组，如果有一边是 undefined，先初始化为 []
-            if(!Array.isArray(zhTarget)) setTarget(appData.zh, path, []);
-            if(!Array.isArray(enTarget)) setTarget(appData.en, path, []);
+            const zhArr = getTarget(appData.zh, path) || [];
+            const enArr = getTarget(appData.en, path) || [];
             
-            const zhArr = getTarget(appData.zh, path);
-            const enArr = getTarget(appData.en, path);
+            // 确保是数组
+            if(!Array.isArray(zhArr)) setTarget(appData.zh, path, []);
+            if(!Array.isArray(enArr)) setTarget(appData.en, path, []);
+
+            // 重新获取引用
+            const targetZh = getTarget(appData.zh, path);
+            const targetEn = getTarget(appData.en, path);
 
             if (action === 'delete') {
-                if (zhArr[idx] !== undefined) zhArr.splice(idx, 1);
-                if (enArr[idx] !== undefined) enArr.splice(idx, 1);
+                if (targetZh[idx] !== undefined) targetZh.splice(idx, 1);
+                if (targetEn[idx] !== undefined) targetEn.splice(idx, 1);
             } 
             else if (action === 'add') {
-                // Template Cloning (From ZH side preference)
+                // Clone template
                 let tpl = {};
-                if (zhArr.length > 0) tpl = cloneClean(zhArr[0]);
-                else if (enArr.length > 0) tpl = cloneClean(enArr[0]);
-                else tpl = { title: "New Item", desc: "" }; // Fallback
+                if (targetZh.length) tpl = cloneClean(targetZh[0]);
+                else if (targetEn.length) tpl = cloneClean(targetEn[0]);
+                else tpl = { title: "New", desc: "" };
 
-                zhArr.push(JSON.parse(JSON.stringify(tpl)));
-                enArr.push(JSON.parse(JSON.stringify(tpl)));
+                targetZh.push(JSON.parse(JSON.stringify(tpl)));
+                targetEn.push(JSON.parse(JSON.stringify(tpl)));
             }
-
-            renderUI(); // Re-render complete tree
+            renderUI();
         }
 
-        // --- 6. Saving ---
-        async function commitChanges() {
-            if (!fileSha) return alert("Please load data first.");
-            updateStatus("Saving...", "text-blue-600");
-            setLoading(true);
-            
-            try {
-                const owner = document.getElementById('gh_owner').value;
-                const repo = document.getElementById('gh_repo').value;
-                const token = document.getElementById('gh_token').value;
-                
-                const content = window.btoa(unescape(encodeURIComponent(JSON.stringify(appData, null, 2))));
-                const body = {
-                    message: "Update via Admin V5 Sync",
-                    content: content,
-                    sha: fileSha
-                };
-                
-                const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/data.json`, {
-                    method: 'PUT',
-                    headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' },
-                    body: JSON.stringify(body)
-                });
-                
-                if(!res.ok) throw new Error((await res.json()).message);
-                
-                const json = await res.json();
-                fileSha = json.content.sha;
-                updateStatus("✅ Saved Successfully", "text-green-600 font-bold");
-                alert("Saved!");
-            } catch(e) {
-                alert(e.message);
-                updateStatus("❌ Save Failed", "text-red-600");
-            } finally {
-                setLoading(false);
+        function getSmartLabel(obj) {
+            if (!obj || typeof obj !== 'object') return null;
+            // 优先查找这些字段作为标题
+            const priorities = ['company', 'school', 'title', 'name', 'group', 'role'];
+            for (let k of priorities) {
+                if (obj[k] && typeof obj[k] === 'string') return obj[k];
             }
+            return null;
         }
 
-        // --- Helpers ---
-        function getTarget(root, path) {
-            let t = root;
-            for(let k of path) {
-                if(t[k] === undefined) return undefined;
-                t = t[k];
-            }
-            return t;
-        }
-
-        function setTarget(root, path, val) {
-            let t = root;
-            for(let i=0; i<path.length-1; i++) {
-                if(!t[path[i]]) t[path[i]] = {}; // Auto-create path
-                t = t[path[i]];
-            }
-            t[path[path.length-1]] = val;
-        }
-
-        function updateDataByPath(fullPath, val) {
-            let t = appData;
-            for(let i=0; i<fullPath.length-1; i++) t = t[fullPath[i]];
-            t[fullPath[fullPath.length-1]] = val;
-        }
-
-        function isObject(v) { return typeof v === 'object' && v !== null && !Array.isArray(v); }
-        function isComplexStructure(v) { return typeof v === 'object' && v !== null; }
-        
         function cloneClean(obj) {
             if (typeof obj !== 'object' || obj === null) return obj;
             const newObj = Array.isArray(obj) ? [] : {};
@@ -426,11 +481,75 @@
             return newObj;
         }
 
+        function updateData(fullPath, val) {
+            let t = appData;
+            for(let i=0; i<fullPath.length-1; i++) {
+                if(t[fullPath[i]] === undefined) t[fullPath[i]] = {};
+                t = t[fullPath[i]];
+            }
+            t[fullPath[fullPath.length-1]] = val;
+        }
+
+        function getTarget(root, path) {
+            let t = root;
+            for(let k of path) {
+                if(t === undefined) return undefined;
+                t = t[k];
+            }
+            return t;
+        }
+        function setTarget(root, path, val) {
+            let t = root;
+            for(let i=0; i<path.length-1; i++) {
+                if(!t[path[i]]) t[path[i]] = {};
+                t = t[path[i]];
+            }
+            t[path[path.length-1]] = val;
+        }
+        function getCombinedKeys(o1, o2) { return Array.from(new Set([...Object.keys(o1||{}), ...Object.keys(o2||{})])); }
+        function isPrimitive(v) { return typeof v === 'string' || typeof v === 'number' || v === null || v === undefined; }
+        function isObject(v) { return typeof v === 'object' && v !== null && !Array.isArray(v); }
         function formatKey(k) { return String(k).replace(/_/g, ' '); }
+        
+        // --- Global Toggles ---
+        function toggleAll(expand) {
+            document.querySelectorAll('.node-body').forEach(el => el.classList.toggle('collapsed', !expand));
+            document.querySelectorAll('.item-caret').forEach(el => el.style.transform = expand ? 'rotate(0deg)' : 'rotate(-90deg)');
+            // 重新手动控制 display，因为 itemBody 是通过内联 style 控制的
+            // 这里为了简单，触发一次整体重绘可能更方便，或者遍历修改 style
+            renderUI(); // 简单粗暴重绘，重置默认状态(默认是展开)
+        }
+
+        // --- Saving ---
+        async function commitChanges() {
+            if (!fileSha) return alert("Please load data first.");
+            updateStatus("Saving...", "text-blue-600");
+            setLoading(true);
+            try {
+                const owner = document.getElementById('gh_owner').value;
+                const repo = document.getElementById('gh_repo').value;
+                const token = document.getElementById('gh_token').value;
+                const content = window.btoa(unescape(encodeURIComponent(JSON.stringify(appData, null, 2))));
+                
+                const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/data.json`, {
+                    method: 'PUT',
+                    headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: "Update via Admin V6", content, sha: fileSha })
+                });
+                
+                if(!res.ok) throw new Error((await res.json()).message);
+                const json = await res.json();
+                fileSha = json.content.sha;
+                updateStatus("✅ Saved Successfully", "text-green-600 font-bold");
+                alert("Saved!");
+            } catch(e) {
+                alert(e.message);
+                updateStatus("❌ Save Failed", "text-red-600");
+            } finally { setLoading(false); }
+        }
+
         function updateStatus(msg, cls) { 
-            const el = document.getElementById('status-bar'); 
-            el.textContent = msg; 
-            el.className = `text-center text-xs mt-1 font-mono h-4 transition-all ${cls}`;
+            const el = document.getElementById('status-bar'); el.textContent = msg; el.className = `text-center text-xs mt-1 font-mono h-4 transition-all ${cls}`;
             if(!cls.includes('red')) setTimeout(()=>el.textContent="Ready", 4000);
         }
         function setLoading(b) {
