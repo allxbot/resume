@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>简历双语后台 (Split View)</title>
+    <title>简历双语后台 (Split View - Fixed)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <style>
@@ -160,7 +160,7 @@
             enContainer.appendChild(buildRecursive(fullData.en, ['en']));
         }
 
-        // --- 3. 递归构建器 ---
+        // --- 3. 递归构建器 (Fixed: keyName string conversion) ---
         function buildRecursive(data, path) {
             const wrapper = document.createElement('div');
             wrapper.className = "space-y-4";
@@ -227,7 +227,8 @@
             } 
             // C. 基础值 (String/Number)
             else {
-                const keyName = path[path.length - 1];
+                // *** 修复重点 *** // 强制转换为 String，因为如果是数组索引，keyName 会是数字，调用 .includes 会报错
+                const keyName = String(path[path.length - 1]);
                 let input;
 
                 // C1. 图标选择
@@ -242,8 +243,8 @@
                         input.appendChild(opt);
                     });
                 }
-                // C2. 长文本 (自动检测)
-                else if (typeof data === 'string' && (data.length > 50 || ['desc','summary','items'].some(k=>keyName.includes(k)))) {
+                // C2. 长文本 (自动检测: 字符串且长度>50 或 key包含指定关键词)
+                else if (typeof data === 'string' && (data.length > 50 || ['desc','summary','items','details'].some(k => keyName.includes(k)))) {
                     input = document.createElement('textarea');
                     input.className = "json-editor-input";
                     input.rows = 4;
