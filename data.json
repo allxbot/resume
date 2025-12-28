@@ -44,7 +44,13 @@
       ]
     },
     "ui": {
-      "nav": ["个人概述", "核心能力", "工作经历", "教育背景", "联系方式"],
+      "nav": [
+        "个人概述",
+        "核心能力",
+        "工作经历",
+        "教育背景",
+        "联系方式"
+      ],
       "buttons": {
         "contact": "联系我",
         "exp": "查看经历",
@@ -81,8 +87,22 @@
     },
     "skills": {
       "chart": {
-        "labels": ["自动化产线设计", "DFM/MFD工艺优化", "智能工厂规划", "跨国团队管理", "半导体封装工艺", "数据分析与优化"],
-        "data": [95, 90, 85, 88, 82, 80]
+        "labels": [
+          "自动化产线设计",
+          "DFM/MFD工艺优化",
+          "智能工厂规划",
+          "跨国团队管理",
+          "半导体封装工艺",
+          "数据分析与优化"
+        ],
+        "data": [
+          95,
+          90,
+          85,
+          88,
+          82,
+          80
+        ]
       },
       "card_groups": [
         {
@@ -224,18 +244,42 @@
     ],
     "hobbies": {
       "desc": "爱好动手实践，持续将DIY创新思维融入精密制造工艺优化。",
-      "items": ["徒步爬山", "电子机械DIY", "3D打印", "木工雕刻", "装修设计"]
+      "items": [
+        "徒步爬山",
+        "电子机械DIY",
+        "3D打印",
+        "木工雕刻",
+        "装修设计"
+      ]
     },
     "tools": [
       {
         "group": "设计工具",
         "icon": "fa-wrench",
-        "list": ["UG NX", "Solid Edge", "SolidWorks", "AutoCAD", "CAE", "E-Plan", "GD&T"]
+        "list": [
+          "UG NX",
+          "Solid Edge",
+          "SolidWorks",
+          "AutoCAD",
+          "CAE",
+          "E-Plan",
+          "GD&T"
+        ]
       },
       {
         "group": "项目与数据工具",
         "icon": "fa-tasks",
-        "list": ["Agile PLM", "SharePoint", "Office", "JMP", "Tableau", "Python", "HTML", "SPC", "NUDD"]
+        "list": [
+          "Agile PLM",
+          "SharePoint",
+          "Office",
+          "JMP",
+          "Tableau",
+          "Python",
+          "HTML",
+          "SPC",
+          "NUDD"
+        ]
       }
     ]
   },
@@ -284,7 +328,13 @@
       ]
     },
     "ui": {
-      "nav": ["Profile", "Skills", "Experience", "Education", "Contact"],
+      "nav": [
+        "Profile",
+        "Skills",
+        "Experience",
+        "Education",
+        "Contact"
+      ],
       "buttons": {
         "contact": "Contact Me",
         "exp": "View Experience",
@@ -321,8 +371,22 @@
     },
     "skills": {
       "chart": {
-        "labels": ["Auto Line Design", "DFM/MFD Optimization", "Smart Factory Planning", "Global Team Mgmt", "Semi Packaging Process", "Data Analysis & Opt"],
-        "data": [95, 90, 85, 88, 82, 80]
+        "labels": [
+          "Auto Line Design",
+          "DFM/MFD Optimization",
+          "Smart Factory Planning",
+          "Global Team Mgmt",
+          "Semi Packaging Process",
+          "Data Analysis & Opt"
+        ],
+        "data": [
+          95,
+          90,
+          85,
+          88,
+          82,
+          80
+        ]
       },
       "card_groups": [
         {
@@ -464,18 +528,41 @@
     ],
     "hobbies": {
       "desc": "Passionate about hands-on practice, continuously integrating DIY innovative thinking into precision manufacturing process optimization.",
-      "items": ["Hiking", "Mechatronics DIY", "3D Printing", "Wood Carving", "Interior Design"]
+      "items": [
+        "Hiking",
+        "Mechatronics DIY",
+        "3D Printing",
+        "Wood Carving",
+        "Interior Design"
+      ]
     },
     "tools": [
       {
         "group": "Design Tools",
         "icon": "fa-wrench",
-        "list": ["UG NX", "SolidWorks", "Solid Edge", "AutoCAD", "CAE", "E-Plan", "GD&T"]
+        "list": [
+          "UG NX",
+          "SolidWorks",
+          "Solid Edge",
+          "AutoCAD",
+          "CAE",
+          "E-Plan",
+          "GD&T"
+        ]
       },
       {
         "group": "Project & Data Tools",
         "icon": "fa-tasks",
-        "list": ["Agile PLM", "SharePoint", "Office", "JMP", "Tableau", "Python", "HTML", "SPC"]
+        "list": [
+          "Agile PLM",
+          "SharePoint",
+          "Office",
+          "JMP",
+          "Tableau",
+          "Python",
+          "HTML",
+          "SPC"
+        ]
       }
     ]
   }
