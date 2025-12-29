@@ -65,6 +65,10 @@
         "contact": "联系方式",
         "contact_info": "联系信息"
       },
+      "contact_labels": {
+        "email": "邮箱",
+        "location": "所在地"
+      },
       "contact_form": {
         "title": "发送消息",
         "label_name": "您的姓名",
@@ -379,6 +383,10 @@
         "education": "Education & Skills",
         "contact": "Contact",
         "contact_info": "Contact Info"
+      },
+      "contact_labels": {
+        "email": "Email",
+        "location": "Location"
       },
       "contact_form": {
         "title": "Send Message",
