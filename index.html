@@ -113,9 +113,10 @@
         </div>
     </section>
 
-    <section id="contact" class="py-16 bg-white print:py-5 scroll-mt-20">
+    <section id="contact" class="py-20 bg-white print:py-5 scroll-mt-20">
         <div class="container mx-auto px-4 md:px-6">
-            <div class="max-w-4xl mx-auto bg-blue-50/50 p-8 md:p-12 rounded-2xl border border-blue-100 print:border" id="contact-area"></div>
+            <div class="text-center mb-12"><h2 class="text-3xl font-bold text-gray-800 mb-2" id="t-contact"></h2><div class="w-16 h-1 bg-primary mx-auto rounded"></div></div>
+            <div class="max-w-3xl mx-auto bg-gray-50 p-8 rounded-xl shadow-sm print:border print:bg-white print:p-4" id="contact-area"></div>
         </div>
     </section>
 
@@ -299,24 +300,51 @@
                 </div>
             `).join('');
 
-            // 7. Contact
+            // 7. Contact (Updated)
+            document.getElementById('t-contact').textContent = ui.section_titles.contact;
+            const cf = ui.contact_form || { title: "Message", label_name: "Name", label_email: "Email", label_msg: "Message", btn_send: "Send" }; // Fallback
+
             document.getElementById('contact-area').innerHTML = `
-                 <div class="flex flex-col md:flex-row justify-between gap-10 items-center md:items-start">
-                    <div class="space-y-6 w-full md:w-auto">
-                        <div class="flex items-center gap-4 bg-white p-4 rounded-xl shadow-sm border border-blue-100">
-                            <div class="w-12 h-12 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center text-xl"><i class="fa fa-envelope"></i></div>
-                            <div><div class="text-xs text-gray-400 uppercase font-bold tracking-wider">Email</div><div class="font-medium text-gray-800">${basic.email}</div></div>
-                        </div>
-                        <div class="flex items-center gap-4 bg-white p-4 rounded-xl shadow-sm border border-blue-100">
-                            <div class="w-12 h-12 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center text-xl"><i class="fa fa-map-marker"></i></div>
-                            <div><div class="text-xs text-gray-400 uppercase font-bold tracking-wider">Location</div><div class="font-medium text-gray-800">${basic.location}</div></div>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="font-semibold text-xl text-gray-700 mb-6">${ui.section_titles.contact_info}</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-start gap-4">
+                                <div class="bg-primary/10 p-3 rounded-full text-primary print:border print:bg-white"><i class="fa fa-envelope"></i></div>
+                                <div><h4 class="font-medium text-gray-700">Email</h4><p class="text-gray-500">${basic.email}</p></div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <div class="bg-primary/10 p-3 rounded-full text-primary print:border print:bg-white"><i class="fa fa-map-marker"></i></div>
+                                <div><h4 class="font-medium text-gray-700">Location</h4><p class="text-gray-500">${basic.location}</p></div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <div class="bg-primary/10 p-3 rounded-full text-primary print:border print:bg-white"><i class="fa fa-briefcase"></i></div>
+                                <div><h4 class="font-medium text-gray-700">${basic.objective.label}</h4>${basic.objective.items.map(o => `<p class="text-gray-500">${o}</p>`).join('')}</div>
+                            </div>
                         </div>
                     </div>
-                    <div class="text-center md:text-right max-w-md">
-                        <h4 class="text-xs font-bold text-blue-400 uppercase tracking-widest mb-3">${basic.objective.label}</h4>
-                        ${basic.objective.items.map(o => `<p class="text-xl md:text-2xl font-bold text-gray-800 mb-1 leading-tight">${o}</p>`).join('')}
+                    
+                    <div class="print:hidden">
+                        <h3 class="font-semibold text-xl text-gray-700 mb-6">${cf.title}</h3>
+                        <form class="space-y-4" onsubmit="event.preventDefault(); alert('${currentLang === 'zh' ? '演示模式：功能开发中' : 'Demo Mode: Under Development'}')">
+                            <div>
+                                <label class="block text-gray-600 mb-2 text-sm">${cf.label_name}</label>
+                                <input type="text" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors">
+                            </div>
+                            <div>
+                                <label class="block text-gray-600 mb-2 text-sm">${cf.label_email}</label>
+                                <input type="email" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors">
+                            </div>
+                            <div>
+                                <label class="block text-gray-600 mb-2 text-sm">${cf.label_msg}</label>
+                                <textarea rows="4" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors"></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-primary hover:bg-primary/90 text-white py-3 rounded-lg transition-colors flex items-center justify-center gap-2">
+                                <i class="fa fa-paper-plane"></i> <span>${cf.btn_send}</span>
+                            </button>
+                        </form>
                     </div>
-                 </div>
+                </div>
             `;
 
             document.getElementById('f-name').textContent = basic.name;
