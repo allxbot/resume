@@ -240,7 +240,7 @@
                 <div><div class="flex justify-between mb-1 text-sm font-semibold text-gray-700"><span>${l}</span><span class="text-primary">${chartData.data[i]}%</span></div><div class="progress-bar" style="--progress:${chartData.data[i]}%"></div></div>
             `).join('');
 
-            // 5. Experience (Mobile & Width Fixed)
+            // 5. Experience
             document.getElementById('t-exp').textContent = ui.section_titles.experience;
             document.getElementById('exp-list').innerHTML = data.experience.map((job, idx) => `
                 <div class="mb-12 relative group last:mb-0">
@@ -290,10 +290,20 @@
             `;
             document.getElementById('edu-col-left').innerHTML = `<h3 class="font-bold text-xl mb-6 text-gray-800 flex items-center gap-2"><i class="fa fa-graduation-cap text-primary"></i> Academic</h3>${eduHTML}${hobbiesHTML}`;
 
-            // 7. Contact (Updated)
+            // Right: Tools (Fixed & Restored)
+            document.getElementById('edu-col-right').innerHTML = data.tools.map(t => `
+                <div class="mb-8 last:mb-0">
+                    <h3 class="font-bold text-lg mb-4 flex items-center gap-2 text-gray-800"><i class="fa ${t.icon} text-primary"></i> ${t.group}</h3>
+                    <div class="grid grid-cols-2 gap-3">
+                        ${t.list.map(i => `<div class="bg-gray-50 px-3 py-2.5 rounded-lg text-sm flex items-center gap-2 text-gray-700 border border-gray-100 hover:border-primary/30 hover:bg-white hover:shadow-sm transition"><i class="fa fa-check text-primary/40 text-xs"></i>${i}</div>`).join('')}
+                    </div>
+                </div>
+            `).join('');
+
+            // 7. Contact (Updated Form & Labels)
             document.getElementById('t-contact').textContent = ui.section_titles.contact;
-            const cf = ui.contact_form || { title: "Message", label_name: "Name", label_email: "Email", label_msg: "Message", btn_send: "Send" }; // Fallback
-            const cl = ui.contact_labels || { email: "Email", location: "Location" }; // Fallback
+            const cf = ui.contact_form || { title: "Message", label_name: "Name", label_email: "Email", label_msg: "Message", btn_send: "Send" };
+            const cl = ui.contact_labels || { email: "Email", location: "Location" };
 
             document.getElementById('contact-area').innerHTML = `
                 <div class="grid md:grid-cols-2 gap-8">
