@@ -392,7 +392,7 @@
                     <td>${row.category}</td>
                     <td>${row.content}</td>
                 </tr>
-            `).join('') : '<tr><td colspan="2">No capability matrix data found in JSON.</td></tr>';
+            `).join('') : '<tr><td colspan="2">No capability matrix data found.</td></tr>';
 
             const toolsHtml = data.tools.map(t => `
                 <li><strong>${t.group}：</strong> ${t.list.join(', ')}</li>
@@ -508,7 +508,8 @@
 
             // Profile
             document.getElementById('t-profile').textContent = ui.section_titles.profile;
-            document.getElementById('profile-summary').textContent = data.profile.summary;
+            // 修正处：使用 innerHTML 以渲染 HTML 标签（加粗）
+            document.getElementById('profile-summary').innerHTML = data.profile.summary; 
             document.getElementById('profile-cards').innerHTML = data.profile.cards.map((c, i) => `
                 <div class="group bg-gray-50 rounded-2xl p-6 hover:bg-white hover:shadow-apple-hover transition-all duration-300 reveal-hidden" style="transition-delay: ${i*100}ms">
                     <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-lg mb-4 group-hover:scale-110 transition-transform"><i class="fa ${c.icon}"></i></div>
@@ -583,8 +584,8 @@
                         data: chartData.data, 
                         backgroundColor: 'rgba(0, 113, 227, 0.2)', 
                         borderColor: '#0071e3', 
-                        pointBackgroundColor: '#fff',
-                        pointBorderColor: '#0071e3',
+                        pointBackgroundColor: '#fff', 
+                        pointBorderColor: '#0071e3', 
                         borderWidth: 2 
                     }]
                 },
