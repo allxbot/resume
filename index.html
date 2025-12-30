@@ -46,118 +46,134 @@
         .tilt-container { perspective: 1000px; transform-style: preserve-3d; }
 
         /* =========================================
-           🖨️ A4 纯文本打印模式 (Markdown 风格适配)
+           🖨️ A4 打印终极优化 (Cross-Browser & Compact)
            ========================================= */
         #print-view { display: none; }
 
         @media print {
-            /* 1. 隐藏屏幕元素 */
+            /* 1. 隐藏所有屏幕元素 */
             #screen-view, header, #backToTop, #wechatModal, .no-print, .tilt-container { 
                 display: none !important; 
             }
 
-            /* 2. 显示打印视图 */
+            /* 2. 页面与容器设置 */
+            @page {
+                size: A4;
+                margin: 15mm 15mm; 
+            }
+
+            html, body {
+                width: 210mm; 
+                height: auto;
+                margin: 0 !important;
+                padding: 0 !important;
+                background-color: white !important;
+                color: #000 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                overflow: visible !important;
+            }
+
             #print-view { 
                 display: block !important; 
-                background-color: white;
-                color: #000;
-                font-family: "Inter", "Microsoft YaHei", sans-serif;
-                font-size: 10.5pt; /* 正文五号字大小 */
-                line-height: 1.4;
-                padding: 0 0.5cm; /* 左右留白 */
+                width: 100%;
+                font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", Helvetica, Arial, sans-serif;
+                font-size: 9.5pt; 
+                line-height: 1.35; 
+                text-align: justify; 
             }
 
-            @page { margin: 1.2cm 1.5cm; size: A4; }
-            
-            /* --- 关键修改 1：允许内容自动分页 --- */
-            section, .print-section { 
-                padding-top: 0 !important; 
-                padding-bottom: 0 !important; 
-                page-break-inside: auto !important; 
-                break-inside: auto !important;
-            }
-
-            /* 修改：不再强制单条经历不分页，允许切断 */
-            .no-break { 
-                page-break-inside: auto !important; 
-                break-inside: auto !important; 
-            }
-            
-            /* --- 排版细节 --- */
+            /* 3. 标题体系优化 */
             .print-h1 { 
                 font-size: 20pt; 
                 font-weight: bold; 
-                margin-bottom: 0.2rem; 
+                line-height: 1.2;
+                margin-bottom: 4pt; 
                 color: #000;
             }
+            
             .print-h2 { 
-                font-size: 14pt; 
+                font-size: 12pt; 
                 font-weight: bold; 
-                border-bottom: 2px solid #000; 
-                margin-top: 1.2rem; 
-                margin-bottom: 0.6rem; 
-                padding-bottom: 0.2rem;
-                page-break-after: avoid; /* 标题后不换页 */
-            }
-            .print-h3 {
-                font-size: 11pt;
-                font-weight: bold;
-                margin-top: 1rem;
-                margin-bottom: 0.2rem;
-                display: flex;
-                justify-content: space-between;
+                border-bottom: 1pt solid #000; 
+                margin-top: 10pt; 
+                margin-bottom: 4pt; 
+                padding-bottom: 2pt;
                 page-break-after: avoid; 
             }
-            .print-meta { font-size: 10pt; margin-bottom: 1.2rem; }
+
+            .print-h3 {
+                font-size: 10pt;
+                font-weight: bold;
+                margin-top: 6pt;
+                margin-bottom: 2pt;
+                display: flex;
+                justify-content: space-between;
+                page-break-after: avoid;
+            }
+
+            /* 4. 列表与表格紧凑化 */
+            .print-meta { 
+                font-size: 9pt; 
+                margin-bottom: 8pt; 
+                line-height: 1.4; 
+            }
             
             .print-table {
                 width: 100%;
                 border-collapse: collapse;
-                margin-bottom: 1rem;
-                font-size: 10pt;
-                page-break-inside: auto; /* 表格允许分页 */
+                margin-bottom: 8pt;
+                font-size: 9pt;
+                page-break-inside: auto; 
             }
             .print-table th, .print-table td {
-                border: 1px solid #000;
-                padding: 6px 8px;
+                border: 1pt solid #333; 
+                padding: 3pt 5pt; 
                 vertical-align: top;
-            }
-            .print-table th {
-                background-color: #f0f0f0 !important;
-                font-weight: bold;
-                text-align: left;
-                -webkit-print-color-adjust: exact;
             }
             .print-table td:first-child {
                 font-weight: bold;
                 white-space: nowrap; 
-                background-color: #fafafa;
-                width: 18%;
-                -webkit-print-color-adjust: exact;
+                background-color: #f2f2f2 !important; 
+                width: 1%; 
             }
 
             .print-list { 
                 list-style-type: disc; 
-                padding-left: 1.2rem; 
-                margin-top: 0.3rem;
+                padding-left: 1.2em; 
+                margin-top: 2pt;
+                margin-bottom: 0;
             }
-            .print-list li { margin-bottom: 0.2rem; }
+            .print-list li { margin-bottom: 2pt; }
             
+            /* 5. 经历部分优化 */
             .job-sub-row { 
                 font-weight: bold; 
-                font-size: 10.5pt; 
-                margin-bottom: 0.4rem;
+                font-size: 9.5pt; 
+                margin-bottom: 3pt;
                 display: flex; 
                 justify-content: space-between;
-                border-bottom: 1px dashed #ccc;
-                padding-bottom: 2px;
+                border-bottom: 0.5pt dashed #999;
+                padding-bottom: 2pt;
             }
             .job-phase-title {
                 font-weight: bold;
-                margin-top: 0.6rem;
-                margin-bottom: 0.2rem;
-                font-size: 10.5pt;
+                margin-top: 4pt;
+                margin-bottom: 2pt;
+                font-size: 9.5pt;
             }
+
+            /* 6. 分页控制 */
+            section, .print-section { 
+                page-break-inside: auto !important; 
+                break-inside: auto !important;
+            }
+            .no-break { 
+                page-break-inside: auto; 
+                break-inside: auto; 
+                margin-bottom: 8pt;
+            }
+            
             a { text-decoration: none !important; color: #000 !important; }
         }
 
@@ -172,7 +188,6 @@
             <div class="container mx-auto px-4 md:px-6">
                 <div class="flex justify-between items-center">
                     <a href="#" class="text-xl font-bold text-gray-900 tracking-tight flex items-center gap-2" id="nav-name"></a>
-                    
                     <div class="hidden md:flex items-center gap-1 px-2" id="nav-pill">
                         <nav class="flex text-sm font-medium text-gray-600 space-x-1" id="nav-menu-desktop"></nav>
                         <div class="w-px h-4 bg-gray-300 mx-3"></div>
@@ -180,14 +195,11 @@
                             <i class="fa fa-globe"></i> <span id="langLabel">EN</span>
                         </button>
                     </div>
-
                     <div class="flex items-center gap-4 md:hidden">
                         <button id="langSwitchMobile" class="border px-2 py-1 rounded text-xs font-medium hover:border-primary text-gray-600">
                             <span id="langLabelMobile">EN</span>
                         </button>
-                        <button id="mobile-menu-btn" class="text-gray-600 hover:text-black focus:outline-none transition p-1">
-                            <i class="fa fa-bars text-2xl"></i>
-                        </button>
+                        <button id="mobile-menu-btn" class="text-gray-600 hover:text-black focus:outline-none transition p-1"><i class="fa fa-bars text-2xl"></i></button>
                     </div>
                 </div>
                 <div id="mobile-menu" class="md:hidden border-t mt-3 border-gray-200/50">
@@ -198,7 +210,6 @@
 
         <section class="pt-40 pb-20 relative overflow-hidden print:pt-10">
             <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-gradient-to-b from-blue-50/80 to-transparent rounded-[100%] blur-3xl -z-10 opacity-60 print:hidden"></div>
-
             <div class="container mx-auto px-4 md:px-6 flex flex-col md:flex-row items-center gap-12 md:gap-20">
                 <div class="md:w-1/2 text-center md:text-left z-10">
                     <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight tracking-tight reveal-hidden" id="hero-name"></h1>
@@ -206,7 +217,6 @@
                     <div class="flex flex-wrap justify-center md:justify-start gap-3 mb-10 reveal-hidden" style="transition-delay: 200ms" id="hero-tags"></div>
                     <div class="flex flex-wrap justify-center md:justify-start gap-4 print:hidden reveal-hidden" style="transition-delay: 300ms" id="hero-btns"></div>
                 </div>
-                
                 <div class="md:w-1/2 flex justify-center tilt-container reveal-hidden" style="transition-delay: 200ms">
                     <div id="hero-tilt" class="relative w-64 h-64 md:w-80 md:h-80 transition-transform duration-100 ease-out cursor-pointer group">
                         <div class="absolute inset-0 rounded-full bg-gradient-to-tr from-blue-200 to-purple-200 blur-2xl opacity-40 group-hover:opacity-60 transition-opacity duration-500 print:hidden"></div>
@@ -224,9 +234,7 @@
 
         <section id="profile" class="py-20 bg-white/50 reveal-hidden print:py-5">
             <div class="container mx-auto px-4 md:px-6 max-w-5xl">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl font-bold text-gray-900" id="t-profile"></h2>
-                </div>
+                <div class="text-center mb-12"><h2 class="text-3xl font-bold text-gray-900" id="t-profile"></h2></div>
                 <div class="bg-white rounded-[2rem] p-8 md:p-12 shadow-apple border border-gray-100">
                     <p class="text-gray-600 mb-10 leading-relaxed text-lg" id="profile-summary"></p>
                     <div class="grid md:grid-cols-3 gap-6" id="profile-cards"></div>
@@ -236,9 +244,7 @@
 
         <section id="skills" class="py-20 reveal-hidden print:py-5 print:break-inside-avoid">
             <div class="container mx-auto px-4 md:px-6">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl font-bold text-gray-900" id="t-skills"></h2>
-                </div>
+                <div class="text-center mb-12"><h2 class="text-3xl font-bold text-gray-900" id="t-skills"></h2></div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6" id="skills-bento-container"></div>
             </div>
         </section>
@@ -284,9 +290,7 @@
                     <img id="modal-qr" src="" class="w-48 h-48 object-contain mix-blend-multiply">
                 </div>
                 <p class="text-gray-500 font-mono text-sm bg-gray-50 py-2 px-4 rounded-lg border border-gray-100 inline-block" id="modal-text"></p>
-                <div class="mt-8">
-                    <button onclick="document.getElementById('wechatModal').classList.add('hidden')" class="text-sm font-medium text-blue-600 hover:text-blue-700 hover:bg-blue-50 px-4 py-2 rounded-full transition">Close</button>
-                </div>
+                <div class="mt-8"><button onclick="document.getElementById('wechatModal').classList.add('hidden')" class="text-sm font-medium text-blue-600 hover:text-blue-700 hover:bg-blue-50 px-4 py-2 rounded-full transition">Close</button></div>
             </div>
         </div>
     </div>
@@ -305,7 +309,6 @@
         function updateNavbarStyle() {
             const isScrolled = window.scrollY > 50;
             const isMenuOpen = mobileMenu.classList.contains('open');
-
             if (isScrolled || isMenuOpen) {
                 navbar.classList.remove('py-4', 'bg-transparent');
                 navbar.classList.add('py-3', 'bg-white/90', 'backdrop-blur-xl', 'border-b', 'border-gray-200/50', 'shadow-sm');
@@ -313,7 +316,6 @@
                 navbar.classList.add('py-4', 'bg-transparent');
                 navbar.classList.remove('py-3', 'bg-white/90', 'backdrop-blur-xl', 'border-b', 'border-gray-200/50', 'shadow-sm');
             }
-
             if (window.scrollY > 300) {
                 backToTopBtn.classList.remove('opacity-0', 'invisible', 'translate-y-4');
                 backToTopBtn.classList.add('opacity-100', 'visible', 'translate-y-0');
@@ -324,15 +326,8 @@
         }
 
         window.addEventListener('scroll', updateNavbarStyle);
-
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('open');
-            updateNavbarStyle();
-        });
-
-        backToTopBtn.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
+        mobileMenuBtn.addEventListener('click', () => { mobileMenu.classList.toggle('open'); updateNavbarStyle(); });
+        backToTopBtn.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
 
         const heroTilt = document.getElementById('hero-tilt');
         if(heroTilt) {
@@ -344,9 +339,7 @@
                 const yRotation = (x - rect.width/2) / rect.width * 10;
                 heroTilt.style.transform = `rotateX(${xRotation}deg) rotateY(${yRotation}deg) scale(1.02)`;
             });
-            heroTilt.addEventListener('mouseleave', () => {
-                heroTilt.style.transform = 'rotateX(0) rotateY(0) scale(1)';
-            });
+            heroTilt.addEventListener('mouseleave', () => { heroTilt.style.transform = 'rotateX(0) rotateY(0) scale(1)'; });
         }
 
         const observer = new IntersectionObserver((entries) => {
@@ -380,11 +373,7 @@
                 const data = fullData[currentLang];
                 render(data);
                 renderPrintView(data, fullData[currentLang].ui); 
-                
-                setTimeout(() => {
-                    document.querySelectorAll('.reveal-hidden').forEach(el => observer.observe(el));
-                }, 100);
-
+                setTimeout(() => { document.querySelectorAll('.reveal-hidden').forEach(el => observer.observe(el)); }, 100);
             } catch(e) { console.error(e); }
         }
 
@@ -393,16 +382,14 @@
             const st = ui.section_titles;
             
             const separator = currentLang === 'zh' ? '；' : '; ';
-            const matrixRows = data.skills.card_groups.map(group => `
+            const matrixRows = (data.skills.card_groups || []).map(group => `
                 <tr>
                     <td style="font-weight: bold;">${group.title}</td>
                     <td>${group.items.join(separator)}</td>
                 </tr>
             `).join('');
 
-            const toolsHtml = data.tools.map(t => `
-                <li><strong>${t.group}：</strong> ${t.list.join(', ')}</li>
-            `).join('');
+            const toolsHtml = data.tools.map(t => `<li><strong>${t.group}：</strong> ${t.list.join(', ')}</li>`).join('');
 
             let html = `
                 <div class="print-h1">${basic.name}</div>
@@ -415,44 +402,27 @@
 
                 <div class="print-section">
                     <div class="print-h2">${st.profile}</div>
-                    <div style="text-align: justify;">
-                        ${data.profile.summary}
-                    </div>
+                    <div style="text-align: justify;">${data.profile.summary}</div>
                 </div>
 
                 <div class="print-section">
                     <div class="print-h2">${st.skills}</div>
                     <table class="print-table">
-                        <thead>
-                            <tr>
-                                <th width="18%">${currentLang === 'zh' ? '能力类别' : 'Category'}</th>
-                                <th>${currentLang === 'zh' ? '核心内容' : 'Core Competencies'}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${matrixRows}
-                        </tbody>
+                        <thead><tr><th width="18%">${currentLang === 'zh' ? '能力类别' : 'Category'}</th><th>${currentLang === 'zh' ? '核心内容' : 'Core Competencies'}</th></tr></thead>
+                        <tbody>${matrixRows}</tbody>
                     </table>
                 </div>
 
                 <div class="print-section">
                     <div class="print-h2">${st.experience}</div>
                     ${data.experience.map(exp => `
-                        <div class="no-break" style="margin-bottom: 1.2rem;">
-                            <div class="print-h3">
-                                <span>${exp.company}</span>
-                            </div>
-                            <div class="job-sub-row">
-                                <span>${exp.role}</span>
-                                <span>${exp.location} | ${exp.date}</span>
-                            </div>
-                            
+                        <div class="no-break">
+                            <div class="print-h3"><span>${exp.company}</span></div>
+                            <div class="job-sub-row"><span>${exp.role}</span><span>${exp.location} | ${exp.date}</span></div>
                             ${exp.projects.map(p => `
                                 <div style="margin-top: 0.5rem;">
                                     ${p.title ? `<div class="job-phase-title">${p.title}</div>` : ''}
-                                    <ul class="print-list">
-                                        ${p.details.map(d => `<li>${d}</li>`).join('')}
-                                    </ul>
+                                    <ul class="print-list">${p.details.map(d => `<li>${d}</li>`).join('')}</ul>
                                 </div>
                             `).join('')}
                         </div>
@@ -462,7 +432,7 @@
                 <div class="print-section no-break">
                     <div class="print-h2">${st.education}</div>
                     ${data.education.map(edu => `
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 10.5pt;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 9.5pt;">
                             <div><strong>${edu.school}</strong> | ${edu.degree}</div>
                             <div>${edu.location} | ${edu.date}</div>
                         </div>
@@ -477,7 +447,6 @@
                     </ul>
                 </div>
             `;
-            
             document.getElementById('print-view').innerHTML = html;
         }
 
@@ -486,12 +455,10 @@
             const ui = data.ui;
             const labelLang = currentLang === 'zh' ? 'EN' : '中文';
             
-            // 修正后的标题逻辑：Name - 简历 / Name - Resume
             document.title = `${basic.name} - ${currentLang === 'zh' ? '简历' : 'Resume'}`;
             
             document.getElementById('langLabel').textContent = labelLang;
             document.getElementById('langLabelMobile').textContent = labelLang;
-            
             document.getElementById('nav-name').textContent = basic.name;
             const links = ['profile','skills','experience','education','contact'];
             const navHTML = ui.nav.map((n, i) => `<a href="#${links[i]}" class="px-3 py-2 rounded-full hover:bg-gray-100 hover:text-black transition-colors" onclick="document.getElementById('mobile-menu').classList.remove('open'); updateNavbarStyle();">${n}</a>`).join('');
@@ -595,7 +562,7 @@
                             min: 0, max: 100, 
                             ticks: { display: true, stepSize: 20, backdropColor: 'transparent', font: { size: 10 }, color: '#999' },
                             grid: { color: '#f0f0f0' },
-                            pointLabels: { font: { size: 12, weight: '600', family: 'Inter' }, color: '#333' }
+                            pointLabels: { font: { size: 14, weight: '600', family: 'Inter' }, color: '#333' }
                         } 
                     }, 
                     plugins: { legend: { display: false }, tooltip: { callbacks: { label: (context) => context.raw + '%' } } } 
@@ -684,7 +651,7 @@
                         <input type="text" name="name" placeholder="${cf.label_name}" class="w-full px-5 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all" required>
                         <input type="email" name="email" placeholder="${cf.label_email}" class="w-full px-5 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all" required>
                         <textarea name="message" rows="4" placeholder="${cf.label_msg}" class="w-full px-5 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all" required></textarea>
-                        <button type="submit" class="w-full bg-black text-white py-3 rounded-xl font-medium hover:bg-gray-800 transition-all transform hover:scale-[1.02] shadow-lg shadow-black/20">${cf.btn_send}</button>
+                        <button type="submit" class="w-auto bg-black text-white px-8 py-3 rounded-xl font-medium hover:bg-gray-800 transition-all transform hover:scale-[1.02] shadow-lg shadow-black/20 inline-block">${cf.btn_send}</button>
                     </form>
                 </div>`;
 
