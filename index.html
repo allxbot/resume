@@ -99,7 +99,11 @@
             <div class="text-center mb-12"><h2 class="text-3xl font-bold text-gray-800 mb-2" id="t-skills"></h2><div class="w-16 h-1 bg-primary mx-auto rounded"></div></div>
             <div class="grid md:grid-cols-3 gap-6" id="skill-groups"></div>
             <div class="mt-12 bg-white p-6 md:p-10 rounded-2xl shadow-sm grid md:grid-cols-2 gap-10 items-center print:border print:break-inside-avoid">
-                <div class="flex justify-center w-full"><div class="w-full max-w-xs md:max-w-sm"><canvas id="skillsChart"></canvas></div></div>
+                <div class="flex justify-center w-full">
+                    <div class="w-full max-w-sm md:max-w-md">
+                        <canvas id="skillsChart"></canvas>
+                    </div>
+                </div>
                 <div class="space-y-5" id="chart-bars"></div>
             </div>
         </div>
@@ -156,33 +160,30 @@
         document.addEventListener('DOMContentLoaded', () => {
             loadResume();
             
-            // 桌面端语言切换
             document.getElementById('langSwitch').addEventListener('click', toggleLanguage);
-            // 移动端语言切换
             document.getElementById('langSwitchMobile').addEventListener('click', toggleLanguage);
-             // --- 滚动交互 ---
-        const navbar = document.getElementById('navbar');
-        const backToTop = document.getElementById('backToTop');
-        
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 100) {
-                navbar.classList.add('py-2', 'shadow');
-                navbar.classList.remove('py-3');
-                backToTop.classList.remove('opacity-0', 'invisible');
-                backToTop.classList.add('opacity-100', 'visible');
-            } else {
-                navbar.classList.add('py-3');
-                navbar.classList.remove('py-2', 'shadow');
-                backToTop.classList.add('opacity-0', 'invisible');
-                backToTop.classList.remove('opacity-100', 'visible');
-            }
-        });
 
-        backToTop.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
+            const navbar = document.getElementById('navbar');
+            const backToTop = document.getElementById('backToTop');
+            
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 100) {
+                    navbar.classList.add('py-2', 'shadow');
+                    navbar.classList.remove('py-3');
+                    backToTop.classList.remove('opacity-0', 'invisible');
+                    backToTop.classList.add('opacity-100', 'visible');
+                } else {
+                    navbar.classList.add('py-3');
+                    navbar.classList.remove('py-2', 'shadow');
+                    backToTop.classList.add('opacity-0', 'invisible');
+                    backToTop.classList.remove('opacity-100', 'visible');
+                }
+            });
+
+            backToTop.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
     
-            // 移动端菜单切换逻辑
             const btn = document.getElementById('mobile-menu-btn');
             const menu = document.getElementById('mobile-menu');
             btn.addEventListener('click', () => {
@@ -201,7 +202,6 @@
                 const res = await fetch('./data.json');
                 const fullData = await res.json();
                 
-                // 固定底部版权名为英文
                 if(fullData['en'] && fullData['en'].basic_info) {
                     document.getElementById('copyright-name').textContent = fullData['en'].basic_info.name;
                 }
@@ -212,12 +212,8 @@
 
         function render(data) {
             const basic = data.basic_info;
-            
-            // --- 核心修改：动态更新网页标题 ---
-            // 根据语言显示 "姓名 - 个人简历" 或 "Name - Resume"
             const titleSuffix = currentLang === 'zh' ? '个人简历' : 'Resume';
             document.title = `${basic.name} - ${titleSuffix}`;
-            // -------------------------------
 
             const ui = data.ui;
             const labelLang = currentLang === 'zh' ? 'EN' : '中文';
@@ -228,7 +224,6 @@
             document.getElementById('langLabelMobile').textContent = labelLang;
             document.getElementById('nav-name').textContent = basic.name;
             
-            // 渲染导航链接 (桌面 + 移动端)
             const links = ['profile','skills','experience','education','contact'];
             const navHTML = ui.nav.map((n, i) => 
                 `<a href="#${links[i]}" class="hover:text-primary transition-colors block py-2 md:py-0" onclick="document.getElementById('mobile-menu').classList.remove('open')">${n}</a>`
@@ -247,7 +242,6 @@
                 <button onclick="window.print()" class="bg-white border border-gray-200 text-gray-700 hover:text-primary hover:border-primary px-6 py-3 rounded-lg flex items-center gap-2 transition hover:-translate-y-1 hover:shadow-md"><i class="fa fa-print"></i> ${ui.buttons.print}</button>
             `;
             
-            // Avatar & Location Binding
             document.getElementById('hero-avatar').src = basic.avatar;
             document.getElementById('hero-location').textContent = basic.location;
 
@@ -275,26 +269,53 @@
                 </div>
             `).join('');
             
+            // --- Chart 配置更新 ---
             const chartData = data.skills.chart;
             if(myChart) myChart.destroy();
             myChart = new Chart(document.getElementById('skillsChart'), {
                 type: 'radar',
                 data: {
                     labels: chartData.labels,
-                    datasets: [{ label: 'Proficiency', data: chartData.data, backgroundColor: 'rgba(22, 93, 255, 0.15)', borderColor: '#165DFF', pointBackgroundColor: '#165DFF', borderWidth: 2 }]
+                    datasets: [{ 
+                        label: 'Proficiency', 
+                        data: chartData.data, 
+                        backgroundColor: 'rgba(22, 93, 255, 0.15)', 
+                        borderColor: '#165DFF', 
+                        pointBackgroundColor: '#165DFF', 
+                        borderWidth: 2 
+                    }]
                 },
-                options: { scales: { r: { min: 40, max: 100, ticks: { display: false }, grid: { color: '#f0f0f0' } } }, plugins: { legend: { display: false } } }
+                options: { 
+                    scales: { 
+                        r: { 
+                            min: 40, 
+                            max: 100, 
+                            ticks: { 
+                                display: true, // 显示刻度
+                                stepSize: 20,
+                                backdropColor: 'transparent', // 刻度背景透明
+                                color: '#94a3b8',
+                                font: { size: 10 }
+                            }, 
+                            grid: { color: '#f0f0f0' },
+                            pointLabels: {
+                                font: { size: 12, weight: 500 }, // 字体稍大
+                                color: '#475569'
+                            }
+                        } 
+                    }, 
+                    plugins: { legend: { display: false } } 
+                }
             });
             document.getElementById('chart-bars').innerHTML = chartData.labels.map((l, i) => `
                 <div><div class="flex justify-between mb-1 text-sm font-semibold text-gray-700"><span>${l}</span><span class="text-primary">${chartData.data[i]}%</span></div><div class="progress-bar" style="--progress:${chartData.data[i]}%"></div></div>
             `).join('');
 
-            // 5. Experience
+            // 5. Experience (保持原样)
             document.getElementById('t-exp').textContent = st.experience;
             document.getElementById('exp-list').innerHTML = data.experience.map((job, idx) => `
                 <div class="mb-12 relative group last:mb-0">
                     <div class="hidden md:block absolute left-[30%] top-0 bottom-0 w-px bg-gray-200 -z-10 group-last:hidden translate-x-[-1px]"></div>
-                    
                     <div class="flex flex-col md:flex-row gap-6 md:gap-12">
                         <div class="md:w-1/3 lg:w-1/4 md:text-right flex flex-col md:items-end">
                             <div class="sticky top-24 bg-gray-100 p-5 shadow-sm rounded-xl border border-gray-200 md:shadow-none md:border-0 md:bg-transparent md:p-0 md:backdrop-blur-none inline-block w-full md:w-auto">
@@ -304,7 +325,6 @@
                                 <p class="text-gray-400 text-xs mt-1 flex items-center md:justify-end gap-1"><i class="fa fa-map-marker"></i> ${job.location}</p>
                             </div>
                         </div>
-
                         <div class="md:w-2/3 lg:w-3/4 space-y-6">
                             ${job.projects.map(p => `
                                 <div class="bg-gray-50 p-6 rounded-2xl hover:bg-white hover:shadow-lg transition-all duration-300 border border-gray-100 group-card">
@@ -319,10 +339,8 @@
                 </div>
             `).join('');
 
-            // 6. Education & Tools
+            // 6. Education
             document.getElementById('t-edu').textContent = st.education;
-            
-            // Left: Edu + Hobbies
             const eduHTML = data.education.map(e => `
                 <div class="mb-8 pl-4 border-l-4 border-primary/20 hover:border-primary transition-colors">
                     <h4 class="font-bold text-lg text-gray-800">${e.school}</h4>
@@ -330,7 +348,6 @@
                     <p class="text-gray-400 text-sm mt-1"><i class="fa fa-calendar-o"></i> ${e.date} &nbsp;|&nbsp; <i class="fa fa-map-marker"></i> ${e.location}</p>
                 </div>
             `).join('');
-            
             const hobbiesHTML = `
                 <div class="mt-10 pt-8 border-t border-gray-100">
                     <h3 class="font-bold text-lg mb-4 flex items-center gap-2 text-gray-800"><i class="fa fa-heart text-red-400"></i> ${st.hobbies}</h3>
@@ -338,10 +355,7 @@
                     <p class="text-sm text-gray-500 italic bg-gray-50 p-3 rounded-lg border border-gray-100">"${data.hobbies.desc}"</p>
                 </div>
             `;
-            
             document.getElementById('edu-col-left').innerHTML = `<h3 class="font-bold text-xl mb-6 text-gray-800 flex items-center gap-2"><i class="fa fa-graduation-cap text-primary"></i> ${st.academic}</h3>${eduHTML}${hobbiesHTML}`;
-
-            // Right: Tools
             document.getElementById('edu-col-right').innerHTML = data.tools.map(t => `
                 <div class="mb-8 last:mb-0">
                     <h3 class="font-bold text-lg mb-4 flex items-center gap-2 text-gray-800"><i class="fa ${t.icon} text-primary"></i> ${t.group}</h3>
@@ -353,20 +367,10 @@
 
             // 7. Contact
             document.getElementById('t-contact').textContent = st.contact;
-            const cf = ui.contact_form || { 
-                title: "Message", 
-                label_name: "Name", 
-                label_email: "Email", 
-                label_msg: "Message", 
-                btn_send: "Send", 
-                msg_required: "Required" 
-            };
+            const cf = ui.contact_form || { title: "Message", label_name: "Name", label_email: "Email", label_msg: "Message", btn_send: "Send", msg_required: "Required" };
             const cl = ui.contact_labels || { email: "Email", location: "Location" };
-
-            // Use the form_id from data.json to build the Formspree URL
             const formAction = cf.form_id ? `https://formspree.io/f/${cf.form_id}` : '';
             const onSubmitAttr = formAction ? '' : `onsubmit="event.preventDefault(); alert('${currentLang === 'zh' ? '请在后台配置 Form ID' : 'Please config Form ID'}')"`;
-
             document.getElementById('contact-area').innerHTML = `
                 <div class="grid md:grid-cols-2 gap-8">
                     <div>
@@ -386,59 +390,24 @@
                             </div>
                         </div>
                     </div>
-                    
                     <div class="print:hidden">
                         <h3 class="font-semibold text-xl text-gray-700 mb-6">${cf.title}</h3>
                         <form class="space-y-4" action="${formAction}" method="POST" ${onSubmitAttr}>
-                            <div>
-                                <label class="block text-gray-600 mb-2 text-sm">${cf.label_name}</label>
-                                <input type="text" name="name" 
-                                    class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors" 
-                                    required
-                                    oninvalid="this.setCustomValidity('${cf.msg_required}')"
-                                    oninput="this.setCustomValidity('')">
-                            </div>
-                            <div>
-                                <label class="block text-gray-600 mb-2 text-sm">${cf.label_email}</label>
-                                <input type="email" name="email" 
-                                    class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors" 
-                                    required
-                                    oninvalid="this.setCustomValidity('${cf.msg_required}')"
-                                    oninput="this.setCustomValidity('')">
-                            </div>
-                            <div>
-                                <label class="block text-gray-600 mb-2 text-sm">${cf.label_msg}</label>
-                                <textarea name="message" rows="4" 
-                                    class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors" 
-                                    required
-                                    oninvalid="this.setCustomValidity('${cf.msg_required}')"
-                                    oninput="this.setCustomValidity('')"></textarea>
-                            </div>
-                            <button type="submit" class="w-full bg-primary hover:bg-primary/90 text-white py-3 rounded-lg transition-colors flex items-center justify-center gap-2">
-                                <i class="fa fa-paper-plane"></i> <span>${cf.btn_send}</span>
-                            </button>
+                            <div><label class="block text-gray-600 mb-2 text-sm">${cf.label_name}</label><input type="text" name="name" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors" required oninvalid="this.setCustomValidity('${cf.msg_required}')" oninput="this.setCustomValidity('')"></div>
+                            <div><label class="block text-gray-600 mb-2 text-sm">${cf.label_email}</label><input type="email" name="email" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors" required oninvalid="this.setCustomValidity('${cf.msg_required}')" oninput="this.setCustomValidity('')"></div>
+                            <div><label class="block text-gray-600 mb-2 text-sm">${cf.label_msg}</label><textarea name="message" rows="4" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors" required oninvalid="this.setCustomValidity('${cf.msg_required}')" oninput="this.setCustomValidity('')"></textarea></div>
+                            <button type="submit" class="w-full bg-primary hover:bg-primary/90 text-white py-3 rounded-lg transition-colors flex items-center justify-center gap-2"><i class="fa fa-paper-plane"></i> <span>${cf.btn_send}</span></button>
                         </form>
                     </div>
                 </div>
             `;
-
             document.getElementById('f-name').textContent = basic.name;
             document.getElementById('f-desc').textContent = basic.footer_text;
-            
-            // Social Icons
             document.getElementById('social-icons').innerHTML = basic.social_links.map(s => {
                 const btnClass = "w-10 h-10 rounded-full bg-gray-700 hover:bg-white hover:text-gray-900 flex items-center justify-center transition-all duration-300 transform hover:-translate-y-1";
-                if(s.type === 'modal') {
-                    return `<button onclick="showModal('${s.modal_img}', '${s.modal_text}')" class="${btnClass}"><i class="fa ${s.icon}"></i></button>`;
-                }
+                if(s.type === 'modal') return `<button onclick="showModal('${s.modal_img}', '${s.modal_text}')" class="${btnClass}"><i class="fa ${s.icon}"></i></button>`;
                 return `<a href="${s.url}" target="_blank" class="${btnClass}"><i class="fa ${s.icon}"></i></a>`;
             }).join('');
-        }
-
-        window.showModal = (img, text) => {
-            document.getElementById('modal-qr').src = img;
-            document.getElementById('modal-text').textContent = text;
-            document.getElementById('wechatModal').classList.remove('hidden');
         }
     </script>
         <button id="backToTop" class="fixed bottom-6 right-6 bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg opacity-0 invisible transition-all duration-300 z-50">
