@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>简历双语后台 (V9 增强版)</title>
+    <title>简历双语后台 (V10 吸顶优化版)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <style>
@@ -33,32 +33,34 @@
         .node-body.collapsed { display: none; }
 
         /* 层级视觉 */
-        .depth-0 { margin: 12px 0; border: 1px solid #cbd5e1; } /* Root level adjustments */
+        .depth-0 { margin: 12px 0; border: 1px solid #cbd5e1; }
         .depth-1 { margin: 8px 8px 8px 12px; border-left: 3px solid #3b82f6; } 
         .depth-2 { margin: 6px 0px 6px 12px; border-left: 3px solid #10b981; } 
         .depth-3 { margin: 6px 0px 6px 12px; border-left: 3px solid #8b5cf6; } 
 
-        /* 叶子行 (Input Row) */
+        /* 叶子行 */
         .leaf-row { display: flex; width: 100%; border-bottom: 1px solid #f1f5f9; background: #fff; align-items: flex-start; }
         .leaf-row:hover { background-color: #f8fafc; }
         .col-half { width: 50%; padding: 8px 12px; position: relative; }
         .col-half:first-child { border-right: 1px solid #f1f5f9; }
         .field-key { display: block; font-size: 10px; font-weight: 700; color: #94a3b8; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.5px; }
 
-        /* 悬浮面包屑 */
-        .sticky-breadcrumb {
-            transition: opacity 0.3s;
-            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        /* 组合吸顶容器 */
+        .sticky-group-wrapper {
+            position: sticky; top: 0; z-index: 40; 
+            background: #fff;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
         }
-
-        /* 语言分栏吸顶标题 */
-        .column-sticky-header {
-            position: sticky; top: 0; z-index: 40; display: flex;
-            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(4px);
-            border-bottom: 2px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        /* 面包屑条样式 */
+        .breadcrumb-bar {
+            background-color: #f8fafc;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 6px 16px;
+            font-size: 12px;
+            color: #64748b;
+            display: flex; align-items: center; gap: 8px;
+            font-family: monospace;
         }
-        .col-header-item { width: 50%; padding: 10px 16px; font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 8px; }
 
         /* 图标选择器 */
         .icon-trigger {
@@ -81,17 +83,10 @@
     <div class="bg-white shadow z-50 px-4 py-2 border-b border-gray-200 shrink-0">
         <div class="flex flex-col md:flex-row justify-between items-center max-w-[1920px] mx-auto gap-4 py-1">
             <h1 class="font-bold text-gray-800 text-lg flex items-center gap-2 select-none">
-                <i class="fa fa-cogs text-blue-600"></i> 双语后台 <span class="text-xs bg-gray-100 text-gray-600 px-2 rounded border border-gray-200">V9 UI Update</span>
+                <i class="fa fa-cogs text-blue-600"></i> 双语后台 <span class="text-xs bg-gray-100 text-gray-600 px-2 rounded border border-gray-200">V10 Sticky</span>
             </h1>
             
-            <div class="flex-1 px-8 text-center hidden md:block overflow-hidden">
-                <div id="breadcrumb-display" class="sticky-breadcrumb bg-white text-gray-600 text-xs py-1.5 px-4 rounded-full inline-flex items-center gap-2 max-w-lg border border-gray-200">
-                    <i class="fa fa-map-marker text-red-500"></i>
-                    <span id="breadcrumb-text" class="font-mono font-bold text-blue-900">READY</span>
-                </div>
-            </div>
-
-            <div class="flex flex-wrap gap-2 items-center">
+            <div class="flex-1"></div> <div class="flex flex-wrap gap-2 items-center">
                 <input id="gh_owner" type="text" placeholder="GitHub User" class="border border-gray-300 p-1.5 rounded text-xs w-24 outline-none focus:border-blue-500 transition">
                 <input id="gh_repo" type="text" placeholder="Repo Name" class="border border-gray-300 p-1.5 rounded text-xs w-24 outline-none focus:border-blue-500 transition">
                 <input id="gh_token" type="password" placeholder="Token" class="border border-gray-300 p-1.5 rounded text-xs w-28 outline-none focus:border-blue-500 transition">
@@ -111,7 +106,7 @@
                  <button onclick="globalToggle(false)" class="hover:text-blue-600 transition flex items-center gap-1"><i class="fa fa-compress"></i> 全部折叠</button>
             </div>
             <div id="status-bar" class="font-mono font-bold text-blue-600 transition-all">Waiting for action...</div>
-            <div class="text-gray-400 italic">Auto-save scroll position enabled</div>
+            <div class="text-gray-400 italic">Sticky Layout Active</div>
         </div>
     </div>
 
@@ -122,7 +117,7 @@
                     <i class="fa fa-cloud-download text-4xl text-blue-100"></i>
                 </div>
                 <p>请输入 GitHub 信息并点击右上角“读取”</p>
-                <p class="text-xs mt-2 text-gray-300">(如果无 Token，将加载测试数据)</p>
+                <p class="text-xs mt-2 text-gray-300">(面包屑和编辑器将在数据加载后显示)</p>
             </div>
         </div>
     </div>
@@ -147,13 +142,12 @@
         // --- 全局变量 ---
         let appData = {};
         let fileSha = "";
-        let collapsedRegistry = new Set(); // 记录折叠状态 (如果 ID 存在，则表示该节点处于折叠状态)
+        let collapsedRegistry = new Set();
         let savedScrollTop = 0;
         let currentIconCallback = null;
 
         const STORAGE_KEYS = ['gh_owner', 'gh_repo', 'gh_token'];
         
-        // FontAwesome 4.7 常用图标
         const ALL_ICONS = [
             "fa-cogs", "fa-user", "fa-briefcase", "fa-graduation-cap", "fa-wrench", "fa-leaf", 
             "fa-line-chart", "fa-users", "fa-flask", "fa-tasks", "fa-heart", "fa-star", "fa-check", 
@@ -174,7 +168,7 @@
             });
             document.getElementById('scroll-container').addEventListener('scroll', updateBreadcrumb);
             document.getElementById('icon-search').addEventListener('input', (e) => renderIconGrid(e.target.value));
-            console.log("Admin System V9 UI Ready.");
+            console.log("Admin System V10 Ready.");
         })();
 
         // --- 1. 读取数据 ---
@@ -228,35 +222,51 @@
             }
         }
 
-        // --- 2. 渲染引擎 ---
+        // --- 2. 渲染引擎 (核心更新) ---
         function renderUI() {
             const root = document.getElementById('editor-root');
             const container = document.getElementById('scroll-container');
             
             root.innerHTML = '';
 
-            // [新增] 插入吸顶标题栏
-            const stickyHeader = document.createElement('div');
-            stickyHeader.className = "column-sticky-header";
-            stickyHeader.innerHTML = `
-                <div class="col-header-item text-blue-700 bg-blue-50/80 border-r border-blue-100">
-                    <i class="fa fa-language text-lg"></i> 
-                    <span>中文 (Chinese)</span>
+            // [构建吸顶容器]：包含分栏表头 + 面包屑
+            const stickyGroup = document.createElement('div');
+            stickyGroup.className = "sticky-group-wrapper"; // sticky top-0
+            
+            // 1. 分栏表头
+            const colHeader = document.createElement('div');
+            colHeader.className = "flex border-b border-gray-200 bg-white/95 backdrop-blur";
+            colHeader.innerHTML = `
+                <div class="w-1/2 px-4 py-2 font-bold text-sm text-blue-700 bg-blue-50/80 border-r border-blue-100 flex items-center gap-2">
+                    <i class="fa fa-language"></i> 中文 (Chinese)
                 </div>
-                <div class="col-header-item text-green-700 bg-green-50/80">
-                    <i class="fa fa-globe text-lg"></i> 
-                    <span>英文 (English)</span>
+                <div class="w-1/2 px-4 py-2 font-bold text-sm text-green-700 bg-green-50/80 flex items-center gap-2">
+                    <i class="fa fa-globe"></i> 英文 (English)
                 </div>
             `;
-            root.appendChild(stickyHeader);
+            stickyGroup.appendChild(colHeader);
 
-            // 渲染主体内容 (增加内边距避免被吸顶遮挡)
+            // 2. 面包屑 (移动到此处)
+            const breadcrumbBar = document.createElement('div');
+            breadcrumbBar.className = "breadcrumb-bar";
+            breadcrumbBar.innerHTML = `
+                <i class="fa fa-map-marker text-red-500"></i>
+                <span id="breadcrumb-text" class="font-bold text-blue-900 truncate flex-1">TOP</span>
+            `;
+            stickyGroup.appendChild(breadcrumbBar);
+
+            root.appendChild(stickyGroup);
+
+            // [内容区域]
             const contentWrapper = document.createElement('div');
             contentWrapper.className = "p-4";
             contentWrapper.appendChild(renderRecursive(appData.zh, appData.en, [], 0));
             root.appendChild(contentWrapper);
 
             if (savedScrollTop > 0) container.scrollTop = savedScrollTop;
+            
+            // 立即更新一次面包屑状态
+            setTimeout(updateBreadcrumb, 50);
         }
 
         function renderRecursive(zh, en, path, depth) {
@@ -278,7 +288,6 @@
         function renderObjectContainer(zhObj = {}, enObj = {}, path, depth, pathId) {
             const container = document.createElement('div');
             
-            // 根节点特殊处理
             if (depth === 0) {
                  getCombinedKeys(zhObj, enObj).forEach(key => {
                      container.appendChild(renderRecursive(zhObj[key], enObj[key], [...path, key], depth + 1));
@@ -467,7 +476,7 @@
         // --- 逻辑: 状态保持折叠 ---
         function toggleNode(pathId, bodyEl, iconEl, type, btnEl, arrowEl) {
             if (collapsedRegistry.has(pathId)) {
-                collapsedRegistry.delete(pathId); // 展开
+                collapsedRegistry.delete(pathId);
                 if(type === 'folder') {
                     bodyEl.classList.remove('collapsed');
                     if(iconEl) iconEl.className = 'fa fa-folder-open text-blue-500 icon-state';
@@ -481,7 +490,7 @@
                     if(iconEl) iconEl.className = 'fa fa-caret-down text-gray-400 item-caret';
                 }
             } else {
-                collapsedRegistry.add(pathId); // 折叠
+                collapsedRegistry.add(pathId);
                 if(type === 'folder') {
                     bodyEl.classList.add('collapsed');
                     if(iconEl) iconEl.className = 'fa fa-folder text-gray-400 icon-state';
@@ -497,14 +506,12 @@
             }
         }
 
-        // --- 逻辑: 全局展开/折叠 (修正版) ---
+        // --- 逻辑: 全局展开/折叠 ---
         function globalToggle(expand) {
             savedScrollTop = document.getElementById('scroll-container').scrollTop;
             if(expand) {
-                // 展开所有 = 清空折叠注册表 (默认就是展开)
                 collapsedRegistry.clear();
             } else {
-                // 折叠所有 = 遍历所有容器并加入注册表
                 collapsedRegistry.clear();
                 traverseAndCollapse(appData.zh, appData.en, []);
             }
@@ -513,13 +520,11 @@
 
         function traverseAndCollapse(zh, en, path) {
             const pathId = path.join('-');
-            // 如果路径非空，则将此ID加入折叠列表 (根节点除外，可选)
             if(path.length > 0) collapsedRegistry.add(pathId);
 
             if (Array.isArray(zh) || Array.isArray(en)) {
                 const count = Math.max(zh?.length || 0, en?.length || 0);
                 for (let i = 0; i < count; i++) {
-                    // 数组项也是容器，需要递归
                     traverseAndCollapse(zh?.[i], en?.[i], [...path, i]);
                 }
             } else if (isObject(zh) || isObject(en)) {
@@ -527,7 +532,6 @@
                     traverseAndCollapse(zh?.[key], en?.[key], [...path, key]);
                 });
             }
-            // 基础类型是叶子节点，无需操作
         }
 
         // --- 逻辑: 增删数组 ---
@@ -552,15 +556,19 @@
             renderUI();
         }
 
-        // --- 辅助功能 ---
+        // --- 辅助功能 (修复更新面包屑逻辑) ---
         function updateBreadcrumb() {
+            const display = document.getElementById('breadcrumb-text');
+            if (!display) return; // 避免在 UI 渲染前报错
+
             const nodes = document.querySelectorAll('[data-path]');
             let currentPath = "TOP";
+            // 阈值设置为 140 (稍微加大一点，因为现在顶部吸顶区域变高了)
             for (let node of nodes) {
-                if (node.getBoundingClientRect().top < 200) currentPath = node.dataset.path;
+                if (node.getBoundingClientRect().top < 140) currentPath = node.dataset.path;
                 else break; 
             }
-            document.getElementById('breadcrumb-text').innerText = formatKey(currentPath).toUpperCase();
+            display.innerText = formatKey(currentPath).toUpperCase();
         }
 
         function openIconPicker(currentVal, callback) {
@@ -646,7 +654,7 @@
                 const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/data.json`, {
                     method: 'PUT',
                     headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: "Update via Admin V9", content, sha: fileSha })
+                    body: JSON.stringify({ message: "Update via Admin V10", content, sha: fileSha })
                 });
                 if(!res.ok) throw new Error((await res.json()).message);
                 const json = await res.json();
