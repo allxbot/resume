@@ -20,7 +20,9 @@
                         'page-bg': 'var(--color-bg)',
                         'card-bg': 'var(--color-card)',
                         'text-main': 'var(--color-text-main)',
-                        'text-muted': 'var(--color-text-muted)'
+                        'text-muted': 'var(--color-text-muted)',
+                        'btn-bg': 'var(--color-btn-bg)', 
+                        'btn-text': 'var(--color-btn-text)'
                     },
                     boxShadow: { 
                         'custom': 'var(--box-shadow)',
@@ -41,37 +43,35 @@
         }
 
         /* =========================================
-           🎨 多主题定义 (CSS Variables)
+           🎨 主题定义 (CSS Variables)
            ========================================= */
         
-        /* 1.  Apple Theme (完全还原原版代码参数) */
+        /* 0.  Apple Theme (1:1 像素级还原原版) */
         :root[data-theme='apple'] {
-            /* 字体栈：保持原版 */
             --font-main: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
-            
-            /* 颜色：完全一致的 Hex 代码 */
             --color-primary: #0071e3;
             --color-secondary: #42a5f5;
             --color-bg: #fbfbfd;
             --color-card: #ffffff;
-            --color-text-main: #111827; /* 对应原版 text-gray-900 */
-            --color-text-muted: #6b7280; /* 对应原版 text-gray-500/600 */
+            --color-text-main: #111827; /* gray-900 */
+            --color-text-muted: #6b7280; /* gray-500/600 mixed */
             
-            /* 形状：保持原版大圆角 */
-            --radius-card: 2rem; /* 对应 rounded-[2rem] */
-            --radius-btn: 9999px; /* 对应 rounded-full */
+            /* 按钮特有: 原版 Contact 按钮是 bg-black */
+            --color-btn-bg: #000000;
+            --color-btn-text: #ffffff;
+
+            --radius-card: 2rem; /* rounded-[2rem] */
+            --radius-btn: 9999px; /* rounded-full */
             
-            /* 阴影：复制原版 shadow-apple */
-            --box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-            --box-shadow-hover: 0 10px 30px rgba(0,0,0,0.1);
+            --box-shadow: 0 4px 20px rgba(0,0,0,0.06); /* shadow-apple */
+            --box-shadow-hover: 0 10px 30px rgba(0,0,0,0.1); /* shadow-apple-hover */
             
-            /* 边框：原版 bg-white 很多自带边框 */
             --border-style: solid;
             --border-width: 1px;
-            --border-color: #f3f4f6; /* 对应 border-gray-100 */
+            --border-color: #f3f4f6; /* border-gray-100/50 approx */
         }
 
-        /* 2. Modern Theme (通用现代蓝) */
+        /* 1. Modern Theme (现代蓝) */
         :root[data-theme='modern'] {
             --font-main: 'Inter', sans-serif;
             --color-primary: #3b82f6; 
@@ -80,6 +80,8 @@
             --color-card: #ffffff;
             --color-text-main: #1f2937;
             --color-text-muted: #6b7280;
+            --color-btn-bg: #3b82f6;
+            --color-btn-text: #ffffff;
             --radius-card: 1.5rem;
             --radius-btn: 0.75rem;
             --box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
@@ -89,7 +91,7 @@
             --border-color: #e5e7eb;
         }
 
-        /* 3. Classic Theme (商务复古) */
+        /* 2. Classic Theme (经典商务) */
         :root[data-theme='classic'] {
             --font-main: 'Playfair Display', serif;
             --color-primary: #1e3a8a; 
@@ -98,6 +100,8 @@
             --color-card: #ffffff;
             --color-text-main: #0f172a;
             --color-text-muted: #475569;
+            --color-btn-bg: #1e3a8a;
+            --color-btn-text: #ffffff;
             --radius-card: 0px; 
             --radius-btn: 2px;
             --box-shadow: 0 1px 3px rgba(0,0,0,0.05);
@@ -107,7 +111,7 @@
             --border-color: #e2e8f0;
         }
 
-        /* 4. Geek Theme (极客黑绿) */
+        /* 3. Geek Theme (极客模式) */
         :root[data-theme='geek'] {
             --font-main: 'JetBrains Mono', monospace;
             --color-primary: #10b981;
@@ -116,6 +120,8 @@
             --color-card: #1e293b;
             --color-text-main: #e2e8f0;
             --color-text-muted: #94a3b8;
+            --color-btn-bg: #10b981;
+            --color-btn-text: #0f172a;
             --radius-card: 4px;
             --radius-btn: 4px;
             --box-shadow: none;
@@ -135,7 +141,7 @@
             transition: background-color 0.3s, color 0.3s;
         }
 
-        /* 通用卡片类：用于替代原版硬编码的 bg-white rounded-[2rem] shadow-apple */
+        /* 通用卡片类：用于替代 bg-white rounded-[2rem] shadow-apple */
         .theme-card {
             background-color: var(--color-card);
             border-radius: var(--radius-card);
@@ -149,7 +155,7 @@
             border-radius: var(--radius-btn);
         }
 
-        /* Classic 模式特殊微调 */
+        /* Classic 模式正文微调 */
         :root[data-theme='classic'] body { font-family: 'Inter', sans-serif; }
         :root[data-theme='classic'] h1, :root[data-theme='classic'] h2, :root[data-theme='classic'] h3 { font-family: 'Playfair Display', serif; }
 
@@ -162,9 +168,6 @@
         .reveal-visible { opacity: 1; transform: translateY(0) scale(1); }
         .tilt-container { perspective: 1000px; transform-style: preserve-3d; }
 
-        /* =========================================
-           🖨️ A4 打印优化 (保持原版逻辑)
-           ========================================= */
         #print-view { display: none; }
         @media print {
             #screen-view, header, #backToTop, #wechatModal, .no-print, .tilt-container { display: none !important; }
@@ -230,9 +233,11 @@
                 <div class="md:w-1/2 flex justify-center tilt-container reveal-hidden" style="transition-delay: 200ms">
                     <div id="hero-tilt" class="relative w-64 h-64 md:w-80 md:h-80 transition-transform duration-100 ease-out cursor-pointer group">
                         <div class="absolute inset-0 rounded-full bg-gradient-to-tr from-primary/30 to-secondary/30 blur-2xl opacity-40 group-hover:opacity-60 transition-opacity duration-500 print:hidden"></div>
-                        <div class="w-full h-full rounded-full theme-card p-1.5 relative overflow-hidden border border-white/50">
+                        
+                        <div class="w-full h-full rounded-full bg-card-bg p-1.5 shadow-custom relative overflow-hidden border border-white/50">
                             <img id="hero-avatar" src="" alt="Profile" class="w-full h-full rounded-full object-cover">
                         </div>
+                        
                         <div class="absolute bottom-4 right-4 bg-white/90 backdrop-blur shadow-lg px-4 py-2 rounded-full border border-white/50 flex items-center gap-2 transform translate-z-10 group-hover:scale-105 transition print:hidden">
                             <i class="fa fa-map-marker text-red-500"></i>
                             <span class="text-xs font-semibold text-gray-700" id="hero-location"></span>
@@ -311,16 +316,13 @@
         let currentLang = localStorage.getItem('lang') || 'zh';
         let myChart = null;
 
-        // --- Utils ---
         function stripHtml(html) { let tmp = document.createElement("DIV"); tmp.innerHTML = html; return tmp.textContent || tmp.innerText || ""; }
 
-        // --- Render Logic ---
         document.addEventListener('DOMContentLoaded', () => {
             loadResume();
             document.getElementById('langSwitch').addEventListener('click', toggleLanguage);
             document.getElementById('langSwitchMobile').addEventListener('click', toggleLanguage);
             
-            // Navbar Scroll Effect
             const navbar = document.getElementById('navbar');
             const mobileMenu = document.getElementById('mobile-menu');
             window.addEventListener('scroll', () => {
@@ -342,23 +344,19 @@
             document.getElementById('backToTop').addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
         });
 
-        // --- Intersection Observer for Animations ---
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('reveal-visible'); observer.unobserve(entry.target); } });
         }, { threshold: 0.1 });
 
-        // --- Main Load Function ---
         async function loadResume() {
             try {
                 const res = await fetch('./data.json');
                 const fullData = await res.json();
                 const data = fullData[currentLang];
                 
-                // 1. 设置主题
                 const theme = fullData[currentLang].ui.theme || 'apple';
                 document.documentElement.setAttribute('data-theme', theme);
                 
-                // 2. 渲染内容
                 if(fullData['en']) document.getElementById('copyright-name').textContent = fullData['en'].basic_info.name;
                 render(data);
                 renderPrintView(data, fullData[currentLang].ui); 
@@ -388,19 +386,19 @@
             document.getElementById('nav-menu-desktop').innerHTML = navHTML;
             document.getElementById('nav-menu-mobile').innerHTML = navHTML;
 
-            // Hero
             document.getElementById('hero-name').textContent = basic.name;
             document.getElementById('hero-title').textContent = basic.titles;
             document.getElementById('hero-tags').innerHTML = basic.tags.map(t => `<span class="bg-white/50 backdrop-blur border border-gray-200/50 text-muted px-4 py-1.5 rounded-full text-sm font-medium shadow-sm">${t}</span>`).join('');
+            
+            // 按钮颜色修复：使用 bg-btn-bg 和 text-btn-text 变量
             document.getElementById('hero-btns').innerHTML = `
-                <a href="#contact" class="bg-text-main text-white px-8 py-3 font-medium hover:bg-opacity-80 hover:scale-105 transition-all duration-300 shadow-lg theme-btn" style="background-color: var(--color-text-main);"><i class="fa fa-envelope mr-2"></i> ${ui.buttons.contact}</a>
+                <a href="#contact" class="bg-btn-bg text-btn-text px-8 py-3 font-medium hover:bg-opacity-80 hover:scale-105 transition-all duration-300 shadow-lg theme-btn"><i class="fa fa-envelope mr-2"></i> ${ui.buttons.contact}</a>
                 <a href="#experience" class="bg-white text-main border border-gray-200 px-8 py-3 font-medium hover:bg-gray-50 transition-all hover:scale-105 shadow-sm theme-btn"><i class="fa fa-briefcase mr-2"></i> ${ui.buttons.exp}</a>
                 <button onclick="window.print()" class="bg-white text-main border border-gray-200 px-8 py-3 font-medium hover:bg-gray-50 transition-all hover:scale-105 shadow-sm theme-btn flex items-center gap-2"><i class="fa fa-print"></i> ${ui.buttons.print}</button>
             `;
             document.getElementById('hero-avatar').src = basic.avatar;
             document.getElementById('hero-location').textContent = basic.location;
 
-            // Profile
             document.getElementById('t-profile').textContent = ui.section_titles.profile;
             document.getElementById('profile-summary').innerHTML = data.profile.summary;
             document.getElementById('profile-cards').innerHTML = data.profile.cards.map((c, i) => `
@@ -410,12 +408,10 @@
                     <p class="text-sm text-muted leading-relaxed">${c.desc}</p>
                 </div>`).join('');
 
-            // Skills
             document.getElementById('t-skills').textContent = ui.section_titles.skills;
             const bentoContainer = document.getElementById('skills-bento-container');
             const chartData = data.skills.chart;
             const currentTheme = document.documentElement.getAttribute('data-theme');
-            // Apple Theme defaults to blue in logic, Geek to Green, etc.
             const chartColor = currentTheme === 'geek' ? '#10b981' : (currentTheme === 'classic' ? '#1e3a8a' : '#0071e3');
             
             let bentoHTML = `
@@ -492,7 +488,6 @@
                 }
             });
 
-            // Experience
             document.getElementById('t-exp').textContent = ui.section_titles.experience;
             document.getElementById('exp-list').innerHTML = data.experience.map(job => `
                 <div class="relative pl-0 md:pl-0 reveal-hidden">
@@ -518,7 +513,6 @@
                     </div>
                 </div>`).join('');
 
-            // Education & Tools
             document.getElementById('t-edu').textContent = ui.section_titles.education;
             document.getElementById('edu-col-left').innerHTML = `
                 <h3 class="font-bold text-xl mb-8 text-main flex items-center gap-3"><span class="bg-blue-100 text-blue-600 w-8 h-8 rounded-lg flex items-center justify-center text-sm"><i class="fa fa-graduation-cap"></i></span> ${ui.section_titles.academic}</h3>
@@ -540,7 +534,6 @@
                     </div>
                 </div>`).join('');
 
-            // Contact
             const cf = ui.contact_form; const cl = ui.contact_labels;
             const formAction = cf.form_id ? `https://formspree.io/f/${cf.form_id}` : '';
             const onSubmitAttr = formAction ? '' : `onsubmit="event.preventDefault(); alert('Please config Form ID')"`;
@@ -565,11 +558,10 @@
                         <input type="text" name="name" placeholder="${cf.label_name}" class="w-full px-5 py-3 bg-white border border-gray-200/50 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-main" required>
                         <input type="email" name="email" placeholder="${cf.label_email}" class="w-full px-5 py-3 bg-white border border-gray-200/50 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-main" required>
                         <textarea name="message" class="w-full px-5 py-3 bg-white border border-gray-200/50 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all flex-1 resize-none text-main" placeholder="${cf.label_msg}" required></textarea>
-                        <button type="submit" class="w-full bg-text-main text-white py-3 font-medium hover:bg-opacity-80 transition-all transform hover:scale-[1.02] shadow-lg theme-btn" style="background-color: var(--color-text-main);">${cf.btn_send}</button>
+                        <button type="submit" class="w-full bg-btn-bg text-btn-text py-3 font-medium hover:bg-opacity-80 transition-all transform hover:scale-[1.02] shadow-lg theme-btn">${cf.btn_send}</button>
                     </form>
                 </div>`;
 
-            // Footer
             document.getElementById('f-name').textContent = basic.name;
             document.getElementById('f-desc').textContent = basic.footer_text;
             document.getElementById('social-icons').innerHTML = basic.social_links.map(s => {
@@ -585,7 +577,6 @@
             document.getElementById('wechatModal').classList.remove('hidden');
         }
 
-        // --- Print View Logic (Keep standard A4 layout) ---
         function renderPrintView(data, ui) {
             const basic = data.basic_info; const st = ui.section_titles;
             const separator = currentLang === 'zh' ? '；' : '; ';
