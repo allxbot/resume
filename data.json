@@ -85,19 +85,19 @@
       "summary": "16年高精智能制造专家，深耕 3C 消费电子（苹果核心供应链） 与 半导体后道封装 领域。兼具消费类产品 NPI 全流程管控、DFM/MFD 工艺优化、智能工厂规划落地 及跨国跨职能团队管理经验。",
       "cards": [
         {
-          "title": "技术专家视点",
+          "title": "技术统筹",
           "icon": "fa-cogs",
-          "desc": "3C / 半导体精密工艺（激光切割、PVD、HAF 贴合、组装、封装等）；智能产线全流程架构设计；设备定位精度 1-2μm、运动系统 20g+ 加速度；DFM/DFMA 设计、MFD（制造为设计）解决方案开发、FAT/SAT 验证、DOE 工艺优化；热学组件装配工艺优化、散热结构 DFM 分析；系统装配公差分析（GD&T 深化应用）、产品外观（cosmetic）质量管控。"
+          "desc": "主导 50+条 高精密自动化产线（含机械/电子组件）NPI 量产导入，推动 2个 智能工厂从 0 到 1 筹建。"
         },
         {
-          "title": "项目与运营",
+          "title": "核心业绩",
           "icon": "fa-line-chart",
-          "desc": "智能工厂 0-1 筹建；自动化产线规划与量产导入；闭环数据管理系统搭建；OEE / 良率 / 成本优化；产能爬坡加速；KISS 原则落地（简化设计与制造流程）；SPC（统计过程控制）数据驱动的良率与成本优化；NUDD 风险管理应用实践。"
+          "desc": "通过 DFM 优化、模块化设计与精益生产，实现 OEE 提升至 85%+、产能提升 90%+、良率稳定 99.6%+。"
         },
         {
-          "title": "团队与领导力",
+          "title": "战略管理",
           "icon": "fa-sitemap",
-          "desc": "跨国跨职能团队管理（中/新/德）；敏捷开发 + Stage-Gate 流程推行；供应商标准化开发体系构建；精益生产（单线流/模块化）落地；跨文化协同研发与供应商协作。"
+          "desc": "擅长协同研发与供应商团队突破制造瓶颈，确保设计与制造无缝衔接。具备跨学科（机械/电子/软件）、跨地域（中/新/德）团队管理经验，精通从战略规划到量产交付的全链条管控。"
         }
       ]
     },
@@ -114,10 +114,10 @@
         "data": [
           95,
           90,
-          85,
-          88,
-          82,
-          80
+          90,
+          90,
+          95,
+          90
         ]
       },
       "card_groups": [
@@ -408,19 +408,19 @@
       "summary": "Expert in High-Precision Smart Manufacturing with 16 years of experience, deeply rooted in 3C Consumer Electronics (Apple Core Supply Chain) and Semiconductor Back-end Packaging. Possesses comprehensive expertise in NPI full-process control, DFM/MFD process optimization, Smart Factory planning, and cross-national cross-functional team management.",
       "cards": [
         {
-          "title": "Technical Expertise",
+          "title": "Technical Leadership",
           "icon": "fa-cogs",
-          "desc": "3C / Semiconductor Precision Processes (Laser cutting, PVD, HAF bonding, Assembly, Packaging, etc.); Smart Line Architecture Design; Equipment positioning accuracy 1-2μm, Motion system acceleration 20g+; DFM/DFMA Design, MFD (Manufacturing for Design) solution development, FAT/SAT validation, DOE Process Optimization; Thermal component assembly optimization, Thermal structure DFM analysis; System assembly tolerance analysis (Advanced GD&T application), Product Cosmetic quality control."
+          "desc": "Spearheaded the NPI and mass production ramp-up for 50+ high-precision automation lines (mechanical/electronic modules) and drove the greenfield set-up of 2 smart factories from scratch."
         },
         {
-          "title": "Project & Operations",
+          "title": "Key Performance",
           "icon": "fa-line-chart",
-          "desc": "Smart Factory Greenfield Projects (0-to-1); Automated line planning and mass production ramp-up; Closed-loop data management system construction; OEE / Yield / Cost Optimization; Capacity Ramp-up acceleration; KISS Principle Implementation (Simplifying design & manufacturing flow); SPC (Statistical Process Control) data-driven yield and cost optimization; NUDD (New, Unique, Different, Difficult) risk management application."
+          "desc": "Achieved OEE >85%, Capacity increase of 90%+, and Yield stability at 99.6%+ through DFM optimization, modular design, and lean manufacturing implementation."
         },
         {
-          "title": "Leadership",
+          "title": "Strategic Management",
           "icon": "fa-sitemap",
-          "desc": "Cross-national Cross-functional Team Management (CN/SG/DE); Agile Development + Stage-Gate Process implementation; Supplier standardization development system construction; Lean Manufacturing (One-piece flow/Modular) implementation; Cross-cultural R&D and supplier collaboration."
+          "desc": "Skilled in collaborating with R&D and supplier teams to breakthrough manufacturing bottlenecks, ensuring a seamless transition from design to manufacturing. Experienced in managing cross-disciplinary (Mech/Elec/SW) and cross-regional (China/Singapore/Germany) teams, mastering the full lifecycle from strategic planning to mass delivery.\n"
         }
       ]
     },
@@ -437,10 +437,10 @@
         "data": [
           95,
           90,
-          85,
-          88,
-          82,
-          80
+          90,
+          90,
+          95,
+          90
         ]
       },
       "card_groups": [
