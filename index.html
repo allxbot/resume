@@ -19,7 +19,7 @@
                         secondary: 'var(--color-secondary)',
                         'page-bg': 'var(--color-bg)',
                         'card-bg': 'var(--color-card)',
-                        'text-main': 'var(--color-text)',
+                        'text-main': 'var(--color-text-main)',
                         'text-muted': 'var(--color-text-muted)'
                     },
                     boxShadow: { 
@@ -40,34 +40,45 @@
             .progress-bar { height: 6px; background: linear-gradient(90deg, var(--color-primary) var(--progress), #e5e7eb var(--progress)); border-radius: 4px; } 
         }
 
-        /* --- 主题定义 (CSS Variables) --- */
+        /* =========================================
+           🎨 多主题定义 (CSS Variables)
+           ========================================= */
         
-        /* 0.  Apple Theme (Original 1:1) */
+        /* 1.  Apple Theme (完全还原原版代码参数) */
         :root[data-theme='apple'] {
+            /* 字体栈：保持原版 */
             --font-main: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+            
+            /* 颜色：完全一致的 Hex 代码 */
             --color-primary: #0071e3;
             --color-secondary: #42a5f5;
             --color-bg: #fbfbfd;
             --color-card: #ffffff;
-            --color-text: #111827; /* Gray-900 */
-            --color-text-muted: #4b5563; /* Gray-600 */
-            --radius-card: 2rem;
-            --radius-btn: 9999px;
+            --color-text-main: #111827; /* 对应原版 text-gray-900 */
+            --color-text-muted: #6b7280; /* 对应原版 text-gray-500/600 */
+            
+            /* 形状：保持原版大圆角 */
+            --radius-card: 2rem; /* 对应 rounded-[2rem] */
+            --radius-btn: 9999px; /* 对应 rounded-full */
+            
+            /* 阴影：复制原版 shadow-apple */
             --box-shadow: 0 4px 20px rgba(0,0,0,0.06);
             --box-shadow-hover: 0 10px 30px rgba(0,0,0,0.1);
+            
+            /* 边框：原版 bg-white 很多自带边框 */
             --border-style: solid;
             --border-width: 1px;
-            --border-color: #f3f4f6;
+            --border-color: #f3f4f6; /* 对应 border-gray-100 */
         }
 
-        /* 1. Modern Theme (Generic Blue) */
+        /* 2. Modern Theme (通用现代蓝) */
         :root[data-theme='modern'] {
             --font-main: 'Inter', sans-serif;
-            --color-primary: #3b82f6; /* Tailwind Blue-500 */
+            --color-primary: #3b82f6; 
             --color-secondary: #60a5fa;
             --color-bg: #f3f4f6;
             --color-card: #ffffff;
-            --color-text: #1f2937;
+            --color-text-main: #1f2937;
             --color-text-muted: #6b7280;
             --radius-card: 1.5rem;
             --radius-btn: 0.75rem;
@@ -78,14 +89,14 @@
             --border-color: #e5e7eb;
         }
 
-        /* 2. Classic Theme (Business/Navy) */
+        /* 3. Classic Theme (商务复古) */
         :root[data-theme='classic'] {
             --font-main: 'Playfair Display', serif;
             --color-primary: #1e3a8a; 
             --color-secondary: #d4af37;
             --color-bg: #f8f9fa;
             --color-card: #ffffff;
-            --color-text: #0f172a;
+            --color-text-main: #0f172a;
             --color-text-muted: #475569;
             --radius-card: 0px; 
             --radius-btn: 2px;
@@ -96,14 +107,14 @@
             --border-color: #e2e8f0;
         }
 
-        /* 3. Geek Theme (Terminal/Dark) */
+        /* 4. Geek Theme (极客黑绿) */
         :root[data-theme='geek'] {
             --font-main: 'JetBrains Mono', monospace;
             --color-primary: #10b981;
             --color-secondary: #3b82f6;
             --color-bg: #0f172a;
             --color-card: #1e293b;
-            --color-text: #e2e8f0;
+            --color-text-main: #e2e8f0;
             --color-text-muted: #94a3b8;
             --radius-card: 4px;
             --radius-btn: 4px;
@@ -117,10 +128,14 @@
         body {
             font-family: var(--font-main);
             background-color: var(--color-bg);
-            color: var(--color-text);
+            color: var(--color-text-main);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            letter-spacing: -0.01em;
             transition: background-color 0.3s, color 0.3s;
         }
 
+        /* 通用卡片类：用于替代原版硬编码的 bg-white rounded-[2rem] shadow-apple */
         .theme-card {
             background-color: var(--color-card);
             border-radius: var(--radius-card);
@@ -134,6 +149,7 @@
             border-radius: var(--radius-btn);
         }
 
+        /* Classic 模式特殊微调 */
         :root[data-theme='classic'] body { font-family: 'Inter', sans-serif; }
         :root[data-theme='classic'] h1, :root[data-theme='classic'] h2, :root[data-theme='classic'] h3 { font-family: 'Playfair Display', serif; }
 
@@ -146,11 +162,14 @@
         .reveal-visible { opacity: 1; transform: translateY(0) scale(1); }
         .tilt-container { perspective: 1000px; transform-style: preserve-3d; }
 
+        /* =========================================
+           🖨️ A4 打印优化 (保持原版逻辑)
+           ========================================= */
         #print-view { display: none; }
         @media print {
             #screen-view, header, #backToTop, #wechatModal, .no-print, .tilt-container { display: none !important; }
             @page { size: A4; margin: 15mm 15mm; }
-            html, body { width: 210mm; height: auto; margin: 0 !important; padding: 0 !important; background-color: white !important; color: #000 !important; overflow: visible !important; font-family: sans-serif !important; }
+            html, body { width: 210mm; height: auto; margin: 0 !important; padding: 0 !important; background-color: white !important; color: #000 !important; overflow: visible !important; font-family: "Microsoft YaHei", sans-serif !important; }
             #print-view { display: block !important; width: 100%; font-size: 9.5pt; line-height: 1.35; text-align: justify; }
             .print-h1 { font-size: 20pt; font-weight: bold; line-height: 1.2; margin-bottom: 4pt; color: #000; }
             .print-h2 { font-size: 12pt; font-weight: bold; border-bottom: 1pt solid #000; margin-top: 10pt; margin-bottom: 4pt; padding-bottom: 2pt; page-break-after: avoid; }
@@ -374,7 +393,7 @@
             document.getElementById('hero-title').textContent = basic.titles;
             document.getElementById('hero-tags').innerHTML = basic.tags.map(t => `<span class="bg-white/50 backdrop-blur border border-gray-200/50 text-muted px-4 py-1.5 rounded-full text-sm font-medium shadow-sm">${t}</span>`).join('');
             document.getElementById('hero-btns').innerHTML = `
-                <a href="#contact" class="bg-text-main text-white px-8 py-3 font-medium hover:bg-opacity-80 hover:scale-105 transition-all duration-300 shadow-lg theme-btn" style="background-color: var(--color-text);"><i class="fa fa-envelope mr-2"></i> ${ui.buttons.contact}</a>
+                <a href="#contact" class="bg-text-main text-white px-8 py-3 font-medium hover:bg-opacity-80 hover:scale-105 transition-all duration-300 shadow-lg theme-btn" style="background-color: var(--color-text-main);"><i class="fa fa-envelope mr-2"></i> ${ui.buttons.contact}</a>
                 <a href="#experience" class="bg-white text-main border border-gray-200 px-8 py-3 font-medium hover:bg-gray-50 transition-all hover:scale-105 shadow-sm theme-btn"><i class="fa fa-briefcase mr-2"></i> ${ui.buttons.exp}</a>
                 <button onclick="window.print()" class="bg-white text-main border border-gray-200 px-8 py-3 font-medium hover:bg-gray-50 transition-all hover:scale-105 shadow-sm theme-btn flex items-center gap-2"><i class="fa fa-print"></i> ${ui.buttons.print}</button>
             `;
@@ -396,6 +415,7 @@
             const bentoContainer = document.getElementById('skills-bento-container');
             const chartData = data.skills.chart;
             const currentTheme = document.documentElement.getAttribute('data-theme');
+            // Apple Theme defaults to blue in logic, Geek to Green, etc.
             const chartColor = currentTheme === 'geek' ? '#10b981' : (currentTheme === 'classic' ? '#1e3a8a' : '#0071e3');
             
             let bentoHTML = `
@@ -545,7 +565,7 @@
                         <input type="text" name="name" placeholder="${cf.label_name}" class="w-full px-5 py-3 bg-white border border-gray-200/50 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-main" required>
                         <input type="email" name="email" placeholder="${cf.label_email}" class="w-full px-5 py-3 bg-white border border-gray-200/50 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-main" required>
                         <textarea name="message" class="w-full px-5 py-3 bg-white border border-gray-200/50 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all flex-1 resize-none text-main" placeholder="${cf.label_msg}" required></textarea>
-                        <button type="submit" class="w-full bg-text-main text-white py-3 font-medium hover:bg-opacity-80 transition-all transform hover:scale-[1.02] shadow-lg theme-btn" style="background-color: var(--color-text);">${cf.btn_send}</button>
+                        <button type="submit" class="w-full bg-text-main text-white py-3 font-medium hover:bg-opacity-80 transition-all transform hover:scale-[1.02] shadow-lg theme-btn" style="background-color: var(--color-text-main);">${cf.btn_send}</button>
                     </form>
                 </div>`;
 
