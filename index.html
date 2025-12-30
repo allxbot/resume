@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    
     <title>Resume Loading...</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -15,38 +19,41 @@
             theme: { 
                 extend: { 
                     colors: { 
-                        // 将 Tailwind 类映射到 CSS 变量
-                        'page': 'var(--bg-page)',
-                        'card': 'var(--bg-card)',
-                        'glass': 'var(--bg-glass)',
-                        'block': 'var(--bg-block)', // 底部灰色块
-                        
-                        'txt-main': 'var(--t-main)',
-                        'txt-sub': 'var(--t-sub)',
-                        'txt-body': 'var(--t-body)',
-                        'txt-nav': 'var(--t-nav)',
-                        'txt-foot': 'var(--t-foot)',
-                        
-                        'btn-p-bg': 'var(--btn-p-bg)', 'btn-p-txt': 'var(--btn-p-txt)',
-                        'btn-s-bg': 'var(--btn-s-bg)', 'btn-s-txt': 'var(--btn-s-txt)', 'btn-s-brd': 'var(--btn-s-brd)',
-                        
-                        'date-bg': 'var(--date-bg)', 'date-txt': 'var(--date-txt)',
-                        'line': 'var(--line-color)',
-                        'check': 'var(--check-color)',
-                        
-                        // 动态图标色
-                        'ico-1': 'var(--ico-1)', 'ico-2': 'var(--ico-2)', 'ico-3': 'var(--ico-3)'
+                        // --- 语义化颜色映射 (Semantic Colors) ---
+                        // 这些类名对应 CSS 变量，实现一键换肤
+                        theme: {
+                            page: 'var(--bg-page)',       /* 页面背景 */
+                            card: 'var(--bg-card)',       /* 卡片背景 */
+                            subtle: 'var(--bg-subtle)',   /* 次级背景(如底栏) */
+                            hover: 'var(--bg-hover)',     /* 悬停背景 */
+                            
+                            title: 'var(--text-title)',   /* 主标题 */
+                            body: 'var(--text-body)',     /* 正文 */
+                            muted: 'var(--text-muted)',   /* 弱化文字 */
+                            accent: 'var(--text-accent)', /* 强调色(链接/高亮) */
+                            
+                            btn: 'var(--btn-bg)',         /* 按钮背景 */
+                            'btn-txt': 'var(--btn-text)', /* 按钮文字 */
+                            
+                            border: 'var(--border-color)',/* 边框色 */
+                            line: 'var(--line-color)',    /* 时间轴线 */
+                            
+                            // 功能色
+                            'tag-bg': 'var(--tag-bg)',    /* 标签背景 */
+                            'tag-txt': 'var(--tag-txt)',  /* 标签文字 */
+                            'icon-def': 'var(--icon-def)' /* 默认图标色 */
+                        }
                     },
                     boxShadow: { 
-                        'theme': 'var(--shadow)',
-                        'theme-hov': 'var(--shadow-h)'
+                        'theme': 'var(--shadow-card)',
+                        'theme-hover': 'var(--shadow-hover)'
                     },
                     borderRadius: {
-                        'theme': 'var(--radius)',
+                        'theme': 'var(--radius-card)',
                         'btn': 'var(--radius-btn)'
                     },
                     fontFamily: {
-                        'theme': 'var(--font)'
+                        'theme': 'var(--font-family)'
                     }
                 } 
             } 
@@ -55,228 +62,240 @@
 
     <style type="text/tailwindcss">
         @layer utilities { 
-            .progress-bar { height: 6px; background: linear-gradient(90deg, var(--bar-color) var(--progress), #e5e7eb var(--progress)); border-radius: 4px; } 
+            /* 进度条渐变 */
+            .progress-bar { height: 6px; background: linear-gradient(90deg, var(--text-accent) var(--progress), var(--bg-subtle) var(--progress)); border-radius: 4px; } 
+            
+            /* 玻璃拟态通用类 */
+            .glass-effect {
+                background-color: var(--glass-bg);
+                backdrop-filter: blur(var(--glass-blur));
+            }
         }
 
         /* =================================================================
-           🎨 风格模版定义区域 (Style Templates)
+           🎨 样式模版定义 (Style Templates)
+           所有视觉特征均在此定义，HTML只负责结构
            ================================================================= */
 
-        /* -----------------------------------------------------------------
-           1.  Apple Theme (Original) - 像素级还原原版
-           ----------------------------------------------------------------- */
+        /* ---------------- 1.  Apple Style (Reference: Apple Official) ---------------- */
         :root[data-theme='apple'] {
-            /* [字体] Inter优先 */
-            --font: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+            /* [字体] SF Pro / Inter, 紧凑且清晰 */
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
             
-            /* [背景] */
-            --bg-page: #fbfbfd;       /* 原版背景 */
-            --bg-card: #ffffff;       /* 原版卡片白 */
-            --bg-glass: rgba(255,255,255,0.5); /* 半透明遮罩 */
-            --bg-block: #f9fafb;      /* gray-50 (Footer/Contact底块) */
-            --hero-blur: rgba(239, 246, 255, 0.8); /* blue-50/80 顶部光斑 */
+            /* [背景] Apple 标志性的灰白调 */
+            --bg-page: #f5f5f7;       /* 官网背景灰 */
+            --bg-card: #ffffff;       /* 纯白卡片 */
+            --bg-subtle: #f5f5f7;     /* 浅灰区块 */
+            --bg-hover: #fbfbfd;      /* 悬停微亮 */
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-blur: 20px;
+            --hero-glow: rgba(0, 113, 227, 0.15); /* 顶部蓝色光晕 */
 
-            /* [文字] */
-            --t-main: #111827; /* gray-900 标题 */
-            --t-sub: #6b7280;  /* gray-500 副标题 */
-            --t-body: #4b5563; /* gray-600 正文/详情/导航 */
-            --t-nav: #4b5563;  /* gray-600 导航 */
-            --t-foot: #9ca3af; /* gray-400 底部版权 */
+            /* [文字] 高对比度灰阶 */
+            --text-title: #1d1d1f;    /* 接近纯黑的深灰 */
+            --text-body: #424245;     /* 次级深灰，阅读舒适 */
+            --text-muted: #86868b;    /* 浅灰，用于辅助信息 */
+            --text-accent: #0066cc;   /* Apple Link Blue */
 
-            /* [按钮] */
-            --btn-p-bg: #000000;  /* Contact按钮: 纯黑 */
-            --btn-p-txt: #ffffff; /* Contact文字: 纯白 */
-            --btn-s-bg: #ffffff;  /* Exp按钮: 白 */
-            --btn-s-txt: #111827; /* Exp文字: gray-900 */
-            --btn-s-brd: #e5e7eb; /* Exp边框: gray-200 */
+            /* [组件] */
+            --btn-bg: #1d1d1f;        /* 黑色按钮 */
+            --btn-text: #ffffff;
+            --tag-bg: #e8e8ed;        /* 标签浅灰底 */
+            --tag-txt: #1d1d1f;
+            
+            /* [线条与边框] */
+            --border-color: rgba(0,0,0,0.0); /* Apple风格通常无边框，靠阴影 */
+            --line-color: #d2d2d7;    /* 时间轴线 */
+            
+            /* [图标] */
+            --icon-def: #1d1d1f;
+            --check-color: #86868b;
 
-            /* [装饰细节] */
-            --date-bg: #eff6ff;   /* blue-50 日期背景 */
-            --date-txt: #2563eb;  /* blue-600 日期文字 */
-            --line-color: #f3f4f6;/* gray-100 左侧线条 */
-            --check-color: #d1d5db;/* gray-300 列表勾选 */
-            --bar-color: #0071e3; /* 进度条主色 */
-
-            /* [图标循环色] */
-            --ico-1: #f97316; /* orange-500 */
-            --ico-2: #a855f7; /* purple-500 */
-            --ico-3: #14b8a6; /* teal-500 */
-
-            /* [形状与阴影] */
-            --radius: 2rem;       /* rounded-[2rem] */
-            --radius-btn: 9999px; /* rounded-full */
-            --shadow: 0 4px 20px rgba(0,0,0,0.06); /* shadow-apple */
-            --shadow-h: 0 10px 30px rgba(0,0,0,0.1);
+            /* [形状] */
+            --radius-card: 1.5rem;    /* 适中的大圆角 */
+            --radius-btn: 9999px;     /* 胶囊按钮 */
+            --shadow-card: 0 4px 12px rgba(0,0,0,0.08); /* 柔和弥散阴影 */
+            --shadow-hover: 0 8px 24px rgba(0,0,0,0.12);
         }
 
-        /* -----------------------------------------------------------------
-           2. 🔷 Modern Theme (通用现代风) - 蓝白灰，更通用的SaaS风格
-           ----------------------------------------------------------------- */
+        /* ---------------- 2. 🔷 Modern Theme (SaaS/Clean) ---------------- */
         :root[data-theme='modern'] {
-            --font: 'Inter', sans-serif;
-            --bg-page: #f3f4f6;
+            --font-family: 'Inter', sans-serif;
+            
+            --bg-page: #f8fafc;       /* 蓝调灰白 */
             --bg-card: #ffffff;
-            --bg-glass: transparent;
-            --bg-block: #f3f4f6;
-            --hero-blur: rgba(59, 130, 246, 0.15);
+            --bg-subtle: #f1f5f9;
+            --bg-hover: #ffffff;
+            --glass-bg: rgba(255, 255, 255, 0.9);
+            --glass-blur: 0px;
+            --hero-glow: rgba(59, 130, 246, 0.1);
 
-            --t-main: #1f2937;
-            --t-sub: #4b5563;
-            --t-body: #6b7280;
-            --t-nav: #4b5563;
-            --t-foot: #9ca3af;
+            --text-title: #0f172a;    /* Slate-900 */
+            --text-body: #334155;     /* Slate-700 */
+            --text-muted: #64748b;    /* Slate-500 */
+            --text-accent: #3b82f6;   /* Blue-500 */
 
-            --btn-p-bg: #3b82f6; /* 亮蓝 */
-            --btn-p-txt: #ffffff;
-            --btn-s-bg: #ffffff;
-            --btn-s-txt: #3b82f6;
-            --btn-s-brd: #3b82f6;
+            --btn-bg: #3b82f6;
+            --btn-text: #ffffff;
+            --tag-bg: #eff6ff;
+            --tag-txt: #1d4ed8;
 
-            --date-bg: #dbeafe;
-            --date-txt: #1d4ed8;
-            --line-color: #e5e7eb;
-            --check-color: #3b82f6; /* 蓝色勾选 */
-            --bar-color: #3b82f6;
-
-            /* 图标统一蓝色 */
-            --ico-1: #3b82f6; --ico-2: #3b82f6; --ico-3: #3b82f6;
-
-            --radius: 1rem;       /* 较小的圆角 */
-            --radius-btn: 0.5rem; /* 矩形圆角按钮 */
-            --shadow: 0 1px 3px rgba(0,0,0,0.1);
-            --shadow-h: 0 10px 15px -3px rgba(0,0,0,0.1);
-        }
-
-        /* -----------------------------------------------------------------
-           3. 🎩 Classic Theme (商务经典) - 衬线体，藏青色，直角
-           ----------------------------------------------------------------- */
-        :root[data-theme='classic'] {
-            --font: 'Playfair Display', serif; /* 衬线标题 */
-            --bg-page: #f9f9f9;
-            --bg-card: #ffffff;
-            --bg-glass: transparent;
-            --bg-block: #f0f0f0;
-            --hero-blur: rgba(30, 58, 138, 0.05);
-
-            --t-main: #0f172a; /* 接近黑色的深蓝 */
-            --t-sub: #334155;
-            --t-body: #475569;
-            --t-nav: #334155;
-            --t-foot: #64748b;
-
-            --btn-p-bg: #1e3a8a; /* 藏青色 */
-            --btn-p-txt: #ffffff;
-            --btn-s-bg: transparent;
-            --btn-s-txt: #1e3a8a;
-            --btn-s-brd: #1e3a8a;
-
-            --date-bg: #e2e8f0;
-            --date-txt: #1e3a8a;
+            --border-color: #e2e8f0;
             --line-color: #cbd5e1;
-            --check-color: #1e3a8a;
-            --bar-color: #1e3a8a;
+            
+            --icon-def: #3b82f6;
+            --check-color: #3b82f6;
 
-            /* 图标统一金色或藏青 */
-            --ico-1: #b45309; --ico-2: #b45309; --ico-3: #b45309;
+            --radius-card: 0.75rem;   /* 标准圆角 */
+            --radius-btn: 0.5rem;
+            --shadow-card: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-hover: 0 10px 15px -3px rgba(0,0,0,0.1);
+        }
 
-            --radius: 0px;       /* 直角 */
+        /* ---------------- 3. 🎩 Classic Theme (Business/Serif) ---------------- */
+        :root[data-theme='classic'] {
+            --font-family: 'Playfair Display', serif; /* 衬线体 */
+            
+            --bg-page: #fafaf9;       /* 暖色调白 */
+            --bg-card: #ffffff;
+            --bg-subtle: #f5f5f4;
+            --bg-hover: #ffffff;
+            --glass-bg: #ffffff;
+            --glass-blur: 0px;
+            --hero-glow: rgba(120, 113, 108, 0.1);
+
+            --text-title: #1c1917;    /* Stone-900 */
+            --text-body: #44403c;     /* Stone-700 */
+            --text-muted: #78716c;    /* Stone-500 */
+            --text-accent: #b45309;   /* Amber-700 */
+
+            --btn-bg: #1c1917;
+            --btn-text: #ffffff;
+            --tag-bg: #f5f5f4;
+            --tag-txt: #1c1917;
+
+            --border-color: #d6d3d1;
+            --line-color: #d6d3d1;
+            
+            --icon-def: #b45309;
+            --check-color: #b45309;
+
+            --radius-card: 2px;       /* 近乎直角 */
             --radius-btn: 2px;
-            --shadow: 0 1px 2px rgba(0,0,0,0.05);
-            --shadow-h: 0 4px 6px -1px rgba(0,0,0,0.1);
+            --shadow-card: 0 1px 2px rgba(0,0,0,0.05);
+            --shadow-hover: 0 4px 6px -1px rgba(0,0,0,0.1);
         }
 
-        /* -----------------------------------------------------------------
-           4. 💻 Geek Theme (极客终端) - 黑底绿字，等宽字体
-           ----------------------------------------------------------------- */
+        /* ---------------- 4. 💻 Geek Theme (Terminal) ---------------- */
         :root[data-theme='geek'] {
-            --font: 'JetBrains Mono', monospace;
-            --bg-page: #0f172a; /* 深色背景 */
-            --bg-card: #1e293b; /* 深色卡片 */
-            --bg-glass: transparent;
-            --bg-block: #1e293b;
-            --hero-blur: rgba(16, 185, 129, 0.1);
+            --font-family: 'JetBrains Mono', monospace;
+            
+            --bg-page: #0d1117;       /* GitHub Dark Dimmed */
+            --bg-card: #161b22;
+            --bg-subtle: #0d1117;
+            --bg-hover: #161b22;
+            --glass-bg: #161b22;
+            --glass-blur: 0px;
+            --hero-glow: rgba(46, 160, 67, 0.1);
 
-            --t-main: #e2e8f0; /* 亮白字 */
-            --t-sub: #94a3b8;
-            --t-body: #cbd5e1;
-            --t-nav: #94a3b8;
-            --t-foot: #64748b;
+            --text-title: #e6edf3;    /* 亮白 */
+            --text-body: #8b949e;     /* 终端灰 */
+            --text-muted: #6e7681;
+            --text-accent: #2ea043;   /* Terminal Green */
 
-            --btn-p-bg: #10b981; /* 终端绿 */
-            --btn-p-txt: #0f172a;
-            --btn-s-bg: transparent;
-            --btn-s-txt: #10b981;
-            --btn-s-brd: #10b981;
+            --btn-bg: #238636;
+            --btn-text: #ffffff;
+            --tag-bg: #1f6feb;        /* Blue accent for tags */
+            --tag-txt: #ffffff;
 
-            --date-bg: #064e3b;
-            --date-txt: #34d399;
-            --line-color: #334155;
-            --check-color: #10b981;
-            --bar-color: #10b981;
+            --border-color: #30363d;
+            --line-color: #30363d;
+            
+            --icon-def: #2ea043;
+            --check-color: #2ea043;
 
-            --ico-1: #10b981; --ico-2: #10b981; --ico-3: #10b981;
-
-            --radius: 4px;
-            --radius-btn: 4px;
-            --shadow: none;
-            --shadow-h: 0 0 0 2px #10b981; /* 悬停绿色发光描边 */
+            --radius-card: 6px;
+            --radius-btn: 6px;
+            --shadow-card: none;
+            --shadow-hover: 0 0 0 2px #2ea043; /* 绿色描边 */
         }
 
-        /* --- 基础设置 --- */
+        /* ---------------- 5. 🌑 Dark Theme (New! Premium Dark) ---------------- */
+        :root[data-theme='dark'] {
+            --font-family: 'Inter', sans-serif;
+            
+            --bg-page: #000000;       /* 纯黑 */
+            --bg-card: #1c1c1e;       /* Apple Dark Grey */
+            --bg-subtle: #1c1c1e;
+            --bg-hover: #2c2c2e;
+            --glass-bg: rgba(28, 28, 30, 0.8);
+            --glass-blur: 20px;
+            --hero-glow: rgba(255, 255, 255, 0.1);
+
+            --text-title: #f5f5f7;    /* 亮白 */
+            --text-body: #d1d1d6;     /* 浅灰 */
+            --text-muted: #86868b;    /* 暗灰 */
+            --text-accent: #0a84ff;   /* iOS Dark Blue */
+
+            --btn-bg: #ffffff;        /* 白色按钮 */
+            --btn-text: #000000;
+            --tag-bg: #2c2c2e;
+            --tag-txt: #f5f5f7;
+
+            --border-color: #38383a;
+            --line-color: #38383a;
+            
+            --icon-def: #0a84ff;
+            --check-color: #86868b;
+
+            --radius-card: 1.5rem;
+            --radius-btn: 9999px;
+            --shadow-card: 0 0 0 1px rgba(255,255,255,0.1); /* 微弱白边替代阴影 */
+            --shadow-hover: 0 0 0 1px rgba(255,255,255,0.3);
+        }
+
+        /* --- 全局样式重置 --- */
         body {
-            font-family: var(--font);
+            font-family: var(--font-family);
             background-color: var(--bg-page);
-            color: var(--t-body);
-            transition: background-color 0.3s, color 0.3s;
+            color: var(--text-body);
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        /* --- 卡片组件类 --- */
-        .theme-card {
-            background-color: var(--bg-card);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            /* 在Apple模式下通常无边框，Geek模式可能有 */
-            border: 1px solid transparent; 
-        }
-        :root[data-theme='apple'] .theme-card { border-color: #f3f4f6; } /* Apple微弱边框 */
-        :root[data-theme='geek'] .theme-card { border-color: #334155; }
+        h1, h2, h3, h4, h5, h6 { color: var(--text-title); }
         
-        .theme-card:hover {
-            box-shadow: var(--shadow-h);
-        }
-
-        /* Profile小卡片特殊逻辑 */
-        .card-subtle {
-            background-color: var(--bg-block);
-            border-radius: 1rem; /* 这里的圆角在Apple模式固定为2xl */
-        }
-        :root[data-theme='classic'] .card-subtle { border-radius: 0; }
-        :root[data-theme='geek'] .card-subtle { background-color: #0f172a; border: 1px dashed #334155; }
-        
-        .card-subtle:hover {
+        /* 交互类 */
+        .card-base {
             background-color: var(--bg-card);
-            box-shadow: var(--shadow-h);
+            border-radius: var(--radius-card);
+            box-shadow: var(--shadow-card);
+            border: 1px solid var(--border-color);
         }
+        .card-base:hover { box-shadow: var(--shadow-hover); }
 
-        /* 按钮组件 */
-        .btn-primary { background-color: var(--btn-p-bg); color: var(--btn-p-txt); border-radius: var(--radius-btn); }
-        .btn-secondary { background-color: var(--btn-s-bg); color: var(--btn-s-txt); border: 1px solid var(--btn-s-brd); border-radius: var(--radius-btn); }
-
-        /* Classic 模式正文修正 */
-        :root[data-theme='classic'] body { font-family: 'Inter', sans-serif; }
-        :root[data-theme='classic'] h1, :root[data-theme='classic'] h2, :root[data-theme='classic'] h3 { font-family: 'Playfair Display', serif; }
+        .btn-main {
+            background-color: var(--btn-bg);
+            color: var(--btn-text);
+            border-radius: var(--radius-btn);
+        }
+        .btn-ghost {
+            background-color: var(--bg-card);
+            color: var(--text-title);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-btn);
+        }
 
         /* 动画类 */
         .reveal-hidden { opacity: 0; transform: translateY(30px) scale(0.98); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform, opacity; }
         .reveal-visible { opacity: 1; transform: translateY(0) scale(1); }
         .tilt-container { perspective: 1000px; transform-style: preserve-3d; }
 
-        /* 打印样式 */
+        /* 打印样式 (保持不变，使用黑白高对比) */
         #print-view { display: none; }
         @media print {
             #screen-view, header, #backToTop, #wechatModal, .no-print, .tilt-container { display: none !important; }
             @page { size: A4; margin: 15mm 15mm; }
-            html, body { width: 210mm; height: auto; margin: 0 !important; padding: 0 !important; background-color: white !important; color: #000 !important; overflow: visible !important; font-family: sans-serif !important; }
+            html, body { width: 210mm; height: auto; margin: 0 !important; padding: 0 !important; background-color: white !important; color: #000 !important; overflow: visible !important; font-family: "Microsoft YaHei", sans-serif !important; }
             #print-view { display: block !important; width: 100%; font-size: 9.5pt; line-height: 1.35; text-align: justify; }
             .print-h1 { font-size: 20pt; font-weight: bold; line-height: 1.2; margin-bottom: 4pt; color: #000; }
             .print-h2 { font-size: 12pt; font-weight: bold; border-bottom: 1pt solid #000; margin-top: 10pt; margin-bottom: 4pt; padding-bottom: 2pt; page-break-after: avoid; }
@@ -297,63 +316,63 @@
         #mobile-menu.open { max-height: 400px; opacity: 1; }
     </style>
 </head>
-<body class="selection:bg-blue-100 selection:text-blue-900 font-theme">
+<body class="selection:bg-theme-accent/20 selection:text-theme-accent font-theme">
 
     <div id="screen-view">
         <header id="navbar" class="fixed w-full top-0 left-0 transition-all duration-300 z-50 py-4 bg-transparent print:hidden">
             <div class="container mx-auto px-4 md:px-6">
                 <div class="flex justify-between items-center">
-                    <a href="#" class="text-xl font-bold text-txt-main tracking-tight flex items-center gap-2" id="nav-name"></a>
+                    <a href="#" class="text-xl font-bold text-theme-title tracking-tight flex items-center gap-2" id="nav-name"></a>
                     <div class="hidden md:flex items-center gap-1 px-2" id="nav-pill">
-                        <nav class="flex text-sm font-medium text-txt-nav space-x-1" id="nav-menu-desktop"></nav>
-                        <div class="w-px h-4 bg-gray-300 mx-3"></div>
-                        <button id="langSwitch" class="flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-semibold hover:bg-black/5 transition text-txt-nav hover:text-txt-main btn-secondary border-transparent">
+                        <nav class="flex text-sm font-medium text-theme-body space-x-1" id="nav-menu-desktop"></nav>
+                        <div class="w-px h-4 bg-theme-border mx-3"></div>
+                        <button id="langSwitch" class="flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-semibold hover:bg-theme-hover transition text-theme-body hover:text-theme-title border border-transparent">
                             <i class="fa fa-globe"></i> <span id="langLabel">EN</span>
                         </button>
                     </div>
                     <div class="flex items-center gap-4 md:hidden">
-                        <button id="langSwitchMobile" class="border border-gray-200 px-2 py-1 rounded text-xs font-medium hover:border-blue-500 text-txt-nav btn-secondary">
+                        <button id="langSwitchMobile" class="border border-theme-border px-2 py-1 rounded text-xs font-medium hover:border-theme-accent text-theme-body">
                             <span id="langLabelMobile">EN</span>
                         </button>
-                        <button id="mobile-menu-btn" class="text-txt-nav hover:text-txt-main focus:outline-none transition p-1"><i class="fa fa-bars text-2xl"></i></button>
+                        <button id="mobile-menu-btn" class="text-theme-body hover:text-theme-title focus:outline-none transition p-1"><i class="fa fa-bars text-2xl"></i></button>
                     </div>
                 </div>
-                <div id="mobile-menu" class="md:hidden border-t mt-3 border-gray-200/50">
+                <div id="mobile-menu" class="md:hidden border-t mt-3 border-theme-border">
                     <nav class="flex flex-col space-y-2 py-4" id="nav-menu-mobile"></nav>
                 </div>
             </div>
         </header>
 
         <section class="pt-40 pb-20 relative overflow-hidden print:pt-10">
-            <div id="hero-bg-blur" class="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] rounded-[100%] blur-3xl -z-10 opacity-60 print:hidden transition-colors" style="background: linear-gradient(to bottom, var(--hero-blur), transparent);"></div>
+            <div id="hero-bg-blur" class="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] rounded-[100%] blur-3xl -z-10 opacity-60 print:hidden transition-colors" style="background: linear-gradient(to bottom, var(--hero-glow), transparent);"></div>
             
             <div class="container mx-auto px-4 md:px-6 flex flex-col md:flex-row items-center gap-12 md:gap-20">
                 <div class="md:w-1/2 text-center md:text-left z-10">
-                    <h1 class="text-4xl md:text-6xl font-bold text-txt-main mb-6 leading-tight tracking-tight reveal-hidden" id="hero-name"></h1>
-                    <p class="text-xl md:text-2xl text-txt-sub mb-8 font-light reveal-hidden" style="transition-delay: 100ms" id="hero-title"></p>
+                    <h1 class="text-4xl md:text-6xl font-bold text-theme-title mb-6 leading-tight tracking-tight reveal-hidden" id="hero-name"></h1>
+                    <p class="text-xl md:text-2xl text-theme-muted mb-8 font-light reveal-hidden" style="transition-delay: 100ms" id="hero-title"></p>
                     <div class="flex flex-wrap justify-center md:justify-start gap-3 mb-10 reveal-hidden" style="transition-delay: 200ms" id="hero-tags"></div>
                     <div class="flex flex-wrap justify-center md:justify-start gap-4 print:hidden reveal-hidden" style="transition-delay: 300ms" id="hero-btns"></div>
                 </div>
                 <div class="md:w-1/2 flex justify-center tilt-container reveal-hidden" style="transition-delay: 200ms">
                     <div id="hero-tilt" class="relative w-64 h-64 md:w-80 md:h-80 transition-transform duration-100 ease-out cursor-pointer group">
-                        <div class="absolute inset-0 rounded-full bg-gradient-to-tr from-blue-200/50 to-purple-200/50 blur-2xl opacity-40 group-hover:opacity-60 transition-opacity duration-500 print:hidden"></div>
-                        <div class="w-full h-full rounded-full bg-card p-1.5 shadow-theme relative overflow-hidden border border-white/50">
+                        <div class="absolute inset-0 rounded-full bg-gradient-to-tr from-theme-accent/20 to-theme-accent/5 blur-2xl opacity-40 group-hover:opacity-60 transition-opacity duration-500 print:hidden"></div>
+                        <div class="w-full h-full rounded-full bg-theme-card p-1.5 shadow-theme relative overflow-hidden border border-white/20">
                             <img id="hero-avatar" src="" alt="Profile" class="w-full h-full rounded-full object-cover">
                         </div>
-                        <div class="absolute bottom-4 right-4 bg-white/90 backdrop-blur shadow-lg px-4 py-2 rounded-full border border-white/50 flex items-center gap-2 transform translate-z-10 group-hover:scale-105 transition print:hidden">
+                        <div class="absolute bottom-4 right-4 bg-theme-card/90 backdrop-blur shadow-lg px-4 py-2 rounded-full border border-theme-border flex items-center gap-2 transform translate-z-10 group-hover:scale-105 transition print:hidden">
                             <i class="fa fa-map-marker text-red-500"></i>
-                            <span class="text-xs font-semibold text-gray-700" id="hero-location"></span>
+                            <span class="text-xs font-semibold text-theme-title" id="hero-location"></span>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="profile" class="py-20 bg-glass reveal-hidden print:py-5">
+        <section id="profile" class="py-20 glass-effect reveal-hidden print:py-5">
             <div class="container mx-auto px-4 md:px-6 max-w-5xl">
-                <div class="text-center mb-12"><h2 class="text-3xl font-bold text-txt-main" id="t-profile"></h2></div>
-                <div class="theme-card p-8 md:p-12">
-                    <p class="text-txt-body mb-10 leading-relaxed text-lg" id="profile-summary"></p>
+                <div class="text-center mb-12"><h2 class="text-3xl font-bold text-theme-title" id="t-profile"></h2></div>
+                <div class="card-base p-8 md:p-12">
+                    <p class="text-theme-body mb-10 leading-relaxed text-lg" id="profile-summary"></p>
                     <div class="grid md:grid-cols-3 gap-6" id="profile-cards"></div>
                 </div>
             </div>
@@ -361,53 +380,53 @@
 
         <section id="skills" class="py-20 reveal-hidden print:py-5 print:break-inside-avoid">
             <div class="container mx-auto px-4 md:px-6">
-                <div class="text-center mb-12"><h2 class="text-3xl font-bold text-txt-main" id="t-skills"></h2></div>
+                <div class="text-center mb-12"><h2 class="text-3xl font-bold text-theme-title" id="t-skills"></h2></div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6" id="skills-bento-container"></div>
             </div>
         </section>
 
-        <section id="experience" class="py-20 bg-glass print:py-5">
+        <section id="experience" class="py-20 glass-effect print:py-5">
             <div class="container mx-auto px-4 md:px-6">
-                <div class="text-center mb-16"><h2 class="text-3xl font-bold text-txt-main" id="t-exp"></h2></div>
+                <div class="text-center mb-16"><h2 class="text-3xl font-bold text-theme-title" id="t-exp"></h2></div>
                 <div class="max-w-5xl mx-auto space-y-12" id="exp-list"></div>
             </div>
         </section>
 
         <section id="education" class="py-20 print:py-5 print:break-inside-avoid">
             <div class="container mx-auto px-4 md:px-6">
-                <div class="text-center mb-16"><h2 class="text-3xl font-bold text-txt-main" id="t-edu"></h2></div>
+                <div class="text-center mb-16"><h2 class="text-3xl font-bold text-theme-title" id="t-edu"></h2></div>
                 <div class="grid md:grid-cols-2 gap-8" id="edu-container">
-                    <div class="theme-card p-8 h-full reveal-hidden" id="edu-col-left"></div>
-                    <div class="theme-card p-8 h-full reveal-hidden" style="transition-delay: 100ms" id="edu-col-right"></div>
+                    <div class="card-base p-8 h-full reveal-hidden" id="edu-col-left"></div>
+                    <div class="card-base p-8 h-full reveal-hidden" style="transition-delay: 100ms" id="edu-col-right"></div>
                 </div>
             </div>
         </section>
 
-        <section id="contact" class="py-24 border-t border-gray-200/20 print:py-5 print:break-inside-avoid bg-card">
+        <section id="contact" class="py-24 border-t border-theme-border print:py-5 print:break-inside-avoid bg-theme-card">
             <div class="container mx-auto px-4 md:px-6">
-                <div class="max-w-4xl mx-auto bg-block theme-card shadow-inner p-8 md:p-12 reveal-hidden" id="contact-area"></div>
+                <div class="max-w-4xl mx-auto bg-theme-subtle card-base shadow-inner p-8 md:p-12 reveal-hidden" id="contact-area"></div>
             </div>
         </section>
 
-        <footer class="bg-block text-txt-foot py-12 print:hidden text-center border-t border-gray-200/20">
-            <h3 class="text-lg font-bold text-txt-main mb-2" id="f-name"></h3>
+        <footer class="bg-theme-subtle text-theme-muted py-12 print:hidden text-center border-t border-theme-border">
+            <h3 class="text-lg font-bold text-theme-title mb-2" id="f-name"></h3>
             <p class="text-sm mb-6" id="f-desc"></p>
             <div class="flex justify-center space-x-6 mb-8" id="social-icons"></div>
             <p class="text-xs opacity-60">© 2026 <span id="copyright-name"></span>. All rights reserved.</p>
         </footer>
 
-        <button id="backToTop" class="fixed bottom-8 right-8 w-12 h-12 bg-white/80 backdrop-blur-md border border-gray-200/50 rounded-full shadow-lg flex items-center justify-center text-gray-500 hover:text-black hover:scale-110 hover:-translate-y-1 transition-all duration-500 z-40 opacity-0 invisible translate-y-4 group">
+        <button id="backToTop" class="fixed bottom-8 right-8 w-12 h-12 bg-theme-card backdrop-blur-md border border-theme-border rounded-full shadow-lg flex items-center justify-center text-theme-muted hover:text-theme-title hover:scale-110 hover:-translate-y-1 transition-all duration-500 z-40 opacity-0 invisible translate-y-4 group">
             <i class="fa fa-arrow-up transition-transform duration-300 group-hover:-translate-y-0.5"></i>
         </button>
 
         <div id="wechatModal" class="hidden fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-md p-4 transition-opacity duration-300" onclick="this.classList.add('hidden')">
-            <div class="bg-white p-8 rounded-2xl shadow-2xl max-w-sm w-full text-center transform scale-100 transition-transform duration-300" onclick="event.stopPropagation()">
-                <h3 id="modal-title" class="text-xl font-bold mb-6 text-txt-main">Scan QR Code</h3>
+            <div class="bg-theme-card p-8 rounded-theme shadow-2xl max-w-sm w-full text-center transform scale-100 transition-transform duration-300" onclick="event.stopPropagation()">
+                <h3 id="modal-title" class="text-xl font-bold mb-6 text-theme-title">Scan QR Code</h3>
                 <div class="bg-gray-100 p-3 rounded-xl inline-block mb-6 shadow-inner">
                     <img id="modal-qr" src="" class="w-48 h-48 object-contain mix-blend-multiply">
                 </div>
-                <p class="text-gray-500 font-mono text-sm bg-gray-50 py-2 px-4 rounded-lg border border-gray-100 inline-block" id="modal-text"></p>
-                <div class="mt-8"><button onclick="document.getElementById('wechatModal').classList.add('hidden')" class="text-sm font-medium text-blue-600 hover:text-blue-700 hover:bg-blue-50 px-4 py-2 rounded-full transition">Close</button></div>
+                <p class="text-theme-body font-mono text-sm bg-theme-subtle py-2 px-4 rounded-lg border border-theme-border inline-block" id="modal-text"></p>
+                <div class="mt-8"><button onclick="document.getElementById('wechatModal').classList.add('hidden')" class="text-sm font-medium text-theme-accent hover:underline px-4 py-2 rounded-full transition">Close</button></div>
             </div>
         </div>
     </div>
@@ -432,10 +451,10 @@
                 const isMenuOpen = mobileMenu.classList.contains('open');
                 if (isScrolled || isMenuOpen) {
                     navbar.classList.remove('bg-transparent', 'py-4');
-                    navbar.classList.add('bg-page/90', 'backdrop-blur-xl', 'border-b', 'border-gray-200/50', 'py-3');
+                    navbar.classList.add('bg-theme-page/90', 'backdrop-blur-xl', 'border-b', 'border-theme-border', 'py-3');
                 } else {
                     navbar.classList.add('bg-transparent', 'py-4');
-                    navbar.classList.remove('bg-page/90', 'backdrop-blur-xl', 'border-b', 'border-gray-200/50', 'py-3');
+                    navbar.classList.remove('bg-theme-page/90', 'backdrop-blur-xl', 'border-b', 'border-theme-border', 'py-3');
                 }
                 
                 const backToTop = document.getElementById('backToTop');
@@ -450,9 +469,11 @@
             entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('reveal-visible'); observer.unobserve(entry.target); } });
         }, { threshold: 0.1 });
 
+        // Cache Busting: 添加时间戳防止缓存
         async function loadResume() {
             try {
-                const res = await fetch('./data.json');
+                // 强制刷新数据
+                const res = await fetch(`./data.json?t=${new Date().getTime()}`);
                 const fullData = await res.json();
                 const data = fullData[currentLang];
                 
@@ -484,19 +505,19 @@
             document.getElementById('nav-name').textContent = basic.name;
             
             const links = ['profile','skills','experience','education','contact'];
-            const navHTML = ui.nav.map((n, i) => `<a href="#${links[i]}" class="px-3 py-2 rounded-full hover:bg-gray-200/50 hover:text-black transition-colors" onclick="document.getElementById('mobile-menu').classList.remove('open');">${n}</a>`).join('');
+            const navHTML = ui.nav.map((n, i) => `<a href="#${links[i]}" class="px-3 py-2 rounded-full hover:bg-theme-subtle hover:text-theme-title transition-colors rounded-btn" onclick="document.getElementById('mobile-menu').classList.remove('open');">${n}</a>`).join('');
             document.getElementById('nav-menu-desktop').innerHTML = navHTML;
             document.getElementById('nav-menu-mobile').innerHTML = navHTML;
 
             document.getElementById('hero-name').textContent = basic.name;
             document.getElementById('hero-title').textContent = basic.titles;
-            document.getElementById('hero-tags').innerHTML = basic.tags.map(t => `<span class="bg-white/50 backdrop-blur border border-gray-200/50 text-txt-body px-4 py-1.5 rounded-full text-sm font-medium shadow-sm">${t}</span>`).join('');
+            document.getElementById('hero-tags').innerHTML = basic.tags.map(t => `<span class="bg-theme-tag-bg border border-theme-border text-theme-tag-txt px-4 py-1.5 rounded-full text-sm font-medium shadow-sm">${t}</span>`).join('');
             
-            // 按钮: 纯黑(Primary) vs 白(Secondary)
+            // 按钮: 使用语义类名 btn-main / btn-ghost
             document.getElementById('hero-btns').innerHTML = `
-                <a href="#contact" class="btn-primary px-8 py-3 font-medium hover:opacity-90 hover:scale-105 transition-all duration-300 shadow-lg flex items-center"><i class="fa fa-envelope mr-2"></i> ${ui.buttons.contact}</a>
-                <a href="#experience" class="btn-secondary px-8 py-3 font-medium hover:bg-gray-50 transition-all hover:scale-105 shadow-sm flex items-center"><i class="fa fa-briefcase mr-2"></i> ${ui.buttons.exp}</a>
-                <button onclick="window.print()" class="btn-secondary px-8 py-3 font-medium hover:bg-gray-50 transition-all hover:scale-105 shadow-sm flex items-center gap-2"><i class="fa fa-print"></i> ${ui.buttons.print}</button>
+                <a href="#contact" class="btn-main px-8 py-3 font-medium hover:opacity-90 hover:scale-105 transition-all duration-300 shadow-lg flex items-center"><i class="fa fa-envelope mr-2"></i> ${ui.buttons.contact}</a>
+                <a href="#experience" class="btn-ghost px-8 py-3 font-medium hover:bg-theme-subtle transition-all hover:scale-105 shadow-sm flex items-center"><i class="fa fa-briefcase mr-2"></i> ${ui.buttons.exp}</a>
+                <button onclick="window.print()" class="btn-ghost px-8 py-3 font-medium hover:bg-theme-subtle transition-all hover:scale-105 shadow-sm flex items-center gap-2"><i class="fa fa-print"></i> ${ui.buttons.print}</button>
             `;
             document.getElementById('hero-avatar').src = basic.avatar;
             document.getElementById('hero-location').textContent = basic.location;
@@ -504,22 +525,21 @@
             document.getElementById('t-profile').textContent = ui.section_titles.profile;
             document.getElementById('profile-summary').innerHTML = data.profile.summary;
             document.getElementById('profile-cards').innerHTML = data.profile.cards.map((c, i) => `
-                <div class="group card-subtle p-6 transition-all duration-300 reveal-hidden" style="transition-delay: ${i*100}ms">
+                <div class="group bg-theme-subtle rounded-theme p-6 transition-all duration-300 reveal-hidden hover:bg-theme-card hover:shadow-theme-hover border border-transparent hover:border-theme-border" style="transition-delay: ${i*100}ms">
                     <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-lg mb-4 group-hover:scale-110 transition-transform"><i class="fa ${c.icon}"></i></div>
-                    <h3 class="font-bold text-txt-main mb-2">${c.title}</h3>
-                    <p class="text-sm text-txt-body leading-relaxed">${c.desc}</p>
+                    <h3 class="font-bold text-theme-title mb-2">${c.title}</h3>
+                    <p class="text-sm text-theme-body leading-relaxed">${c.desc}</p>
                 </div>`).join('');
 
             document.getElementById('t-skills').textContent = ui.section_titles.skills;
             const bentoContainer = document.getElementById('skills-bento-container');
             const chartData = data.skills.chart;
-            const chartColor = theme === 'geek' ? '#10b981' : (theme === 'classic' ? '#1e3a8a' : '#0071e3');
             
             let bentoHTML = `
-                <div class="col-span-1 md:col-span-1 lg:col-span-3 theme-card p-6 flex flex-col relative overflow-hidden reveal-hidden">
+                <div class="col-span-1 md:col-span-1 lg:col-span-3 card-base p-6 flex flex-col relative overflow-hidden reveal-hidden">
                     <div class="flex items-center gap-3 mb-4 z-10">
                         <div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center"><i class="fa fa-pie-chart"></i></div>
-                        <h3 class="font-bold text-txt-main">${ui.section_titles.chart} (Radar)</h3>
+                        <h3 class="font-bold text-theme-title">${ui.section_titles.chart} (Radar)</h3>
                     </div>
                     <div class="flex-1 min-h-[300px] flex items-center justify-center min-w-0">
                         <div class="relative w-full h-full">
@@ -527,17 +547,17 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-span-1 md:col-span-1 lg:col-span-3 theme-card p-6 reveal-hidden">
-                    <div class="flex items-center gap-3 mb-6 pb-3 border-b border-gray-100/50">
+                <div class="col-span-1 md:col-span-1 lg:col-span-3 card-base p-6 reveal-hidden">
+                    <div class="flex items-center gap-3 mb-6 pb-3 border-b border-theme-border">
                         <div class="w-8 h-8 rounded-lg bg-green-50 text-green-600 flex items-center justify-center"><i class="fa fa-sliders"></i></div>
-                        <h3 class="font-bold text-txt-main">${ui.section_titles.chart} (Levels)</h3>
+                        <h3 class="font-bold text-theme-title">${ui.section_titles.chart} (Levels)</h3>
                     </div>
                     <div class="space-y-6">
                         ${chartData.labels.map((l, i) => `
                             <div>
-                                <div class="flex justify-between mb-1.5 text-sm font-semibold text-txt-body">
+                                <div class="flex justify-between mb-1.5 text-sm font-semibold text-theme-body">
                                     <span>${l}</span>
-                                    <span class="text-blue-600">${chartData.data[i]}%</span>
+                                    <span class="text-theme-accent">${chartData.data[i]}%</span>
                                 </div>
                                 <div class="progress-bar" style="--progress:${chartData.data[i]}%"></div>
                             </div>
@@ -546,23 +566,27 @@
                 </div>
             `;
             
-            // 图标颜色循环: Orange, Purple, Teal
+            // 图标颜色循环 logic now handled by CSS variables --ico-1, 2, 3
+            // In Apple theme, these are Orange, Purple, Teal. In others, they are monochrome.
             const iconVars = ['text-ico-1', 'text-ico-2', 'text-ico-3'];
             data.skills.card_groups.forEach((g, idx) => {
                 bentoHTML += `
-                <div class="col-span-1 md:col-span-1 lg:col-span-2 theme-card p-6 hover:-translate-y-1 transition-all duration-300 reveal-hidden" style="transition-delay: ${(idx+1)*100}ms">
-                    <div class="flex items-center gap-3 mb-4 pb-3 border-b border-gray-100/50">
+                <div class="col-span-1 md:col-span-1 lg:col-span-2 card-base p-6 hover:-translate-y-1 transition-all duration-300 reveal-hidden" style="transition-delay: ${(idx+1)*100}ms">
+                    <div class="flex items-center gap-3 mb-4 pb-3 border-b border-theme-border">
                         <i class="fa ${g.icon} ${iconVars[idx%3]} text-lg"></i>
-                        <h3 class="font-bold text-txt-main">${g.title}</h3>
+                        <h3 class="font-bold text-theme-title">${g.title}</h3>
                     </div>
                     <ul class="space-y-3">
-                        ${g.items.slice(0, 5).map(item => `<li class="flex items-start gap-2 text-sm text-txt-body"><span class="w-1.5 h-1.5 rounded-full bg-gray-300 mt-1.5 shrink-0"></span><span class="leading-snug">${stripHtml(item)}</span></li>`).join('')}
+                        ${g.items.slice(0, 5).map(item => `<li class="flex items-start gap-2 text-sm text-theme-body"><span class="w-1.5 h-1.5 rounded-full bg-gray-300 mt-1.5 shrink-0"></span><span class="leading-snug">${stripHtml(item)}</span></li>`).join('')}
                     </ul>
                 </div>`;
             });
             bentoContainer.innerHTML = bentoHTML;
 
             if(myChart) myChart.destroy();
+            const gridColor = theme === 'geek' || theme === 'dark' ? '#333' : '#f0f0f0';
+            const pointColor = theme === 'geek' || theme === 'dark' ? '#fff' : '#333';
+            
             myChart = new Chart(document.getElementById('skillsChart'), {
                 type: 'radar',
                 data: {
@@ -570,10 +594,10 @@
                     datasets: [{ 
                         label: 'Level', 
                         data: chartData.data, 
-                        backgroundColor: theme === 'geek' ? 'rgba(16, 185, 129, 0.2)' : 'rgba(0, 113, 227, 0.2)', 
-                        borderColor: chartColor, 
-                        pointBackgroundColor: theme === 'geek' ? '#0f172a' : '#fff', 
-                        pointBorderColor: chartColor, 
+                        backgroundColor: theme === 'geek' ? 'rgba(46, 160, 67, 0.2)' : 'rgba(0, 113, 227, 0.2)', 
+                        borderColor: theme === 'geek' ? '#2ea043' : (theme === 'classic' ? '#1e3a8a' : '#0071e3'), 
+                        pointBackgroundColor: pointColor, 
+                        pointBorderColor: theme === 'geek' ? '#2ea043' : '#0071e3', 
                         borderWidth: 2 
                     }]
                 },
@@ -583,8 +607,8 @@
                         r: { 
                             min: 0, max: 100, 
                             ticks: { display: true, stepSize: 20, backdropColor: 'transparent', font: { size: 10 }, color: '#999' },
-                            grid: { color: theme === 'geek' ? '#334155' : '#f0f0f0' },
-                            pointLabels: { font: { size: 12, weight: '600', family: 'var(--font)' }, color: '#6b7280' }
+                            grid: { color: gridColor },
+                            pointLabels: { font: { size: 12, weight: '600', family: 'var(--font-family)' }, color: 'var(--text-muted)' }
                         } 
                     }, 
                     plugins: { legend: { display: false }, tooltip: { callbacks: { label: (context) => context.raw + '%' } } } 
@@ -592,24 +616,23 @@
             });
 
             document.getElementById('t-exp').textContent = ui.section_titles.experience;
-            // 修复：左侧线 gray-100, 图标 gray-300, 日期蓝字浅底
             document.getElementById('exp-list').innerHTML = data.experience.map(job => `
                 <div class="relative pl-0 md:pl-0 reveal-hidden">
                     <div class="flex flex-col md:flex-row gap-8 md:gap-16">
                         <div class="md:w-1/3 text-left md:text-right relative">
                             <div class="sticky top-28 transition-all">
-                                <h3 class="font-bold text-2xl text-txt-main tracking-tight">${job.company}</h3>
+                                <h3 class="font-bold text-2xl text-theme-title tracking-tight">${job.company}</h3>
                                 <div class="text-date-txt font-semibold text-sm mt-1 mb-2 inline-block bg-date-bg px-3 py-1 rounded-full">${job.date}</div>
-                                <p class="text-gray-700 font-medium mb-1">${job.role}</p>
-                                <p class="text-gray-400 text-xs flex items-center md:justify-end gap-1"><i class="fa fa-map-marker"></i> ${job.location}</p>
+                                <p class="text-theme-body font-medium mb-1">${job.role}</p>
+                                <p class="text-theme-muted text-xs flex items-center md:justify-end gap-1"><i class="fa fa-map-marker"></i> ${job.location}</p>
                             </div>
                         </div>
-                        <div class="md:w-2/3 border-l-2 pl-8 py-2 space-y-8 border-line">
+                        <div class="md:w-2/3 border-l-2 border-theme-line pl-8 py-2 space-y-8">
                             ${job.projects.map(p => `
                                 <div class="group">
-                                    ${p.title ? `<h4 class="font-bold text-txt-main mb-3 text-lg flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-blue-500"></span> ${p.title}</h4>` : ''}
+                                    ${p.title ? `<h4 class="font-bold text-theme-title mb-3 text-lg flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-theme-accent"></span> ${p.title}</h4>` : ''}
                                     <ul class="space-y-4">
-                                        ${p.details.map(d => `<li class="flex items-start gap-3 text-[15px] text-txt-body leading-relaxed group-hover:text-txt-main transition-colors"><i class="fa fa-check mt-1 shrink-0 text-xs text-check"></i><span>${d}</span></li>`).join('')}
+                                        ${p.details.map(d => `<li class="flex items-start gap-3 text-[15px] text-theme-body leading-relaxed group-hover:text-theme-title transition-colors"><i class="fa fa-check mt-1 shrink-0 text-xs text-check"></i><span>${d}</span></li>`).join('')}
                                     </ul>
                                 </div>
                             `).join('')}
@@ -619,22 +642,22 @@
 
             document.getElementById('t-edu').textContent = ui.section_titles.education;
             document.getElementById('edu-col-left').innerHTML = `
-                <h3 class="font-bold text-xl mb-8 text-txt-main flex items-center gap-3"><span class="bg-blue-100 text-blue-600 w-8 h-8 rounded-lg flex items-center justify-center text-sm"><i class="fa fa-graduation-cap"></i></span> ${ui.section_titles.academic}</h3>
+                <h3 class="font-bold text-xl mb-8 text-theme-title flex items-center gap-3"><span class="bg-blue-100 text-blue-600 w-8 h-8 rounded-lg flex items-center justify-center text-sm"><i class="fa fa-graduation-cap"></i></span> ${ui.section_titles.academic}</h3>
                 <div class="space-y-8">
                 ${data.education.map(e => `
-                    <div><h4 class="font-bold text-lg text-txt-main">${e.school}</h4><p class="text-txt-body font-medium">${e.degree}</p><p class="text-gray-400 text-sm mt-1 flex items-center gap-2"><i class="fa fa-calendar-o"></i> ${e.date} &nbsp;•&nbsp; ${e.location}</p></div>`).join('')}
+                    <div><h4 class="font-bold text-lg text-theme-title">${e.school}</h4><p class="text-theme-body font-medium">${e.degree}</p><p class="text-theme-muted text-sm mt-1 flex items-center gap-2"><i class="fa fa-calendar-o"></i> ${e.date} &nbsp;•&nbsp; ${e.location}</p></div>`).join('')}
                 </div>
-                <div class="mt-12 pt-8 border-t border-gray-100/50">
-                    <h3 class="font-bold text-lg mb-4 text-txt-main flex items-center gap-2"><i class="fa fa-heart text-red-400"></i> ${ui.section_titles.hobbies}</h3>
-                    <div class="flex flex-wrap gap-2 mb-4">${data.hobbies.items.map(h => `<span class="bg-gray-100/50 px-3 py-1 rounded-full text-xs font-medium text-txt-body border border-transparent hover:border-gray-200 transition">${h}</span>`).join('')}</div>
-                    <p class="text-sm text-txt-body bg-gray-50/50 p-4 rounded-xl italic border border-gray-100/50">"${data.hobbies.desc}"</p>
+                <div class="mt-12 pt-8 border-t border-theme-border">
+                    <h3 class="font-bold text-lg mb-4 text-theme-title flex items-center gap-2"><i class="fa fa-heart text-red-400"></i> ${ui.section_titles.hobbies}</h3>
+                    <div class="flex flex-wrap gap-2 mb-4">${data.hobbies.items.map(h => `<span class="bg-theme-subtle px-3 py-1 rounded-full text-xs font-medium text-theme-body border border-transparent hover:border-theme-border transition">${h}</span>`).join('')}</div>
+                    <p class="text-sm text-theme-body bg-theme-subtle p-4 rounded-xl italic border border-theme-border">"${data.hobbies.desc}"</p>
                 </div>`;
             
             document.getElementById('edu-col-right').innerHTML = data.tools.map(t => `
                 <div class="mb-8 last:mb-0">
-                    <h3 class="font-bold text-lg mb-5 text-txt-main flex items-center gap-2"><i class="fa ${t.icon} text-gray-400"></i> ${t.group}</h3>
+                    <h3 class="font-bold text-lg mb-5 text-theme-title flex items-center gap-2"><i class="fa ${t.icon} text-theme-muted"></i> ${t.group}</h3>
                     <div class="grid grid-cols-2 gap-3">
-                        ${t.list.map(i => `<div class="bg-gray-50/50 px-4 py-3 rounded-xl text-sm font-medium text-txt-body border border-transparent hover:border-gray-200 hover:bg-white hover:shadow-sm transition-all cursor-default flex items-center gap-2"><i class="fa fa-check text-xs text-icon-tool-check"></i> ${i}</div>`).join('')}
+                        ${t.list.map(i => `<div class="bg-theme-subtle px-4 py-3 rounded-xl text-sm font-medium text-theme-body border border-transparent hover:border-theme-border hover:bg-theme-card hover:shadow-sm transition-all cursor-default flex items-center gap-2"><i class="fa fa-check text-xs text-check"></i> ${i}</div>`).join('')}
                     </div>
                 </div>`).join('');
 
@@ -642,34 +665,34 @@
             const formAction = cf.form_id ? `https://formspree.io/f/${cf.form_id}` : '';
             const onSubmitAttr = formAction ? '' : `onsubmit="event.preventDefault(); alert('Please config Form ID')"`;
             document.getElementById('contact-area').innerHTML = `
-                <div class="text-center mb-10"><h2 class="text-3xl font-bold text-txt-main mb-2">${ui.section_titles.contact}</h2></div>
+                <div class="text-center mb-10"><h2 class="text-3xl font-bold text-theme-title mb-2">${ui.section_titles.contact}</h2></div>
                 <div class="grid md:grid-cols-2 gap-12 items-stretch">
                     <div class="space-y-6 flex flex-col">
-                         <div class="flex items-start gap-4 p-5 rounded-2xl bg-white border border-gray-100/50 shadow-sm hover:shadow-md transition">
+                         <div class="flex items-start gap-4 p-5 rounded-2xl bg-theme-card border border-theme-border shadow-sm hover:shadow-md transition">
                             <div class="w-10 h-10 rounded-full bg-purple-50 text-purple-500 flex items-center justify-center shrink-0"><i class="fa fa-briefcase"></i></div>
-                            <div><div class="text-xs text-gray-400 uppercase font-bold tracking-wider mb-1">${basic.objective.label}</div>${basic.objective.items.map(o => `<div class="text-txt-main font-medium mb-1">${o}</div>`).join('')}</div>
+                            <div><div class="text-xs text-theme-muted uppercase font-bold tracking-wider mb-1">${basic.objective.label}</div>${basic.objective.items.map(o => `<div class="text-theme-title font-medium mb-1">${o}</div>`).join('')}</div>
                          </div>
-                         <div class="flex items-center gap-4 p-5 rounded-2xl bg-white border border-gray-100/50 shadow-sm hover:shadow-md transition">
+                         <div class="flex items-center gap-4 p-5 rounded-2xl bg-theme-card border border-theme-border shadow-sm hover:shadow-md transition">
                             <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-500 flex items-center justify-center shrink-0"><i class="fa fa-envelope"></i></div>
-                            <div><div class="text-xs text-gray-400 uppercase font-bold tracking-wider mb-1">${cl.email}</div><div class="text-txt-main font-medium">${basic.email}</div></div>
+                            <div><div class="text-xs text-theme-muted uppercase font-bold tracking-wider mb-1">${cl.email}</div><div class="text-theme-title font-medium">${basic.email}</div></div>
                          </div>
-                         <div class="flex items-center gap-4 p-5 rounded-2xl bg-white border border-gray-100/50 shadow-sm hover:shadow-md transition">
+                         <div class="flex items-center gap-4 p-5 rounded-2xl bg-theme-card border border-theme-border shadow-sm hover:shadow-md transition">
                             <div class="w-10 h-10 rounded-full bg-green-50 text-green-500 flex items-center justify-center shrink-0"><i class="fa fa-map-marker"></i></div>
-                            <div><div class="text-xs text-gray-400 uppercase font-bold tracking-wider mb-1">${cl.location}</div><div class="text-txt-main font-medium">${basic.location}</div></div>
+                            <div><div class="text-xs text-theme-muted uppercase font-bold tracking-wider mb-1">${cl.location}</div><div class="text-theme-title font-medium">${basic.location}</div></div>
                          </div>
                     </div>
                     <form class="h-full flex flex-col gap-4" action="${formAction}" method="POST" ${onSubmitAttr}>
-                        <input type="text" name="name" placeholder="${cf.label_name}" class="w-full px-5 py-3 bg-white border border-gray-200/50 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all text-txt-main" required>
-                        <input type="email" name="email" placeholder="${cf.label_email}" class="w-full px-5 py-3 bg-white border border-gray-200/50 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all text-txt-main" required>
-                        <textarea name="message" class="w-full px-5 py-3 bg-white border border-gray-200/50 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all flex-1 resize-none text-txt-main" placeholder="${cf.label_msg}" required></textarea>
-                        <button type="submit" class="w-full btn-primary py-3 font-medium hover:opacity-80 transition-all transform hover:scale-[1.02] shadow-lg">${cf.btn_send}</button>
+                        <input type="text" name="name" placeholder="${cf.label_name}" class="w-full px-5 py-3 bg-theme-card border border-theme-border rounded-xl focus:outline-none focus:border-theme-accent focus:ring-2 focus:ring-blue-500/20 transition-all text-theme-title" required>
+                        <input type="email" name="email" placeholder="${cf.label_email}" class="w-full px-5 py-3 bg-theme-card border border-theme-border rounded-xl focus:outline-none focus:border-theme-accent focus:ring-2 focus:ring-blue-500/20 transition-all text-theme-title" required>
+                        <textarea name="message" class="w-full px-5 py-3 bg-theme-card border border-theme-border rounded-xl focus:outline-none focus:border-theme-accent focus:ring-2 focus:ring-blue-500/20 transition-all flex-1 resize-none text-theme-title" placeholder="${cf.label_msg}" required></textarea>
+                        <button type="submit" class="w-full btn-main py-3 font-medium hover:opacity-80 transition-all transform hover:scale-[1.02] shadow-lg">${cf.btn_send}</button>
                     </form>
                 </div>`;
 
             document.getElementById('f-name').textContent = basic.name;
             document.getElementById('f-desc').textContent = basic.footer_text;
             document.getElementById('social-icons').innerHTML = basic.social_links.map(s => {
-                const btnClass = "w-10 h-10 rounded-full bg-gray-200/50 text-muted hover:bg-black hover:text-white flex items-center justify-center transition-all duration-300 transform hover:-translate-y-1";
+                const btnClass = "w-10 h-10 rounded-full bg-theme-card text-theme-muted hover:bg-black hover:text-white flex items-center justify-center transition-all duration-300 transform hover:-translate-y-1 shadow-sm";
                 if(s.type === 'modal') return `<button onclick="showModal('${s.modal_img}', '${s.modal_text}')" class="${btnClass}"><i class="fa ${s.icon}"></i></button>`;
                 return `<a href="${s.url}" target="_blank" class="${btnClass}"><i class="fa ${s.icon}"></i></a>`;
             }).join('');
@@ -681,6 +704,7 @@
             document.getElementById('wechatModal').classList.remove('hidden');
         }
 
+        // Print view remains standardized black & white
         function renderPrintView(data, ui) {
             const basic = data.basic_info; const st = ui.section_titles;
             const separator = currentLang === 'zh' ? '；' : '; ';
