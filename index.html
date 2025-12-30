@@ -136,12 +136,12 @@
 
     <div id="wechatModal" class="hidden fixed inset-0 z-[60] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4" onclick="this.classList.add('hidden')">
         <div class="bg-white p-6 rounded-2xl shadow-2xl max-w-sm w-full text-center transform transition-all scale-100" onclick="event.stopPropagation()">
-            <h3 class="text-lg font-bold mb-4 text-gray-800">Scan QR Code</h3>
+            <h3 id="modal-title" class="text-lg font-bold mb-4 text-gray-800">Scan QR Code</h3>
             <div class="bg-gray-100 p-2 rounded-lg inline-block mb-4">
                 <img id="modal-qr" src="" class="w-56 h-56 object-contain mix-blend-multiply">
             </div>
             <p class="text-gray-600 font-mono text-sm bg-gray-50 py-2 rounded border border-gray-100" id="modal-text"></p>
-            <button onclick="document.getElementById('wechatModal').classList.add('hidden')" class="mt-6 text-sm text-gray-400 hover:text-gray-600 underline">Close</button>
+            <button id="modal-close" onclick="document.getElementById('wechatModal').classList.add('hidden')" class="mt-6 text-sm text-gray-400 hover:text-gray-600 underline">Close</button>
         </div>
     </div>
 
@@ -375,9 +375,16 @@
                 return `<a href="${s.url}" target="_blank" class="${btnClass}"><i class="fa ${s.icon}"></i></a>`;
             }).join('');
         }
+        
         window.showModal = (img, text) => {
             document.getElementById('modal-qr').src = img;
             document.getElementById('modal-text').textContent = text;
+            
+            // Dynamic text update
+            const isZh = currentLang === 'zh';
+            document.getElementById('modal-title').textContent = isZh ? '扫描二维码' : 'Scan QR Code';
+            document.getElementById('modal-close').textContent = isZh ? '关闭' : 'Close';
+
             document.getElementById('wechatModal').classList.remove('hidden');
         }
     </script>
