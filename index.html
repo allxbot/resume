@@ -260,14 +260,14 @@
                 },
                 options: { 
                     responsive: true,
-                    maintainAspectRatio: false, // 允许自由缩放以填满容器
+                    maintainAspectRatio: false,
                     scales: { 
                         r: { 
-                            min: 50,  // 起点 50
-                            max: 100, // 终点 100
+                            min: 50, 
+                            max: 100,
                             ticks: { 
                                 display: true,
-                                stepSize: 10, // 步长10 -> 60, 70, 80, 90, 100 (正好5格)
+                                stepSize: 10,
                                 backdropColor: 'transparent',
                                 color: '#94a3b8',
                                 font: { size: 10 }
@@ -279,7 +279,16 @@
                             }
                         } 
                     }, 
-                    plugins: { legend: { display: false } } 
+                    plugins: { 
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.raw + '%';
+                                }
+                            }
+                        }
+                    } 
                 }
             });
             document.getElementById('chart-bars').innerHTML = chartData.labels.map((l, i) => `<div><div class="flex justify-between mb-1 text-sm font-semibold text-gray-700"><span>${l}</span><span class="text-primary">${chartData.data[i]}%</span></div><div class="progress-bar" style="--progress:${chartData.data[i]}%"></div></div>`).join('');
