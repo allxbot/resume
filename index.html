@@ -337,9 +337,8 @@
                 </div>
             `).join('');
 
-            // 7. Contact (Updated Form & Labels)
+            // 7. Contact
             document.getElementById('t-contact').textContent = st.contact;
-            // 增加 msg_required 的默认值处理
             const cf = ui.contact_form || { 
                 title: "Message", 
                 label_name: "Name", 
@@ -428,7 +427,7 @@
             document.getElementById('wechatModal').classList.remove('hidden');
         }
     </script>
-  <button id="backToTop" class="fixed bottom-6 right-6 bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg opacity-0 invisible transition-all duration-300 z-50">
+        <button id="backToTop" class="fixed bottom-6 right-6 bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg opacity-0 invisible transition-all duration-300 z-50">
     <i class="fa fa-arrow-up"></i>
     </button>
 </body>
