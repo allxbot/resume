@@ -22,21 +22,21 @@
       "footer_text": "高精智能制造专家 | 16年行业经验",
       "social_links": [
         {
-          "name": "LinkedIn",
+          "name": "领英",
           "icon": "fa-linkedin",
           "url": "https://www.linkedin.com/in/xuyongzhi",
           "type": "link"
         },
         {
-          "name": "WeChat",
+          "name": "微信",
           "icon": "fa-wechat",
           "url": "",
           "type": "modal",
-          "modal_img": "/wechat-qr.jpg",
+          "modal_img": "/pic/wechat.jpg",
           "modal_text": "微信号: xj_xyz"
         },
         {
-          "name": "Facebook",
+          "name": "脸书",
           "icon": "fa-facebook",
           "url": "https://www.facebook.com/xuyongzhi2016",
           "type": "link"
@@ -78,7 +78,7 @@
         "label_msg": "消息内容",
         "btn_send": "发送消息",
         "form_id": "YOUR_FORMSPREE_ID_HERE",
-        "msg_required": "请填写此字段"
+        "msg_required": "maqyvrjy"
       }
     },
     "profile": {
@@ -355,7 +355,7 @@
           "icon": "fa-wechat",
           "url": "",
           "type": "modal",
-          "modal_img": "/wechat-qr.jpg",
+          "modal_img": "/pic/wechat.jpg",
           "modal_text": "WeChat ID: xj_xyz"
         },
         {
@@ -401,7 +401,7 @@
         "label_msg": "Message",
         "btn_send": "Send Message",
         "form_id": "YOUR_FORMSPREE_ID_HERE",
-        "msg_required": "Please fill out this field"
+        "msg_required": "maqyvrjy"
       }
     },
     "profile": {
