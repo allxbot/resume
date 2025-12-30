@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>简历双语后台 (V11 面包屑置顶版)</title>
+    <title>简历双语后台 (V12 工具栏版)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <style>
         /* --- 核心样式 --- */
-        body { background-color: #f1f5f9; color: #334155; height: 100vh; display: flex; flex-direction: column; font-family: 'Segoe UI', Roboto, sans-serif; }
+        body { background-color: #f8fafc; color: #334155; height: 100vh; display: flex; flex-direction: column; font-family: 'Segoe UI', Roboto, sans-serif; padding-bottom: 80px; /* 为底部工具栏留空间 */ }
         
         /* 滚动条 */
         ::-webkit-scrollbar { width: 8px; height: 8px; }
@@ -17,645 +17,329 @@
         ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
         /* 输入框 */
-        .json-input { width: 100%; padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 13px; background: #fff; transition: all 0.2s; }
-        .json-input:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 2px rgba(59,130,246,0.1); }
-        textarea.json-input { min-height: 50px; resize: vertical; line-height: 1.5; }
+        .json-input { width: 100%; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; background: #fff; transition: all 0.2s; line-height: 1.5; }
+        .json-input:focus { outline: none; border-color: #3b82f6; ring: 2px; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
 
-        /* 节点容器 */
-        .node-container { border: 1px solid #e2e8f0; border-radius: 6px; margin-bottom: 12px; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.02); overflow: hidden; transition: all 0.2s; }
-        .node-header { 
-            display: flex; justify-content: space-between; align-items: center; 
-            padding: 8px 12px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; 
-            cursor: pointer; user-select: none;
-        }
-        .node-header:hover { background: #e2e8f0; }
-        .node-body { padding: 0; display: block; }
-        .node-body.collapsed { display: none; }
-
-        /* 层级视觉 */
-        .depth-0 { margin: 12px 0; border: 1px solid #cbd5e1; }
-        .depth-1 { margin: 8px 8px 8px 12px; border-left: 3px solid #3b82f6; } 
-        .depth-2 { margin: 6px 0px 6px 12px; border-left: 3px solid #10b981; } 
-        .depth-3 { margin: 6px 0px 6px 12px; border-left: 3px solid #8b5cf6; } 
-
-        /* 叶子行 */
-        .leaf-row { display: flex; width: 100%; border-bottom: 1px solid #f1f5f9; background: #fff; align-items: flex-start; }
-        .leaf-row:hover { background-color: #f8fafc; }
-        .col-half { width: 50%; padding: 8px 12px; position: relative; }
-        .col-half:first-child { border-right: 1px solid #f1f5f9; }
-        .field-key { display: block; font-size: 10px; font-weight: 700; color: #94a3b8; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.5px; }
-
-        /* 组合吸顶容器 */
-        .sticky-group-wrapper {
-            position: sticky; top: 0; z-index: 40; 
-            background: #fff;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-        }
-        /* 面包屑条样式 */
-        .breadcrumb-bar {
-            background-color: #fff; /* 改为纯白，更干净 */
-            border-bottom: 1px solid #e2e8f0;
-            padding: 8px 16px; /* 增加一点内边距 */
-            font-size: 12px;
-            color: #64748b;
-            display: flex; align-items: center; gap: 8px;
-            font-family: monospace;
+        /* 悬浮工具栏 */
+        #toolbar {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 8px 16px;
+            border-radius: 50px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            display: flex;
+            gap: 8px;
+            z-index: 1000;
+            border: 1px solid #e2e8f0;
+            align-items: center;
         }
 
-        /* 图标选择器 */
-        .icon-trigger {
-            display: flex; align-items: center; gap: 8px; cursor: pointer;
-            border: 1px solid #cbd5e1; padding: 5px 10px; border-radius: 4px; background: #fff; height: 34px;
+        .tool-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid transparent;
         }
-        .icon-trigger:hover { border-color: #94a3b8; background: #f8fafc; }
-        .icon-preview { width: 20px; text-align: center; color: #3b82f6; display: flex; justify-content: center; }
+        .tool-btn:hover { background-color: #f1f5f9; transform: translateY(-1px); }
+        .tool-btn:active { transform: translateY(0); }
         
-        .icon-grid-item { 
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            padding: 10px; border: 1px solid #e2e8f0; border-radius: 6px; cursor: pointer;
-            transition: all 0.1s; gap: 5px; background: white;
-        }
-        .icon-grid-item:hover { background-color: #eff6ff; border-color: #3b82f6; color: #1d4ed8; transform: translateY(-1px); shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .btn-bold { color: #1e293b; }
+        .btn-primary { color: #165DFF; background-color: #eff6ff; border-color: #dbeafe; }
+        .btn-red { color: #ef4444; background-color: #fef2f2; border-color: #fee2e2; }
+
     </style>
 </head>
 <body>
 
-    <div class="bg-white shadow z-50 px-4 py-2 border-b border-gray-200 shrink-0">
-        <div class="flex flex-col md:flex-row justify-between items-center max-w-[1920px] mx-auto gap-4 py-1">
-            <h1 class="font-bold text-gray-800 text-lg flex items-center gap-2 select-none">
-                <i class="fa fa-cogs text-blue-600"></i> 双语后台 <span class="text-xs bg-gray-100 text-gray-600 px-2 rounded border border-gray-200">V11</span>
-            </h1>
-            
-            <div class="flex-1"></div>
-
-            <div class="flex flex-wrap gap-2 items-center">
-                <input id="gh_owner" type="text" placeholder="GitHub User" class="border border-gray-300 p-1.5 rounded text-xs w-24 outline-none focus:border-blue-500 transition">
-                <input id="gh_repo" type="text" placeholder="Repo Name" class="border border-gray-300 p-1.5 rounded text-xs w-24 outline-none focus:border-blue-500 transition">
-                <input id="gh_token" type="password" placeholder="Token" class="border border-gray-300 p-1.5 rounded text-xs w-28 outline-none focus:border-blue-500 transition">
-                
-                <button onclick="initLoad()" id="btn-load" class="bg-slate-700 text-white px-3 py-1.5 rounded text-xs font-bold hover:bg-slate-800 active:scale-95 transition flex items-center gap-2 shadow-sm cursor-pointer select-none">
-                    <i class="fa fa-refresh"></i> 读取 (Load)
-                </button>
-                <button onclick="commitChanges()" id="btn-save" class="bg-green-600 text-white px-4 py-1.5 rounded text-xs font-bold hover:bg-green-700 active:scale-95 transition shadow-sm flex items-center gap-2 cursor-pointer select-none">
-                    <i class="fa fa-floppy-o"></i> 保存 (Save)
-                </button>
-            </div>
-        </div>
+    <div class="bg-white border-b border-gray-200 px-6 py-4 flex flex-wrap gap-4 items-center shadow-sm shrink-0 z-10">
+        <h1 class="text-xl font-bold text-gray-700 mr-4"><i class="fa fa-cogs"></i> 简历后台</h1>
         
-        <div class="flex justify-between items-center max-w-[1920px] mx-auto text-xs text-gray-500 mt-1 border-t border-gray-100 pt-1">
-            <div class="flex gap-4 font-medium">
-                 <button onclick="globalToggle(true)" class="hover:text-blue-600 transition flex items-center gap-1"><i class="fa fa-expand"></i> 全部展开</button>
-                 <button onclick="globalToggle(false)" class="hover:text-blue-600 transition flex items-center gap-1"><i class="fa fa-compress"></i> 全部折叠</button>
-            </div>
-            <div id="status-bar" class="font-mono font-bold text-blue-600 transition-all">Waiting for action...</div>
-            <div class="text-gray-400 italic">Auto-save scroll position</div>
+        <div class="flex items-center gap-2 bg-gray-50 px-3 py-1.5 rounded-lg border border-gray-200">
+            <i class="fa fa-github text-gray-500"></i>
+            <input type="text" id="gh_owner" placeholder="Username" class="bg-transparent border-none focus:outline-none text-sm w-24">
+            <span class="text-gray-300">/</span>
+            <input type="text" id="gh_repo" placeholder="Repo" class="bg-transparent border-none focus:outline-none text-sm w-32">
         </div>
+
+        <div class="flex items-center gap-2 bg-gray-50 px-3 py-1.5 rounded-lg border border-gray-200 flex-1 max-w-xs">
+            <i class="fa fa-key text-gray-500"></i>
+            <input type="password" id="gh_token" placeholder="GitHub Token (ghp_...)" class="bg-transparent border-none focus:outline-none text-sm w-full">
+        </div>
+
+        <button onclick="fetchData()" class="bg-gray-700 hover:bg-gray-800 text-white px-5 py-2 rounded-lg text-sm font-medium transition shadow-sm ml-auto">
+            <i class="fa fa-download"></i> 读取数据
+        </button>
+        <button onclick="commitChanges()" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg text-sm font-medium transition shadow-sm shadow-blue-200">
+            <i class="fa fa-save"></i> 保存修改
+        </button>
+        <div id="status" class="text-sm font-medium animate-pulse hidden"></div>
     </div>
 
-    <div class="flex-1 overflow-y-auto bg-gray-50 relative scroll-smooth" id="scroll-container">
-        <div class="max-w-[1920px] mx-auto min-h-full pb-32" id="editor-root">
-            <div class="flex flex-col items-center justify-center h-80 text-gray-400 select-none">
-                <div class="bg-white p-6 rounded-full shadow-sm mb-4">
-                    <i class="fa fa-cloud-download text-4xl text-blue-100"></i>
+    <div class="flex flex-1 overflow-hidden">
+        <div class="w-64 bg-white border-r border-gray-200 overflow-y-auto hidden md:block" id="sidebar">
+            <div class="p-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Navigation</div>
+            <div id="nav-links" class="space-y-1 px-2 pb-4"></div>
+        </div>
+
+        <div class="flex-1 overflow-y-auto p-8 relative" id="main-content">
+            <div id="editor-container" class="max-w-4xl mx-auto space-y-8">
+                <div class="text-center text-gray-400 py-20">
+                    <i class="fa fa-inbox text-4xl mb-4 opacity-50"></i>
+                    <p>请输入 GitHub 信息并点击“读取数据”开始编辑</p>
                 </div>
-                <p>请输入 GitHub 信息并点击右上角“读取”</p>
-                <p class="text-xs mt-2 text-gray-300">(Breadcrumb Top Layout)</p>
             </div>
         </div>
     </div>
 
-    <div id="icon-picker-modal" class="hidden fixed inset-0 z-[100] bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 transition-opacity duration-300">
-        <div class="bg-white rounded-lg shadow-2xl w-full max-w-2xl max-h-[80vh] flex flex-col transform transition-all scale-100">
-            <div class="p-4 border-b flex justify-between items-center bg-gray-50 rounded-t-lg">
-                <h3 class="font-bold text-gray-700 flex items-center gap-2"><i class="fa fa-icons text-blue-500"></i> 选择图标</h3>
-                <button onclick="closeIconPicker()" class="text-gray-400 hover:text-red-500 text-2xl w-8 h-8 flex items-center justify-center rounded hover:bg-red-50">&times;</button>
-            </div>
-            <div class="p-4 border-b bg-white">
-                 <input type="text" id="icon-search" placeholder="搜索图标 (例如: user, chart, code...)" class="w-full border p-2 rounded text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition">
-            </div>
-            <div class="flex-1 overflow-y-auto p-4 bg-gray-50">
-                <div id="icon-grid" class="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-3">
-                    </div>
-            </div>
-        </div>
+    <div id="toolbar" class="hidden">
+        <span class="text-xs text-gray-400 mr-2 select-none">选中文字点击:</span>
+        <button class="tool-btn btn-bold" onclick="insertTag('<strong>', '</strong>')" title="加粗">
+            <i class="fa fa-bold"></i> 粗体
+        </button>
+        <button class="tool-btn btn-primary" onclick="insertTag('<span class=\'text-primary font-bold\'>', '</span>')" title="主色高亮">
+            <i class="fa fa-paint-brush"></i> 重点蓝
+        </button>
+        <button class="tool-btn btn-red" onclick="insertTag('<span class=\'text-red-500 font-bold\'>', '</span>')" title="警告红">
+            <i class="fa fa-exclamation-circle"></i> 警告红
+        </button>
+        <div class="w-px h-4 bg-gray-300 mx-1"></div>
+        <button class="tool-btn" onclick="insertTag('<br>', '')" title="插入换行">
+            <i class="fa fa-level-down fa-rotate-90"></i> 换行
+        </button>
     </div>
 
     <script>
-        // --- 全局变量 ---
         let appData = {};
         let fileSha = "";
-        let collapsedRegistry = new Set();
-        let savedScrollTop = 0;
-        let currentIconCallback = null;
+        let currentActiveInput = null; // 记录当前获得焦点的输入框
 
-        const STORAGE_KEYS = ['gh_owner', 'gh_repo', 'gh_token'];
-        
-        const ALL_ICONS = [
-            "fa-cogs", "fa-user", "fa-briefcase", "fa-graduation-cap", "fa-wrench", "fa-leaf", 
-            "fa-line-chart", "fa-users", "fa-flask", "fa-tasks", "fa-heart", "fa-star", "fa-check", 
-            "fa-envelope", "fa-phone", "fa-linkedin", "fa-github", "fa-wechat", "fa-facebook", 
-            "fa-sitemap", "fa-file-text-o", "fa-calendar", "fa-map-marker", "fa-globe", "fa-laptop",
-            "fa-desktop", "fa-mobile", "fa-camera", "fa-picture-o", "fa-music", "fa-home",
-            "fa-search", "fa-cog", "fa-trash", "fa-pencil", "fa-print", "fa-download", "fa-code",
-            "fa-terminal", "fa-keyboard-o", "fa-rocket", "fa-lightbulb-o", "fa-bolt", "fa-shield",
-            "fa-trophy", "fa-certificate", "fa-university", "fa-building", "fa-industry", "fa-plane",
-            "fa-instagram", "fa-twitter", "fa-youtube", "fa-link", "fa-external-link", "fa-paper-plane"
-        ];
+        // 监听焦点，显示/隐藏工具栏
+        document.addEventListener('focusin', (e) => {
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+                currentActiveInput = e.target;
+                document.getElementById('toolbar').classList.remove('hidden');
+                document.getElementById('toolbar').classList.add('flex');
+            }
+        });
+
+        // --- 核心功能：插入标签 ---
+        function insertTag(startTag, endTag) {
+            const el = currentActiveInput;
+            if (!el) {
+                alert("请先点击一个输入框！");
+                return;
+            }
+
+            const start = el.selectionStart;
+            const end = el.selectionEnd;
+            const text = el.value;
+            const selectedText = text.substring(start, end);
+
+            // 如果没有选中文本，且不是插入换行符等单标签
+            if (start === end && endTag !== '') {
+                // 可选：如果没有选中文本，直接插入标签光标放中间
+                // 这里我们简单处理，直接插入空标签
+            }
+
+            const replacement = startTag + selectedText + endTag;
+            el.value = text.substring(0, start) + replacement + text.substring(end);
+
+            // 恢复光标位置并选中新插入的内容（或放在末尾）
+            el.selectionStart = start;
+            el.selectionEnd = start + replacement.length;
+            el.focus();
+
+            // 触发 input 事件以更新 appData
+            el.dispatchEvent(new Event('input', { bubbles: true }));
+        }
 
         // --- 初始化 ---
-        (function init() {
-            STORAGE_KEYS.forEach(k => {
-                const v = localStorage.getItem(k);
-                if(v) document.getElementById(k).value = v;
-            });
-            document.getElementById('scroll-container').addEventListener('scroll', updateBreadcrumb);
-            document.getElementById('icon-search').addEventListener('input', (e) => renderIconGrid(e.target.value));
-            console.log("Admin System V11 Ready.");
-        })();
-
-        // --- 1. 读取数据 ---
-        async function initLoad() {
-            updateStatus("Connecting to GitHub...", "text-blue-600");
-            const owner = document.getElementById('gh_owner').value.trim();
-            const repo = document.getElementById('gh_repo').value.trim();
-            const token = document.getElementById('gh_token').value.trim();
-
-            if(owner) localStorage.setItem('gh_owner', owner);
-            if(repo) localStorage.setItem('gh_repo', repo);
-            if(token) localStorage.setItem('gh_token', token);
-
-            setLoading(true);
-
-            try {
-                let jsonContent = "";
-                if (owner && repo && token) {
-                    const url = `https://api.github.com/repos/${owner}/${repo}/contents/data.json?t=${Date.now()}`;
-                    const res = await fetch(url, { headers: { 'Authorization': `token ${token}` } });
-                    if (!res.ok) throw new Error(`GitHub Error: ${res.status} ${res.statusText}`);
-                    const data = await res.json();
-                    fileSha = data.sha;
-                    jsonContent = decodeURIComponent(escape(window.atob(data.content.replace(/\n/g, ""))));
-                    updateStatus("✅ Data Loaded from GitHub", "text-green-600");
-                } else {
-                    try {
-                        const res = await fetch('./data.json');
-                        if(!res.ok) throw new Error("Local file not found");
-                        jsonContent = await res.text();
-                        updateStatus("⚠️ Local Preview Mode", "text-orange-500");
-                    } catch(err) {
-                        jsonContent = JSON.stringify({ zh: {}, en: {} });
-                        updateStatus("⚠️ Empty Mode", "text-red-400");
-                    }
-                    fileSha = "";
-                }
-
-                try { appData = JSON.parse(jsonContent); } catch(e) { throw new Error("JSON Parse Error"); }
-                if(!appData.zh) appData.zh = {};
-                if(!appData.en) appData.en = {};
-
-                renderUI();
-
-            } catch (e) {
-                console.error(e);
-                alert(`加载失败: ${e.message}`);
-                updateStatus("❌ Load Failed", "text-red-600");
-            } finally {
-                setLoading(false);
+        window.onload = () => {
+            if(localStorage.getItem('gh_token')) {
+                document.getElementById('gh_owner').value = localStorage.getItem('gh_owner');
+                document.getElementById('gh_repo').value = localStorage.getItem('gh_repo');
+                document.getElementById('gh_token').value = localStorage.getItem('gh_token');
             }
+        };
+
+        function updateStatus(msg, colorClass) {
+            const el = document.getElementById('status');
+            el.textContent = msg;
+            el.className = `text-sm font-medium ${colorClass}`;
+            el.classList.remove('hidden');
+            setTimeout(() => el.classList.add('hidden'), 5000);
         }
 
-        // --- 2. 渲染引擎 ---
-        function renderUI() {
-            const root = document.getElementById('editor-root');
-            const container = document.getElementById('scroll-container');
-            
-            root.innerHTML = '';
-
-            // [构建吸顶容器]
-            const stickyGroup = document.createElement('div');
-            stickyGroup.className = "sticky-group-wrapper"; // sticky top-0
-            
-            // 1. 面包屑 (现在在第一位)
-            const breadcrumbBar = document.createElement('div');
-            breadcrumbBar.className = "breadcrumb-bar";
-            breadcrumbBar.innerHTML = `
-                <i class="fa fa-map-marker text-red-500"></i>
-                <span id="breadcrumb-text" class="font-bold text-blue-900 truncate flex-1">TOP</span>
-            `;
-            stickyGroup.appendChild(breadcrumbBar);
-
-            // 2. 分栏表头 (现在在第二位)
-            const colHeader = document.createElement('div');
-            colHeader.className = "flex border-b border-gray-200 bg-gray-50";
-            colHeader.innerHTML = `
-                <div class="w-1/2 px-4 py-2 font-bold text-sm text-blue-700 bg-blue-50/80 border-r border-blue-100 flex items-center gap-2">
-                    <i class="fa fa-language"></i> 中文 (Chinese)
-                </div>
-                <div class="w-1/2 px-4 py-2 font-bold text-sm text-green-700 bg-green-50/80 flex items-center gap-2">
-                    <i class="fa fa-globe"></i> 英文 (English)
-                </div>
-            `;
-            stickyGroup.appendChild(colHeader);
-
-            root.appendChild(stickyGroup);
-
-            // [内容区域]
-            const contentWrapper = document.createElement('div');
-            contentWrapper.className = "p-4";
-            contentWrapper.appendChild(renderRecursive(appData.zh, appData.en, [], 0));
-            root.appendChild(contentWrapper);
-
-            if (savedScrollTop > 0) container.scrollTop = savedScrollTop;
-            
-            setTimeout(updateBreadcrumb, 50);
-        }
-
-        function renderRecursive(zh, en, path, depth) {
-            const pathId = path.join('-');
-
-            if (isPrimitive(zh) || isPrimitive(en)) {
-                return renderLeafRow(zh, en, path);
-            }
-            if (Array.isArray(zh) || Array.isArray(en)) {
-                return renderArrayContainer(zh, en, path, depth, pathId);
-            }
-            if (isObject(zh) || isObject(en)) {
-                return renderObjectContainer(zh, en, path, depth, pathId);
-            }
-            return document.createElement('div');
-        }
-
-        // --- A. 对象容器 ---
-        function renderObjectContainer(zhObj = {}, enObj = {}, path, depth, pathId) {
-            const container = document.createElement('div');
-            
-            if (depth === 0) {
-                 getCombinedKeys(zhObj, enObj).forEach(key => {
-                     container.appendChild(renderRecursive(zhObj[key], enObj[key], [...path, key], depth + 1));
-                 });
-                 return container;
-            }
-
-            container.className = `node-container depth-${Math.min(depth, 3)}`;
-            container.dataset.path = path.join(' > ');
-            
-            let isCollapsed = collapsedRegistry.has(pathId);
-
-            const header = document.createElement('div');
-            header.className = "node-header";
-            header.innerHTML = `
-                <div class="font-bold text-sm text-gray-700 flex items-center gap-2">
-                    <i class="fa ${isCollapsed ? 'fa-folder' : 'fa-folder-open'} text-blue-500 icon-state"></i> 
-                    <span>${formatKey(path[path.length - 1])}</span>
-                </div>
-                <div class="text-xs text-gray-400 font-mono">Object</div>
-            `;
-            
-            const body = document.createElement('div');
-            body.className = `node-body ${isCollapsed ? 'collapsed' : ''}`;
-            
-            getCombinedKeys(zhObj, enObj).forEach(key => {
-                body.appendChild(renderRecursive(zhObj[key], enObj[key], [...path, key], depth + 1));
-            });
-
-            header.onclick = (e) => {
-                if(e.target.closest('button')) return;
-                toggleNode(pathId, body, header.querySelector('.icon-state'), 'folder');
-            };
-
-            container.appendChild(header);
-            container.appendChild(body);
-            return container;
-        }
-
-        // --- B. 数组容器 ---
-        function renderArrayContainer(zhArr = [], enArr = [], path, depth, pathId) {
-            const container = document.createElement('div');
-            container.className = `node-container depth-${Math.min(depth, 3)}`;
-            container.dataset.path = path.join(' > ');
-            
-            let isCollapsed = collapsedRegistry.has(pathId);
-            const currentKey = formatKey(path[path.length - 1] || "List");
-            const count = Math.max(zhArr.length, enArr.length);
-
-            const header = document.createElement('div');
-            header.className = "node-header";
-            header.innerHTML = `
-                <div class="font-bold text-sm text-gray-700 flex items-center gap-2">
-                    <i class="fa ${isCollapsed ? 'fa-list' : 'fa-list-ul'} text-purple-500 icon-state"></i>
-                    <span>${currentKey}</span>
-                    <span class="bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full text-[10px] ml-2 font-normal">${count} Items</span>
-                </div>
-                <button class="text-gray-400 hover:text-blue-600 transition w-6 h-6 flex items-center justify-center"><i class="fa fa-chevron-${isCollapsed ? 'down' : 'up'} arrow-state"></i></button>
-            `;
-
-            const body = document.createElement('div');
-            body.className = `node-body ${isCollapsed ? 'collapsed' : ''}`;
-
-            for (let i = 0; i < count; i++) {
-                const itemPathId = `${pathId}-${i}`;
-                const itemCollapsed = collapsedRegistry.has(itemPathId);
-                
-                const itemContainer = document.createElement('div');
-                itemContainer.className = "border-b border-gray-100 last:border-0";
-                itemContainer.dataset.path = `${path.join(' > ')} > Item ${i+1}`;
-
-                const label = getSmartLabel(zhArr[i]) || getSmartLabel(enArr[i]) || `Item #${i+1}`;
-                const itemHeader = document.createElement('div');
-                itemHeader.className = "flex justify-between items-center bg-gray-50 px-3 py-1.5 border-b border-gray-100 cursor-pointer hover:bg-gray-100 transition";
-                itemHeader.innerHTML = `
-                    <div class="text-xs font-bold text-gray-600 flex items-center gap-2">
-                        <i class="fa fa-caret-${itemCollapsed ? 'right' : 'down'} text-gray-400 item-caret w-4 text-center"></i> 
-                        <span class="truncate max-w-[200px]">${label}</span>
-                    </div>
-                    <button class="text-red-400 hover:text-red-600 hover:bg-red-50 rounded px-2 py-0.5 text-xs transition" title="Delete">
-                        <i class="fa fa-trash"></i>
-                    </button>
-                `;
-
-                const itemBody = document.createElement('div');
-                itemBody.className = itemCollapsed ? 'hidden' : 'block';
-                itemBody.appendChild(renderRecursive(zhArr[i], enArr[i], [...path, i], depth + 1));
-
-                itemHeader.onclick = (e) => {
-                    if(e.target.closest('button')) {
-                        if(confirm(`确定删除 "${label}"?`)) modifyDualArray('delete', path, i);
-                        return;
-                    }
-                    toggleNode(itemPathId, itemBody, itemHeader.querySelector('.item-caret'), 'caret');
-                };
-
-                itemContainer.appendChild(itemHeader);
-                itemContainer.appendChild(itemBody);
-                body.appendChild(itemContainer);
-            }
-
-            const addBtn = document.createElement('button');
-            addBtn.className = "w-full py-2 text-center text-xs font-bold text-blue-500 bg-white hover:bg-blue-50 border-t border-gray-200 transition";
-            addBtn.innerHTML = `<i class="fa fa-plus-circle"></i> Add Item`;
-            addBtn.style.display = isCollapsed ? 'none' : 'block';
-            addBtn.onclick = () => modifyDualArray('add', path);
-
-            header.onclick = (e) => {
-                if(e.target.closest('button') && !e.target.classList.contains('arrow-state')) return;
-                toggleNode(pathId, body, header.querySelector('.icon-state'), 'list', addBtn, header.querySelector('.arrow-state'));
-            };
-
-            container.appendChild(header);
-            container.appendChild(body);
-            container.appendChild(addBtn);
-            return container;
-        }
-
-        // --- C. 输入行 ---
-        function renderLeafRow(zhVal, enVal, path) {
-            const row = document.createElement('div');
-            row.className = "leaf-row";
-            const key = path[path.length - 1];
-
-            const left = document.createElement('div');
-            left.className = "col-half";
-            left.appendChild(createLabel(key));
-            left.appendChild(createInput(zhVal, [...path], 'zh'));
-
-            const right = document.createElement('div');
-            right.className = "col-half";
-            right.appendChild(createLabel(key));
-            right.appendChild(createInput(enVal, [...path], 'en'));
-
-            row.appendChild(left);
-            row.appendChild(right);
-            return row;
-        }
-
-        function createLabel(key) {
-            const el = document.createElement('span');
-            el.className = "field-key";
-            el.innerText = formatKey(key);
-            return el;
-        }
-
-        function createInput(val, fullPath, lang) {
-            const key = String(fullPath[fullPath.length - 1]).toLowerCase();
-            
-            if (key === 'icon') {
-                const trigger = document.createElement('div');
-                trigger.className = "icon-trigger";
-                trigger.innerHTML = `
-                    <div class="icon-preview"><i class="fa ${val || 'fa-circle-o'}"></i></div>
-                    <span class="text-xs text-gray-600 flex-1 truncate">${val || 'Select Icon'}</span>
-                    <i class="fa fa-caret-down text-gray-400"></i>
-                `;
-                trigger.onclick = () => openIconPicker(val, (newIcon) => {
-                    updateData([lang, ...fullPath], newIcon);
-                    trigger.querySelector('.icon-preview i').className = `fa ${newIcon}`;
-                    trigger.querySelector('span').innerText = newIcon;
-                });
-                return trigger;
-            } 
-            else if (typeof val === 'string' && (val.length > 40 || ['desc','summary','items','list','details'].some(k => key.includes(k)))) {
-                const ta = document.createElement('textarea');
-                ta.className = "json-input";
-                ta.value = val || "";
-                ta.onchange = (e) => updateData([lang, ...fullPath], e.target.value);
-                return ta;
-            } 
-            else {
-                const inp = document.createElement('input');
-                inp.type = typeof val === 'number' ? 'number' : 'text';
-                inp.className = "json-input";
-                inp.value = (val === undefined || val === null) ? "" : val;
-                inp.onchange = (e) => {
-                    let v = e.target.value;
-                    if(typeof val === 'number') v = Number(v);
-                    updateData([lang, ...fullPath], v);
-                };
-                return inp;
-            }
-        }
-
-        // --- 逻辑: 状态保持折叠 ---
-        function toggleNode(pathId, bodyEl, iconEl, type, btnEl, arrowEl) {
-            if (collapsedRegistry.has(pathId)) {
-                collapsedRegistry.delete(pathId);
-                if(type === 'folder') {
-                    bodyEl.classList.remove('collapsed');
-                    if(iconEl) iconEl.className = 'fa fa-folder-open text-blue-500 icon-state';
-                } else if (type === 'list') {
-                    bodyEl.classList.remove('collapsed');
-                    if(iconEl) iconEl.className = 'fa fa-list-ul text-purple-500 icon-state';
-                    if(btnEl) btnEl.style.display = 'block';
-                    if(arrowEl) arrowEl.className = 'fa fa-chevron-up arrow-state';
-                } else if (type === 'caret') {
-                    bodyEl.classList.remove('hidden');
-                    if(iconEl) iconEl.className = 'fa fa-caret-down text-gray-400 item-caret';
-                }
-            } else {
-                collapsedRegistry.add(pathId);
-                if(type === 'folder') {
-                    bodyEl.classList.add('collapsed');
-                    if(iconEl) iconEl.className = 'fa fa-folder text-gray-400 icon-state';
-                } else if (type === 'list') {
-                    bodyEl.classList.add('collapsed');
-                    if(iconEl) iconEl.className = 'fa fa-list text-gray-400 icon-state';
-                    if(btnEl) btnEl.style.display = 'none';
-                    if(arrowEl) arrowEl.className = 'fa fa-chevron-down arrow-state';
-                } else if (type === 'caret') {
-                    bodyEl.classList.add('hidden');
-                    if(iconEl) iconEl.className = 'fa fa-caret-right text-gray-400 item-caret';
-                }
-            }
-        }
-
-        // --- 逻辑: 全局展开/折叠 ---
-        function globalToggle(expand) {
-            savedScrollTop = document.getElementById('scroll-container').scrollTop;
-            if(expand) {
-                collapsedRegistry.clear();
-            } else {
-                collapsedRegistry.clear();
-                traverseAndCollapse(appData.zh, appData.en, []);
-            }
-            renderUI();
-        }
-
-        function traverseAndCollapse(zh, en, path) {
-            const pathId = path.join('-');
-            if(path.length > 0) collapsedRegistry.add(pathId);
-
-            if (Array.isArray(zh) || Array.isArray(en)) {
-                const count = Math.max(zh?.length || 0, en?.length || 0);
-                for (let i = 0; i < count; i++) {
-                    traverseAndCollapse(zh?.[i], en?.[i], [...path, i]);
-                }
-            } else if (isObject(zh) || isObject(en)) {
-                getCombinedKeys(zh, en).forEach(key => {
-                    traverseAndCollapse(zh?.[key], en?.[key], [...path, key]);
-                });
-            }
-        }
-
-        // --- 逻辑: 增删数组 ---
-        function modifyDualArray(action, path, idx) {
-            savedScrollTop = document.getElementById('scroll-container').scrollTop;
-            const tZh = getTarget(appData.zh, path) || ensureArray(appData.zh, path);
-            const tEn = getTarget(appData.en, path) || ensureArray(appData.en, path);
-
-            if (action === 'delete') {
-                if (tZh[idx] !== undefined) tZh.splice(idx, 1);
-                if (tEn[idx] !== undefined) tEn.splice(idx, 1);
-            } 
-            else if (action === 'add') {
-                let tpl = {};
-                if (tZh.length) tpl = cloneClean(tZh[0]);
-                else if (tEn.length) tpl = cloneClean(tEn[0]);
-                else tpl = { title: "New Item", desc: "" };
-                
-                tZh.push(JSON.parse(JSON.stringify(tpl)));
-                tEn.push(JSON.parse(JSON.stringify(tpl)));
-            }
-            renderUI();
-        }
-
-        // --- 辅助功能 ---
-        function updateBreadcrumb() {
-            const display = document.getElementById('breadcrumb-text');
-            if (!display) return; 
-
-            const nodes = document.querySelectorAll('[data-path]');
-            let currentPath = "TOP";
-            for (let node of nodes) {
-                if (node.getBoundingClientRect().top < 140) currentPath = node.dataset.path;
-                else break; 
-            }
-            display.innerText = formatKey(currentPath).toUpperCase();
-        }
-
-        function openIconPicker(currentVal, callback) {
-            currentIconCallback = callback;
-            document.getElementById('icon-picker-modal').classList.remove('hidden');
-            renderIconGrid('');
-        }
-        function closeIconPicker() { document.getElementById('icon-picker-modal').classList.add('hidden'); }
-        function renderIconGrid(filter) {
-            const grid = document.getElementById('icon-grid');
-            grid.innerHTML = '';
-            ALL_ICONS.filter(i => i.toLowerCase().includes(filter.toLowerCase())).forEach(icon => {
-                const btn = document.createElement('div');
-                btn.className = "icon-grid-item";
-                btn.innerHTML = `<i class="fa ${icon}"></i><span class="text-[10px] text-gray-500">${icon.replace('fa-', '')}</span>`;
-                btn.onclick = () => { if(currentIconCallback) currentIconCallback(icon); closeIconPicker(); };
-                grid.appendChild(btn);
-            });
-        }
-
-        // --- 通用工具 ---
-        function ensureArray(root, path) {
-            let t = root;
-            for(let i=0; i<path.length-1; i++) {
-                if(!t[path[i]]) t[path[i]] = {};
-                t = t[path[i]];
-            }
-            if(!Array.isArray(t[path[path.length-1]])) t[path[path.length-1]] = [];
-            return t[path[path.length-1]];
-        }
-        function getSmartLabel(obj) {
-            if (!obj || typeof obj !== 'object') return null;
-            const priorities = ['company', 'school', 'title', 'name', 'group', 'role'];
-            for (let k of priorities) if (obj[k] && typeof obj[k] === 'string') return obj[k];
-            return null;
-        }
-        function cloneClean(obj) {
-            if (typeof obj !== 'object' || obj === null) return obj;
-            const newObj = Array.isArray(obj) ? [] : {};
-            Object.keys(obj).forEach(k => {
-                if(typeof obj[k] === 'string') newObj[k] = "";
-                else if(typeof obj[k] === 'number') newObj[k] = 0;
-                else newObj[k] = cloneClean(obj[k]);
-            });
-            return newObj;
-        }
-        function updateData(fullPath, val) {
-            let t = appData;
-            for(let i=0; i<fullPath.length-1; i++) {
-                if(t[fullPath[i]] === undefined) t[fullPath[i]] = {};
-                t = t[fullPath[i]];
-            }
-            t[fullPath[fullPath.length-1]] = val;
-        }
-        function getTarget(root, path) {
-            let t = root;
-            for(let k of path) { if(t === undefined) return undefined; t = t[k]; }
-            return t;
-        }
-        function getCombinedKeys(o1, o2) { return Array.from(new Set([...Object.keys(o1||{}), ...Object.keys(o2||{})])); }
-        function isPrimitive(v) { return typeof v === 'string' || typeof v === 'number' || v === null || v === undefined; }
-        function isObject(v) { return typeof v === 'object' && v !== null && !Array.isArray(v); }
-        function formatKey(k) { return String(k).replace(/_/g, ' '); }
-        function updateStatus(msg, cls) { 
-            const el = document.getElementById('status-bar'); el.textContent = msg; el.className = `font-mono font-bold ${cls} transition-all`;
-        }
         function setLoading(b) {
-            document.getElementById('btn-load').disabled = b;
-            document.getElementById('btn-save').disabled = b;
             document.body.style.cursor = b ? 'wait' : 'default';
         }
 
-        // --- 保存逻辑 ---
+        // --- 读取数据 ---
+        async function fetchData() {
+            setLoading(true);
+            updateStatus("Loading...", "text-gray-500");
+            try {
+                const owner = document.getElementById('gh_owner').value;
+                const repo = document.getElementById('gh_repo').value;
+                const token = document.getElementById('gh_token').value;
+                
+                if(!owner || !repo || !token) throw new Error("Please fill all GitHub fields");
+                
+                localStorage.setItem('gh_owner', owner);
+                localStorage.setItem('gh_repo', repo);
+                localStorage.setItem('gh_token', token);
+
+                const url = `https://api.github.com/repos/${owner}/${repo}/contents/data.json`;
+                const res = await fetch(url, { headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' } });
+                
+                if(!res.ok) throw new Error("Fetch failed: " + res.status);
+                
+                const json = await res.json();
+                fileSha = json.sha;
+                const content = decodeURIComponent(escape(window.atob(json.content)));
+                appData = JSON.parse(content);
+                
+                renderEditor();
+                updateStatus("Loaded", "text-green-600");
+                document.getElementById('toolbar').classList.add('hidden'); // 初始加载隐藏工具栏
+            } catch(e) {
+                alert(e.message);
+                updateStatus("Error", "text-red-600");
+            } finally { setLoading(false); }
+        }
+
+        // --- 渲染编辑器 ---
+        function renderEditor() {
+            const container = document.getElementById('editor-container');
+            const nav = document.getElementById('nav-links');
+            container.innerHTML = '';
+            nav.innerHTML = '';
+
+            // 创建两个大标签页：中文 / 英文
+            const langs = ['zh', 'en'];
+            
+            langs.forEach(lang => {
+                // 导航头
+                const navHeader = document.createElement('div');
+                navHeader.className = "px-3 py-2 mt-4 text-xs font-bold text-gray-500 uppercase";
+                navHeader.textContent = lang === 'zh' ? '🇨🇳 Chinese (中文)' : '🇺🇸 English (英文)';
+                nav.appendChild(navHeader);
+
+                const langSection = document.createElement('div');
+                langSection.className = "bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-8";
+                langSection.innerHTML = `<div class="bg-gray-50 px-6 py-4 border-b border-gray-200 font-bold text-lg flex items-center gap-2"><span class="w-2 h-6 bg-${lang==='zh'?'blue':'green'}-500 rounded-full"></span>${lang === 'zh' ? '中文简历数据 (data.zh)' : '英文简历数据 (data.en)'}</div>`;
+                
+                const contentBox = document.createElement('div');
+                contentBox.className = "p-6 space-y-8";
+
+                // 遍历 JSON 顶层 (basic_info, ui, profile...)
+                for (let key in appData[lang]) {
+                    // 导航链接
+                    const navItem = document.createElement('button');
+                    navItem.className = "w-full text-left px-3 py-2 text-sm text-gray-600 hover:bg-blue-50 hover:text-blue-600 rounded transition truncate";
+                    navItem.innerHTML = `<i class="fa fa-angle-right mr-2 text-xs"></i>${key}`;
+                    navItem.onclick = () => document.getElementById(`section-${lang}-${key}`).scrollIntoView({behavior: 'smooth', block: 'start'});
+                    nav.appendChild(navItem);
+
+                    // 内容块
+                    const section = document.createElement('div');
+                    section.id = `section-${lang}-${key}`;
+                    section.className = "border-b border-gray-100 pb-8 last:border-0";
+                    
+                    const title = document.createElement('h3');
+                    title.className = "text-md font-bold text-gray-800 mb-4 flex items-center gap-2 uppercase tracking-wide";
+                    title.innerHTML = `<i class="fa fa-folder-open text-blue-400"></i> ${key}`;
+                    section.appendChild(title);
+
+                    // 递归生成表单
+                    section.appendChild(generateForm(appData[lang][key], [lang, key]));
+                    contentBox.appendChild(section);
+                }
+                
+                langSection.appendChild(contentBox);
+                container.appendChild(langSection);
+            });
+        }
+
+        // --- 递归生成表单 (核心逻辑) ---
+        function generateForm(data, path) {
+            const wrapper = document.createElement('div');
+            wrapper.className = "space-y-4 pl-4 border-l-2 border-gray-100";
+
+            if (typeof data === 'string' || typeof data === 'number') {
+                const input = document.createElement(data.length > 60 ? 'textarea' : 'input');
+                input.className = "json-input";
+                if(data.length > 60) input.rows = 3;
+                input.value = data;
+                
+                // 绑定事件：修改时更新 appData
+                input.oninput = (e) => {
+                    let ref = appData;
+                    for(let i=0; i<path.length-1; i++) ref = ref[path[i]];
+                    ref[path[path.length-1]] = e.target.value;
+                };
+
+                return input;
+            } 
+            else if (Array.isArray(data)) {
+                data.forEach((item, idx) => {
+                    const itemBox = document.createElement('div');
+                    itemBox.className = "bg-gray-50 p-4 rounded-lg border border-gray-200 relative group";
+                    
+                    const label = document.createElement('div');
+                    label.className = "text-xs font-bold text-gray-400 mb-2 uppercase";
+                    label.textContent = `Item ${idx + 1}`;
+                    itemBox.appendChild(label);
+                    
+                    itemBox.appendChild(generateForm(item, [...path, idx]));
+                    
+                    // 简单的删除按钮（可选，暂不实现复杂增删）
+                    wrapper.appendChild(itemBox);
+                });
+            } 
+            else if (typeof data === 'object' && data !== null) {
+                for (let k in data) {
+                    const fieldRow = document.createElement('div');
+                    
+                    const label = document.createElement('label');
+                    label.className = "block text-sm font-medium text-gray-600 mb-1";
+                    label.textContent = k;
+                    
+                    fieldRow.appendChild(label);
+                    fieldRow.appendChild(generateForm(data[k], [...path, k]));
+                    wrapper.appendChild(fieldRow);
+                }
+            }
+            return wrapper;
+        }
+
+        // --- 保存 ---
         async function commitChanges() {
-            if (!fileSha && !confirm("未检测到文件SHA，保存可能会失败。继续？")) return;
+            if (!fileSha && !confirm("未检测到文件SHA（可能是本地预览模式），保存可能会失败。继续？")) return;
+            
             updateStatus("Saving to GitHub...", "text-blue-600");
             setLoading(true);
             try {
                 const owner = document.getElementById('gh_owner').value;
                 const repo = document.getElementById('gh_repo').value;
                 const token = document.getElementById('gh_token').value;
+                
                 const content = window.btoa(unescape(encodeURIComponent(JSON.stringify(appData, null, 2))));
                 const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/data.json`, {
                     method: 'PUT',
                     headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: "Update via Admin V11", content, sha: fileSha })
+                    body: JSON.stringify({ message: "Update via Admin V9 Toolbar", content, sha: fileSha })
                 });
+                
                 if(!res.ok) throw new Error((await res.json()).message);
                 const json = await res.json();
                 fileSha = json.content.sha;
