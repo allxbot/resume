@@ -1,10 +1,10 @@
 {
   "zh": {
     "basic_info": {
-      "name": "徐一尧",
-      "titles": "研发制造总监 | 供应链技术总监 | 智能制造设备工艺专家",
+      "name": "徐咏智",
+      "titles": "研发制造总监 | 供应链技术总监 | 智能制造设备工艺专家 | 消费电子 NPI 负责人",
       "avatar": "/pic/hero-avatar.jpeg",
-      "location": "成都 / 深圳",
+      "location": "成都 / 深圳.中国",
       "email": "xuyongzhi@antmy.com",
       "tags": [
         "16年高精智能制造经验",
@@ -77,27 +77,27 @@
         "label_email": "您的邮箱",
         "label_msg": "消息内容",
         "btn_send": "发送消息",
-        "form_id": "YOUR_FORMSPREE_ID_HERE",
-        "msg_required": "maqyvrjy"
+        "form_id": "maqyvrjy",
+        "msg_required": "请填写信息"
       }
     },
     "profile": {
-      "summary": "16年高精智能制造专家，深耕3C消费电子（苹果核心供应链）与半导体后道封装领域。兼具消费类产品NPI全流程管控、DFM/MFD工艺优化、智能工厂规划落地及跨国跨职能团队管理经验。",
+      "summary": "16年高精智能制造专家，深耕 3C 消费电子（苹果核心供应链） 与 半导体后道封装 领域。兼具消费类产品 NPI 全流程管控、DFM/MFD 工艺优化、智能工厂规划落地 及跨国跨职能团队管理经验。",
       "cards": [
         {
-          "title": "技术统筹",
+          "title": "技术专家视点",
           "icon": "fa-cogs",
-          "desc": "主导50+条高精密自动化产线NPI量产导入，推动2个智能工厂从0到1筹建。"
+          "desc": "3C / 半导体精密工艺（激光切割、PVD、HAF 贴合、组装、封装等）；智能产线全流程架构设计；设备定位精度 1-2μm、运动系统 20g+ 加速度；DFM/DFMA 设计、MFD（制造为设计）解决方案开发、FAT/SAT 验证、DOE 工艺优化；热学组件装配工艺优化、散热结构 DFM 分析；系统装配公差分析（GD&T 深化应用）、产品外观（cosmetic）质量管控。"
         },
         {
-          "title": "核心业绩",
+          "title": "项目与运营",
           "icon": "fa-line-chart",
-          "desc": "通过DFM优化、模块化设计与精益生产，实现OEE提升至85%+、产能提升90%+、良率稳定99.6%+。"
+          "desc": "智能工厂 0-1 筹建；自动化产线规划与量产导入；闭环数据管理系统搭建；OEE / 良率 / 成本优化；产能爬坡加速；KISS 原则落地（简化设计与制造流程）；SPC（统计过程控制）数据驱动的良率与成本优化；NUDD 风险管理应用实践。"
         },
         {
-          "title": "战略管理",
+          "title": "团队与领导力",
           "icon": "fa-sitemap",
-          "desc": "擅长协同研发与供应商团队突破制造瓶颈，确保设计与制造无缝衔接。"
+          "desc": "跨国跨职能团队管理（中/新/德）；敏捷开发 + Stage-Gate 流程推行；供应商标准化开发体系构建；精益生产（单线流/模块化）落地；跨文化协同研发与供应商协作。"
         }
       ]
     },
@@ -324,10 +324,10 @@
   },
   "en": {
     "basic_info": {
-      "name": "Xu Yiyao",
-      "titles": "R&D Manufacturing Director | Supply Chain Technical Director",
+      "name": "Xu Yongzhi",
+      "titles": "R&D Manufacturing Director | Supply Chain Technical Director | Smart Mfg Equipment Expert | Consumer Electronics NPI Lead",
       "avatar": "/pic/hero-avatar.jpeg",
-      "location": "Chengdu / Shenzhen",
+      "location": "Chengdu / Shenzhen . China",
       "email": "xuyongzhi@antmy.com",
       "tags": [
         "16 Years in Smart Mfg",
@@ -400,27 +400,27 @@
         "label_email": "Your Email",
         "label_msg": "Message",
         "btn_send": "Send Message",
-        "form_id": "YOUR_FORMSPREE_ID_HERE",
-        "msg_required": "maqyvrjy"
+        "form_id": "maqyvrjy",
+        "msg_required": "Please fill information"
       }
     },
     "profile": {
-      "summary": "16-year expert in high-precision smart manufacturing, specializing in 3C consumer electronics (Apple Core Supply Chain) and semiconductor backend packaging. Extensive experience in NPI lifecycle management, DFM/MFD process optimization, smart factory planning, and leading cross-functional international teams.",
+      "summary": "Expert in High-Precision Smart Manufacturing with 16 years of experience, deeply rooted in 3C Consumer Electronics (Apple Core Supply Chain) and Semiconductor Back-end Packaging. Possesses comprehensive expertise in NPI full-process control, DFM/MFD process optimization, Smart Factory planning, and cross-national cross-functional team management.",
       "cards": [
         {
-          "title": "Technical Leadership",
+          "title": "Technical Expertise",
           "icon": "fa-cogs",
-          "desc": "Led NPI and mass production for 50+ high-precision automated lines; spearheaded the 0-to-1 establishment of two smart factories."
+          "desc": "3C / Semiconductor Precision Processes (Laser cutting, PVD, HAF bonding, Assembly, Packaging, etc.); Smart Line Architecture Design; Equipment positioning accuracy 1-2μm, Motion system acceleration 20g+; DFM/DFMA Design, MFD (Manufacturing for Design) solution development, FAT/SAT validation, DOE Process Optimization; Thermal component assembly optimization, Thermal structure DFM analysis; System assembly tolerance analysis (Advanced GD&T application), Product Cosmetic quality control."
         },
         {
-          "title": "Key Achievements",
+          "title": "Project & Operations",
           "icon": "fa-line-chart",
-          "desc": "Optimized OEE to >85%, increased capacity by 90%, and stabilized yield at 99.6% through DFM, modular design, and Lean manufacturing."
+          "desc": "Smart Factory Greenfield Projects (0-to-1); Automated line planning and mass production ramp-up; Closed-loop data management system construction; OEE / Yield / Cost Optimization; Capacity Ramp-up acceleration; KISS Principle Implementation (Simplifying design & manufacturing flow); SPC (Statistical Process Control) data-driven yield and cost optimization; NUDD (New, Unique, Different, Difficult) risk management application."
         },
         {
-          "title": "Strategic Management",
+          "title": "Leadership",
           "icon": "fa-sitemap",
-          "desc": "Expert in bridging R&D and supplier teams to resolve manufacturing bottlenecks, ensuring seamless design-to-manufacturing transition."
+          "desc": "Cross-national Cross-functional Team Management (CN/SG/DE); Agile Development + Stage-Gate Process implementation; Supplier standardization development system construction; Lean Manufacturing (One-piece flow/Modular) implementation; Cross-cultural R&D and supplier collaboration."
         }
       ]
     },
