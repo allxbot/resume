@@ -22,7 +22,13 @@
                         'text-main': 'var(--color-text-main)',
                         'text-muted': 'var(--color-text-muted)',
                         'btn-bg': 'var(--color-btn-bg)', 
-                        'btn-text': 'var(--color-btn-text)'
+                        'btn-text': 'var(--color-btn-text)',
+                        /* 定义图标颜色变量，默认使用 primary */
+                        'icon-accent-1': 'var(--color-icon-accent-1, var(--color-primary))',
+                        'icon-accent-2': 'var(--color-icon-accent-2, var(--color-primary))',
+                        'icon-accent-3': 'var(--color-icon-accent-3, var(--color-primary))',
+                        'border-color': 'var(--border-color)',
+                        'check-color': 'var(--check-color)'
                     },
                     boxShadow: { 
                         'custom': 'var(--box-shadow)',
@@ -56,19 +62,30 @@
             --color-text-main: #111827; /* gray-900 */
             --color-text-muted: #6b7280; /* gray-500/600 mixed */
             
-            /* 按钮特有: 原版 Contact 按钮是 bg-black */
+            /* 关键修复：按钮背景纯黑 */
             --color-btn-bg: #000000;
             --color-btn-text: #ffffff;
 
-            --radius-card: 2rem; /* rounded-[2rem] */
-            --radius-btn: 9999px; /* rounded-full */
+            --radius-card: 2rem; 
+            --radius-btn: 9999px; 
             
-            --box-shadow: 0 4px 20px rgba(0,0,0,0.06); /* shadow-apple */
-            --box-shadow-hover: 0 10px 30px rgba(0,0,0,0.1); /* shadow-apple-hover */
+            --box-shadow: 0 4px 20px rgba(0,0,0,0.06); 
+            --box-shadow-hover: 0 10px 30px rgba(0,0,0,0.1); 
             
             --border-style: solid;
             --border-width: 1px;
-            --border-color: #f3f4f6; /* border-gray-100/50 approx */
+            --border-color: #f3f4f6; /* border-gray-100 */
+            
+            /* 关键修复：图标颜色循环 */
+            --color-icon-accent-1: #f97316; /* orange-500 */
+            --color-icon-accent-2: #a855f7; /* purple-500 */
+            --color-icon-accent-3: #14b8a6; /* teal-500 */
+            
+            /* 关键修复：背景光斑颜色 */
+            --hero-blur-color: rgba(239, 246, 255, 0.8); /* blue-50 with opacity */
+            
+            /* 关键修复：列表勾选颜色 */
+            --check-color: #d1d5db; /* gray-300 */
         }
 
         /* 1. Modern Theme (现代蓝) */
@@ -89,6 +106,14 @@
             --border-style: solid;
             --border-width: 1px;
             --border-color: #e5e7eb;
+            
+            /* 图标颜色统一跟随主题 */
+            --color-icon-accent-1: #3b82f6;
+            --color-icon-accent-2: #3b82f6;
+            --color-icon-accent-3: #3b82f6;
+            
+            --hero-blur-color: rgba(59, 130, 246, 0.1);
+            --check-color: #93c5fd; /* blue-300 */
         }
 
         /* 2. Classic Theme (经典商务) */
@@ -109,6 +134,13 @@
             --border-style: solid;
             --border-width: 1px;
             --border-color: #e2e8f0;
+            
+            --color-icon-accent-1: #1e3a8a;
+            --color-icon-accent-2: #1e3a8a;
+            --color-icon-accent-3: #1e3a8a;
+            
+            --hero-blur-color: rgba(30, 58, 138, 0.05);
+            --check-color: #cbd5e1;
         }
 
         /* 3. Geek Theme (极客模式) */
@@ -129,6 +161,13 @@
             --border-style: dashed;
             --border-width: 1px;
             --border-color: #334155;
+            
+            --color-icon-accent-1: #10b981;
+            --color-icon-accent-2: #10b981;
+            --color-icon-accent-3: #10b981;
+            
+            --hero-blur-color: rgba(16, 185, 129, 0.1);
+            --check-color: #334155;
         }
 
         body {
@@ -141,7 +180,7 @@
             transition: background-color 0.3s, color 0.3s;
         }
 
-        /* 通用卡片类：用于替代 bg-white rounded-[2rem] shadow-apple */
+        /* 通用卡片类 */
         .theme-card {
             background-color: var(--color-card);
             border-radius: var(--radius-card);
@@ -168,6 +207,7 @@
         .reveal-visible { opacity: 1; transform: translateY(0) scale(1); }
         .tilt-container { perspective: 1000px; transform-style: preserve-3d; }
 
+        /* 打印样式 */
         #print-view { display: none; }
         @media print {
             #screen-view, header, #backToTop, #wechatModal, .no-print, .tilt-container { display: none !important; }
@@ -221,7 +261,7 @@
         </header>
 
         <section class="pt-40 pb-20 relative overflow-hidden print:pt-10">
-            <div id="hero-bg-blur" class="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-gradient-to-b from-primary/10 to-transparent rounded-[100%] blur-3xl -z-10 opacity-60 print:hidden transition-colors"></div>
+            <div id="hero-bg-blur" class="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] rounded-[100%] blur-3xl -z-10 opacity-60 print:hidden transition-colors" style="background: linear-gradient(to bottom, var(--hero-blur-color), transparent);"></div>
             
             <div class="container mx-auto px-4 md:px-6 flex flex-col md:flex-row items-center gap-12 md:gap-20">
                 <div class="md:w-1/2 text-center md:text-left z-10">
@@ -390,7 +430,7 @@
             document.getElementById('hero-title').textContent = basic.titles;
             document.getElementById('hero-tags').innerHTML = basic.tags.map(t => `<span class="bg-white/50 backdrop-blur border border-gray-200/50 text-muted px-4 py-1.5 rounded-full text-sm font-medium shadow-sm">${t}</span>`).join('');
             
-            // 按钮颜色修复：使用 bg-btn-bg 和 text-btn-text 变量
+            // 修复：按钮样式使用变量，确保 Apple 模式下 Contact 按钮为纯黑 (#000000)
             document.getElementById('hero-btns').innerHTML = `
                 <a href="#contact" class="bg-btn-bg text-btn-text px-8 py-3 font-medium hover:bg-opacity-80 hover:scale-105 transition-all duration-300 shadow-lg theme-btn"><i class="fa fa-envelope mr-2"></i> ${ui.buttons.contact}</a>
                 <a href="#experience" class="bg-white text-main border border-gray-200 px-8 py-3 font-medium hover:bg-gray-50 transition-all hover:scale-105 shadow-sm theme-btn"><i class="fa fa-briefcase mr-2"></i> ${ui.buttons.exp}</a>
@@ -445,11 +485,13 @@
                 </div>
             `;
             
+            // 修复：图标颜色使用 CSS 变量，确保 Apple 模式下分别显示橙、紫、青
+            const iconVars = ['text-icon-accent-1', 'text-icon-accent-2', 'text-icon-accent-3'];
             data.skills.card_groups.forEach((g, idx) => {
                 bentoHTML += `
                 <div class="col-span-1 md:col-span-1 lg:col-span-2 theme-card p-6 hover:-translate-y-1 transition-all duration-300 reveal-hidden" style="transition-delay: ${(idx+1)*100}ms">
                     <div class="flex items-center gap-3 mb-4 pb-3 border-b border-gray-100/50">
-                        <i class="fa ${g.icon} text-primary text-lg"></i>
+                        <i class="fa ${g.icon} ${iconVars[idx%3]} text-lg"></i>
                         <h3 class="font-bold text-main">${g.title}</h3>
                     </div>
                     <ul class="space-y-3">
@@ -489,6 +531,7 @@
             });
 
             document.getElementById('t-exp').textContent = ui.section_titles.experience;
+            // 修复：工作经历部分样式，确保 Apple 模式下左侧边框和图标颜色正确
             document.getElementById('exp-list').innerHTML = data.experience.map(job => `
                 <div class="relative pl-0 md:pl-0 reveal-hidden">
                     <div class="flex flex-col md:flex-row gap-8 md:gap-16">
@@ -500,12 +543,12 @@
                                 <p class="text-gray-400 text-xs flex items-center md:justify-end gap-1"><i class="fa fa-map-marker"></i> ${job.location}</p>
                             </div>
                         </div>
-                        <div class="md:w-2/3 border-l-2 border-gray-200/50 pl-8 py-2 space-y-8">
+                        <div class="md:w-2/3 border-l-2 border-border-color pl-8 py-2 space-y-8">
                             ${job.projects.map(p => `
                                 <div class="group">
                                     ${p.title ? `<h4 class="font-bold text-main mb-3 text-lg flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-primary"></span> ${p.title}</h4>` : ''}
                                     <ul class="space-y-4">
-                                        ${p.details.map(d => `<li class="flex items-start gap-3 text-[15px] text-muted leading-relaxed group-hover:text-main transition-colors"><i class="fa fa-check text-gray-300 mt-1 shrink-0 text-xs"></i><span>${d}</span></li>`).join('')}
+                                        ${p.details.map(d => `<li class="flex items-start gap-3 text-[15px] text-muted leading-relaxed group-hover:text-main transition-colors"><i class="fa fa-check text-check-color mt-1 shrink-0 text-xs"></i><span>${d}</span></li>`).join('')}
                                     </ul>
                                 </div>
                             `).join('')}
