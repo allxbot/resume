@@ -62,32 +62,43 @@
                 background-color: white;
                 color: #000;
                 font-family: "Inter", "Microsoft YaHei", sans-serif;
-                font-size: 10.5pt; /* 正文五号字大小 */
+                font-size: 10.5pt;
                 line-height: 1.4;
-                padding: 0 0.5cm; /* 左右留白 */
+                padding: 0 0.5cm;
             }
 
             @page { margin: 1.2cm 1.5cm; size: A4; }
             
-            /* --- 排版细节 --- */
+            /* --- 关键修复：允许 Section 分页 --- */
+            section, .print-section { 
+                padding-top: 0 !important; 
+                padding-bottom: 0 !important; 
+                page-break-inside: auto !important; /* 允许内部断页 */
+                break-inside: auto !important;
+            }
+
+            /* 保持单个职位块尽量不切断 */
+            .no-break { 
+                page-break-inside: avoid; 
+                break-inside: avoid; 
+            }
             
-            /* 标题体系 */
+            /* --- 排版细节 --- */
             .print-h1 { 
                 font-size: 20pt; 
                 font-weight: bold; 
                 margin-bottom: 0.2rem; 
                 color: #000;
             }
-            
             .print-h2 { 
                 font-size: 14pt; 
                 font-weight: bold; 
-                border-bottom: 2px solid #000; /* 分割线 */
+                border-bottom: 2px solid #000; 
                 margin-top: 1.2rem; 
                 margin-bottom: 0.6rem; 
                 padding-bottom: 0.2rem;
+                page-break-after: avoid; /* 标题后不换页 */
             }
-
             .print-h3 {
                 font-size: 11pt;
                 font-weight: bold;
@@ -95,17 +106,15 @@
                 margin-bottom: 0.2rem;
                 display: flex;
                 justify-content: space-between;
+                page-break-after: avoid; /* 公司名后不换页 */
             }
-
-            /* 顶部元数据 */
             .print-meta { font-size: 10pt; margin-bottom: 1.2rem; }
-            
-            /* 核心能力矩阵表格 */
             .print-table {
                 width: 100%;
                 border-collapse: collapse;
                 margin-bottom: 1rem;
                 font-size: 10pt;
+                page-break-inside: avoid; /* 表格尽量不切断 */
             }
             .print-table th, .print-table td {
                 border: 1px solid #000;
@@ -118,24 +127,18 @@
                 text-align: left;
                 -webkit-print-color-adjust: exact;
             }
-            /* 第一列样式控制 */
             .print-table td:first-child {
                 font-weight: bold;
-                white-space: nowrap; /* 保持标题不换行 */
+                white-space: nowrap; 
                 background-color: #fafafa;
-                width: 18%; /* 固定宽度 */
                 -webkit-print-color-adjust: exact;
             }
-
-            /* 列表样式 */
             .print-list { 
                 list-style-type: disc; 
                 padding-left: 1.2rem; 
                 margin-top: 0.3rem;
             }
             .print-list li { margin-bottom: 0.2rem; }
-            
-            /* 工作经历细节 */
             .job-sub-row { 
                 font-weight: bold; 
                 font-size: 10.5pt; 
@@ -151,9 +154,6 @@
                 margin-bottom: 0.2rem;
                 font-size: 10.5pt;
             }
-
-            /* 辅助类 */
-            .no-break { break-inside: avoid; }
             a { text-decoration: none !important; color: #000 !important; }
         }
 
