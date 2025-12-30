@@ -242,7 +242,7 @@
         "company": "成都工具研究所 (CTRI)",
         "role": "机械工程师",
         "date": "2009.07 - 2009.10",
-        "location": "成都",
+        "location": "成都 . 中国",
         "projects": [
           {
             "title": "",
@@ -253,36 +253,14 @@
             ]
           }
         ]
-      },
-      {
-        "company": "超级公司",
-        "role": "工程师",
-        "date": "2021-2019",
-        "location": "成都",
-        "projects": [
-          {
-            "title": "测试",
-            "details": [
-              "测试2",
-              "",
-              ""
-            ]
-          }
-        ]
       }
     ],
     "education": [
       {
         "school": "西南科技大学",
         "degree": "机械设计制造及其自动化 | 学士",
-        "date": "2009年",
-        "location": "绵阳"
-      },
-      {
-        "school": "进口顶级丝",
-        "degree": "嘟嘟",
-        "date": "dd",
-        "location": "成都"
+        "date": "2005-2009年",
+        "location": "绵阳 . 中国"
       }
     ],
     "hobbies": {
@@ -292,8 +270,7 @@
         "电子机械DIY",
         "3D打印",
         "木工雕刻",
-        "装修设计",
-        "徒步爬山"
+        "装修设计"
       ]
     },
     "tools": [
@@ -320,7 +297,7 @@
           "JMP",
           "Tableau",
           "Python",
-          "HTML",
+          "HTML&Web",
           "SPC",
           "NUDD"
         ]
@@ -570,30 +547,14 @@
         "company": "Chengdu Tool Research Institute (CTRI)",
         "role": "Mechanical Engineer",
         "date": "2009.07 - 2009.10",
-        "location": "Chengdu",
+        "location": "Chengdu . China",
         "projects": [
           {
             "title": "",
             "details": [
-              "Designed customized special cutting tools, drafting full sets of part, assembly, and process drawings.",
-              "Managed full lifecycle from client communication to delivery, developing new processes and fixtures to improve efficiency.",
-              "Mastered the full R&D-to-delivery lifecycle, laying the foundation for precision manufacturing."
-            ]
-          }
-        ]
-      },
-      {
-        "company": "supper company",
-        "role": "engineer",
-        "date": "2011-2019",
-        "location": "chengdu",
-        "projects": [
-          {
-            "title": "test",
-            "details": [
-              "test2",
-              "",
-              ""
+              "Responsible for the design of customized special cutting tools, independently completing the full process of part drawings, assembly drawings, and process drawings.",
+              "Participated in full-process management from client requirement communication to production delivery, developing new production processes and fixtures to improve efficiency.",
+              "Mastered the full lifecycle management flow from R&D to delivery, laying the foundation for precision manufacturing.\n"
             ]
           }
         ]
@@ -602,26 +563,19 @@
     "education": [
       {
         "school": "Southwest University of Science and Technology",
-        "degree": "B.Eng in Mechanical Design & Automation",
-        "date": "2009",
-        "location": "Mianyang"
-      },
-      {
-        "school": "jdkjd",
-        "degree": "djldj",
-        "date": "1122",
-        "location": "chengdu"
+        "degree": "B.S. in Mechanical Design Manufacturing and Automation",
+        "date": "2005-2009",
+        "location": "Mianyang . China"
       }
     ],
     "hobbies": {
-      "desc": "Passionate about hands-on practice, continuously integrating DIY innovative thinking into precision manufacturing process optimization.",
+      "desc": "Dedicated to hands-on innovation and applying maker-mindset to precision process optimization.",
       "items": [
         "Hiking",
         "Mechatronics DIY",
         "3D Printing",
         "Wood Carving",
-        "Interior Design",
-        "徒步爬山"
+        "Interior Design"
       ]
     },
     "tools": [
@@ -630,8 +584,8 @@
         "icon": "fa-wrench",
         "list": [
           "UG NX",
-          "SolidWorks",
           "Solid Edge",
+          "SolidWorks",
           "AutoCAD",
           "CAE",
           "E-Plan",
@@ -648,8 +602,9 @@
           "JMP",
           "Tableau",
           "Python",
-          "HTML",
-          "SPC"
+          "HTML&Web",
+          "SPC",
+          "NUDD"
         ]
       }
     ]
