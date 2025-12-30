@@ -129,7 +129,7 @@
             <div class="text-center mb-12">
                 <h2 class="text-3xl font-bold text-gray-900" id="t-skills"></h2>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="skills-bento-container"></div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6" id="skills-bento-container"></div>
         </div>
     </section>
 
@@ -160,7 +160,7 @@
         <h3 class="text-lg font-bold text-gray-800 mb-2" id="f-name"></h3>
         <p class="text-sm mb-6" id="f-desc"></p>
         <div class="flex justify-center space-x-6 mb-8" id="social-icons"></div>
-        <p class="text-xs text-gray-300">© 2026 <span id="copyright-name"></span>. Designed with Apple Aesthetics.</p>
+        <p class="text-xs text-gray-300">© 2026 <span id="copyright-name"></span>. All rights reserved.</p>
     </footer>
 
     <div id="wechatModal" class="hidden fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-md p-4 transition-opacity duration-300" onclick="this.classList.add('hidden')">
@@ -180,39 +180,30 @@
         let currentLang = localStorage.getItem('lang') || 'zh';
         let myChart = null;
 
-        // --- 核心修复：更智能的导航栏状态管理 ---
         const navbar = document.getElementById('navbar');
         const mobileMenu = document.getElementById('mobile-menu');
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
 
-        // 更新导航栏样式的函数
         function updateNavbarStyle() {
             const isScrolled = window.scrollY > 50;
             const isMenuOpen = mobileMenu.classList.contains('open');
 
-            // 只要 [已滚动] 或者 [菜单已打开]，就强制使用“磨砂白底”模式
             if (isScrolled || isMenuOpen) {
                 navbar.classList.remove('py-4', 'bg-transparent');
-                // 增加 backdrop-blur-xl 提升磨砂质感，bg-white/90 提高文字可读性
                 navbar.classList.add('py-3', 'bg-white/90', 'backdrop-blur-xl', 'border-b', 'border-gray-200/50', 'shadow-sm');
             } else {
-                // 只有在 [顶部] 且 [菜单关闭] 时，才透明
                 navbar.classList.add('py-4', 'bg-transparent');
                 navbar.classList.remove('py-3', 'bg-white/90', 'backdrop-blur-xl', 'border-b', 'border-gray-200/50', 'shadow-sm');
             }
         }
 
-        // 监听滚动
         window.addEventListener('scroll', updateNavbarStyle);
 
-        // 监听菜单点击
         mobileMenuBtn.addEventListener('click', () => {
             mobileMenu.classList.toggle('open');
-            // 点击瞬间立即更新样式，不用等滚动
             updateNavbarStyle();
         });
 
-        // 3D Tilt Effect
         const heroTilt = document.getElementById('hero-tilt');
         if(heroTilt) {
             heroTilt.addEventListener('mousemove', (e) => {
@@ -228,7 +219,6 @@
             });
         }
 
-        // Observer
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -305,13 +295,14 @@
                     <p class="text-sm text-gray-500 leading-relaxed">${c.desc}</p>
                 </div>`).join('');
 
-            // Bento Skills
+            // --- Bento Skills: 布局修改 (上2 下3) ---
             document.getElementById('t-skills').textContent = ui.section_titles.skills;
             const bentoContainer = document.getElementById('skills-bento-container');
             const chartData = data.skills.chart;
             
+            // 1. Radar Chart (左上, lg屏幕占一半)
             let bentoHTML = `
-                <div class="col-span-1 md:col-span-1 lg:col-span-1 row-span-2 bg-white rounded-[2rem] p-6 shadow-apple border border-gray-100 flex flex-col relative overflow-hidden reveal-hidden hover:shadow-apple-hover transition-all">
+                <div class="col-span-1 md:col-span-1 lg:col-span-3 bg-white rounded-[2rem] p-6 shadow-apple border border-gray-100 flex flex-col relative overflow-hidden reveal-hidden hover:shadow-apple-hover transition-all">
                     <div class="flex items-center gap-3 mb-4 z-10">
                         <div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center"><i class="fa fa-pie-chart"></i></div>
                         <h3 class="font-bold text-gray-900">${ui.section_titles.chart} (Radar)</h3>
@@ -324,8 +315,9 @@
                 </div>
             `;
 
+            // 2. Progress Levels (右上, lg屏幕占一半)
             bentoHTML += `
-                <div class="col-span-1 row-span-2 bg-white rounded-[2rem] p-6 shadow-apple border border-gray-100 reveal-hidden hover:shadow-apple-hover transition-all">
+                <div class="col-span-1 md:col-span-1 lg:col-span-3 bg-white rounded-[2rem] p-6 shadow-apple border border-gray-100 reveal-hidden hover:shadow-apple-hover transition-all">
                     <div class="flex items-center gap-3 mb-6 pb-3 border-b border-gray-50">
                         <div class="w-8 h-8 rounded-lg bg-green-50 text-green-600 flex items-center justify-center"><i class="fa fa-sliders"></i></div>
                         <h3 class="font-bold text-gray-900">${ui.section_titles.chart} (Levels)</h3>
@@ -344,10 +336,11 @@
                 </div>
             `;
             
+            // 3. Card Groups (下排, lg屏幕下每张卡片占 2/6 = 1/3，刚好一行放3个)
             const iconColors = ['text-orange-500', 'text-purple-500', 'text-teal-500'];
             data.skills.card_groups.forEach((g, idx) => {
                 bentoHTML += `
-                <div class="col-span-1 bg-white rounded-[2rem] p-6 shadow-apple border border-gray-100 hover:shadow-apple-hover hover:-translate-y-1 transition-all duration-300 reveal-hidden" style="transition-delay: ${(idx+1)*100}ms">
+                <div class="col-span-1 md:col-span-1 lg:col-span-2 bg-white rounded-[2rem] p-6 shadow-apple border border-gray-100 hover:shadow-apple-hover hover:-translate-y-1 transition-all duration-300 reveal-hidden" style="transition-delay: ${(idx+1)*100}ms">
                     <div class="flex items-center gap-3 mb-4 pb-3 border-b border-gray-50">
                         <i class="fa ${g.icon} ${iconColors[idx%3]} text-lg"></i>
                         <h3 class="font-bold text-gray-900">${g.title}</h3>
@@ -441,7 +434,7 @@
                     </div>
                 </div>`).join('');
 
-            // Contact
+            // Contact (修改：删除 Let's build... 文字)
             const cf = ui.contact_form;
             const cl = ui.contact_labels;
             const formAction = cf.form_id ? `https://formspree.io/f/${cf.form_id}` : '';
@@ -450,7 +443,6 @@
             document.getElementById('contact-area').innerHTML = `
                 <div class="text-center mb-10">
                     <h2 class="text-3xl font-bold text-gray-900 mb-2">${ui.section_titles.contact}</h2>
-                    <p class="text-gray-500">Let's build something amazing together.</p>
                 </div>
                 <div class="grid md:grid-cols-2 gap-12">
                     <div class="space-y-6">
@@ -499,4 +491,3 @@
     </script>
 </body>
 </html>
-
