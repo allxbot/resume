@@ -337,9 +337,17 @@
                 </div>
             `).join('');
 
-            // 7. Contact
+            // 7. Contact (Updated Form & Labels)
             document.getElementById('t-contact').textContent = st.contact;
-            const cf = ui.contact_form || { title: "Message", label_name: "Name", label_email: "Email", label_msg: "Message", btn_send: "Send" };
+            // 增加 msg_required 的默认值处理
+            const cf = ui.contact_form || { 
+                title: "Message", 
+                label_name: "Name", 
+                label_email: "Email", 
+                label_msg: "Message", 
+                btn_send: "Send", 
+                msg_required: "Required" 
+            };
             const cl = ui.contact_labels || { email: "Email", location: "Location" };
 
             // Use the form_id from data.json to build the Formspree URL
@@ -371,15 +379,27 @@
                         <form class="space-y-4" action="${formAction}" method="POST" ${onSubmitAttr}>
                             <div>
                                 <label class="block text-gray-600 mb-2 text-sm">${cf.label_name}</label>
-                                <input type="text" name="name" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors" required>
+                                <input type="text" name="name" 
+                                    class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors" 
+                                    required
+                                    oninvalid="this.setCustomValidity('${cf.msg_required}')"
+                                    oninput="this.setCustomValidity('')">
                             </div>
                             <div>
                                 <label class="block text-gray-600 mb-2 text-sm">${cf.label_email}</label>
-                                <input type="email" name="email" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors" required>
+                                <input type="email" name="email" 
+                                    class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors" 
+                                    required
+                                    oninvalid="this.setCustomValidity('${cf.msg_required}')"
+                                    oninput="this.setCustomValidity('')">
                             </div>
                             <div>
                                 <label class="block text-gray-600 mb-2 text-sm">${cf.label_msg}</label>
-                                <textarea name="message" rows="4" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors" required></textarea>
+                                <textarea name="message" rows="4" 
+                                    class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors" 
+                                    required
+                                    oninvalid="this.setCustomValidity('${cf.msg_required}')"
+                                    oninput="this.setCustomValidity('')"></textarea>
                             </div>
                             <button type="submit" class="w-full bg-primary hover:bg-primary/90 text-white py-3 rounded-lg transition-colors flex items-center justify-center gap-2">
                                 <i class="fa fa-paper-plane"></i> <span>${cf.btn_send}</span>
