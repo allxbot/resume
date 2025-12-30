@@ -69,18 +69,18 @@
 
             @page { margin: 1.2cm 1.5cm; size: A4; }
             
-            /* --- 关键修复：允许大板块分页，防止留白 --- */
+            /* --- 关键修改 1：允许内容自动分页 --- */
             section, .print-section { 
                 padding-top: 0 !important; 
                 padding-bottom: 0 !important; 
-                page-break-inside: auto !important; /* 允许内部断页 */
+                page-break-inside: auto !important; 
                 break-inside: auto !important;
             }
 
-            /* 保持单个职位/项目块尽量不切断 */
+            /* 修改：不再强制单条经历不分页，允许切断 */
             .no-break { 
-                page-break-inside: avoid; 
-                break-inside: avoid; 
+                page-break-inside: auto !important; 
+                break-inside: auto !important; 
             }
             
             /* --- 排版细节 --- */
@@ -106,7 +106,7 @@
                 margin-bottom: 0.2rem;
                 display: flex;
                 justify-content: space-between;
-                page-break-after: avoid; /* 公司名后不换页 */
+                page-break-after: avoid; 
             }
             .print-meta { font-size: 10pt; margin-bottom: 1.2rem; }
             
@@ -486,7 +486,8 @@
             const ui = data.ui;
             const labelLang = currentLang === 'zh' ? 'EN' : '中文';
             
-            document.title = `${basic.name} - ${basic.titles.split('|')[0]}`;
+            // 关键修改 2：动态设置标题
+            document.title = `${basic.name} - ${currentLang === 'zh' ? '简历' : 'Resume'}`;
             document.getElementById('langLabel').textContent = labelLang;
             document.getElementById('langLabelMobile').textContent = labelLang;
             
