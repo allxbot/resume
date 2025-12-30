@@ -170,10 +170,10 @@
                 page-break-inside: auto !important; 
                 break-inside: auto !important;
             }
-            /* 单个项目/职位尽量不切断，但如果太长允许切断 */
+            /* 允许单个项目切断，自动流向下一页 */
             .no-break { 
-                page-break-inside: auto; 
-                break-inside: auto; 
+                page-break-inside: auto !important; 
+                break-inside: auto !important; 
                 margin-bottom: 8pt;
             }
             
@@ -459,7 +459,7 @@
             const ui = data.ui;
             const labelLang = currentLang === 'zh' ? 'EN' : '中文';
             
-            // Dynamic Title Logic
+            // 修正后的标题逻辑：Name - 简历 / Name - Resume
             document.title = `${basic.name} - ${currentLang === 'zh' ? '简历' : 'Resume'}`;
             
             document.getElementById('langLabel').textContent = labelLang;
@@ -565,12 +565,12 @@
                     scales: { 
                         r: { 
                             min: 0, max: 100, 
-                            ticks: { display: false }, 
+                            ticks: { display: true, stepSize: 20, backdropColor: 'transparent', font: { size: 8 }, color: '#bbb' },
                             grid: { color: '#f0f0f0' },
                             pointLabels: { font: { size: 10, family: 'Inter' }, color: '#666' }
                         } 
                     }, 
-                    plugins: { legend: { display: false } } 
+                    plugins: { legend: { display: false }, tooltip: { callbacks: { label: (context) => context.raw + '%' } } } 
                 }
             });
 
