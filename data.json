@@ -63,7 +63,9 @@
         "experience": "工作经历",
         "education": "教育背景与技能",
         "contact": "联系方式",
-        "contact_info": "联系信息"
+        "contact_info": "联系信息",
+        "academic": "学历背景",
+        "hobbies": "兴趣爱好"
       },
       "contact_labels": {
         "email": "邮箱",
@@ -382,7 +384,9 @@
         "experience": "Work Experience",
         "education": "Education & Skills",
         "contact": "Contact",
-        "contact_info": "Contact Info"
+        "contact_info": "Contact Info",
+        "academic": "Academic",
+        "hobbies": "Hobbies & Interests"
       },
       "contact_labels": {
         "email": "Email",
