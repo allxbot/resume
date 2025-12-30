@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>简历双语后台 (V8 稳定版)</title>
+    <title>简历双语后台 (V9 增强版)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <style>
         /* --- 核心样式 --- */
-        body { background-color: #f8fafc; color: #334155; height: 100vh; display: flex; flex-direction: column; font-family: 'Segoe UI', Roboto, sans-serif; }
+        body { background-color: #f1f5f9; color: #334155; height: 100vh; display: flex; flex-direction: column; font-family: 'Segoe UI', Roboto, sans-serif; }
         
         /* 滚动条 */
         ::-webkit-scrollbar { width: 8px; height: 8px; }
@@ -25,7 +25,7 @@
         .node-container { border: 1px solid #e2e8f0; border-radius: 6px; margin-bottom: 12px; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.02); overflow: hidden; transition: all 0.2s; }
         .node-header { 
             display: flex; justify-content: space-between; align-items: center; 
-            padding: 8px 12px; background: #f1f5f9; border-bottom: 1px solid #e2e8f0; 
+            padding: 8px 12px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; 
             cursor: pointer; user-select: none;
         }
         .node-header:hover { background: #e2e8f0; }
@@ -33,7 +33,7 @@
         .node-body.collapsed { display: none; }
 
         /* 层级视觉 */
-        .depth-0 { margin: 12px; border: 1px solid #e2e8f0; }
+        .depth-0 { margin: 12px 0; border: 1px solid #cbd5e1; } /* Root level adjustments */
         .depth-1 { margin: 8px 8px 8px 12px; border-left: 3px solid #3b82f6; } 
         .depth-2 { margin: 6px 0px 6px 12px; border-left: 3px solid #10b981; } 
         .depth-3 { margin: 6px 0px 6px 12px; border-left: 3px solid #8b5cf6; } 
@@ -51,6 +51,14 @@
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
+
+        /* 语言分栏吸顶标题 */
+        .column-sticky-header {
+            position: sticky; top: 0; z-index: 40; display: flex;
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(4px);
+            border-bottom: 2px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+        .col-header-item { width: 50%; padding: 10px 16px; font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 8px; }
 
         /* 图标选择器 */
         .icon-trigger {
@@ -73,7 +81,7 @@
     <div class="bg-white shadow z-50 px-4 py-2 border-b border-gray-200 shrink-0">
         <div class="flex flex-col md:flex-row justify-between items-center max-w-[1920px] mx-auto gap-4 py-1">
             <h1 class="font-bold text-gray-800 text-lg flex items-center gap-2 select-none">
-                <i class="fa fa-cogs text-blue-600"></i> 双语后台 <span class="text-xs bg-gray-100 text-gray-600 px-2 rounded border border-gray-200">V8 Stable</span>
+                <i class="fa fa-cogs text-blue-600"></i> 双语后台 <span class="text-xs bg-gray-100 text-gray-600 px-2 rounded border border-gray-200">V9 UI Update</span>
             </h1>
             
             <div class="flex-1 px-8 text-center hidden md:block overflow-hidden">
@@ -98,20 +106,17 @@
         </div>
         
         <div class="flex justify-between items-center max-w-[1920px] mx-auto text-xs text-gray-500 mt-1 border-t border-gray-100 pt-1">
-            <div class="flex gap-4">
-                 <button onclick="globalToggle(true)" class="hover:text-blue-600 transition"><i class="fa fa-expand"></i> 全部展开</button>
-                 <button onclick="globalToggle(false)" class="hover:text-blue-600 transition"><i class="fa fa-compress"></i> 全部折叠</button>
+            <div class="flex gap-4 font-medium">
+                 <button onclick="globalToggle(true)" class="hover:text-blue-600 transition flex items-center gap-1"><i class="fa fa-expand"></i> 全部展开</button>
+                 <button onclick="globalToggle(false)" class="hover:text-blue-600 transition flex items-center gap-1"><i class="fa fa-compress"></i> 全部折叠</button>
             </div>
             <div id="status-bar" class="font-mono font-bold text-blue-600 transition-all">Waiting for action...</div>
-            <div class="flex gap-8 font-bold uppercase tracking-wider">
-                <div class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-blue-500"></span> 中文</div>
-                <div class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-green-500"></span> 英文</div>
-            </div>
+            <div class="text-gray-400 italic">Auto-save scroll position enabled</div>
         </div>
     </div>
 
     <div class="flex-1 overflow-y-auto bg-gray-50 relative scroll-smooth" id="scroll-container">
-        <div class="max-w-[1920px] mx-auto min-h-full pb-32 p-4" id="editor-root">
+        <div class="max-w-[1920px] mx-auto min-h-full pb-32" id="editor-root">
             <div class="flex flex-col items-center justify-center h-80 text-gray-400 select-none">
                 <div class="bg-white p-6 rounded-full shadow-sm mb-4">
                     <i class="fa fa-cloud-download text-4xl text-blue-100"></i>
@@ -142,8 +147,8 @@
         // --- 全局变量 ---
         let appData = {};
         let fileSha = "";
-        let collapsedRegistry = new Set(); // 记录折叠状态
-        let savedScrollTop = 0; // 记录滚动位置
+        let collapsedRegistry = new Set(); // 记录折叠状态 (如果 ID 存在，则表示该节点处于折叠状态)
+        let savedScrollTop = 0;
         let currentIconCallback = null;
 
         const STORAGE_KEYS = ['gh_owner', 'gh_repo', 'gh_token'];
@@ -158,29 +163,23 @@
             "fa-search", "fa-cog", "fa-trash", "fa-pencil", "fa-print", "fa-download", "fa-code",
             "fa-terminal", "fa-keyboard-o", "fa-rocket", "fa-lightbulb-o", "fa-bolt", "fa-shield",
             "fa-trophy", "fa-certificate", "fa-university", "fa-building", "fa-industry", "fa-plane",
-            "fa-instagram", "fa-twitter", "fa-youtube", "fa-link", "fa-external-link"
+            "fa-instagram", "fa-twitter", "fa-youtube", "fa-link", "fa-external-link", "fa-paper-plane"
         ];
 
         // --- 初始化 ---
-        // 将脚本放在 body 底部并立即执行，无需等待 window.onload
         (function init() {
             STORAGE_KEYS.forEach(k => {
                 const v = localStorage.getItem(k);
                 if(v) document.getElementById(k).value = v;
             });
-
-            // 绑定辅助事件
             document.getElementById('scroll-container').addEventListener('scroll', updateBreadcrumb);
             document.getElementById('icon-search').addEventListener('input', (e) => renderIconGrid(e.target.value));
-            
-            console.log("Admin System V8 Ready.");
+            console.log("Admin System V9 UI Ready.");
         })();
 
-        // --- 1. 读取数据 (核心逻辑修复) ---
+        // --- 1. 读取数据 ---
         async function initLoad() {
-            console.log("InitLoad Triggered");
             updateStatus("Connecting to GitHub...", "text-blue-600");
-            
             const owner = document.getElementById('gh_owner').value.trim();
             const repo = document.getElementById('gh_repo').value.trim();
             const token = document.getElementById('gh_token').value.trim();
@@ -193,46 +192,28 @@
 
             try {
                 let jsonContent = "";
-                
-                // 1. 尝试 GitHub 加载
                 if (owner && repo && token) {
                     const url = `https://api.github.com/repos/${owner}/${repo}/contents/data.json?t=${Date.now()}`;
                     const res = await fetch(url, { headers: { 'Authorization': `token ${token}` } });
-                    
                     if (!res.ok) throw new Error(`GitHub Error: ${res.status} ${res.statusText}`);
-                    
                     const data = await res.json();
                     fileSha = data.sha;
-                    // UTF-8 解码
                     jsonContent = decodeURIComponent(escape(window.atob(data.content.replace(/\n/g, ""))));
                     updateStatus("✅ Data Loaded from GitHub", "text-green-600");
-                } 
-                // 2. 尝试本地加载 (Fallback)
-                else {
-                    console.warn("No Token provided, trying local file...");
+                } else {
                     try {
                         const res = await fetch('./data.json');
                         if(!res.ok) throw new Error("Local file not found");
                         jsonContent = await res.text();
                         updateStatus("⚠️ Local Preview Mode", "text-orange-500");
                     } catch(err) {
-                        // 3. 如果本地也失败 (比如 CORS)，加载内置空模板，保证 UI 不白屏
-                        console.warn("Local fetch failed, using dummy data.");
-                        jsonContent = JSON.stringify({
-                            zh: { basic_info: { name: "测试用户", desc: "请配置 GitHub Token 以读取真实数据" } },
-                            en: { basic_info: { name: "Test User", desc: "Please config Token" } }
-                        });
-                        updateStatus("⚠️ Demo Mode (No Data Found)", "text-red-400");
+                        jsonContent = JSON.stringify({ zh: {}, en: {} });
+                        updateStatus("⚠️ Empty Mode", "text-red-400");
                     }
                     fileSha = "";
                 }
 
-                try {
-                    appData = JSON.parse(jsonContent);
-                } catch(e) {
-                    throw new Error("JSON Parse Error: 文件格式错误");
-                }
-
+                try { appData = JSON.parse(jsonContent); } catch(e) { throw new Error("JSON Parse Error"); }
                 if(!appData.zh) appData.zh = {};
                 if(!appData.en) appData.en = {};
 
@@ -240,7 +221,7 @@
 
             } catch (e) {
                 console.error(e);
-                alert(`加载失败: ${e.message}\n请检查控制台(F12)获取详情。`);
+                alert(`加载失败: ${e.message}`);
                 updateStatus("❌ Load Failed", "text-red-600");
             } finally {
                 setLoading(false);
@@ -252,16 +233,30 @@
             const root = document.getElementById('editor-root');
             const container = document.getElementById('scroll-container');
             
-            // 渲染前：无需操作
-            
             root.innerHTML = '';
-            root.appendChild(renderRecursive(appData.zh, appData.en, [], 0));
 
-            // 渲染后：恢复滚动条
-            if (savedScrollTop > 0) {
-                container.scrollTop = savedScrollTop;
-                // savedScrollTop = 0; // 不重置，保持状态稳定
-            }
+            // [新增] 插入吸顶标题栏
+            const stickyHeader = document.createElement('div');
+            stickyHeader.className = "column-sticky-header";
+            stickyHeader.innerHTML = `
+                <div class="col-header-item text-blue-700 bg-blue-50/80 border-r border-blue-100">
+                    <i class="fa fa-language text-lg"></i> 
+                    <span>中文 (Chinese)</span>
+                </div>
+                <div class="col-header-item text-green-700 bg-green-50/80">
+                    <i class="fa fa-globe text-lg"></i> 
+                    <span>英文 (English)</span>
+                </div>
+            `;
+            root.appendChild(stickyHeader);
+
+            // 渲染主体内容 (增加内边距避免被吸顶遮挡)
+            const contentWrapper = document.createElement('div');
+            contentWrapper.className = "p-4";
+            contentWrapper.appendChild(renderRecursive(appData.zh, appData.en, [], 0));
+            root.appendChild(contentWrapper);
+
+            if (savedScrollTop > 0) container.scrollTop = savedScrollTop;
         }
 
         function renderRecursive(zh, en, path, depth) {
@@ -283,7 +278,7 @@
         function renderObjectContainer(zhObj = {}, enObj = {}, path, depth, pathId) {
             const container = document.createElement('div');
             
-            // Root (depth 0) unwrapped
+            // 根节点特殊处理
             if (depth === 0) {
                  getCombinedKeys(zhObj, enObj).forEach(key => {
                      container.appendChild(renderRecursive(zhObj[key], enObj[key], [...path, key], depth + 1));
@@ -292,7 +287,7 @@
             }
 
             container.className = `node-container depth-${Math.min(depth, 3)}`;
-            container.dataset.path = path.join(' > '); // Breadcrumb Data
+            container.dataset.path = path.join(' > ');
             
             let isCollapsed = collapsedRegistry.has(pathId);
 
@@ -303,7 +298,7 @@
                     <i class="fa ${isCollapsed ? 'fa-folder' : 'fa-folder-open'} text-blue-500 icon-state"></i> 
                     <span>${formatKey(path[path.length - 1])}</span>
                 </div>
-                <div class="text-xs text-gray-400">Object</div>
+                <div class="text-xs text-gray-400 font-mono">Object</div>
             `;
             
             const body = document.createElement('div');
@@ -423,7 +418,6 @@
             return row;
         }
 
-        // --- 组件 Helper ---
         function createLabel(key) {
             const el = document.createElement('span');
             el.className = "field-key";
@@ -434,13 +428,12 @@
         function createInput(val, fullPath, lang) {
             const key = String(fullPath[fullPath.length - 1]).toLowerCase();
             
-            // Icon Picker
             if (key === 'icon') {
                 const trigger = document.createElement('div');
                 trigger.className = "icon-trigger";
                 trigger.innerHTML = `
                     <div class="icon-preview"><i class="fa ${val || 'fa-circle-o'}"></i></div>
-                    <span class="text-xs text-gray-600 flex-1 truncate">${val || '选择图标...'}</span>
+                    <span class="text-xs text-gray-600 flex-1 truncate">${val || 'Select Icon'}</span>
                     <i class="fa fa-caret-down text-gray-400"></i>
                 `;
                 trigger.onclick = () => openIconPicker(val, (newIcon) => {
@@ -450,8 +443,6 @@
                 });
                 return trigger;
             } 
-            
-            // Textarea
             else if (typeof val === 'string' && (val.length > 40 || ['desc','summary','items','list','details'].some(k => key.includes(k)))) {
                 const ta = document.createElement('textarea');
                 ta.className = "json-input";
@@ -459,8 +450,6 @@
                 ta.onchange = (e) => updateData([lang, ...fullPath], e.target.value);
                 return ta;
             } 
-            
-            // Input
             else {
                 const inp = document.createElement('input');
                 inp.type = typeof val === 'number' ? 'number' : 'text';
@@ -508,11 +497,42 @@
             }
         }
 
-        // --- 逻辑: 增删数组 (不跳转) ---
-        function modifyDualArray(action, path, idx) {
-            // 关键：保存滚动位置
+        // --- 逻辑: 全局展开/折叠 (修正版) ---
+        function globalToggle(expand) {
             savedScrollTop = document.getElementById('scroll-container').scrollTop;
+            if(expand) {
+                // 展开所有 = 清空折叠注册表 (默认就是展开)
+                collapsedRegistry.clear();
+            } else {
+                // 折叠所有 = 遍历所有容器并加入注册表
+                collapsedRegistry.clear();
+                traverseAndCollapse(appData.zh, appData.en, []);
+            }
+            renderUI();
+        }
 
+        function traverseAndCollapse(zh, en, path) {
+            const pathId = path.join('-');
+            // 如果路径非空，则将此ID加入折叠列表 (根节点除外，可选)
+            if(path.length > 0) collapsedRegistry.add(pathId);
+
+            if (Array.isArray(zh) || Array.isArray(en)) {
+                const count = Math.max(zh?.length || 0, en?.length || 0);
+                for (let i = 0; i < count; i++) {
+                    // 数组项也是容器，需要递归
+                    traverseAndCollapse(zh?.[i], en?.[i], [...path, i]);
+                }
+            } else if (isObject(zh) || isObject(en)) {
+                getCombinedKeys(zh, en).forEach(key => {
+                    traverseAndCollapse(zh?.[key], en?.[key], [...path, key]);
+                });
+            }
+            // 基础类型是叶子节点，无需操作
+        }
+
+        // --- 逻辑: 增删数组 ---
+        function modifyDualArray(action, path, idx) {
+            savedScrollTop = document.getElementById('scroll-container').scrollTop;
             const tZh = getTarget(appData.zh, path) || ensureArray(appData.zh, path);
             const tEn = getTarget(appData.en, path) || ensureArray(appData.en, path);
 
@@ -532,73 +552,36 @@
             renderUI();
         }
 
-        // --- 逻辑: 面包屑 ScrollSpy ---
+        // --- 辅助功能 ---
         function updateBreadcrumb() {
-            const container = document.getElementById('scroll-container');
             const nodes = document.querySelectorAll('[data-path]');
             let currentPath = "TOP";
-            
-            // 找到离顶部最近的一个可见元素
-            // 阈值设为 120px (顶部栏的高度)
             for (let node of nodes) {
-                const rect = node.getBoundingClientRect();
-                if (rect.top < 160) {
-                    currentPath = node.dataset.path;
-                } else {
-                    break; 
-                }
+                if (node.getBoundingClientRect().top < 200) currentPath = node.dataset.path;
+                else break; 
             }
             document.getElementById('breadcrumb-text').innerText = formatKey(currentPath).toUpperCase();
         }
 
-        // --- 逻辑: 图标选择器 ---
         function openIconPicker(currentVal, callback) {
             currentIconCallback = callback;
-            const modal = document.getElementById('icon-picker-modal');
-            modal.classList.remove('hidden');
+            document.getElementById('icon-picker-modal').classList.remove('hidden');
             renderIconGrid('');
         }
-
-        function closeIconPicker() {
-            document.getElementById('icon-picker-modal').classList.add('hidden');
-        }
-
+        function closeIconPicker() { document.getElementById('icon-picker-modal').classList.add('hidden'); }
         function renderIconGrid(filter) {
             const grid = document.getElementById('icon-grid');
             grid.innerHTML = '';
-            const list = ALL_ICONS.filter(i => i.toLowerCase().includes(filter.toLowerCase()));
-            
-            list.forEach(icon => {
+            ALL_ICONS.filter(i => i.toLowerCase().includes(filter.toLowerCase())).forEach(icon => {
                 const btn = document.createElement('div');
                 btn.className = "icon-grid-item";
                 btn.innerHTML = `<i class="fa ${icon}"></i><span class="text-[10px] text-gray-500">${icon.replace('fa-', '')}</span>`;
-                btn.onclick = () => {
-                    if(currentIconCallback) currentIconCallback(icon);
-                    closeIconPicker();
-                };
+                btn.onclick = () => { if(currentIconCallback) currentIconCallback(icon); closeIconPicker(); };
                 grid.appendChild(btn);
             });
         }
 
-        function globalToggle(expand) {
-            if(expand) collapsedRegistry.clear();
-            else {
-                // 简单实现：由于未遍历所有ID，建议仅用于重置
-                // 这里我们做个简单提示
-                if(confirm("确定要全部折叠吗？这将重置所有展开状态。")) {
-                     // 遍历 DOM 获取所有 pathId 并添加到 Set 比较复杂，
-                     // 简单做法是刷新 UI，render 过程中如果发现是 false (默认) 就会折叠。
-                     // 但我们 V7 的默认是 collapsedRegistry 有值才折叠...
-                     // 修正逻辑：V7 中 has() -> collapsed.
-                     // 所以 clear() -> 全部展开 (默认展开).
-                     // 要全部折叠，需要将所有可能的 ID 加入 Registry，这很复杂。
-                     // 实际体验中，"全部展开" (clear) 最常用。
-                }
-            }
-            renderUI();
-        }
-
-        // --- 数据工具 ---
+        // --- 通用工具 ---
         function ensureArray(root, path) {
             let t = root;
             for(let i=0; i<path.length-1; i++) {
@@ -650,24 +633,21 @@
             document.body.style.cursor = b ? 'wait' : 'default';
         }
 
-        // --- 保存 ---
+        // --- 保存逻辑 ---
         async function commitChanges() {
-            if (!fileSha && !confirm("未检测到文件SHA（可能是本地预览模式），保存可能会失败。继续？")) return;
-            
+            if (!fileSha && !confirm("未检测到文件SHA，保存可能会失败。继续？")) return;
             updateStatus("Saving to GitHub...", "text-blue-600");
             setLoading(true);
             try {
                 const owner = document.getElementById('gh_owner').value;
                 const repo = document.getElementById('gh_repo').value;
                 const token = document.getElementById('gh_token').value;
-                
                 const content = window.btoa(unescape(encodeURIComponent(JSON.stringify(appData, null, 2))));
                 const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/data.json`, {
                     method: 'PUT',
                     headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: "Update via Admin V8", content, sha: fileSha })
+                    body: JSON.stringify({ message: "Update via Admin V9", content, sha: fileSha })
                 });
-                
                 if(!res.ok) throw new Error((await res.json()).message);
                 const json = await res.json();
                 fileSha = json.content.sha;
