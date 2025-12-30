@@ -12,9 +12,9 @@
         tailwind.config = { 
             theme: { 
                 extend: { 
-                    colors: { primary: '#0071e3', secondary: '#42a5f5' }, /* 使用更接近 Apple 的蓝色 */
+                    colors: { primary: '#0071e3', secondary: '#42a5f5' }, /* Apple Blue */
                     fontFamily: { inter: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'] },
-                    boxShadow: { 'apple': '0 4px 20px rgba(0,0,0,0.08)' } /* 柔和的 Apple 风格阴影 */
+                    boxShadow: { 'apple': '0 4px 20px rgba(0,0,0,0.06)', 'apple-hover': '0 10px 30px rgba(0,0,0,0.1)' }
                 } 
             } 
         }
@@ -24,20 +24,20 @@
             .progress-bar { height: 6px; background: linear-gradient(90deg, #0071e3 var(--progress), #F5F5F7 var(--progress)); border-radius: 4px; } 
         }
         
-        /* --- 核心优化 1: 字体平滑与质感 --- */
+        /* --- 核心优化: 字体与质感 --- */
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            letter-spacing: -0.015em;
-            background-color: #fbfbfd; /* Apple 官网常用的极浅灰底色 */
+            letter-spacing: -0.01em;
+            background-color: #fbfbfd;
         }
 
-        /* --- 核心优化 2: 滚动显现动画 (Scroll Reveal) --- */
+        /* --- 核心优化: 滚动显现动画 (Scroll Reveal) --- */
         .reveal-hidden {
             opacity: 0;
             transform: translateY(30px) scale(0.98);
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); /* Apple 风格缓动曲线 */
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
             will-change: transform, opacity;
         }
         .reveal-visible {
@@ -45,18 +45,17 @@
             transform: translateY(0) scale(1);
         }
 
-        /* --- 核心优化 3: 3D Tilt 容器样式 --- */
-        .tilt-container {
-            perspective: 1000px;
-            transform-style: preserve-3d;
-        }
+        /* --- 核心优化: 3D Tilt --- */
+        .tilt-container { perspective: 1000px; transform-style: preserve-3d; }
 
+        /* --- 打印样式优化 --- */
         @media print { 
             body { color: black; background-color: white; } 
             header, .no-print, #mobile-menu-container, #hero-btns { display: none !important; } 
-            .card-hover { box-shadow: none !important; border: 1px solid #eee; } 
+            .reveal-hidden { opacity: 1 !important; transform: none !important; } 
+            .shadow-apple, .shadow-sm, .shadow-xl { box-shadow: none !important; border: 1px solid #eee; }
+            /* 打印时强制展开 */
             .break-inside-avoid { break-inside: avoid; }
-            .reveal-hidden { opacity: 1 !important; transform: none !important; } /* 打印时取消动画 */
         }
         #mobile-menu { transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease; max-height: 0; opacity: 0; overflow: hidden; }
         #mobile-menu.open { max-height: 400px; opacity: 1; }
@@ -64,13 +63,13 @@
 </head>
 <body class="font-inter text-gray-800 selection:bg-blue-100 selection:text-blue-900">
 
-    <header id="navbar" class="fixed w-full top-0 left-0 transition-all duration-500 z-50 py-4 bg-transparent">
+    <header id="navbar" class="fixed w-full top-0 left-0 transition-all duration-500 z-50 py-4 bg-transparent print:hidden">
         <div class="container mx-auto px-4 md:px-6">
             <div class="flex justify-between items-center">
                 <a href="#" class="text-xl font-bold text-gray-900 tracking-tight flex items-center gap-2" id="nav-name"></a>
                 
-                <div class="hidden md:flex items-center gap-1 bg-white/0 rounded-full px-2 transition-all" id="nav-pill">
-                    <nav class="flex text-sm font-medium text-gray-600" id="nav-menu-desktop"></nav>
+                <div class="hidden md:flex items-center gap-1 px-2" id="nav-pill">
+                    <nav class="flex text-sm font-medium text-gray-600 space-x-1" id="nav-menu-desktop"></nav>
                     <div class="w-px h-4 bg-gray-300 mx-3"></div>
                     <button id="langSwitch" class="flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-semibold hover:bg-black/5 transition text-gray-500 hover:text-black">
                         <i class="fa fa-globe"></i> <span id="langLabel">EN</span>
@@ -92,8 +91,8 @@
         </div>
     </header>
 
-    <section class="pt-40 pb-20 relative overflow-hidden">
-        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-gradient-to-b from-blue-50/80 to-transparent rounded-[100%] blur-3xl -z-10 opacity-60"></div>
+    <section class="pt-40 pb-20 relative overflow-hidden print:pt-10">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-gradient-to-b from-blue-50/80 to-transparent rounded-[100%] blur-3xl -z-10 opacity-60 print:hidden"></div>
 
         <div class="container mx-auto px-4 md:px-6 flex flex-col md:flex-row items-center gap-12 md:gap-20">
             <div class="md:w-1/2 text-center md:text-left z-10">
@@ -105,11 +104,11 @@
             
             <div class="md:w-1/2 flex justify-center tilt-container reveal-hidden" style="transition-delay: 200ms">
                 <div id="hero-tilt" class="relative w-64 h-64 md:w-80 md:h-80 transition-transform duration-100 ease-out cursor-pointer group">
-                    <div class="absolute inset-0 rounded-full bg-gradient-to-tr from-blue-200 to-purple-200 blur-2xl opacity-40 group-hover:opacity-60 transition-opacity duration-500"></div>
+                    <div class="absolute inset-0 rounded-full bg-gradient-to-tr from-blue-200 to-purple-200 blur-2xl opacity-40 group-hover:opacity-60 transition-opacity duration-500 print:hidden"></div>
                     <div class="w-full h-full rounded-full bg-white p-1.5 shadow-apple relative overflow-hidden border border-white/50">
                         <img id="hero-avatar" src="" alt="Profile" class="w-full h-full rounded-full object-cover">
                     </div>
-                    <div class="absolute bottom-4 right-4 bg-white/90 backdrop-blur shadow-lg px-4 py-2 rounded-full border border-white/50 flex items-center gap-2 transform translate-z-10 group-hover:scale-105 transition">
+                    <div class="absolute bottom-4 right-4 bg-white/90 backdrop-blur shadow-lg px-4 py-2 rounded-full border border-white/50 flex items-center gap-2 transform translate-z-10 group-hover:scale-105 transition print:hidden">
                         <i class="fa fa-map-marker text-red-500"></i>
                         <span class="text-xs font-semibold text-gray-700" id="hero-location"></span>
                     </div>
@@ -118,47 +117,46 @@
         </div>
     </section>
 
-    <section id="profile" class="py-20 bg-white/50 reveal-hidden">
+    <section id="profile" class="py-20 bg-white/50 reveal-hidden print:py-5">
         <div class="container mx-auto px-4 md:px-6 max-w-5xl">
             <div class="text-center mb-12">
                 <h2 class="text-3xl font-bold text-gray-900" id="t-profile"></h2>
             </div>
-            <div class="bg-white rounded-[2rem] p-8 md:p-12 shadow-xl shadow-gray-200/50 border border-gray-100">
+            <div class="bg-white rounded-[2rem] p-8 md:p-12 shadow-apple border border-gray-100">
                 <p class="text-gray-600 mb-10 leading-relaxed text-lg" id="profile-summary"></p>
                 <div class="grid md:grid-cols-3 gap-6" id="profile-cards"></div>
             </div>
         </div>
     </section>
 
-    <section id="skills" class="py-20 reveal-hidden">
+    <section id="skills" class="py-20 reveal-hidden print:py-5 print:break-inside-avoid">
         <div class="container mx-auto px-4 md:px-6">
             <div class="text-center mb-12">
                 <h2 class="text-3xl font-bold text-gray-900" id="t-skills"></h2>
             </div>
-            
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="skills-bento-container">
                 </div>
         </div>
     </section>
 
-    <section id="experience" class="py-20 bg-white/50">
+    <section id="experience" class="py-20 bg-white/50 print:py-5">
         <div class="container mx-auto px-4 md:px-6">
             <div class="text-center mb-16"><h2 class="text-3xl font-bold text-gray-900" id="t-exp"></h2></div>
             <div class="max-w-5xl mx-auto space-y-12" id="exp-list"></div>
         </div>
     </section>
 
-    <section id="education" class="py-20">
+    <section id="education" class="py-20 print:py-5 print:break-inside-avoid">
         <div class="container mx-auto px-4 md:px-6">
             <div class="text-center mb-16"><h2 class="text-3xl font-bold text-gray-900" id="t-edu"></h2></div>
             <div class="grid md:grid-cols-2 gap-8" id="edu-container">
-                <div class="bg-white p-8 rounded-[2rem] shadow-sm border border-gray-100 h-full reveal-hidden" id="edu-col-left"></div>
-                <div class="bg-white p-8 rounded-[2rem] shadow-sm border border-gray-100 h-full reveal-hidden" style="transition-delay: 100ms" id="edu-col-right"></div>
+                <div class="bg-white p-8 rounded-[2rem] shadow-apple border border-gray-100 h-full reveal-hidden" id="edu-col-left"></div>
+                <div class="bg-white p-8 rounded-[2rem] shadow-apple border border-gray-100 h-full reveal-hidden" style="transition-delay: 100ms" id="edu-col-right"></div>
             </div>
         </div>
     </section>
 
-    <section id="contact" class="py-24 bg-white border-t border-gray-100">
+    <section id="contact" class="py-24 bg-white border-t border-gray-100 print:py-5 print:break-inside-avoid">
         <div class="container mx-auto px-4 md:px-6">
             <div class="max-w-4xl mx-auto bg-gray-50 rounded-[2.5rem] p-8 md:p-12 shadow-inner reveal-hidden" id="contact-area"></div>
         </div>
@@ -188,31 +186,27 @@
         let currentLang = localStorage.getItem('lang') || 'zh';
         let myChart = null;
 
-        // --- Core 1: Navbar Scroll Effect ---
+        // Navbar Scroll Effect
         const navbar = document.getElementById('navbar');
-        const navPill = document.getElementById('nav-pill');
-        
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) {
-                // 滚动后：毛玻璃、半透明白底、细边框
                 navbar.classList.remove('py-4', 'bg-transparent');
                 navbar.classList.add('py-3', 'bg-white/70', 'backdrop-blur-md', 'border-b', 'border-gray-200/50');
             } else {
-                // 顶部：透明、无边框
                 navbar.classList.add('py-4', 'bg-transparent');
                 navbar.classList.remove('py-3', 'bg-white/70', 'backdrop-blur-md', 'border-b', 'border-gray-200/50');
             }
         });
 
-        // --- Core 2: 3D Tilt Effect ---
+        // 3D Tilt Effect
         const heroTilt = document.getElementById('hero-tilt');
         if(heroTilt) {
             heroTilt.addEventListener('mousemove', (e) => {
                 const rect = heroTilt.getBoundingClientRect();
                 const x = e.clientX - rect.left;
                 const y = e.clientY - rect.top;
-                const xRotation = -((y - rect.height/2) / rect.height * 15); // Max 15 deg
-                const yRotation = (x - rect.width/2) / rect.width * 15;
+                const xRotation = -((y - rect.height/2) / rect.height * 10);
+                const yRotation = (x - rect.width/2) / rect.width * 10;
                 heroTilt.style.transform = `rotateX(${xRotation}deg) rotateY(${yRotation}deg) scale(1.02)`;
             });
             heroTilt.addEventListener('mouseleave', () => {
@@ -220,7 +214,7 @@
             });
         }
 
-        // --- Core 3: Scroll Reveal Observer ---
+        // Observer
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -254,7 +248,6 @@
                 }
                 render(fullData[currentLang]);
                 
-                // 数据加载完后，重新挂载 observer
                 setTimeout(() => {
                     document.querySelectorAll('.reveal-hidden').forEach(el => observer.observe(el));
                 }, 100);
@@ -282,9 +275,12 @@
             document.getElementById('hero-name').textContent = basic.name;
             document.getElementById('hero-title').textContent = basic.titles;
             document.getElementById('hero-tags').innerHTML = basic.tags.map(t => `<span class="bg-white/80 backdrop-blur border border-gray-200 text-gray-600 px-4 py-1.5 rounded-full text-sm font-medium shadow-sm">${t}</span>`).join('');
+            
+            // 恢复: 打印按钮
             document.getElementById('hero-btns').innerHTML = `
-                <a href="#contact" class="bg-black text-white px-8 py-3 rounded-full font-medium hover:bg-gray-800 hover:scale-105 transition-all duration-300 shadow-lg shadow-black/20">${ui.buttons.contact}</a>
-                <a href="#experience" class="bg-white text-gray-900 border border-gray-200 px-8 py-3 rounded-full font-medium hover:bg-gray-50 hover:border-gray-300 transition-all hover:scale-105 shadow-sm">${ui.buttons.exp}</a>
+                <a href="#contact" class="bg-black text-white px-8 py-3 rounded-full font-medium hover:bg-gray-800 hover:scale-105 transition-all duration-300 shadow-lg shadow-black/20"><i class="fa fa-envelope mr-2"></i> ${ui.buttons.contact}</a>
+                <a href="#experience" class="bg-white text-gray-900 border border-gray-200 px-8 py-3 rounded-full font-medium hover:bg-gray-50 hover:border-gray-300 transition-all hover:scale-105 shadow-sm"><i class="fa fa-briefcase mr-2"></i> ${ui.buttons.exp}</a>
+                <button onclick="window.print()" class="bg-white text-gray-700 border border-gray-200 px-6 py-3 rounded-full font-medium hover:bg-gray-50 hover:border-primary hover:text-primary transition-all shadow-sm"><i class="fa fa-print"></i></button>
             `;
             document.getElementById('hero-avatar').src = basic.avatar;
             document.getElementById('hero-location').textContent = basic.location;
@@ -293,22 +289,23 @@
             document.getElementById('t-profile').textContent = ui.section_titles.profile;
             document.getElementById('profile-summary').textContent = data.profile.summary;
             document.getElementById('profile-cards').innerHTML = data.profile.cards.map((c, i) => `
-                <div class="group bg-gray-50 rounded-2xl p-6 hover:bg-white hover:shadow-apple transition-all duration-300 reveal-hidden" style="transition-delay: ${i*100}ms">
+                <div class="group bg-gray-50 rounded-2xl p-6 hover:bg-white hover:shadow-apple-hover transition-all duration-300 reveal-hidden" style="transition-delay: ${i*100}ms">
                     <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-lg mb-4 group-hover:scale-110 transition-transform"><i class="fa ${c.icon}"></i></div>
                     <h3 class="font-bold text-gray-900 mb-2">${c.title}</h3>
                     <p class="text-sm text-gray-500 leading-relaxed">${c.desc}</p>
                 </div>`).join('');
 
-            // --- Bento Grid Skills (重构核心) ---
+            // --- Bento Grid Skills ---
             document.getElementById('t-skills').textContent = ui.section_titles.skills;
             const bentoContainer = document.getElementById('skills-bento-container');
+            const chartData = data.skills.chart;
             
-            // 1. 生成 Chart Card (占据较大空间)
+            // 1. Chart Card (Radar)
             let bentoHTML = `
-                <div class="col-span-1 md:col-span-1 lg:col-span-1 row-span-2 bg-white rounded-[2rem] p-6 shadow-sm border border-gray-100 flex flex-col relative overflow-hidden reveal-hidden hover:shadow-apple transition-all">
+                <div class="col-span-1 md:col-span-1 lg:col-span-1 row-span-2 bg-white rounded-[2rem] p-6 shadow-apple border border-gray-100 flex flex-col relative overflow-hidden reveal-hidden hover:shadow-apple-hover transition-all">
                     <div class="flex items-center gap-3 mb-4 z-10">
                         <div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center"><i class="fa fa-pie-chart"></i></div>
-                        <h3 class="font-bold text-gray-900">${ui.section_titles.chart}</h3>
+                        <h3 class="font-bold text-gray-900">${ui.section_titles.chart} (Radar)</h3>
                     </div>
                     <div class="flex-1 min-h-[300px] flex items-center justify-center min-w-0">
                         <div class="relative w-full h-full">
@@ -317,14 +314,33 @@
                     </div>
                 </div>
             `;
-            
-            // 2. 生成 Card Groups
-            const colors = ['bg-orange-50', 'bg-blue-50', 'bg-purple-50']; // 为不同卡片添加微弱的色彩差异
-            const iconColors = ['text-orange-500', 'text-blue-500', 'text-purple-500'];
 
+            // 2. 恢复: Progress Bars Card (作为独立的 Bento 卡片)
+            bentoHTML += `
+                <div class="col-span-1 row-span-2 bg-white rounded-[2rem] p-6 shadow-apple border border-gray-100 reveal-hidden hover:shadow-apple-hover transition-all">
+                    <div class="flex items-center gap-3 mb-6 pb-3 border-b border-gray-50">
+                        <div class="w-8 h-8 rounded-lg bg-green-50 text-green-600 flex items-center justify-center"><i class="fa fa-sliders"></i></div>
+                        <h3 class="font-bold text-gray-900">${ui.section_titles.chart} (Levels)</h3>
+                    </div>
+                    <div class="space-y-6">
+                        ${chartData.labels.map((l, i) => `
+                            <div>
+                                <div class="flex justify-between mb-1.5 text-sm font-semibold text-gray-700">
+                                    <span>${l}</span>
+                                    <span class="text-blue-600">${chartData.data[i]}%</span>
+                                </div>
+                                <div class="progress-bar" style="--progress:${chartData.data[i]}%"></div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            
+            // 3. Card Groups
+            const iconColors = ['text-orange-500', 'text-purple-500', 'text-teal-500'];
             data.skills.card_groups.forEach((g, idx) => {
                 bentoHTML += `
-                <div class="col-span-1 bg-white rounded-[2rem] p-6 shadow-sm border border-gray-100 hover:shadow-apple hover:-translate-y-1 transition-all duration-300 reveal-hidden" style="transition-delay: ${(idx+1)*100}ms">
+                <div class="col-span-1 bg-white rounded-[2rem] p-6 shadow-apple border border-gray-100 hover:shadow-apple-hover hover:-translate-y-1 transition-all duration-300 reveal-hidden" style="transition-delay: ${(idx+1)*100}ms">
                     <div class="flex items-center gap-3 mb-4 pb-3 border-b border-gray-50">
                         <i class="fa ${g.icon} ${iconColors[idx%3]} text-lg"></i>
                         <h3 class="font-bold text-gray-900">${g.title}</h3>
@@ -336,8 +352,7 @@
             });
             bentoContainer.innerHTML = bentoHTML;
 
-            // 渲染图表
-            const chartData = data.skills.chart;
+            // Render Chart
             if(myChart) myChart.destroy();
             myChart = new Chart(document.getElementById('skillsChart'), {
                 type: 'radar',
@@ -346,7 +361,7 @@
                     datasets: [{ 
                         label: 'Level', 
                         data: chartData.data, 
-                        backgroundColor: 'rgba(0, 113, 227, 0.2)', // Apple Blue
+                        backgroundColor: 'rgba(0, 113, 227, 0.2)', 
                         borderColor: '#0071e3', 
                         pointBackgroundColor: '#fff',
                         pointBorderColor: '#0071e3',
@@ -359,29 +374,29 @@
                     scales: { 
                         r: { 
                             min: 0, max: 100, 
-                            ticks: { display: false }, // 隐藏刻度数字，更简洁
+                            ticks: { display: false }, 
                             grid: { color: '#f0f0f0' },
-                            pointLabels: { font: { size: 11, family: 'Inter' }, color: '#666' }
+                            pointLabels: { font: { size: 10, family: 'Inter' }, color: '#666' }
                         } 
                     }, 
                     plugins: { legend: { display: false } } 
                 }
             });
 
-            // Experience (Sticky Title)
+            // Experience (Sticky Layout)
             document.getElementById('t-exp').textContent = ui.section_titles.experience;
             document.getElementById('exp-list').innerHTML = data.experience.map(job => `
-                <div class="relative pl-8 md:pl-0 reveal-hidden">
+                <div class="relative pl-0 md:pl-0 reveal-hidden">
                     <div class="flex flex-col md:flex-row gap-8 md:gap-16">
                         <div class="md:w-1/3 text-left md:text-right relative">
                             <div class="sticky top-28 transition-all">
                                 <h3 class="font-bold text-2xl text-gray-900 tracking-tight">${job.company}</h3>
-                                <div class="text-blue-600 font-semibold text-sm mt-1 mb-2">${job.date}</div>
+                                <div class="text-blue-600 font-semibold text-sm mt-1 mb-2 inline-block bg-blue-50 px-3 py-1 rounded-full">${job.date}</div>
                                 <p class="text-gray-700 font-medium mb-1">${job.role}</p>
                                 <p class="text-gray-400 text-xs flex items-center md:justify-end gap-1"><i class="fa fa-map-marker"></i> ${job.location}</p>
                             </div>
                         </div>
-                        <div class="md:w-2/3 border-l border-gray-100 pl-8 py-2 space-y-8">
+                        <div class="md:w-2/3 border-l-2 border-gray-100 pl-8 py-2 space-y-8">
                             ${job.projects.map(p => `
                                 <div class="group">
                                     ${p.title ? `<h4 class="font-bold text-gray-800 mb-3 text-lg flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-blue-500"></span> ${p.title}</h4>` : ''}
@@ -394,8 +409,10 @@
                     </div>
                 </div>`).join('');
 
-            // Education & Tools
+            // Education & Tools (No Content Deletion)
             document.getElementById('t-edu').textContent = ui.section_titles.education;
+            
+            // Left Column: Academic + Hobbies (Restored Hobbies)
             document.getElementById('edu-col-left').innerHTML = `
                 <h3 class="font-bold text-xl mb-8 text-gray-900 flex items-center gap-3"><span class="bg-blue-100 text-blue-600 w-8 h-8 rounded-lg flex items-center justify-center text-sm"><i class="fa fa-graduation-cap"></i></span> ${ui.section_titles.academic}</h3>
                 <div class="space-y-8">
@@ -403,20 +420,21 @@
                     <div>
                         <h4 class="font-bold text-lg text-gray-900">${e.school}</h4>
                         <p class="text-gray-600 font-medium">${e.degree}</p>
-                        <p class="text-gray-400 text-sm mt-1">${e.date} • ${e.location}</p>
+                        <p class="text-gray-400 text-sm mt-1 flex items-center gap-2"><i class="fa fa-calendar-o"></i> ${e.date} &nbsp;•&nbsp; ${e.location}</p>
                     </div>`).join('')}
                 </div>
                 <div class="mt-12 pt-8 border-t border-gray-100">
-                    <h3 class="font-bold text-lg mb-4 text-gray-900">${ui.section_titles.hobbies}</h3>
-                    <div class="flex flex-wrap gap-2 mb-4">${data.hobbies.items.map(h => `<span class="bg-gray-100 px-3 py-1 rounded-full text-xs font-medium text-gray-600">${h}</span>`).join('')}</div>
-                    <p class="text-sm text-gray-500 bg-gray-50 p-4 rounded-xl">"${data.hobbies.desc}"</p>
+                    <h3 class="font-bold text-lg mb-4 text-gray-900 flex items-center gap-2"><i class="fa fa-heart text-red-400"></i> ${ui.section_titles.hobbies}</h3>
+                    <div class="flex flex-wrap gap-2 mb-4">${data.hobbies.items.map(h => `<span class="bg-gray-100 px-3 py-1 rounded-full text-xs font-medium text-gray-600 border border-transparent hover:border-gray-200 transition">${h}</span>`).join('')}</div>
+                    <p class="text-sm text-gray-500 bg-gray-50 p-4 rounded-xl italic border border-gray-100">"${data.hobbies.desc}"</p>
                 </div>`;
             
+            // Right Column: Tools
             document.getElementById('edu-col-right').innerHTML = data.tools.map(t => `
                 <div class="mb-8 last:mb-0">
                     <h3 class="font-bold text-lg mb-5 text-gray-900 flex items-center gap-2"><i class="fa ${t.icon} text-gray-400"></i> ${t.group}</h3>
                     <div class="grid grid-cols-2 gap-3">
-                        ${t.list.map(i => `<div class="bg-gray-50 px-4 py-3 rounded-xl text-sm font-medium text-gray-700 border border-transparent hover:border-gray-200 hover:bg-white hover:shadow-sm transition-all cursor-default">${i}</div>`).join('')}
+                        ${t.list.map(i => `<div class="bg-gray-50 px-4 py-3 rounded-xl text-sm font-medium text-gray-700 border border-transparent hover:border-gray-200 hover:bg-white hover:shadow-sm transition-all cursor-default flex items-center gap-2"><i class="fa fa-check text-xs text-blue-300"></i> ${i}</div>`).join('')}
                     </div>
                 </div>`).join('');
 
@@ -433,14 +451,28 @@
                 </div>
                 <div class="grid md:grid-cols-2 gap-12">
                     <div class="space-y-6">
-                         <div class="flex items-center gap-4 p-4 rounded-2xl bg-white border border-gray-100 shadow-sm"><div class="w-10 h-10 rounded-full bg-blue-50 text-blue-500 flex items-center justify-center"><i class="fa fa-envelope"></i></div><div><div class="text-xs text-gray-400 uppercase font-bold tracking-wider">${cl.email}</div><div class="text-gray-800 font-medium">${basic.email}</div></div></div>
-                         <div class="flex items-center gap-4 p-4 rounded-2xl bg-white border border-gray-100 shadow-sm"><div class="w-10 h-10 rounded-full bg-green-50 text-green-500 flex items-center justify-center"><i class="fa fa-map-marker"></i></div><div><div class="text-xs text-gray-400 uppercase font-bold tracking-wider">${cl.location}</div><div class="text-gray-800 font-medium">${basic.location}</div></div></div>
+                         <div class="flex items-start gap-4 p-5 rounded-2xl bg-white border border-gray-100 shadow-sm hover:shadow-md transition">
+                            <div class="w-10 h-10 rounded-full bg-purple-50 text-purple-500 flex items-center justify-center shrink-0"><i class="fa fa-briefcase"></i></div>
+                            <div>
+                                <div class="text-xs text-gray-400 uppercase font-bold tracking-wider mb-1">${basic.objective.label}</div>
+                                ${basic.objective.items.map(o => `<div class="text-gray-800 font-medium mb-1">${o}</div>`).join('')}
+                            </div>
+                         </div>
+
+                         <div class="flex items-center gap-4 p-5 rounded-2xl bg-white border border-gray-100 shadow-sm hover:shadow-md transition">
+                            <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-500 flex items-center justify-center shrink-0"><i class="fa fa-envelope"></i></div>
+                            <div><div class="text-xs text-gray-400 uppercase font-bold tracking-wider mb-1">${cl.email}</div><div class="text-gray-800 font-medium">${basic.email}</div></div>
+                         </div>
+                         <div class="flex items-center gap-4 p-5 rounded-2xl bg-white border border-gray-100 shadow-sm hover:shadow-md transition">
+                            <div class="w-10 h-10 rounded-full bg-green-50 text-green-500 flex items-center justify-center shrink-0"><i class="fa fa-map-marker"></i></div>
+                            <div><div class="text-xs text-gray-400 uppercase font-bold tracking-wider mb-1">${cl.location}</div><div class="text-gray-800 font-medium">${basic.location}</div></div>
+                         </div>
                     </div>
                     <form class="space-y-4" action="${formAction}" method="POST" ${onSubmitAttr}>
                         <input type="text" name="name" placeholder="${cf.label_name}" class="w-full px-5 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all" required>
                         <input type="email" name="email" placeholder="${cf.label_email}" class="w-full px-5 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all" required>
-                        <textarea name="message" rows="3" placeholder="${cf.label_msg}" class="w-full px-5 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all" required></textarea>
-                        <button type="submit" class="w-full bg-black text-white py-3 rounded-xl font-medium hover:bg-gray-800 transition-all transform hover:scale-[1.02]">${cf.btn_send}</button>
+                        <textarea name="message" rows="4" placeholder="${cf.label_msg}" class="w-full px-5 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all" required></textarea>
+                        <button type="submit" class="w-full bg-black text-white py-3 rounded-xl font-medium hover:bg-gray-800 transition-all transform hover:scale-[1.02] shadow-lg shadow-black/20">${cf.btn_send}</button>
                     </form>
                 </div>`;
 
