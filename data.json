@@ -44,7 +44,7 @@
       ]
     },
     "ui": {
-      "theme": "modern",
+      "theme": "geek",
       "nav": [
         "个人概述",
         "核心能力",
@@ -347,7 +347,7 @@
       ]
     },
     "ui": {
-      "theme": "modern",
+      "theme": "geek",
       "nav": [
         "Profile",
         "Skills",
