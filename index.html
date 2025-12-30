@@ -12,7 +12,7 @@
         tailwind.config = { 
             theme: { 
                 extend: { 
-                    colors: { primary: '#0071e3', secondary: '#42a5f5' }, /* Apple Blue */
+                    colors: { primary: '#0071e3', secondary: '#42a5f5' }, 
                     fontFamily: { inter: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'] },
                     boxShadow: { 'apple': '0 4px 20px rgba(0,0,0,0.06)', 'apple-hover': '0 10px 30px rgba(0,0,0,0.1)' }
                 } 
@@ -24,7 +24,6 @@
             .progress-bar { height: 6px; background: linear-gradient(90deg, #0071e3 var(--progress), #F5F5F7 var(--progress)); border-radius: 4px; } 
         }
         
-        /* --- 核心优化: 字体与质感 --- */
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
             -webkit-font-smoothing: antialiased;
@@ -33,7 +32,6 @@
             background-color: #fbfbfd;
         }
 
-        /* --- 核心优化: 滚动显现动画 (Scroll Reveal) --- */
         .reveal-hidden {
             opacity: 0;
             transform: translateY(30px) scale(0.98);
@@ -45,16 +43,13 @@
             transform: translateY(0) scale(1);
         }
 
-        /* --- 核心优化: 3D Tilt --- */
         .tilt-container { perspective: 1000px; transform-style: preserve-3d; }
 
-        /* --- 打印样式优化 --- */
         @media print { 
             body { color: black; background-color: white; } 
             header, .no-print, #mobile-menu-container, #hero-btns { display: none !important; } 
             .reveal-hidden { opacity: 1 !important; transform: none !important; } 
             .shadow-apple, .shadow-sm, .shadow-xl { box-shadow: none !important; border: 1px solid #eee; }
-            /* 打印时强制展开 */
             .break-inside-avoid { break-inside: avoid; }
         }
         #mobile-menu { transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease; max-height: 0; opacity: 0; overflow: hidden; }
@@ -63,7 +58,7 @@
 </head>
 <body class="font-inter text-gray-800 selection:bg-blue-100 selection:text-blue-900">
 
-    <header id="navbar" class="fixed w-full top-0 left-0 transition-all duration-500 z-50 py-4 bg-transparent print:hidden">
+    <header id="navbar" class="fixed w-full top-0 left-0 transition-all duration-300 z-50 py-4 bg-transparent print:hidden">
         <div class="container mx-auto px-4 md:px-6">
             <div class="flex justify-between items-center">
                 <a href="#" class="text-xl font-bold text-gray-900 tracking-tight flex items-center gap-2" id="nav-name"></a>
@@ -80,12 +75,12 @@
                     <button id="langSwitchMobile" class="border px-2 py-1 rounded text-xs font-medium hover:border-primary text-gray-600">
                         <span id="langLabelMobile">EN</span>
                     </button>
-                    <button id="mobile-menu-btn" class="text-gray-600 hover:text-black focus:outline-none transition">
+                    <button id="mobile-menu-btn" class="text-gray-600 hover:text-black focus:outline-none transition p-1">
                         <i class="fa fa-bars text-2xl"></i>
                     </button>
                 </div>
             </div>
-            <div id="mobile-menu" class="md:hidden border-t mt-3 border-gray-100/50">
+            <div id="mobile-menu" class="md:hidden border-t mt-3 border-gray-200/50">
                 <nav class="flex flex-col space-y-2 py-4" id="nav-menu-mobile"></nav>
             </div>
         </div>
@@ -134,8 +129,7 @@
             <div class="text-center mb-12">
                 <h2 class="text-3xl font-bold text-gray-900" id="t-skills"></h2>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="skills-bento-container">
-                </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="skills-bento-container"></div>
         </div>
     </section>
 
@@ -186,16 +180,36 @@
         let currentLang = localStorage.getItem('lang') || 'zh';
         let myChart = null;
 
-        // Navbar Scroll Effect
+        // --- 核心修复：更智能的导航栏状态管理 ---
         const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+
+        // 更新导航栏样式的函数
+        function updateNavbarStyle() {
+            const isScrolled = window.scrollY > 50;
+            const isMenuOpen = mobileMenu.classList.contains('open');
+
+            // 只要 [已滚动] 或者 [菜单已打开]，就强制使用“磨砂白底”模式
+            if (isScrolled || isMenuOpen) {
                 navbar.classList.remove('py-4', 'bg-transparent');
-                navbar.classList.add('py-3', 'bg-white/70', 'backdrop-blur-md', 'border-b', 'border-gray-200/50');
+                // 增加 backdrop-blur-xl 提升磨砂质感，bg-white/90 提高文字可读性
+                navbar.classList.add('py-3', 'bg-white/90', 'backdrop-blur-xl', 'border-b', 'border-gray-200/50', 'shadow-sm');
             } else {
+                // 只有在 [顶部] 且 [菜单关闭] 时，才透明
                 navbar.classList.add('py-4', 'bg-transparent');
-                navbar.classList.remove('py-3', 'bg-white/70', 'backdrop-blur-md', 'border-b', 'border-gray-200/50');
+                navbar.classList.remove('py-3', 'bg-white/90', 'backdrop-blur-xl', 'border-b', 'border-gray-200/50', 'shadow-sm');
             }
+        }
+
+        // 监听滚动
+        window.addEventListener('scroll', updateNavbarStyle);
+
+        // 监听菜单点击
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+            // 点击瞬间立即更新样式，不用等滚动
+            updateNavbarStyle();
         });
 
         // 3D Tilt Effect
@@ -228,9 +242,6 @@
             loadResume();
             document.getElementById('langSwitch').addEventListener('click', toggleLanguage);
             document.getElementById('langSwitchMobile').addEventListener('click', toggleLanguage);
-            document.getElementById('mobile-menu-btn').addEventListener('click', () => {
-                document.getElementById('mobile-menu').classList.toggle('open');
-            });
         });
 
         function toggleLanguage() {
@@ -267,7 +278,7 @@
             // Nav
             document.getElementById('nav-name').textContent = basic.name;
             const links = ['profile','skills','experience','education','contact'];
-            const navHTML = ui.nav.map((n, i) => `<a href="#${links[i]}" class="px-3 py-2 rounded-full hover:bg-gray-100 hover:text-black transition-colors" onclick="document.getElementById('mobile-menu').classList.remove('open')">${n}</a>`).join('');
+            const navHTML = ui.nav.map((n, i) => `<a href="#${links[i]}" class="px-3 py-2 rounded-full hover:bg-gray-100 hover:text-black transition-colors" onclick="document.getElementById('mobile-menu').classList.remove('open'); updateNavbarStyle();">${n}</a>`).join('');
             document.getElementById('nav-menu-desktop').innerHTML = navHTML;
             document.getElementById('nav-menu-mobile').innerHTML = navHTML;
 
@@ -276,7 +287,6 @@
             document.getElementById('hero-title').textContent = basic.titles;
             document.getElementById('hero-tags').innerHTML = basic.tags.map(t => `<span class="bg-white/80 backdrop-blur border border-gray-200 text-gray-600 px-4 py-1.5 rounded-full text-sm font-medium shadow-sm">${t}</span>`).join('');
             
-            // 恢复: 打印按钮
             document.getElementById('hero-btns').innerHTML = `
                 <a href="#contact" class="bg-black text-white px-8 py-3 rounded-full font-medium hover:bg-gray-800 hover:scale-105 transition-all duration-300 shadow-lg shadow-black/20"><i class="fa fa-envelope mr-2"></i> ${ui.buttons.contact}</a>
                 <a href="#experience" class="bg-white text-gray-900 border border-gray-200 px-8 py-3 rounded-full font-medium hover:bg-gray-50 hover:border-gray-300 transition-all hover:scale-105 shadow-sm"><i class="fa fa-briefcase mr-2"></i> ${ui.buttons.exp}</a>
@@ -295,12 +305,11 @@
                     <p class="text-sm text-gray-500 leading-relaxed">${c.desc}</p>
                 </div>`).join('');
 
-            // --- Bento Grid Skills ---
+            // Bento Skills
             document.getElementById('t-skills').textContent = ui.section_titles.skills;
             const bentoContainer = document.getElementById('skills-bento-container');
             const chartData = data.skills.chart;
             
-            // 1. Chart Card (Radar)
             let bentoHTML = `
                 <div class="col-span-1 md:col-span-1 lg:col-span-1 row-span-2 bg-white rounded-[2rem] p-6 shadow-apple border border-gray-100 flex flex-col relative overflow-hidden reveal-hidden hover:shadow-apple-hover transition-all">
                     <div class="flex items-center gap-3 mb-4 z-10">
@@ -315,7 +324,6 @@
                 </div>
             `;
 
-            // 2. 恢复: Progress Bars Card (作为独立的 Bento 卡片)
             bentoHTML += `
                 <div class="col-span-1 row-span-2 bg-white rounded-[2rem] p-6 shadow-apple border border-gray-100 reveal-hidden hover:shadow-apple-hover transition-all">
                     <div class="flex items-center gap-3 mb-6 pb-3 border-b border-gray-50">
@@ -336,7 +344,6 @@
                 </div>
             `;
             
-            // 3. Card Groups
             const iconColors = ['text-orange-500', 'text-purple-500', 'text-teal-500'];
             data.skills.card_groups.forEach((g, idx) => {
                 bentoHTML += `
@@ -352,7 +359,6 @@
             });
             bentoContainer.innerHTML = bentoHTML;
 
-            // Render Chart
             if(myChart) myChart.destroy();
             myChart = new Chart(document.getElementById('skillsChart'), {
                 type: 'radar',
@@ -383,7 +389,7 @@
                 }
             });
 
-            // Experience (Sticky Layout)
+            // Experience
             document.getElementById('t-exp').textContent = ui.section_titles.experience;
             document.getElementById('exp-list').innerHTML = data.experience.map(job => `
                 <div class="relative pl-0 md:pl-0 reveal-hidden">
@@ -409,10 +415,8 @@
                     </div>
                 </div>`).join('');
 
-            // Education & Tools (No Content Deletion)
+            // Education
             document.getElementById('t-edu').textContent = ui.section_titles.education;
-            
-            // Left Column: Academic + Hobbies (Restored Hobbies)
             document.getElementById('edu-col-left').innerHTML = `
                 <h3 class="font-bold text-xl mb-8 text-gray-900 flex items-center gap-3"><span class="bg-blue-100 text-blue-600 w-8 h-8 rounded-lg flex items-center justify-center text-sm"><i class="fa fa-graduation-cap"></i></span> ${ui.section_titles.academic}</h3>
                 <div class="space-y-8">
@@ -429,7 +433,6 @@
                     <p class="text-sm text-gray-500 bg-gray-50 p-4 rounded-xl italic border border-gray-100">"${data.hobbies.desc}"</p>
                 </div>`;
             
-            // Right Column: Tools
             document.getElementById('edu-col-right').innerHTML = data.tools.map(t => `
                 <div class="mb-8 last:mb-0">
                     <h3 class="font-bold text-lg mb-5 text-gray-900 flex items-center gap-2"><i class="fa ${t.icon} text-gray-400"></i> ${t.group}</h3>
@@ -496,3 +499,4 @@
     </script>
 </body>
 </html>
+
