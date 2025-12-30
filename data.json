@@ -4,7 +4,7 @@
       "name": "徐咏智",
       "titles": "研发制造总监 | 供应链技术总监 | 智能制造设备工艺专家 | 消费电子 NPI 负责人",
       "avatar": "/pic/hero-avatar.jpeg",
-      "location": "成都 / 深圳 . 中国",
+      "location": "成都 / 深圳.中国",
       "email": "xuyongzhi@antmy.com",
       "tags": [
         "16年高精智能制造经验",
@@ -41,9 +41,7 @@
         "hobbies": "兴趣爱好"
       },
       "contact_labels": { "email": "邮箱", "location": "所在地" },
-      "contact_form": {
-        "title": "发送消息", "label_name": "您的姓名", "label_email": "您的邮箱", "label_msg": "消息内容", "btn_send": "发送消息", "form_id": "maqyvrjy", "msg_required": "请填写信息"
-      }
+      "contact_form": { "title": "发送消息", "label_name": "您的姓名", "label_email": "您的邮箱", "label_msg": "消息内容", "btn_send": "发送消息", "form_id": "maqyvrjy", "msg_required": "请填写信息" }
     },
     "profile": {
       "summary": "<strong>16年高精智能制造专家</strong>，深耕 <strong>3C消费电子（苹果核心供应链）</strong> 与 <strong>半导体后道封装</strong> 领域。兼具消费类产品 <strong>NPI 全流程管控</strong>、<strong>DFM/MFD 工艺优化</strong>、<strong>智能工厂规划落地</strong> 及跨国跨职能团队管理经验。",
@@ -219,12 +217,22 @@
     "ui": {
       "nav": ["Profile", "Skills", "Experience", "Education", "Contact"],
       "buttons": { "contact": "Contact Me", "exp": "Experience", "print": "Print Resume" },
-      "section_titles": { "profile": "Profile Summary", "skills": "Capability Matrix", "chart": "Skill Proficiency", "experience": "Experience", "education": "Education", "hobbies": "Hobbies", "contact": "Contact", "academic": "Academic", "contact_info": "Info" },
+      "section_titles": {
+        "profile": "Profile Summary",
+        "skills": "Capability Matrix",
+        "chart": "Skill Proficiency",
+        "experience": "Experience",
+        "education": "Education & Skills",
+        "hobbies": "Hobbies",
+        "contact": "Contact",
+        "academic": "Academic",
+        "contact_info": "Info"
+      },
       "contact_labels": { "email": "Email", "location": "Location" },
       "contact_form": { "title": "Send Message", "label_name": "Name", "label_email": "Email", "label_msg": "Message", "btn_send": "Send", "form_id": "maqyvrjy", "msg_required": "Required" }
     },
     "profile": {
-      "summary": "<strong>16-year Expert in High-Precision Smart Manufacturing</strong>, deeply rooted in <strong>3C Consumer Electronics (Apple Core Supply Chain)</strong> and <strong>Semiconductor Packaging</strong>. Expertise in NPI full-process control, DFM/MFD optimization, Smart Factory planning, and global team management.",
+      "summary": "<strong>16-year Expert in High-Precision Smart Manufacturing</strong>, deeply rooted in <strong>3C Consumer Electronics (Apple Core Supply Chain)</strong> and <strong>Semiconductor Packaging</strong>. Expertise in <strong>NPI full-process control</strong>, <strong>DFM/MFD optimization</strong>, <strong>Smart Factory planning</strong>, and cross-functional global team management.",
       "cards": [
         { "title": "Tech Leadership", "icon": "fa-cogs", "desc": "Led NPI and ramp-up for 50+ high-precision automation lines and drove 2 smart factories from scratch." },
         { "title": "Key Performance", "icon": "fa-line-chart", "desc": "Achieved 85%+ OEE, 90%+ capacity increase, and 99.6%+ yield via DFM and lean manufacturing." },
@@ -232,16 +240,34 @@
       ]
     },
     "capability_matrix": [
-      { "category": "Technical Expertise", "content": "3C/Semi Precision Process (Laser, PVD, HAF); Smart Line Architecture; High Precision (1-2μm) & Speed (20g+) Motion; DFM/DFMA & MFD Solutions; Thermal Assembly Opt; GD&T Analysis." },
-      { "category": "Project & Ops", "content": "Smart Factory 0-to-1; Auto Line NPI; Closed-loop Data System; OEE / Yield / Cost Opt; KISS Principle; SPC Data-Driven Opt; NUDD Risk Mgmt." },
-      { "category": "Leadership", "content": "Global Team Mgmt (CN/SG/DE); Agile + Stage-Gate; Supplier Standardization; Lean Mfg Implementation; Cross-cultural R&D Collab." }
+      {
+        "category": "Technical Expertise",
+        "content": "<strong>3C/Semi Precision Process</strong> (Laser, PVD, HAF, Assy); <strong>Smart Line Architecture</strong>; Equip Positioning Accuracy <strong>1-2μm</strong>, Motion System <strong>20g+</strong> Acceleration; <strong>DFM/DFMA</strong>, <strong>MFD</strong> Solutions, FAT/SAT, <strong>DOE Optimization</strong>; Thermal module assembly, Thermal DFM; <strong>GD&T</strong> Analysis, Cosmetic QC."
+      },
+      {
+        "category": "Project & Operations",
+        "content": "<strong>Smart Factory 0-to-1</strong>; Auto Line NPI; Closed-loop Data System; <strong>OEE / Yield / Cost Opt</strong>; Ramp-up Acceleration; <strong>KISS Principle</strong> (Simplify Design & Mfg); <strong>SPC</strong> Data-driven Opt; <strong>NUDD</strong> Risk Management."
+      },
+      {
+        "category": "Leadership",
+        "content": "<strong>Global Team Mgmt</strong> (CN/SG/DE); <strong>Agile + Stage-Gate</strong>; Supplier Standardization; <strong>Lean Manufacturing</strong> (One-piece Flow) Implementation; Cross-cultural R&D Collaboration."
+      }
     ],
     "skills": {
       "chart": { "labels": ["Auto Line Design", "DFM/MFD Opt", "Factory Planning", "Global Mgmt", "Semi Pkg Process", "Data Analysis"], "data": [95, 90, 90, 90, 95, 90] },
       "card_groups": [
-        { "title": "Technical Expertise", "icon": "fa-flask", "items": ["3C/Semi Precision Process", "Smart Line Architecture", "High Precision Motion (1μm)", "DFM / MFD / DOE", "Thermal / GD&T Analysis"] },
-        { "title": "Project & Ops", "icon": "fa-tasks", "items": ["Smart Factory 0-to-1", "NPI Full Process", "OEE / Yield / Cost Opt", "KISS Principle", "SPC Data-Driven"] },
-        { "title": "Leadership", "icon": "fa-users", "items": ["Global Team Mgmt", "Agile + Stage-Gate", "Supplier System", "Lean Mfg", "Cross-cultural Collab"] }
+        {
+          "title": "Technical Expertise", "icon": "fa-flask",
+          "items": ["3C/Semi Precision Process", "Smart Line Architecture", "High Precision Motion (1μm)", "DFM / MFD / DOE", "Thermal / GD&T Analysis"]
+        },
+        {
+          "title": "Project & Ops", "icon": "fa-tasks",
+          "items": ["Smart Factory 0-to-1", "NPI Full Process", "OEE / Yield / Cost Opt", "KISS Principle", "SPC Data-Driven"]
+        },
+        {
+          "title": "Leadership", "icon": "fa-users",
+          "items": ["Global Team Mgmt", "Agile + Stage-Gate", "Supplier System", "Lean Mfg", "Cross-cultural Collab"]
+        }
       ]
     },
     "experience": [
@@ -252,7 +278,7 @@
         "location": "Chengdu / Shenzhen . China",
         "projects": [
           { "title": "Phase I: iPhone / Watch Mfg (2019 - Present)", "details": ["<strong>Pioneering Line Dev:</strong> Led first UV-curing low-pressure molding auto line. Reduced cost/footprint by 80% via modular design.", "<strong>Standardized Line R&D:</strong> Led frame assembly line R&D. Achieved <50μm accuracy, +90% capacity, 99.6% yield.", "<strong>Thermal Structure Opt:</strong> Optimized UV module. Ensured uniform light & thermal balance for consistent quality.", "<strong>Closed-loop Data:</strong> Built SPC-based data system. Reduced ramp-up from 4 weeks to 4 days.", "<strong>Multi-factory Mgmt:</strong> Managed 50+ lines across 3 factories. Provided DFM & risk assessment.", "<strong>FATP Full-Process:</strong> Led Watch FATP dev. Optimized structure & ink solutions. Established full traceability."] },
-          { "title": "Phase II: Brittle Material Process (2017 - 2019)", "details": ["<strong>Laser Innovation:</strong> Developed sapphire laser filamentation cutting. Controlled ink fracture ≤0.1mm.", "<strong>Auto Upgrade:</strong> Upgraded 100+ glass cover lines. Innovated 20+ equipment types. Saved 10% manpower.", "<strong>Precision Mechanism:</strong> Developed sapphire pad printing & handling mechanisms. Saved 60% manpower. Defect rate <0.1%.", "<strong>Bottleneck Breakthrough:</strong> Overcame sapphire assembly defects. Increased capacity by 20%+, yield >99%."] }
+          { "title": "Phase II: Brittle Material Process (2017 - 2019)", "details": ["<strong>Laser Innovation:</strong> Developed sapphire laser filamentation cutting. Controlled ink fracture ≤0.1mm.", "<strong>Auto Upgrade:</strong> Upgraded 100+ glass cover lines. Innovated 20+ equipment types. Saved 10% manpower.", "<strong>Precision Mechanism:</strong> Developed sapphire pad printing & handling mechanisms. Saved 60% manpower. Defect <0.1%.", "<strong>Bottleneck Breakthrough:</strong> Overcame sapphire assembly defects. Increased capacity by 20%+, yield >99%."] }
         ]
       },
       {
@@ -269,14 +295,14 @@
       },
       {
         "company": "Chengdu Tool Research Institute", "role": "Mech Engineer", "date": "2009.07 - 2009.10", "location": "Chengdu . China",
-        "projects": [{ "title": "", "details": ["Designed customized cutting tools.", "Managed full production lifecycle from requirement to delivery."] }]
+        "projects": [{ "title": "", "details": ["Responsible for the design of customized special cutting tools, independently completing the full process of part drawings, assembly drawings, and process drawings.", "Participated in full-process management from client requirement communication to production delivery, developing new production processes and fixtures to improve efficiency.", "Mastered the full lifecycle management flow from R&D to delivery, laying the foundation for precision manufacturing."] }]
       }
     ],
-    "education": [{ "school": "SWUST", "degree": "B.S. in Mech Design & Automation", "date": "2005 - 2009", "location": "Mianyang . China" }],
+    "education": [{ "school": "Southwest University of Science and Technology", "degree": "B.S. in Mechanical Design Manufacturing and Automation", "date": "2005 - 2009", "location": "Mianyang . China" }],
     "hobbies": { "desc": "Applying maker-mindset to precision process optimization.", "items": ["Hiking", "Mechatronics DIY", "3D Printing", "Wood Carving", "Interior Design"] },
     "tools": [
-      { "group": "Design Tools", "icon": "fa-wrench", "list": ["UG NX", "SolidWorks", "AutoCAD", "CAE", "GD&T"] },
-      { "group": "Project & Data Tools", "icon": "fa-tasks", "list": ["Agile PLM", "JMP", "Python", "HTML&Web", "SPC", "NUDD"] }
+      { "group": "Design Tools", "icon": "fa-wrench", "list": ["UG NX", "Solid Edge", "SolidWorks", "AutoCAD", "CAE", "E-Plan", "GD&T"] },
+      { "group": "Project & Data Tools", "icon": "fa-tasks", "list": ["Agile PLM", "SharePoint", "Office", "JMP", "Tableau", "Python", "HTML&Web", "SPC", "NUDD"] }
     ]
   }
 }
