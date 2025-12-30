@@ -201,7 +201,6 @@
                 navbar.classList.remove('py-3', 'bg-white/90', 'backdrop-blur-xl', 'border-b', 'border-gray-200/50', 'shadow-sm');
             }
 
-            // Back to Top Logic
             if (window.scrollY > 300) {
                 backToTopBtn.classList.remove('opacity-0', 'invisible', 'translate-y-4');
                 backToTopBtn.classList.add('opacity-100', 'visible', 'translate-y-0');
@@ -295,10 +294,11 @@
             document.getElementById('hero-title').textContent = basic.titles;
             document.getElementById('hero-tags').innerHTML = basic.tags.map(t => `<span class="bg-white/80 backdrop-blur border border-gray-200 text-gray-600 px-4 py-1.5 rounded-full text-sm font-medium shadow-sm">${t}</span>`).join('');
             
+            // --- 恢复 Print 按钮读取 data.json 字段 ---
             document.getElementById('hero-btns').innerHTML = `
                 <a href="#contact" class="bg-black text-white px-8 py-3 rounded-full font-medium hover:bg-gray-800 hover:scale-105 transition-all duration-300 shadow-lg shadow-black/20"><i class="fa fa-envelope mr-2"></i> ${ui.buttons.contact}</a>
                 <a href="#experience" class="bg-white text-gray-900 border border-gray-200 px-8 py-3 rounded-full font-medium hover:bg-gray-50 hover:border-gray-300 transition-all hover:scale-105 shadow-sm"><i class="fa fa-briefcase mr-2"></i> ${ui.buttons.exp}</a>
-                <button onclick="window.print()" class="bg-white text-gray-700 border border-gray-200 px-6 py-3 rounded-full font-medium hover:bg-gray-50 hover:border-primary hover:text-primary transition-all shadow-sm"><i class="fa fa-print"></i></button>
+                <button onclick="window.print()" class="bg-white text-gray-900 border border-gray-200 px-8 py-3 rounded-full font-medium hover:bg-gray-50 hover:border-gray-300 transition-all hover:scale-105 shadow-sm flex items-center gap-2"><i class="fa fa-print"></i> ${ui.buttons.print}</button>
             `;
             document.getElementById('hero-avatar').src = basic.avatar;
             document.getElementById('hero-location').textContent = basic.location;
@@ -318,7 +318,7 @@
             const bentoContainer = document.getElementById('skills-bento-container');
             const chartData = data.skills.chart;
             
-            // 1. Radar Chart (左上, lg屏幕占3/6)
+            // 1. Radar Chart (lg:col-span-3)
             let bentoHTML = `
                 <div class="col-span-1 md:col-span-1 lg:col-span-3 bg-white rounded-[2rem] p-6 shadow-apple border border-gray-100 flex flex-col relative overflow-hidden reveal-hidden hover:shadow-apple-hover transition-all">
                     <div class="flex items-center gap-3 mb-4 z-10">
@@ -333,7 +333,7 @@
                 </div>
             `;
 
-            // 2. Progress Levels (右上, lg屏幕占3/6)
+            // 2. Levels (lg:col-span-3)
             bentoHTML += `
                 <div class="col-span-1 md:col-span-1 lg:col-span-3 bg-white rounded-[2rem] p-6 shadow-apple border border-gray-100 reveal-hidden hover:shadow-apple-hover transition-all">
                     <div class="flex items-center gap-3 mb-6 pb-3 border-b border-gray-50">
@@ -354,7 +354,7 @@
                 </div>
             `;
             
-            // 3. Card Groups (下排, lg屏幕占2/6)
+            // 3. Card Groups (lg:col-span-2)
             const iconColors = ['text-orange-500', 'text-purple-500', 'text-teal-500'];
             data.skills.card_groups.forEach((g, idx) => {
                 bentoHTML += `
