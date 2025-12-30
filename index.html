@@ -181,11 +181,7 @@
         backToTop.addEventListener('click', () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
-            // --- 修改开始：单独设置底部的英文名 ---
-                // 无论 currentLang 是什么，这里都读取 fullData['en'].basic_info.name
-                document.getElementById('copyright-name').textContent = fullData['en'].basic_info.name;
-                // --- 修改结束 ---
-            
+    
             // 移动端菜单切换逻辑
             const btn = document.getElementById('mobile-menu-btn');
             const menu = document.getElementById('mobile-menu');
@@ -204,6 +200,12 @@
             try {
                 const res = await fetch('./data.json');
                 const fullData = await res.json();
+                
+                // --- 修改开始：单独设置底部的英文名 ---
+                // 无论 currentLang 是什么，这里都读取 fullData['en'].basic_info.name
+                document.getElementById('copyright-name').textContent = fullData['en'].basic_info.name;
+                // --- 修改结束 ---
+
                 render(fullData[currentLang]);
             } catch(e) { console.error(e); }
         }
