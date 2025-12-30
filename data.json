@@ -76,7 +76,8 @@
         "label_name": "您的姓名",
         "label_email": "您的邮箱",
         "label_msg": "消息内容",
-        "btn_send": "发送消息"
+        "btn_send": "发送消息",
+        "form_id": "YOUR_FORMSPREE_ID_HERE"
       }
     },
     "profile": {
@@ -397,7 +398,8 @@
         "label_name": "Your Name",
         "label_email": "Your Email",
         "label_msg": "Message",
-        "btn_send": "Send Message"
+        "btn_send": "Send Message",
+        "form_id": "YOUR_FORMSPREE_ID_HERE"
       }
     },
     "profile": {
