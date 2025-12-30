@@ -149,7 +149,27 @@
             document.getElementById('langSwitch').addEventListener('click', toggleLanguage);
             // 移动端语言切换
             document.getElementById('langSwitchMobile').addEventListener('click', toggleLanguage);
-            
+            // --- 滚动交互 ---
+        const navbar = document.getElementById('navbar');
+        const backToTop = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                navbar.classList.add('py-2', 'shadow');
+                navbar.classList.remove('py-3');
+                backToTop.classList.remove('opacity-0', 'invisible');
+                backToTop.classList.add('opacity-100', 'visible');
+            } else {
+                navbar.classList.add('py-3');
+                navbar.classList.remove('py-2', 'shadow');
+                backToTop.classList.add('opacity-0', 'invisible');
+                backToTop.classList.remove('opacity-100', 'visible');
+            }
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
             // 移动端菜单切换逻辑
             const btn = document.getElementById('mobile-menu-btn');
             const menu = document.getElementById('mobile-menu');
