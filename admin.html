@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>简历双语后台 (V10 吸顶优化版)</title>
+    <title>简历双语后台 (V11 面包屑置顶版)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <style>
@@ -53,9 +53,9 @@
         }
         /* 面包屑条样式 */
         .breadcrumb-bar {
-            background-color: #f8fafc;
+            background-color: #fff; /* 改为纯白，更干净 */
             border-bottom: 1px solid #e2e8f0;
-            padding: 6px 16px;
+            padding: 8px 16px; /* 增加一点内边距 */
             font-size: 12px;
             color: #64748b;
             display: flex; align-items: center; gap: 8px;
@@ -83,10 +83,12 @@
     <div class="bg-white shadow z-50 px-4 py-2 border-b border-gray-200 shrink-0">
         <div class="flex flex-col md:flex-row justify-between items-center max-w-[1920px] mx-auto gap-4 py-1">
             <h1 class="font-bold text-gray-800 text-lg flex items-center gap-2 select-none">
-                <i class="fa fa-cogs text-blue-600"></i> 双语后台 <span class="text-xs bg-gray-100 text-gray-600 px-2 rounded border border-gray-200">V10 Sticky</span>
+                <i class="fa fa-cogs text-blue-600"></i> 双语后台 <span class="text-xs bg-gray-100 text-gray-600 px-2 rounded border border-gray-200">V11</span>
             </h1>
             
-            <div class="flex-1"></div> <div class="flex flex-wrap gap-2 items-center">
+            <div class="flex-1"></div>
+
+            <div class="flex flex-wrap gap-2 items-center">
                 <input id="gh_owner" type="text" placeholder="GitHub User" class="border border-gray-300 p-1.5 rounded text-xs w-24 outline-none focus:border-blue-500 transition">
                 <input id="gh_repo" type="text" placeholder="Repo Name" class="border border-gray-300 p-1.5 rounded text-xs w-24 outline-none focus:border-blue-500 transition">
                 <input id="gh_token" type="password" placeholder="Token" class="border border-gray-300 p-1.5 rounded text-xs w-28 outline-none focus:border-blue-500 transition">
@@ -106,7 +108,7 @@
                  <button onclick="globalToggle(false)" class="hover:text-blue-600 transition flex items-center gap-1"><i class="fa fa-compress"></i> 全部折叠</button>
             </div>
             <div id="status-bar" class="font-mono font-bold text-blue-600 transition-all">Waiting for action...</div>
-            <div class="text-gray-400 italic">Sticky Layout Active</div>
+            <div class="text-gray-400 italic">Auto-save scroll position</div>
         </div>
     </div>
 
@@ -117,7 +119,7 @@
                     <i class="fa fa-cloud-download text-4xl text-blue-100"></i>
                 </div>
                 <p>请输入 GitHub 信息并点击右上角“读取”</p>
-                <p class="text-xs mt-2 text-gray-300">(面包屑和编辑器将在数据加载后显示)</p>
+                <p class="text-xs mt-2 text-gray-300">(Breadcrumb Top Layout)</p>
             </div>
         </div>
     </div>
@@ -168,7 +170,7 @@
             });
             document.getElementById('scroll-container').addEventListener('scroll', updateBreadcrumb);
             document.getElementById('icon-search').addEventListener('input', (e) => renderIconGrid(e.target.value));
-            console.log("Admin System V10 Ready.");
+            console.log("Admin System V11 Ready.");
         })();
 
         // --- 1. 读取数据 ---
@@ -222,20 +224,29 @@
             }
         }
 
-        // --- 2. 渲染引擎 (核心更新) ---
+        // --- 2. 渲染引擎 ---
         function renderUI() {
             const root = document.getElementById('editor-root');
             const container = document.getElementById('scroll-container');
             
             root.innerHTML = '';
 
-            // [构建吸顶容器]：包含分栏表头 + 面包屑
+            // [构建吸顶容器]
             const stickyGroup = document.createElement('div');
             stickyGroup.className = "sticky-group-wrapper"; // sticky top-0
             
-            // 1. 分栏表头
+            // 1. 面包屑 (现在在第一位)
+            const breadcrumbBar = document.createElement('div');
+            breadcrumbBar.className = "breadcrumb-bar";
+            breadcrumbBar.innerHTML = `
+                <i class="fa fa-map-marker text-red-500"></i>
+                <span id="breadcrumb-text" class="font-bold text-blue-900 truncate flex-1">TOP</span>
+            `;
+            stickyGroup.appendChild(breadcrumbBar);
+
+            // 2. 分栏表头 (现在在第二位)
             const colHeader = document.createElement('div');
-            colHeader.className = "flex border-b border-gray-200 bg-white/95 backdrop-blur";
+            colHeader.className = "flex border-b border-gray-200 bg-gray-50";
             colHeader.innerHTML = `
                 <div class="w-1/2 px-4 py-2 font-bold text-sm text-blue-700 bg-blue-50/80 border-r border-blue-100 flex items-center gap-2">
                     <i class="fa fa-language"></i> 中文 (Chinese)
@@ -245,15 +256,6 @@
                 </div>
             `;
             stickyGroup.appendChild(colHeader);
-
-            // 2. 面包屑 (移动到此处)
-            const breadcrumbBar = document.createElement('div');
-            breadcrumbBar.className = "breadcrumb-bar";
-            breadcrumbBar.innerHTML = `
-                <i class="fa fa-map-marker text-red-500"></i>
-                <span id="breadcrumb-text" class="font-bold text-blue-900 truncate flex-1">TOP</span>
-            `;
-            stickyGroup.appendChild(breadcrumbBar);
 
             root.appendChild(stickyGroup);
 
@@ -265,7 +267,6 @@
 
             if (savedScrollTop > 0) container.scrollTop = savedScrollTop;
             
-            // 立即更新一次面包屑状态
             setTimeout(updateBreadcrumb, 50);
         }
 
@@ -556,14 +557,13 @@
             renderUI();
         }
 
-        // --- 辅助功能 (修复更新面包屑逻辑) ---
+        // --- 辅助功能 ---
         function updateBreadcrumb() {
             const display = document.getElementById('breadcrumb-text');
-            if (!display) return; // 避免在 UI 渲染前报错
+            if (!display) return; 
 
             const nodes = document.querySelectorAll('[data-path]');
             let currentPath = "TOP";
-            // 阈值设置为 140 (稍微加大一点，因为现在顶部吸顶区域变高了)
             for (let node of nodes) {
                 if (node.getBoundingClientRect().top < 140) currentPath = node.dataset.path;
                 else break; 
@@ -654,7 +654,7 @@
                 const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/data.json`, {
                     method: 'PUT',
                     headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: "Update via Admin V10", content, sha: fileSha })
+                    body: JSON.stringify({ message: "Update via Admin V11", content, sha: fileSha })
                 });
                 if(!res.ok) throw new Error((await res.json()).message);
                 const json = await res.json();
