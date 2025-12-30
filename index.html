@@ -47,7 +47,7 @@
 
         @media print { 
             body { color: black; background-color: white; } 
-            header, .no-print, #mobile-menu-container, #hero-btns { display: none !important; } 
+            header, .no-print, #mobile-menu-container, #hero-btns, #backToTop { display: none !important; } 
             .reveal-hidden { opacity: 1 !important; transform: none !important; } 
             .shadow-apple, .shadow-sm, .shadow-xl { box-shadow: none !important; border: 1px solid #eee; }
             .break-inside-avoid { break-inside: avoid; }
@@ -163,6 +163,10 @@
         <p class="text-xs text-gray-300">© 2026 <span id="copyright-name"></span>. All rights reserved.</p>
     </footer>
 
+    <button id="backToTop" class="fixed bottom-8 right-8 w-12 h-12 bg-white/80 backdrop-blur-md border border-gray-200/50 rounded-full shadow-apple flex items-center justify-center text-gray-600 hover:text-black hover:scale-110 hover:-translate-y-1 transition-all duration-500 z-40 opacity-0 invisible translate-y-4 group">
+        <i class="fa fa-arrow-up transition-transform duration-300 group-hover:-translate-y-0.5"></i>
+    </button>
+
     <div id="wechatModal" class="hidden fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-md p-4 transition-opacity duration-300" onclick="this.classList.add('hidden')">
         <div class="bg-white p-8 rounded-[2rem] shadow-2xl max-w-sm w-full text-center transform scale-100 transition-transform duration-300" onclick="event.stopPropagation()">
             <h3 id="modal-title" class="text-xl font-bold mb-6 text-gray-900">Scan QR Code</h3>
@@ -183,6 +187,7 @@
         const navbar = document.getElementById('navbar');
         const mobileMenu = document.getElementById('mobile-menu');
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const backToTopBtn = document.getElementById('backToTop');
 
         function updateNavbarStyle() {
             const isScrolled = window.scrollY > 50;
@@ -195,6 +200,15 @@
                 navbar.classList.add('py-4', 'bg-transparent');
                 navbar.classList.remove('py-3', 'bg-white/90', 'backdrop-blur-xl', 'border-b', 'border-gray-200/50', 'shadow-sm');
             }
+
+            // Back to Top Logic
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.remove('opacity-0', 'invisible', 'translate-y-4');
+                backToTopBtn.classList.add('opacity-100', 'visible', 'translate-y-0');
+            } else {
+                backToTopBtn.classList.add('opacity-0', 'invisible', 'translate-y-4');
+                backToTopBtn.classList.remove('opacity-100', 'visible', 'translate-y-0');
+            }
         }
 
         window.addEventListener('scroll', updateNavbarStyle);
@@ -202,6 +216,10 @@
         mobileMenuBtn.addEventListener('click', () => {
             mobileMenu.classList.toggle('open');
             updateNavbarStyle();
+        });
+
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
         const heroTilt = document.getElementById('hero-tilt');
@@ -295,12 +313,12 @@
                     <p class="text-sm text-gray-500 leading-relaxed">${c.desc}</p>
                 </div>`).join('');
 
-            // --- Bento Skills: 布局修改 (上2 下3) ---
+            // Bento Skills
             document.getElementById('t-skills').textContent = ui.section_titles.skills;
             const bentoContainer = document.getElementById('skills-bento-container');
             const chartData = data.skills.chart;
             
-            // 1. Radar Chart (左上, lg屏幕占一半)
+            // 1. Radar Chart (左上, lg屏幕占3/6)
             let bentoHTML = `
                 <div class="col-span-1 md:col-span-1 lg:col-span-3 bg-white rounded-[2rem] p-6 shadow-apple border border-gray-100 flex flex-col relative overflow-hidden reveal-hidden hover:shadow-apple-hover transition-all">
                     <div class="flex items-center gap-3 mb-4 z-10">
@@ -315,7 +333,7 @@
                 </div>
             `;
 
-            // 2. Progress Levels (右上, lg屏幕占一半)
+            // 2. Progress Levels (右上, lg屏幕占3/6)
             bentoHTML += `
                 <div class="col-span-1 md:col-span-1 lg:col-span-3 bg-white rounded-[2rem] p-6 shadow-apple border border-gray-100 reveal-hidden hover:shadow-apple-hover transition-all">
                     <div class="flex items-center gap-3 mb-6 pb-3 border-b border-gray-50">
@@ -336,7 +354,7 @@
                 </div>
             `;
             
-            // 3. Card Groups (下排, lg屏幕下每张卡片占 2/6 = 1/3，刚好一行放3个)
+            // 3. Card Groups (下排, lg屏幕占2/6)
             const iconColors = ['text-orange-500', 'text-purple-500', 'text-teal-500'];
             data.skills.card_groups.forEach((g, idx) => {
                 bentoHTML += `
@@ -434,7 +452,7 @@
                     </div>
                 </div>`).join('');
 
-            // Contact (修改：删除 Let's build... 文字)
+            // Contact
             const cf = ui.contact_form;
             const cl = ui.contact_labels;
             const formAction = cf.form_id ? `https://formspree.io/f/${cf.form_id}` : '';
