@@ -70,20 +70,24 @@
             @page { margin: 1.2cm 1.5cm; size: A4; }
             
             /* --- 排版细节 --- */
+            
+            /* 标题体系 */
             .print-h1 { 
                 font-size: 20pt; 
                 font-weight: bold; 
                 margin-bottom: 0.2rem; 
                 color: #000;
             }
+            
             .print-h2 { 
                 font-size: 14pt; 
                 font-weight: bold; 
-                border-bottom: 2px solid #000; 
+                border-bottom: 2px solid #000; /* 分割线 */
                 margin-top: 1.2rem; 
                 margin-bottom: 0.6rem; 
                 padding-bottom: 0.2rem;
             }
+
             .print-h3 {
                 font-size: 11pt;
                 font-weight: bold;
@@ -92,7 +96,11 @@
                 display: flex;
                 justify-content: space-between;
             }
+
+            /* 顶部元数据 */
             .print-meta { font-size: 10pt; margin-bottom: 1.2rem; }
+            
+            /* 核心能力矩阵表格 */
             .print-table {
                 width: 100%;
                 border-collapse: collapse;
@@ -110,18 +118,24 @@
                 text-align: left;
                 -webkit-print-color-adjust: exact;
             }
+            /* 第一列样式控制 */
             .print-table td:first-child {
                 font-weight: bold;
-                white-space: nowrap; 
+                white-space: nowrap; /* 保持标题不换行 */
                 background-color: #fafafa;
+                width: 18%; /* 固定宽度 */
                 -webkit-print-color-adjust: exact;
             }
+
+            /* 列表样式 */
             .print-list { 
                 list-style-type: disc; 
                 padding-left: 1.2rem; 
                 margin-top: 0.3rem;
             }
             .print-list li { margin-bottom: 0.2rem; }
+            
+            /* 工作经历细节 */
             .job-sub-row { 
                 font-weight: bold; 
                 font-size: 10.5pt; 
@@ -137,6 +151,8 @@
                 margin-bottom: 0.2rem;
                 font-size: 10.5pt;
             }
+
+            /* 辅助类 */
             .no-break { break-inside: avoid; }
             a { text-decoration: none !important; color: #000 !important; }
         }
@@ -368,17 +384,19 @@
             } catch(e) { console.error(e); }
         }
 
-        // --- 核心功能：渲染 Markdown 风格打印视图 (完全动态版) ---
+        // --- 核心功能：渲染 Markdown 风格打印视图 (动态生成版) ---
         function renderPrintView(data, ui) {
             const basic = data.basic_info;
             const st = ui.section_titles;
             
-            const matrixRows = data.capability_matrix ? data.capability_matrix.map(row => `
+            // 使用 card_groups 生成能力矩阵
+            const separator = currentLang === 'zh' ? '；' : '; ';
+            const matrixRows = data.skills.card_groups.map(group => `
                 <tr>
-                    <td>${row.category}</td>
-                    <td>${row.content}</td>
+                    <td style="font-weight: bold;">${group.title}</td>
+                    <td>${group.items.join(separator)}</td>
                 </tr>
-            `).join('') : '<tr><td colspan="2">No capability matrix data found.</td></tr>';
+            `).join('');
 
             const toolsHtml = data.tools.map(t => `
                 <li><strong>${t.group}：</strong> ${t.list.join(', ')}</li>
@@ -405,8 +423,8 @@
                     <table class="print-table">
                         <thead>
                             <tr>
-                                <th width="18%">能力类别</th>
-                                <th>核心内容</th>
+                                <th width="18%">${currentLang === 'zh' ? '能力类别' : 'Category'}</th>
+                                <th>${currentLang === 'zh' ? '核心内容' : 'Core Competencies'}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -453,7 +471,6 @@
                     <div class="print-h2">${currentLang === 'zh' ? '技能与兴趣' : 'Skills & Interests'}</div>
                     <ul class="print-list">
                         ${toolsHtml}
-                        <li><strong>跨学科技术：</strong> 机械+电气+软件设计复合能力；机器人与视觉应用；热学组件装配工艺优化、散热结构 DFM 分析；系统装配公差分析、产品外观（cosmetic）质量管控</li>
                         <li><strong>${st.hobbies}：</strong> ${data.hobbies.items.join('、')}，${data.hobbies.desc}</li>
                     </ul>
                 </div>
@@ -494,7 +511,7 @@
 
             // Profile
             document.getElementById('t-profile').textContent = ui.section_titles.profile;
-            document.getElementById('profile-summary').innerHTML = data.profile.summary; // Fixed: Use innerHTML
+            document.getElementById('profile-summary').innerHTML = data.profile.summary; // Use innerHTML
             document.getElementById('profile-cards').innerHTML = data.profile.cards.map((c, i) => `
                 <div class="group bg-gray-50 rounded-2xl p-6 hover:bg-white hover:shadow-apple-hover transition-all duration-300 reveal-hidden" style="transition-delay: ${i*100}ms">
                     <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-lg mb-4 group-hover:scale-110 transition-transform"><i class="fa ${c.icon}"></i></div>
