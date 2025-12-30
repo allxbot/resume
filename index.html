@@ -62,14 +62,14 @@
                 background-color: white;
                 color: #000;
                 font-family: "Inter", "Microsoft YaHei", sans-serif;
-                font-size: 10.5pt;
+                font-size: 10.5pt; /* 正文五号字大小 */
                 line-height: 1.4;
-                padding: 0 0.5cm;
+                padding: 0 0.5cm; /* 左右留白 */
             }
 
             @page { margin: 1.2cm 1.5cm; size: A4; }
             
-            /* --- 关键修复：允许 Section 分页 --- */
+            /* --- 关键修复：允许大板块分页，防止留白 --- */
             section, .print-section { 
                 padding-top: 0 !important; 
                 padding-bottom: 0 !important; 
@@ -77,7 +77,7 @@
                 break-inside: auto !important;
             }
 
-            /* 保持单个职位块尽量不切断 */
+            /* 保持单个职位/项目块尽量不切断 */
             .no-break { 
                 page-break-inside: avoid; 
                 break-inside: avoid; 
@@ -109,12 +109,13 @@
                 page-break-after: avoid; /* 公司名后不换页 */
             }
             .print-meta { font-size: 10pt; margin-bottom: 1.2rem; }
+            
             .print-table {
                 width: 100%;
                 border-collapse: collapse;
                 margin-bottom: 1rem;
                 font-size: 10pt;
-                page-break-inside: avoid; /* 表格尽量不切断 */
+                page-break-inside: auto; /* 表格允许分页 */
             }
             .print-table th, .print-table td {
                 border: 1px solid #000;
@@ -131,14 +132,17 @@
                 font-weight: bold;
                 white-space: nowrap; 
                 background-color: #fafafa;
+                width: 18%;
                 -webkit-print-color-adjust: exact;
             }
+
             .print-list { 
                 list-style-type: disc; 
                 padding-left: 1.2rem; 
                 margin-top: 0.3rem;
             }
             .print-list li { margin-bottom: 0.2rem; }
+            
             .job-sub-row { 
                 font-weight: bold; 
                 font-size: 10.5pt; 
@@ -384,12 +388,10 @@
             } catch(e) { console.error(e); }
         }
 
-        // --- 核心功能：渲染 Markdown 风格打印视图 (动态生成版) ---
         function renderPrintView(data, ui) {
             const basic = data.basic_info;
             const st = ui.section_titles;
             
-            // 使用 card_groups 生成能力矩阵
             const separator = currentLang === 'zh' ? '；' : '; ';
             const matrixRows = data.skills.card_groups.map(group => `
                 <tr>
@@ -488,19 +490,16 @@
             document.getElementById('langLabel').textContent = labelLang;
             document.getElementById('langLabelMobile').textContent = labelLang;
             
-            // Nav
             document.getElementById('nav-name').textContent = basic.name;
             const links = ['profile','skills','experience','education','contact'];
             const navHTML = ui.nav.map((n, i) => `<a href="#${links[i]}" class="px-3 py-2 rounded-full hover:bg-gray-100 hover:text-black transition-colors" onclick="document.getElementById('mobile-menu').classList.remove('open'); updateNavbarStyle();">${n}</a>`).join('');
             document.getElementById('nav-menu-desktop').innerHTML = navHTML;
             document.getElementById('nav-menu-mobile').innerHTML = navHTML;
 
-            // Hero
             document.getElementById('hero-name').textContent = basic.name;
             document.getElementById('hero-title').textContent = basic.titles;
             document.getElementById('hero-tags').innerHTML = basic.tags.map(t => `<span class="bg-white/80 backdrop-blur border border-gray-200 text-gray-600 px-4 py-1.5 rounded-full text-sm font-medium shadow-sm">${t}</span>`).join('');
             
-            // Buttons
             document.getElementById('hero-btns').innerHTML = `
                 <a href="#contact" class="bg-black text-white px-8 py-3 rounded-full font-medium hover:bg-gray-800 hover:scale-105 transition-all duration-300 shadow-lg shadow-black/20"><i class="fa fa-envelope mr-2"></i> ${ui.buttons.contact}</a>
                 <a href="#experience" class="bg-white text-gray-900 border border-gray-200 px-8 py-3 rounded-full font-medium hover:bg-gray-50 hover:border-gray-300 transition-all hover:scale-105 shadow-sm"><i class="fa fa-briefcase mr-2"></i> ${ui.buttons.exp}</a>
@@ -509,9 +508,8 @@
             document.getElementById('hero-avatar').src = basic.avatar;
             document.getElementById('hero-location').textContent = basic.location;
 
-            // Profile
             document.getElementById('t-profile').textContent = ui.section_titles.profile;
-            document.getElementById('profile-summary').innerHTML = data.profile.summary; // Use innerHTML
+            document.getElementById('profile-summary').innerHTML = data.profile.summary;
             document.getElementById('profile-cards').innerHTML = data.profile.cards.map((c, i) => `
                 <div class="group bg-gray-50 rounded-2xl p-6 hover:bg-white hover:shadow-apple-hover transition-all duration-300 reveal-hidden" style="transition-delay: ${i*100}ms">
                     <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-lg mb-4 group-hover:scale-110 transition-transform"><i class="fa ${c.icon}"></i></div>
@@ -519,12 +517,10 @@
                     <p class="text-sm text-gray-500 leading-relaxed">${c.desc}</p>
                 </div>`).join('');
 
-            // Bento Skills
             document.getElementById('t-skills').textContent = ui.section_titles.skills;
             const bentoContainer = document.getElementById('skills-bento-container');
             const chartData = data.skills.chart;
             
-            // 1. Radar Chart (lg:col-span-3)
             let bentoHTML = `
                 <div class="col-span-1 md:col-span-1 lg:col-span-3 bg-white rounded-[2rem] p-6 shadow-apple border border-gray-100 flex flex-col relative overflow-hidden reveal-hidden hover:shadow-apple-hover transition-all">
                     <div class="flex items-center gap-3 mb-4 z-10">
@@ -539,7 +535,6 @@
                 </div>
             `;
 
-            // 2. Levels (lg:col-span-3)
             bentoHTML += `
                 <div class="col-span-1 md:col-span-1 lg:col-span-3 bg-white rounded-[2rem] p-6 shadow-apple border border-gray-100 reveal-hidden hover:shadow-apple-hover transition-all">
                     <div class="flex items-center gap-3 mb-6 pb-3 border-b border-gray-50">
@@ -560,7 +555,6 @@
                 </div>
             `;
             
-            // 3. Card Groups (lg:col-span-2)
             const iconColors = ['text-orange-500', 'text-purple-500', 'text-teal-500'];
             data.skills.card_groups.forEach((g, idx) => {
                 bentoHTML += `
@@ -606,7 +600,6 @@
                 }
             });
 
-            // Experience
             document.getElementById('t-exp').textContent = ui.section_titles.experience;
             document.getElementById('exp-list').innerHTML = data.experience.map(job => `
                 <div class="relative pl-0 md:pl-0 reveal-hidden">
@@ -632,7 +625,6 @@
                     </div>
                 </div>`).join('');
 
-            // Education
             document.getElementById('t-edu').textContent = ui.section_titles.education;
             document.getElementById('edu-col-left').innerHTML = `
                 <h3 class="font-bold text-xl mb-8 text-gray-900 flex items-center gap-3"><span class="bg-blue-100 text-blue-600 w-8 h-8 rounded-lg flex items-center justify-center text-sm"><i class="fa fa-graduation-cap"></i></span> ${ui.section_titles.academic}</h3>
@@ -658,7 +650,6 @@
                     </div>
                 </div>`).join('');
 
-            // Contact
             const cf = ui.contact_form;
             const cl = ui.contact_labels;
             const formAction = cf.form_id ? `https://formspree.io/f/${cf.form_id}` : '';
@@ -695,7 +686,6 @@
                     </form>
                 </div>`;
 
-            // Footer
             document.getElementById('f-name').textContent = basic.name;
             document.getElementById('f-desc').textContent = basic.footer_text;
             document.getElementById('social-icons').innerHTML = basic.social_links.map(s => {
