@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Xu Yongzhi - Resume</title>
+    <title>Resume Loading...</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
@@ -201,17 +201,24 @@
                 const res = await fetch('./data.json');
                 const fullData = await res.json();
                 
-                // --- 修改开始：单独设置底部的英文名 ---
-                // 无论 currentLang 是什么，这里都读取 fullData['en'].basic_info.name
-                document.getElementById('copyright-name').textContent = fullData['en'].basic_info.name;
-                // --- 修改结束 ---
-
+                // 固定底部版权名为英文
+                if(fullData['en'] && fullData['en'].basic_info) {
+                    document.getElementById('copyright-name').textContent = fullData['en'].basic_info.name;
+                }
+                
                 render(fullData[currentLang]);
             } catch(e) { console.error(e); }
         }
 
         function render(data) {
             const basic = data.basic_info;
+            
+            // --- 核心修改：动态更新网页标题 ---
+            // 根据语言显示 "姓名 - 个人简历" 或 "Name - Resume"
+            const titleSuffix = currentLang === 'zh' ? '个人简历' : 'Resume';
+            document.title = `${basic.name} - ${titleSuffix}`;
+            // -------------------------------
+
             const ui = data.ui;
             const labelLang = currentLang === 'zh' ? 'EN' : '中文';
             const st = ui.section_titles;
