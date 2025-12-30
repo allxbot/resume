@@ -15,6 +15,7 @@
             theme: { 
                 extend: { 
                     colors: { 
+                        // 这些变量用于非 Apple 风格，Apple 风格将主要依赖 CSS 变量覆盖或原生类
                         primary: 'var(--color-primary)', 
                         secondary: 'var(--color-secondary)',
                         'page-bg': 'var(--color-bg)',
@@ -23,14 +24,12 @@
                         'text-muted': 'var(--color-text-muted)',
                         'btn-bg': 'var(--color-btn-bg)', 
                         'btn-text': 'var(--color-btn-text)',
-                        /* 定义图标颜色变量，默认使用 primary */
-                        'icon-accent-1': 'var(--color-icon-accent-1, var(--color-primary))',
-                        'icon-accent-2': 'var(--color-icon-accent-2, var(--color-primary))',
-                        'icon-accent-3': 'var(--color-icon-accent-3, var(--color-primary))',
-                        'border-color': 'var(--border-color)',
-                        'check-color': 'var(--check-color)'
+                        'border-color': 'var(--color-border)',
+                        'icon-accent': 'var(--color-icon)'
                     },
                     boxShadow: { 
+                        'apple': '0 4px 20px rgba(0,0,0,0.06)', 
+                        'apple-hover': '0 10px 30px rgba(0,0,0,0.1)',
                         'custom': 'var(--box-shadow)',
                         'custom-hover': 'var(--box-shadow-hover)'
                     },
@@ -49,43 +48,35 @@
         }
 
         /* =========================================
-           🎨 主题定义 (CSS Variables)
+           🎨 全局主题变量定义
            ========================================= */
         
-        /* 0.  Apple Theme (1:1 像素级还原原版) */
+        /* 0.  Apple Theme (1:1 还原原版参数) */
         :root[data-theme='apple'] {
             --font-main: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
             --color-primary: #0071e3;
             --color-secondary: #42a5f5;
+            
+            /* 背景与文字：严格对齐原版 */
             --color-bg: #fbfbfd;
             --color-card: #ffffff;
             --color-text-main: #111827; /* gray-900 */
-            --color-text-muted: #6b7280; /* gray-500/600 mixed */
+            --color-text-muted: #6b7280; /* gray-500 */
             
-            /* 关键修复：按钮背景纯黑 */
-            --color-btn-bg: #000000;
+            /* 按钮 */
+            --color-btn-bg: #000000;    /* Contact按钮纯黑 */
             --color-btn-text: #ffffff;
-
-            --radius-card: 2rem; 
-            --radius-btn: 9999px; 
             
+            /* 边框与阴影 */
+            --color-border: #f3f4f6;    /* gray-100 */
+            --radius-card: 2rem;        /* rounded-[2rem] */
+            --radius-btn: 9999px;       /* rounded-full */
             --box-shadow: 0 4px 20px rgba(0,0,0,0.06); 
-            --box-shadow-hover: 0 10px 30px rgba(0,0,0,0.1); 
+            --box-shadow-hover: 0 10px 30px rgba(0,0,0,0.1);
             
-            --border-style: solid;
-            --border-width: 1px;
-            --border-color: #f3f4f6; /* border-gray-100 */
-            
-            /* 关键修复：图标颜色循环 */
-            --color-icon-accent-1: #f97316; /* orange-500 */
-            --color-icon-accent-2: #a855f7; /* purple-500 */
-            --color-icon-accent-3: #14b8a6; /* teal-500 */
-            
-            /* 关键修复：背景光斑颜色 */
-            --hero-blur-color: rgba(239, 246, 255, 0.8); /* blue-50 with opacity */
-            
-            /* 关键修复：列表勾选颜色 */
-            --check-color: #d1d5db; /* gray-300 */
+            /* 特殊元素 */
+            --hero-blur-start: rgba(59, 130, 246, 0.1); /* blue-50/80 approximate */
+            --check-icon-color: #d1d5db; /* gray-300 */
         }
 
         /* 1. Modern Theme (现代蓝) */
@@ -99,21 +90,13 @@
             --color-text-muted: #6b7280;
             --color-btn-bg: #3b82f6;
             --color-btn-text: #ffffff;
+            --color-border: #e5e7eb;
             --radius-card: 1.5rem;
             --radius-btn: 0.75rem;
             --box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             --box-shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            --border-style: solid;
-            --border-width: 1px;
-            --border-color: #e5e7eb;
-            
-            /* 图标颜色统一跟随主题 */
-            --color-icon-accent-1: #3b82f6;
-            --color-icon-accent-2: #3b82f6;
-            --color-icon-accent-3: #3b82f6;
-            
-            --hero-blur-color: rgba(59, 130, 246, 0.1);
-            --check-color: #93c5fd; /* blue-300 */
+            --hero-blur-start: rgba(59, 130, 246, 0.15);
+            --check-icon-color: #93c5fd;
         }
 
         /* 2. Classic Theme (经典商务) */
@@ -127,20 +110,13 @@
             --color-text-muted: #475569;
             --color-btn-bg: #1e3a8a;
             --color-btn-text: #ffffff;
+            --color-border: #cbd5e1;
             --radius-card: 0px; 
             --radius-btn: 2px;
             --box-shadow: 0 1px 3px rgba(0,0,0,0.05);
             --box-shadow-hover: 0 4px 6px rgba(0,0,0,0.1);
-            --border-style: solid;
-            --border-width: 1px;
-            --border-color: #e2e8f0;
-            
-            --color-icon-accent-1: #1e3a8a;
-            --color-icon-accent-2: #1e3a8a;
-            --color-icon-accent-3: #1e3a8a;
-            
-            --hero-blur-color: rgba(30, 58, 138, 0.05);
-            --check-color: #cbd5e1;
+            --hero-blur-start: rgba(30, 58, 138, 0.05);
+            --check-icon-color: #cbd5e1;
         }
 
         /* 3. Geek Theme (极客模式) */
@@ -154,20 +130,13 @@
             --color-text-muted: #94a3b8;
             --color-btn-bg: #10b981;
             --color-btn-text: #0f172a;
+            --color-border: #334155;
             --radius-card: 4px;
             --radius-btn: 4px;
             --box-shadow: none;
             --box-shadow-hover: 0 0 0 2px #10b981;
-            --border-style: dashed;
-            --border-width: 1px;
-            --border-color: #334155;
-            
-            --color-icon-accent-1: #10b981;
-            --color-icon-accent-2: #10b981;
-            --color-icon-accent-3: #10b981;
-            
-            --hero-blur-color: rgba(16, 185, 129, 0.1);
-            --check-color: #334155;
+            --hero-blur-start: rgba(16, 185, 129, 0.1);
+            --check-icon-color: #334155;
         }
 
         body {
@@ -180,34 +149,41 @@
             transition: background-color 0.3s, color 0.3s;
         }
 
-        /* 通用卡片类 */
-        .theme-card {
+        /* 通用类：在 Apple 模式下模拟原版，在其他模式下使用变量 */
+        .theme-card-main {
             background-color: var(--color-card);
             border-radius: var(--radius-card);
             box-shadow: var(--box-shadow);
-            border: var(--border-width) var(--border-style) var(--border-color);
+            border: 1px solid var(--color-border);
         }
-        .theme-card:hover {
+        .theme-card-main:hover { box-shadow: var(--box-shadow-hover); }
+
+        /* Profile 卡片特殊处理：原版是 bg-gray-50，悬停变白 */
+        .theme-card-subtle {
+            background-color: #f9fafb; /* gray-50 default */
+            border-radius: var(--radius-card); /* 原版是 rounded-2xl，这里统一使用 radius-card 调整 */
+        }
+        :root[data-theme='apple'] .theme-card-subtle { border-radius: 1rem; } /* 强制 Profile 卡片为 2xl (1rem) */
+        
+        .theme-card-subtle:hover {
+            background-color: var(--color-card);
             box-shadow: var(--box-shadow-hover);
         }
-        .theme-btn {
-            border-radius: var(--radius-btn);
-        }
+        /* 非 Apple 模式下，Subtle 卡片可能需要变色 */
+        :root[data-theme='geek'] .theme-card-subtle { background-color: #1e293b; border: 1px dashed #334155; }
+        :root[data-theme='geek'] .theme-card-subtle:hover { background-color: #0f172a; }
 
-        /* Classic 模式正文微调 */
+        .theme-btn { border-radius: var(--radius-btn); }
+
+        /* Classic 模式字体修正 */
         :root[data-theme='classic'] body { font-family: 'Inter', sans-serif; }
         :root[data-theme='classic'] h1, :root[data-theme='classic'] h2, :root[data-theme='classic'] h3 { font-family: 'Playfair Display', serif; }
 
-        .reveal-hidden {
-            opacity: 0;
-            transform: translateY(30px) scale(0.98);
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-            will-change: transform, opacity;
-        }
+        .reveal-hidden { opacity: 0; transform: translateY(30px) scale(0.98); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform, opacity; }
         .reveal-visible { opacity: 1; transform: translateY(0) scale(1); }
         .tilt-container { perspective: 1000px; transform-style: preserve-3d; }
 
-        /* 打印样式 */
+        /* 打印样式保持不变 */
         #print-view { display: none; }
         @media print {
             #screen-view, header, #backToTop, #wechatModal, .no-print, .tilt-container { display: none !important; }
@@ -261,7 +237,7 @@
         </header>
 
         <section class="pt-40 pb-20 relative overflow-hidden print:pt-10">
-            <div id="hero-bg-blur" class="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] rounded-[100%] blur-3xl -z-10 opacity-60 print:hidden transition-colors" style="background: linear-gradient(to bottom, var(--hero-blur-color), transparent);"></div>
+            <div id="hero-bg-blur" class="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-gradient-to-b rounded-[100%] blur-3xl -z-10 opacity-60 print:hidden transition-colors" style="background: linear-gradient(to bottom, var(--hero-blur-start), transparent);"></div>
             
             <div class="container mx-auto px-4 md:px-6 flex flex-col md:flex-row items-center gap-12 md:gap-20">
                 <div class="md:w-1/2 text-center md:text-left z-10">
@@ -290,7 +266,7 @@
         <section id="profile" class="py-20 reveal-hidden print:py-5">
             <div class="container mx-auto px-4 md:px-6 max-w-5xl">
                 <div class="text-center mb-12"><h2 class="text-3xl font-bold text-main" id="t-profile"></h2></div>
-                <div class="theme-card p-8 md:p-12">
+                <div class="theme-card-main p-8 md:p-12">
                     <p class="text-muted mb-10 leading-relaxed text-lg" id="profile-summary"></p>
                     <div class="grid md:grid-cols-3 gap-6" id="profile-cards"></div>
                 </div>
@@ -315,15 +291,15 @@
             <div class="container mx-auto px-4 md:px-6">
                 <div class="text-center mb-16"><h2 class="text-3xl font-bold text-main" id="t-edu"></h2></div>
                 <div class="grid md:grid-cols-2 gap-8" id="edu-container">
-                    <div class="theme-card p-8 h-full reveal-hidden" id="edu-col-left"></div>
-                    <div class="theme-card p-8 h-full reveal-hidden" style="transition-delay: 100ms" id="edu-col-right"></div>
+                    <div class="theme-card-main p-8 h-full reveal-hidden" id="edu-col-left"></div>
+                    <div class="theme-card-main p-8 h-full reveal-hidden" style="transition-delay: 100ms" id="edu-col-right"></div>
                 </div>
             </div>
         </section>
 
         <section id="contact" class="py-24 border-t border-gray-200/20 print:py-5 print:break-inside-avoid bg-white/5">
             <div class="container mx-auto px-4 md:px-6">
-                <div class="max-w-4xl mx-auto theme-card p-8 md:p-12 reveal-hidden" id="contact-area"></div>
+                <div class="max-w-4xl mx-auto theme-card-main p-8 md:p-12 reveal-hidden" id="contact-area"></div>
             </div>
         </section>
 
@@ -394,11 +370,12 @@
                 const fullData = await res.json();
                 const data = fullData[currentLang];
                 
+                // 获取主题，默认为 apple
                 const theme = fullData[currentLang].ui.theme || 'apple';
                 document.documentElement.setAttribute('data-theme', theme);
                 
                 if(fullData['en']) document.getElementById('copyright-name').textContent = fullData['en'].basic_info.name;
-                render(data);
+                render(data, theme);
                 renderPrintView(data, fullData[currentLang].ui); 
                 
                 setTimeout(() => { document.querySelectorAll('.reveal-hidden').forEach(el => observer.observe(el)); }, 100);
@@ -411,7 +388,7 @@
             loadResume();
         }
 
-        function render(data) {
+        function render(data, theme) {
             const basic = data.basic_info;
             const ui = data.ui;
             const labelLang = currentLang === 'zh' ? 'EN' : '中文';
@@ -430,11 +407,11 @@
             document.getElementById('hero-title').textContent = basic.titles;
             document.getElementById('hero-tags').innerHTML = basic.tags.map(t => `<span class="bg-white/50 backdrop-blur border border-gray-200/50 text-muted px-4 py-1.5 rounded-full text-sm font-medium shadow-sm">${t}</span>`).join('');
             
-            // 修复：按钮样式使用变量，确保 Apple 模式下 Contact 按钮为纯黑 (#000000)
+            // 修复：Contact 按钮使用 CSS 变量，Exp 按钮使用通用类
             document.getElementById('hero-btns').innerHTML = `
-                <a href="#contact" class="bg-btn-bg text-btn-text px-8 py-3 font-medium hover:bg-opacity-80 hover:scale-105 transition-all duration-300 shadow-lg theme-btn"><i class="fa fa-envelope mr-2"></i> ${ui.buttons.contact}</a>
-                <a href="#experience" class="bg-white text-main border border-gray-200 px-8 py-3 font-medium hover:bg-gray-50 transition-all hover:scale-105 shadow-sm theme-btn"><i class="fa fa-briefcase mr-2"></i> ${ui.buttons.exp}</a>
-                <button onclick="window.print()" class="bg-white text-main border border-gray-200 px-8 py-3 font-medium hover:bg-gray-50 transition-all hover:scale-105 shadow-sm theme-btn flex items-center gap-2"><i class="fa fa-print"></i> ${ui.buttons.print}</button>
+                <a href="#contact" class="bg-btn-bg text-btn-text px-8 py-3 font-medium hover:bg-opacity-80 hover:scale-105 transition-all duration-300 shadow-lg theme-btn flex items-center"><i class="fa fa-envelope mr-2"></i> ${ui.buttons.contact}</a>
+                <a href="#experience" class="bg-white text-main border border-border-color px-8 py-3 font-medium hover:bg-gray-50 transition-all hover:scale-105 shadow-sm theme-btn flex items-center"><i class="fa fa-briefcase mr-2"></i> ${ui.buttons.exp}</a>
+                <button onclick="window.print()" class="bg-white text-main border border-border-color px-8 py-3 font-medium hover:bg-gray-50 transition-all hover:scale-105 shadow-sm theme-btn flex items-center gap-2"><i class="fa fa-print"></i> ${ui.buttons.print}</button>
             `;
             document.getElementById('hero-avatar').src = basic.avatar;
             document.getElementById('hero-location').textContent = basic.location;
@@ -442,8 +419,8 @@
             document.getElementById('t-profile').textContent = ui.section_titles.profile;
             document.getElementById('profile-summary').innerHTML = data.profile.summary;
             document.getElementById('profile-cards').innerHTML = data.profile.cards.map((c, i) => `
-                <div class="group bg-gray-50/50 rounded-xl p-6 hover:bg-white hover:shadow-custom-hover transition-all duration-300 reveal-hidden border border-transparent hover:border-gray-100" style="transition-delay: ${i*100}ms">
-                    <div class="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center text-lg mb-4 group-hover:scale-110 transition-transform"><i class="fa ${c.icon}"></i></div>
+                <div class="group theme-card-subtle p-6 transition-all duration-300 reveal-hidden" style="transition-delay: ${i*100}ms">
+                    <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-lg mb-4 group-hover:scale-110 transition-transform"><i class="fa ${c.icon}"></i></div>
                     <h3 class="font-bold text-main mb-2">${c.title}</h3>
                     <p class="text-sm text-muted leading-relaxed">${c.desc}</p>
                 </div>`).join('');
@@ -451,13 +428,12 @@
             document.getElementById('t-skills').textContent = ui.section_titles.skills;
             const bentoContainer = document.getElementById('skills-bento-container');
             const chartData = data.skills.chart;
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            const chartColor = currentTheme === 'geek' ? '#10b981' : (currentTheme === 'classic' ? '#1e3a8a' : '#0071e3');
+            const chartColor = theme === 'geek' ? '#10b981' : (theme === 'classic' ? '#1e3a8a' : '#0071e3');
             
             let bentoHTML = `
-                <div class="col-span-1 md:col-span-1 lg:col-span-3 theme-card p-6 flex flex-col relative overflow-hidden reveal-hidden">
+                <div class="col-span-1 md:col-span-1 lg:col-span-3 theme-card-main p-6 flex flex-col relative overflow-hidden reveal-hidden">
                     <div class="flex items-center gap-3 mb-4 z-10">
-                        <div class="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center"><i class="fa fa-pie-chart"></i></div>
+                        <div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center"><i class="fa fa-pie-chart"></i></div>
                         <h3 class="font-bold text-main">${ui.section_titles.chart} (Radar)</h3>
                     </div>
                     <div class="flex-1 min-h-[300px] flex items-center justify-center min-w-0">
@@ -466,9 +442,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-span-1 md:col-span-1 lg:col-span-3 theme-card p-6 reveal-hidden">
+                <div class="col-span-1 md:col-span-1 lg:col-span-3 theme-card-main p-6 reveal-hidden">
                     <div class="flex items-center gap-3 mb-6 pb-3 border-b border-gray-100/50">
-                        <div class="w-8 h-8 rounded-lg bg-secondary/10 text-secondary flex items-center justify-center"><i class="fa fa-sliders"></i></div>
+                        <div class="w-8 h-8 rounded-lg bg-green-50 text-green-600 flex items-center justify-center"><i class="fa fa-sliders"></i></div>
                         <h3 class="font-bold text-main">${ui.section_titles.chart} (Levels)</h3>
                     </div>
                     <div class="space-y-6">
@@ -485,13 +461,18 @@
                 </div>
             `;
             
-            // 修复：图标颜色使用 CSS 变量，确保 Apple 模式下分别显示橙、紫、青
-            const iconVars = ['text-icon-accent-1', 'text-icon-accent-2', 'text-icon-accent-3'];
+            // 修复：Apple 模式下使用彩色图标，其他模式使用单色
             data.skills.card_groups.forEach((g, idx) => {
+                let iconClass = 'text-primary';
+                if(theme === 'apple') {
+                    const colors = ['text-orange-500', 'text-purple-500', 'text-teal-500'];
+                    iconClass = colors[idx % 3];
+                }
+                
                 bentoHTML += `
-                <div class="col-span-1 md:col-span-1 lg:col-span-2 theme-card p-6 hover:-translate-y-1 transition-all duration-300 reveal-hidden" style="transition-delay: ${(idx+1)*100}ms">
+                <div class="col-span-1 md:col-span-1 lg:col-span-2 theme-card-main p-6 hover:-translate-y-1 transition-all duration-300 reveal-hidden" style="transition-delay: ${(idx+1)*100}ms">
                     <div class="flex items-center gap-3 mb-4 pb-3 border-b border-gray-100/50">
-                        <i class="fa ${g.icon} ${iconVars[idx%3]} text-lg"></i>
+                        <i class="fa ${g.icon} ${iconClass} text-lg"></i>
                         <h3 class="font-bold text-main">${g.title}</h3>
                     </div>
                     <ul class="space-y-3">
@@ -509,9 +490,9 @@
                     datasets: [{ 
                         label: 'Level', 
                         data: chartData.data, 
-                        backgroundColor: currentTheme === 'geek' ? 'rgba(16, 185, 129, 0.2)' : 'rgba(0, 113, 227, 0.2)', 
+                        backgroundColor: theme === 'geek' ? 'rgba(16, 185, 129, 0.2)' : 'rgba(0, 113, 227, 0.2)', 
                         borderColor: chartColor, 
-                        pointBackgroundColor: currentTheme === 'geek' ? '#0f172a' : '#fff', 
+                        pointBackgroundColor: theme === 'geek' ? '#0f172a' : '#fff', 
                         pointBorderColor: chartColor, 
                         borderWidth: 2 
                     }]
@@ -522,7 +503,7 @@
                         r: { 
                             min: 0, max: 100, 
                             ticks: { display: true, stepSize: 20, backdropColor: 'transparent', font: { size: 10 }, color: '#999' },
-                            grid: { color: currentTheme === 'geek' ? '#334155' : '#f0f0f0' },
+                            grid: { color: theme === 'geek' ? '#334155' : '#f0f0f0' },
                             pointLabels: { font: { size: 12, weight: '600', family: 'var(--font-main)' }, color: 'var(--color-text-muted)' }
                         } 
                     }, 
@@ -531,7 +512,7 @@
             });
 
             document.getElementById('t-exp').textContent = ui.section_titles.experience;
-            // 修复：工作经历部分样式，确保 Apple 模式下左侧边框和图标颜色正确
+            // 修复：左侧线和图标颜色使用 CSS 变量，确保 Apple 模式下为灰色
             document.getElementById('exp-list').innerHTML = data.experience.map(job => `
                 <div class="relative pl-0 md:pl-0 reveal-hidden">
                     <div class="flex flex-col md:flex-row gap-8 md:gap-16">
@@ -543,12 +524,12 @@
                                 <p class="text-gray-400 text-xs flex items-center md:justify-end gap-1"><i class="fa fa-map-marker"></i> ${job.location}</p>
                             </div>
                         </div>
-                        <div class="md:w-2/3 border-l-2 border-border-color pl-8 py-2 space-y-8">
+                        <div class="md:w-2/3 border-l-2 border-gray-100 pl-8 py-2 space-y-8" style="border-color: var(--color-border);">
                             ${job.projects.map(p => `
                                 <div class="group">
                                     ${p.title ? `<h4 class="font-bold text-main mb-3 text-lg flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-primary"></span> ${p.title}</h4>` : ''}
                                     <ul class="space-y-4">
-                                        ${p.details.map(d => `<li class="flex items-start gap-3 text-[15px] text-muted leading-relaxed group-hover:text-main transition-colors"><i class="fa fa-check text-check-color mt-1 shrink-0 text-xs"></i><span>${d}</span></li>`).join('')}
+                                        ${p.details.map(d => `<li class="flex items-start gap-3 text-[15px] text-muted leading-relaxed group-hover:text-main transition-colors"><i class="fa fa-check mt-1 shrink-0 text-xs" style="color: var(--check-icon-color)"></i><span>${d}</span></li>`).join('')}
                                     </ul>
                                 </div>
                             `).join('')}
