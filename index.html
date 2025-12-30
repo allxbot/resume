@@ -9,139 +9,174 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script>
-        tailwind.config = { theme: { extend: { colors: { primary: '#165DFF', secondary: '#36CFC9' }, fontFamily: { inter: ['Inter', 'sans-serif'] } } } }
+        tailwind.config = { 
+            theme: { 
+                extend: { 
+                    colors: { primary: '#0071e3', secondary: '#42a5f5' }, 
+                    fontFamily: { inter: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'] },
+                    boxShadow: { 'apple': '0 4px 20px rgba(0,0,0,0.06)', 'apple-hover': '0 10px 30px rgba(0,0,0,0.1)' }
+                } 
+            } 
+        }
     </script>
     <style type="text/tailwindcss">
         @layer utilities { 
-            .progress-bar { height: 8px; background: linear-gradient(90deg, #165DFF var(--progress), #E5E6EB var(--progress)); border-radius: 4px; } 
+            .progress-bar { height: 6px; background: linear-gradient(90deg, #0071e3 var(--progress), #F5F5F7 var(--progress)); border-radius: 4px; } 
         }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            letter-spacing: -0.01em;
+            background-color: #fbfbfd;
+        }
+
+        .reveal-hidden {
+            opacity: 0;
+            transform: translateY(30px) scale(0.98);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform, opacity;
+        }
+        .reveal-visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .tilt-container { perspective: 1000px; transform-style: preserve-3d; }
+
         @media print { 
-            body { color: black; } 
-            header, .no-print, #mobile-menu-container { display: none !important; } 
-            .card-hover { box-shadow: none !important; border: 1px solid #eee; } 
+            body { color: black; background-color: white; } 
+            header, .no-print, #mobile-menu-container, #hero-btns, #backToTop { display: none !important; } 
+            .reveal-hidden { opacity: 1 !important; transform: none !important; } 
+            .shadow-apple, .shadow-sm, .shadow-xl { box-shadow: none !important; border: 1px solid #eee; }
             .break-inside-avoid { break-inside: avoid; }
         }
-        #mobile-menu { transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out; max-height: 0; opacity: 0; overflow: hidden; }
+        #mobile-menu { transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease; max-height: 0; opacity: 0; overflow: hidden; }
         #mobile-menu.open { max-height: 400px; opacity: 1; }
     </style>
 </head>
-<body class="font-inter bg-gray-100 text-gray-700">
+<body class="font-inter text-gray-800 selection:bg-blue-100 selection:text-blue-900">
 
-    <header id="navbar" class="fixed w-full bg-white/95 backdrop-blur-sm shadow-sm z-50 print:hidden transition-all duration-300">
-        <div class="container mx-auto px-4 md:px-6 py-3">
+    <header id="navbar" class="fixed w-full top-0 left-0 transition-all duration-300 z-50 py-4 bg-transparent print:hidden">
+        <div class="container mx-auto px-4 md:px-6">
             <div class="flex justify-between items-center">
-                <a href="#" class="text-xl font-bold text-primary truncate" id="nav-name"> </a>
-                <div class="hidden md:flex items-center gap-6">
-                    <nav class="flex space-x-6 text-sm font-medium" id="nav-menu-desktop"></nav>
-                    <button id="langSwitch" class="flex items-center gap-2 border px-3 py-1 rounded-full text-sm font-medium hover:border-primary transition text-gray-600 hover:text-primary">
+                <a href="#" class="text-xl font-bold text-gray-900 tracking-tight flex items-center gap-2" id="nav-name"></a>
+                
+                <div class="hidden md:flex items-center gap-1 px-2" id="nav-pill">
+                    <nav class="flex text-sm font-medium text-gray-600 space-x-1" id="nav-menu-desktop"></nav>
+                    <div class="w-px h-4 bg-gray-300 mx-3"></div>
+                    <button id="langSwitch" class="flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-semibold hover:bg-black/5 transition text-gray-500 hover:text-black">
                         <i class="fa fa-globe"></i> <span id="langLabel">EN</span>
                     </button>
                 </div>
+
                 <div class="flex items-center gap-4 md:hidden">
                     <button id="langSwitchMobile" class="border px-2 py-1 rounded text-xs font-medium hover:border-primary text-gray-600">
                         <span id="langLabelMobile">EN</span>
                     </button>
-                    <button id="mobile-menu-btn" class="text-gray-600 hover:text-primary focus:outline-none">
+                    <button id="mobile-menu-btn" class="text-gray-600 hover:text-black focus:outline-none transition p-1">
                         <i class="fa fa-bars text-2xl"></i>
                     </button>
                 </div>
             </div>
-            <div id="mobile-menu" class="md:hidden border-t mt-3 border-gray-100">
+            <div id="mobile-menu" class="md:hidden border-t mt-3 border-gray-200/50">
                 <nav class="flex flex-col space-y-2 py-4" id="nav-menu-mobile"></nav>
             </div>
         </div>
     </header>
 
-    <section class="pt-32 pb-20 bg-gradient-to-br from-primary/5 to-secondary/5 print:pt-10">
-        <div class="container mx-auto px-4 md:px-6 flex flex-col md:flex-row items-center gap-10">
-            <div class="md:w-1/2 text-center md:text-left">
-                <h1 class="text-3xl md:text-5xl font-bold text-gray-800 mb-4 leading-tight" id="hero-name"></h1>
-                <p class="text-lg md:text-xl text-gray-500 mb-6 font-light" id="hero-title"></p>
-                <div class="flex flex-wrap justify-center md:justify-start gap-2 mb-8" id="hero-tags"></div>
-                <div class="flex flex-wrap justify-center md:justify-start gap-4 print:hidden" id="hero-btns"></div>
+    <section class="pt-40 pb-20 relative overflow-hidden print:pt-10">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-gradient-to-b from-blue-50/80 to-transparent rounded-[100%] blur-3xl -z-10 opacity-60 print:hidden"></div>
+
+        <div class="container mx-auto px-4 md:px-6 flex flex-col md:flex-row items-center gap-12 md:gap-20">
+            <div class="md:w-1/2 text-center md:text-left z-10">
+                <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight tracking-tight reveal-hidden" id="hero-name"></h1>
+                <p class="text-xl md:text-2xl text-gray-500 mb-8 font-light reveal-hidden" style="transition-delay: 100ms" id="hero-title"></p>
+                <div class="flex flex-wrap justify-center md:justify-start gap-3 mb-10 reveal-hidden" style="transition-delay: 200ms" id="hero-tags"></div>
+                <div class="flex flex-wrap justify-center md:justify-start gap-4 print:hidden reveal-hidden" style="transition-delay: 300ms" id="hero-btns"></div>
             </div>
-            <div class="md:w-1/2 flex justify-center">
-                <div class="relative">
-                    <div class="w-64 h-64 md:w-80 md:h-80 rounded-full bg-gradient-to-br from-primary to-secondary p-1 shadow-xl">
-                        <div class="w-full h-full rounded-full bg-white flex items-center justify-center overflow-hidden border-4 border-white">
-                            <img id="hero-avatar" src="" alt="Profile Photo" class="w-full h-full object-cover">
-                        </div>
+            
+            <div class="md:w-1/2 flex justify-center tilt-container reveal-hidden" style="transition-delay: 200ms">
+                <div id="hero-tilt" class="relative w-64 h-64 md:w-80 md:h-80 transition-transform duration-100 ease-out cursor-pointer group">
+                    <div class="absolute inset-0 rounded-full bg-gradient-to-tr from-blue-200 to-purple-200 blur-2xl opacity-40 group-hover:opacity-60 transition-opacity duration-500 print:hidden"></div>
+                    <div class="w-full h-full rounded-full bg-white p-1.5 shadow-apple relative overflow-hidden border border-white/50">
+                        <img id="hero-avatar" src="" alt="Profile" class="w-full h-full rounded-full object-cover">
                     </div>
-                    <div class="absolute -bottom-4 -right-4 bg-white p-3 rounded-lg shadow-lg print:hidden border border-gray-100">
-                        <div class="flex items-center gap-2">
-                            <i class="fa fa-map-marker text-primary text-xl"></i>
-                            <span class="text-gray-600 font-medium" id="hero-location"></span>
-                        </div>
+                    <div class="absolute bottom-4 right-4 bg-white/90 backdrop-blur shadow-lg px-4 py-2 rounded-full border border-white/50 flex items-center gap-2 transform translate-z-10 group-hover:scale-105 transition print:hidden">
+                        <i class="fa fa-map-marker text-red-500"></i>
+                        <span class="text-xs font-semibold text-gray-700" id="hero-location"></span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="profile" class="py-16 bg-white print:py-5 scroll-mt-20">
+    <section id="profile" class="py-20 bg-white/50 reveal-hidden print:py-5">
         <div class="container mx-auto px-4 md:px-6 max-w-5xl">
-            <div class="text-center mb-10"><h2 class="text-3xl font-bold text-gray-800 mb-2" id="t-profile"></h2><div class="w-16 h-1 bg-primary mx-auto rounded"></div></div>
-            <div class="bg-gray-50 p-6 md:p-10 rounded-2xl shadow-sm print:border border border-gray-100">
-                <p class="text-gray-600 mb-8 leading-relaxed text-base md:text-lg" id="profile-summary"></p>
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900" id="t-profile"></h2>
+            </div>
+            <div class="bg-white rounded-[2rem] p-8 md:p-12 shadow-apple border border-gray-100">
+                <p class="text-gray-600 mb-10 leading-relaxed text-lg" id="profile-summary"></p>
                 <div class="grid md:grid-cols-3 gap-6" id="profile-cards"></div>
             </div>
         </div>
     </section>
 
-    <section id="skills" class="py-16 bg-gray-50 print:py-5 scroll-mt-20">
+    <section id="skills" class="py-20 reveal-hidden print:py-5 print:break-inside-avoid">
         <div class="container mx-auto px-4 md:px-6">
-            <div class="text-center mb-12"><h2 class="text-3xl font-bold text-gray-800 mb-2" id="t-skills"></h2><div class="w-16 h-1 bg-primary mx-auto rounded"></div></div>
-            <div class="grid md:grid-cols-3 gap-6" id="skill-groups"></div>
-            <div class="mt-12 bg-white p-6 md:p-10 rounded-2xl shadow-sm grid md:grid-cols-2 gap-10 items-center print:border print:break-inside-avoid">
-            <div class="w-full flex justify-center min-w-0">
-                <div class="relative w-full h-[300px] md:h-[400px]">
-                <canvas id="skillsChart"></canvas>
-                </div>
-             </div>
-                <div class="space-y-5" id="chart-bars"></div>
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900" id="t-skills"></h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6" id="skills-bento-container"></div>
+        </div>
+    </section>
+
+    <section id="experience" class="py-20 bg-white/50 print:py-5">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="text-center mb-16"><h2 class="text-3xl font-bold text-gray-900" id="t-exp"></h2></div>
+            <div class="max-w-5xl mx-auto space-y-12" id="exp-list"></div>
+        </div>
+    </section>
+
+    <section id="education" class="py-20 print:py-5 print:break-inside-avoid">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="text-center mb-16"><h2 class="text-3xl font-bold text-gray-900" id="t-edu"></h2></div>
+            <div class="grid md:grid-cols-2 gap-8" id="edu-container">
+                <div class="bg-white p-8 rounded-[2rem] shadow-apple border border-gray-100 h-full reveal-hidden" id="edu-col-left"></div>
+                <div class="bg-white p-8 rounded-[2rem] shadow-apple border border-gray-100 h-full reveal-hidden" style="transition-delay: 100ms" id="edu-col-right"></div>
             </div>
         </div>
     </section>
 
-    <section id="experience" class="py-16 bg-white print:py-5 scroll-mt-20">
+    <section id="contact" class="py-24 bg-white border-t border-gray-100 print:py-5 print:break-inside-avoid">
         <div class="container mx-auto px-4 md:px-6">
-            <div class="text-center mb-12"><h2 class="text-3xl font-bold text-gray-800 mb-2" id="t-exp"></h2><div class="w-16 h-1 bg-primary mx-auto rounded"></div></div>
-            <div class="max-w-6xl mx-auto" id="exp-list"></div>
+            <div class="max-w-4xl mx-auto bg-gray-50 rounded-[2.5rem] p-8 md:p-12 shadow-inner reveal-hidden" id="contact-area"></div>
         </div>
     </section>
 
-    <section id="education" class="py-16 bg-gray-50 print:py-5 scroll-mt-20">
-        <div class="container mx-auto px-4 md:px-6">
-            <div class="text-center mb-12"><h2 class="text-3xl font-bold text-gray-800 mb-2" id="t-edu"></h2><div class="w-16 h-1 bg-primary mx-auto rounded"></div></div>
-            <div class="grid md:grid-cols-2 gap-8">
-                <div class="bg-white p-8 rounded-2xl shadow-sm print:border h-full" id="edu-col-left"></div>
-                <div class="bg-white p-8 rounded-2xl shadow-sm print:border h-full" id="edu-col-right"></div>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact" class="py-20 bg-white print:py-5 scroll-mt-20">
-        <div class="container mx-auto px-4 md:px-6">
-            <div class="text-center mb-12"><h2 class="text-3xl font-bold text-gray-800 mb-2" id="t-contact"></h2><div class="w-16 h-1 bg-primary mx-auto rounded"></div></div>
-            <div class="max-w-3xl mx-auto bg-gray-50 p-8 rounded-xl shadow-sm print:border print:bg-white print:p-4" id="contact-area"></div>
-        </div>
-    </section>
-
-    <footer class="bg-gray-800 text-white py-12 print:hidden text-center">
-        <h3 class="text-xl font-bold mb-2" id="f-name"></h3>
-        <p class="text-gray-400 mb-6 text-sm" id="f-desc"></p>
-        <div class="flex justify-center space-x-4 mb-6" id="social-icons"></div>
-        <p class="text-gray-500 text-xs">© 2026 <span id="copyright-name"></span>. All rights reserved.</p>
+    <footer class="bg-gray-50 text-gray-400 py-12 print:hidden text-center border-t border-gray-200">
+        <h3 class="text-lg font-bold text-gray-800 mb-2" id="f-name"></h3>
+        <p class="text-sm mb-6" id="f-desc"></p>
+        <div class="flex justify-center space-x-6 mb-8" id="social-icons"></div>
+        <p class="text-xs text-gray-300">© 2026 <span id="copyright-name"></span>. All rights reserved.</p>
     </footer>
 
-    <div id="wechatModal" class="hidden fixed inset-0 z-[60] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4" onclick="this.classList.add('hidden')">
-        <div class="bg-white p-6 rounded-2xl shadow-2xl max-w-sm w-full text-center transform transition-all scale-100" onclick="event.stopPropagation()">
-            <h3 id="modal-title" class="text-lg font-bold mb-4 text-gray-800">Scan QR Code</h3>
-            <div class="bg-gray-100 p-2 rounded-lg inline-block mb-4">
-                <img id="modal-qr" src="" class="w-56 h-56 object-contain mix-blend-multiply">
+    <button id="backToTop" class="fixed bottom-8 right-8 w-12 h-12 bg-white/80 backdrop-blur-md border border-gray-200/50 rounded-full shadow-apple flex items-center justify-center text-gray-600 hover:text-black hover:scale-110 hover:-translate-y-1 transition-all duration-500 z-40 opacity-0 invisible translate-y-4 group">
+        <i class="fa fa-arrow-up transition-transform duration-300 group-hover:-translate-y-0.5"></i>
+    </button>
+
+    <div id="wechatModal" class="hidden fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-md p-4 transition-opacity duration-300" onclick="this.classList.add('hidden')">
+        <div class="bg-white p-8 rounded-[2rem] shadow-2xl max-w-sm w-full text-center transform scale-100 transition-transform duration-300" onclick="event.stopPropagation()">
+            <h3 id="modal-title" class="text-xl font-bold mb-6 text-gray-900">Scan QR Code</h3>
+            <div class="bg-gray-100 p-3 rounded-2xl inline-block mb-6 shadow-inner">
+                <img id="modal-qr" src="" class="w-48 h-48 object-contain mix-blend-multiply">
             </div>
-            <p class="text-gray-600 font-mono text-sm bg-gray-50 py-2 rounded border border-gray-100" id="modal-text"></p>
-            <button id="modal-close" onclick="document.getElementById('wechatModal').classList.add('hidden')" class="mt-6 text-sm text-gray-400 hover:text-gray-600 underline">Close</button>
+            <p class="text-gray-500 font-mono text-sm bg-gray-50 py-2 px-4 rounded-lg border border-gray-100 inline-block" id="modal-text"></p>
+            <div class="mt-8">
+                <button onclick="document.getElementById('wechatModal').classList.add('hidden')" class="text-sm font-medium text-blue-600 hover:text-blue-700 hover:bg-blue-50 px-4 py-2 rounded-full transition">Close</button>
+            </div>
         </div>
     </div>
 
@@ -149,30 +184,71 @@
         let currentLang = localStorage.getItem('lang') || 'zh';
         let myChart = null;
 
+        const navbar = document.getElementById('navbar');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const backToTopBtn = document.getElementById('backToTop');
+
+        function updateNavbarStyle() {
+            const isScrolled = window.scrollY > 50;
+            const isMenuOpen = mobileMenu.classList.contains('open');
+
+            if (isScrolled || isMenuOpen) {
+                navbar.classList.remove('py-4', 'bg-transparent');
+                navbar.classList.add('py-3', 'bg-white/90', 'backdrop-blur-xl', 'border-b', 'border-gray-200/50', 'shadow-sm');
+            } else {
+                navbar.classList.add('py-4', 'bg-transparent');
+                navbar.classList.remove('py-3', 'bg-white/90', 'backdrop-blur-xl', 'border-b', 'border-gray-200/50', 'shadow-sm');
+            }
+
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.remove('opacity-0', 'invisible', 'translate-y-4');
+                backToTopBtn.classList.add('opacity-100', 'visible', 'translate-y-0');
+            } else {
+                backToTopBtn.classList.add('opacity-0', 'invisible', 'translate-y-4');
+                backToTopBtn.classList.remove('opacity-100', 'visible', 'translate-y-0');
+            }
+        }
+
+        window.addEventListener('scroll', updateNavbarStyle);
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+            updateNavbarStyle();
+        });
+
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        const heroTilt = document.getElementById('hero-tilt');
+        if(heroTilt) {
+            heroTilt.addEventListener('mousemove', (e) => {
+                const rect = heroTilt.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const xRotation = -((y - rect.height/2) / rect.height * 10);
+                const yRotation = (x - rect.width/2) / rect.width * 10;
+                heroTilt.style.transform = `rotateX(${xRotation}deg) rotateY(${yRotation}deg) scale(1.02)`;
+            });
+            heroTilt.addEventListener('mouseleave', () => {
+                heroTilt.style.transform = 'rotateX(0) rotateY(0) scale(1)';
+            });
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('reveal-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+
         document.addEventListener('DOMContentLoaded', () => {
             loadResume();
             document.getElementById('langSwitch').addEventListener('click', toggleLanguage);
             document.getElementById('langSwitchMobile').addEventListener('click', toggleLanguage);
-            
-            const navbar = document.getElementById('navbar');
-            const backToTop = document.getElementById('backToTop');
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 100) {
-                    navbar.classList.add('py-2', 'shadow');
-                    navbar.classList.remove('py-3');
-                    backToTop.classList.remove('opacity-0', 'invisible');
-                    backToTop.classList.add('opacity-100', 'visible');
-                } else {
-                    navbar.classList.add('py-3');
-                    navbar.classList.remove('py-2', 'shadow');
-                    backToTop.classList.add('opacity-0', 'invisible');
-                    backToTop.classList.remove('opacity-100', 'visible');
-                }
-            });
-            backToTop.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
-            document.getElementById('mobile-menu-btn').addEventListener('click', () => {
-                document.getElementById('mobile-menu').classList.toggle('open');
-            });
         });
 
         function toggleLanguage() {
@@ -189,72 +265,123 @@
                     document.getElementById('copyright-name').textContent = fullData['en'].basic_info.name;
                 }
                 render(fullData[currentLang]);
+                
+                setTimeout(() => {
+                    document.querySelectorAll('.reveal-hidden').forEach(el => observer.observe(el));
+                }, 100);
+
             } catch(e) { console.error(e); }
         }
 
         function render(data) {
             const basic = data.basic_info;
-            document.title = `${basic.name} - ${currentLang === 'zh' ? '个人简历' : 'Resume'}`;
-
             const ui = data.ui;
             const labelLang = currentLang === 'zh' ? 'EN' : '中文';
-            const st = ui.section_titles;
-
-            // Nav & Header
+            
+            document.title = `${basic.name} - ${basic.titles.split('|')[0]}`;
             document.getElementById('langLabel').textContent = labelLang;
             document.getElementById('langLabelMobile').textContent = labelLang;
+            
+            // Nav
             document.getElementById('nav-name').textContent = basic.name;
             const links = ['profile','skills','experience','education','contact'];
-            const navHTML = ui.nav.map((n, i) => `<a href="#${links[i]}" class="hover:text-primary transition-colors block py-2 md:py-0" onclick="document.getElementById('mobile-menu').classList.remove('open')">${n}</a>`).join('');
+            const navHTML = ui.nav.map((n, i) => `<a href="#${links[i]}" class="px-3 py-2 rounded-full hover:bg-gray-100 hover:text-black transition-colors" onclick="document.getElementById('mobile-menu').classList.remove('open'); updateNavbarStyle();">${n}</a>`).join('');
             document.getElementById('nav-menu-desktop').innerHTML = navHTML;
             document.getElementById('nav-menu-mobile').innerHTML = navHTML;
 
             // Hero
             document.getElementById('hero-name').textContent = basic.name;
             document.getElementById('hero-title').textContent = basic.titles;
-            document.getElementById('hero-tags').innerHTML = basic.tags.map(t => `<span class="bg-white/60 backdrop-blur border border-white text-gray-600 px-3 py-1 rounded-full text-sm font-medium shadow-sm">${t}</span>`).join('');
+            document.getElementById('hero-tags').innerHTML = basic.tags.map(t => `<span class="bg-white/80 backdrop-blur border border-gray-200 text-gray-600 px-4 py-1.5 rounded-full text-sm font-medium shadow-sm">${t}</span>`).join('');
+            
+            // --- 恢复 Print 按钮读取 data.json 字段 ---
             document.getElementById('hero-btns').innerHTML = `
-                <a href="#contact" class="bg-primary text-white px-6 py-3 rounded-lg flex items-center gap-2 shadow-lg shadow-primary/30 hover:bg-blue-600 hover:-translate-y-1 transition-all"><i class="fa fa-envelope"></i> ${ui.buttons.contact}</a>
-                <a href="#experience" class="bg-white border border-gray-200 text-gray-700 hover:text-primary hover:border-primary px-6 py-3 rounded-lg flex items-center gap-2 transition hover:-translate-y-1 hover:shadow-md"><i class="fa fa-briefcase"></i> ${ui.buttons.exp}</a>
-                <button onclick="window.print()" class="bg-white border border-gray-200 text-gray-700 hover:text-primary hover:border-primary px-6 py-3 rounded-lg flex items-center gap-2 transition hover:-translate-y-1 hover:shadow-md"><i class="fa fa-print"></i> ${ui.buttons.print}</button>
+                <a href="#contact" class="bg-black text-white px-8 py-3 rounded-full font-medium hover:bg-gray-800 hover:scale-105 transition-all duration-300 shadow-lg shadow-black/20"><i class="fa fa-envelope mr-2"></i> ${ui.buttons.contact}</a>
+                <a href="#experience" class="bg-white text-gray-900 border border-gray-200 px-8 py-3 rounded-full font-medium hover:bg-gray-50 hover:border-gray-300 transition-all hover:scale-105 shadow-sm"><i class="fa fa-briefcase mr-2"></i> ${ui.buttons.exp}</a>
+                <button onclick="window.print()" class="bg-white text-gray-900 border border-gray-200 px-8 py-3 rounded-full font-medium hover:bg-gray-50 hover:border-gray-300 transition-all hover:scale-105 shadow-sm flex items-center gap-2"><i class="fa fa-print"></i> ${ui.buttons.print}</button>
             `;
             document.getElementById('hero-avatar').src = basic.avatar;
             document.getElementById('hero-location').textContent = basic.location;
 
-            // Content
-            document.getElementById('t-profile').textContent = st.profile;
+            // Profile
+            document.getElementById('t-profile').textContent = ui.section_titles.profile;
             document.getElementById('profile-summary').textContent = data.profile.summary;
-            document.getElementById('profile-cards').innerHTML = data.profile.cards.map(c => `
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:border-primary/30 hover:shadow-md transition group">
-                    <div class="w-12 h-12 rounded-lg bg-blue-50 text-primary flex items-center justify-center text-2xl mb-4 group-hover:bg-primary group-hover:text-white transition"><i class="fa ${c.icon}"></i></div>
-                    <h3 class="font-bold text-lg mb-2 text-gray-800">${c.title}</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed">${c.desc}</p>
+            document.getElementById('profile-cards').innerHTML = data.profile.cards.map((c, i) => `
+                <div class="group bg-gray-50 rounded-2xl p-6 hover:bg-white hover:shadow-apple-hover transition-all duration-300 reveal-hidden" style="transition-delay: ${i*100}ms">
+                    <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-lg mb-4 group-hover:scale-110 transition-transform"><i class="fa ${c.icon}"></i></div>
+                    <h3 class="font-bold text-gray-900 mb-2">${c.title}</h3>
+                    <p class="text-sm text-gray-500 leading-relaxed">${c.desc}</p>
                 </div>`).join('');
 
-            document.getElementById('t-skills').textContent = st.skills;
-            document.getElementById('skill-groups').innerHTML = data.skills.card_groups.map(g => `
-                <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100 hover:shadow-md transition h-full flex flex-col">
-                    <div class="bg-gray-50/50 px-6 py-4 border-b border-gray-100 flex items-center gap-3">
-                        <i class="fa ${g.icon} text-primary text-lg"></i><h3 class="font-bold text-gray-800">${g.title}</h3>
-                    </div>
-                    <ul class="p-6 space-y-3 flex-1">
-                        ${g.items.map(item => `<li class="flex items-start gap-3 text-sm text-gray-600"><i class="fa fa-check text-secondary mt-1 shrink-0 text-xs"></i><span class="leading-snug">${item}</span></li>`).join('')}
-                    </ul>
-                </div>`).join('');
-            
-            // --- Chart Update ---
+            // Bento Skills
+            document.getElementById('t-skills').textContent = ui.section_titles.skills;
+            const bentoContainer = document.getElementById('skills-bento-container');
             const chartData = data.skills.chart;
+            
+            // 1. Radar Chart (lg:col-span-3)
+            let bentoHTML = `
+                <div class="col-span-1 md:col-span-1 lg:col-span-3 bg-white rounded-[2rem] p-6 shadow-apple border border-gray-100 flex flex-col relative overflow-hidden reveal-hidden hover:shadow-apple-hover transition-all">
+                    <div class="flex items-center gap-3 mb-4 z-10">
+                        <div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center"><i class="fa fa-pie-chart"></i></div>
+                        <h3 class="font-bold text-gray-900">${ui.section_titles.chart} (Radar)</h3>
+                    </div>
+                    <div class="flex-1 min-h-[300px] flex items-center justify-center min-w-0">
+                        <div class="relative w-full h-full">
+                            <canvas id="skillsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // 2. Levels (lg:col-span-3)
+            bentoHTML += `
+                <div class="col-span-1 md:col-span-1 lg:col-span-3 bg-white rounded-[2rem] p-6 shadow-apple border border-gray-100 reveal-hidden hover:shadow-apple-hover transition-all">
+                    <div class="flex items-center gap-3 mb-6 pb-3 border-b border-gray-50">
+                        <div class="w-8 h-8 rounded-lg bg-green-50 text-green-600 flex items-center justify-center"><i class="fa fa-sliders"></i></div>
+                        <h3 class="font-bold text-gray-900">${ui.section_titles.chart} (Levels)</h3>
+                    </div>
+                    <div class="space-y-6">
+                        ${chartData.labels.map((l, i) => `
+                            <div>
+                                <div class="flex justify-between mb-1.5 text-sm font-semibold text-gray-700">
+                                    <span>${l}</span>
+                                    <span class="text-blue-600">${chartData.data[i]}%</span>
+                                </div>
+                                <div class="progress-bar" style="--progress:${chartData.data[i]}%"></div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            
+            // 3. Card Groups (lg:col-span-2)
+            const iconColors = ['text-orange-500', 'text-purple-500', 'text-teal-500'];
+            data.skills.card_groups.forEach((g, idx) => {
+                bentoHTML += `
+                <div class="col-span-1 md:col-span-1 lg:col-span-2 bg-white rounded-[2rem] p-6 shadow-apple border border-gray-100 hover:shadow-apple-hover hover:-translate-y-1 transition-all duration-300 reveal-hidden" style="transition-delay: ${(idx+1)*100}ms">
+                    <div class="flex items-center gap-3 mb-4 pb-3 border-b border-gray-50">
+                        <i class="fa ${g.icon} ${iconColors[idx%3]} text-lg"></i>
+                        <h3 class="font-bold text-gray-900">${g.title}</h3>
+                    </div>
+                    <ul class="space-y-3">
+                        ${g.items.slice(0, 5).map(item => `<li class="flex items-start gap-2 text-sm text-gray-600"><span class="w-1.5 h-1.5 rounded-full bg-gray-300 mt-1.5 shrink-0"></span><span class="leading-snug">${item}</span></li>`).join('')}
+                    </ul>
+                </div>`;
+            });
+            bentoContainer.innerHTML = bentoHTML;
+
             if(myChart) myChart.destroy();
             myChart = new Chart(document.getElementById('skillsChart'), {
                 type: 'radar',
                 data: {
                     labels: chartData.labels,
                     datasets: [{ 
-                        label: 'Proficiency', 
+                        label: 'Level', 
                         data: chartData.data, 
-                        backgroundColor: 'rgba(22, 93, 255, 0.15)', 
-                        borderColor: '#165DFF', 
-                        pointBackgroundColor: '#165DFF', 
+                        backgroundColor: 'rgba(0, 113, 227, 0.2)', 
+                        borderColor: '#0071e3', 
+                        pointBackgroundColor: '#fff',
+                        pointBorderColor: '#0071e3',
                         borderWidth: 2 
                     }]
                 },
@@ -263,56 +390,35 @@
                     maintainAspectRatio: false,
                     scales: { 
                         r: { 
-                            min: 50, 
-                            max: 100,
-                            ticks: { 
-                                display: true,
-                                stepSize: 10,
-                                backdropColor: 'transparent',
-                                color: '#94a3b8',
-                                font: { size: 10 }
-                            }, 
+                            min: 0, max: 100, 
+                            ticks: { display: false }, 
                             grid: { color: '#f0f0f0' },
-                            pointLabels: {
-                                font: { size: 12, weight: 600 },
-                                color: '#475569'
-                            }
+                            pointLabels: { font: { size: 10, family: 'Inter' }, color: '#666' }
                         } 
                     }, 
-                    plugins: { 
-                        legend: { display: false },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    return context.raw + '%';
-                                }
-                            }
-                        }
-                    } 
+                    plugins: { legend: { display: false } } 
                 }
             });
-            document.getElementById('chart-bars').innerHTML = chartData.labels.map((l, i) => `<div><div class="flex justify-between mb-1 text-sm font-semibold text-gray-700"><span>${l}</span><span class="text-primary">${chartData.data[i]}%</span></div><div class="progress-bar" style="--progress:${chartData.data[i]}%"></div></div>`).join('');
 
             // Experience
-            document.getElementById('t-exp').textContent = st.experience;
+            document.getElementById('t-exp').textContent = ui.section_titles.experience;
             document.getElementById('exp-list').innerHTML = data.experience.map(job => `
-                <div class="mb-12 relative group last:mb-0">
-                    <div class="hidden md:block absolute left-[30%] top-0 bottom-0 w-px bg-gray-200 -z-10 group-last:hidden translate-x-[-1px]"></div>
-                    <div class="flex flex-col md:flex-row gap-6 md:gap-12">
-                        <div class="md:w-1/3 lg:w-1/4 md:text-right flex flex-col md:items-end">
-                            <div class="sticky top-24 bg-gray-100 p-5 shadow-sm rounded-xl border border-gray-200 md:shadow-none md:border-0 md:bg-transparent md:p-0 md:backdrop-blur-none inline-block w-full md:w-auto">
-                                <h3 class="font-bold text-xl text-gray-800 leading-tight">${job.company}</h3>
-                                <div class="text-primary font-bold text-sm mt-1 inline-block bg-blue-50 px-2 py-0.5 rounded">${job.date}</div>
-                                <p class="text-gray-700 font-medium text-sm mt-2">${job.role}</p>
-                                <p class="text-gray-400 text-xs mt-1 flex items-center md:justify-end gap-1"><i class="fa fa-map-marker"></i> ${job.location}</p>
+                <div class="relative pl-0 md:pl-0 reveal-hidden">
+                    <div class="flex flex-col md:flex-row gap-8 md:gap-16">
+                        <div class="md:w-1/3 text-left md:text-right relative">
+                            <div class="sticky top-28 transition-all">
+                                <h3 class="font-bold text-2xl text-gray-900 tracking-tight">${job.company}</h3>
+                                <div class="text-blue-600 font-semibold text-sm mt-1 mb-2 inline-block bg-blue-50 px-3 py-1 rounded-full">${job.date}</div>
+                                <p class="text-gray-700 font-medium mb-1">${job.role}</p>
+                                <p class="text-gray-400 text-xs flex items-center md:justify-end gap-1"><i class="fa fa-map-marker"></i> ${job.location}</p>
                             </div>
                         </div>
-                        <div class="md:w-2/3 lg:w-3/4 space-y-6">
+                        <div class="md:w-2/3 border-l-2 border-gray-100 pl-8 py-2 space-y-8">
                             ${job.projects.map(p => `
-                                <div class="bg-gray-50 p-6 rounded-2xl hover:bg-white hover:shadow-lg transition-all duration-300 border border-gray-100 group-card">
-                                    ${p.title ? `<h4 class="font-bold text-gray-800 mb-3 pb-2 border-b border-gray-200/60 flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> ${p.title}</h4>` : ''}
-                                    <ul class="space-y-3">
-                                        ${p.details.map(d => `<li class="flex items-start gap-3 text-sm text-gray-600 leading-relaxed"><i class="fa fa-angle-right text-gray-300 mt-1 shrink-0 group-card-hover:text-primary transition-colors"></i><span>${d}</span></li>`).join('')}
+                                <div class="group">
+                                    ${p.title ? `<h4 class="font-bold text-gray-800 mb-3 text-lg flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-blue-500"></span> ${p.title}</h4>` : ''}
+                                    <ul class="space-y-4">
+                                        ${p.details.map(d => `<li class="flex items-start gap-3 text-[15px] text-gray-600 leading-relaxed group-hover:text-gray-900 transition-colors"><i class="fa fa-check text-gray-300 mt-1 shrink-0 text-xs"></i><span>${d}</span></li>`).join('')}
                                     </ul>
                                 </div>
                             `).join('')}
@@ -321,56 +427,73 @@
                 </div>`).join('');
 
             // Education
-            document.getElementById('t-edu').textContent = st.education;
-            document.getElementById('edu-col-left').innerHTML = `<h3 class="font-bold text-xl mb-6 text-gray-800 flex items-center gap-2"><i class="fa fa-graduation-cap text-primary"></i> ${st.academic}</h3>` + data.education.map(e => `
-                <div class="mb-8 pl-4 border-l-4 border-primary/20 hover:border-primary transition-colors">
-                    <h4 class="font-bold text-lg text-gray-800">${e.school}</h4>
-                    <p class="text-gray-600 font-medium">${e.degree}</p>
-                    <p class="text-gray-400 text-sm mt-1"><i class="fa fa-calendar-o"></i> ${e.date} &nbsp;|&nbsp; <i class="fa fa-map-marker"></i> ${e.location}</p>
-                </div>`).join('') + `
-                <div class="mt-10 pt-8 border-t border-gray-100">
-                    <h3 class="font-bold text-lg mb-4 flex items-center gap-2 text-gray-800"><i class="fa fa-heart text-red-400"></i> ${st.hobbies}</h3>
-                    <div class="flex flex-wrap gap-2 mb-3">${data.hobbies.items.map(h => `<span class="bg-gray-100 px-3 py-1 rounded-full text-xs font-medium text-gray-600 border border-gray-200">${h}</span>`).join('')}</div>
-                    <p class="text-sm text-gray-500 italic bg-gray-50 p-3 rounded-lg border border-gray-100">"${data.hobbies.desc}"</p>
+            document.getElementById('t-edu').textContent = ui.section_titles.education;
+            document.getElementById('edu-col-left').innerHTML = `
+                <h3 class="font-bold text-xl mb-8 text-gray-900 flex items-center gap-3"><span class="bg-blue-100 text-blue-600 w-8 h-8 rounded-lg flex items-center justify-center text-sm"><i class="fa fa-graduation-cap"></i></span> ${ui.section_titles.academic}</h3>
+                <div class="space-y-8">
+                ${data.education.map(e => `
+                    <div>
+                        <h4 class="font-bold text-lg text-gray-900">${e.school}</h4>
+                        <p class="text-gray-600 font-medium">${e.degree}</p>
+                        <p class="text-gray-400 text-sm mt-1 flex items-center gap-2"><i class="fa fa-calendar-o"></i> ${e.date} &nbsp;•&nbsp; ${e.location}</p>
+                    </div>`).join('')}
+                </div>
+                <div class="mt-12 pt-8 border-t border-gray-100">
+                    <h3 class="font-bold text-lg mb-4 text-gray-900 flex items-center gap-2"><i class="fa fa-heart text-red-400"></i> ${ui.section_titles.hobbies}</h3>
+                    <div class="flex flex-wrap gap-2 mb-4">${data.hobbies.items.map(h => `<span class="bg-gray-100 px-3 py-1 rounded-full text-xs font-medium text-gray-600 border border-transparent hover:border-gray-200 transition">${h}</span>`).join('')}</div>
+                    <p class="text-sm text-gray-500 bg-gray-50 p-4 rounded-xl italic border border-gray-100">"${data.hobbies.desc}"</p>
                 </div>`;
+            
             document.getElementById('edu-col-right').innerHTML = data.tools.map(t => `
                 <div class="mb-8 last:mb-0">
-                    <h3 class="font-bold text-lg mb-4 flex items-center gap-2 text-gray-800"><i class="fa ${t.icon} text-primary"></i> ${t.group}</h3>
+                    <h3 class="font-bold text-lg mb-5 text-gray-900 flex items-center gap-2"><i class="fa ${t.icon} text-gray-400"></i> ${t.group}</h3>
                     <div class="grid grid-cols-2 gap-3">
-                        ${t.list.map(i => `<div class="bg-gray-50 px-3 py-2.5 rounded-lg text-sm flex items-center gap-2 text-gray-700 border border-gray-100 hover:border-primary/30 hover:bg-white hover:shadow-sm transition"><i class="fa fa-check text-primary/40 text-xs"></i>${i}</div>`).join('')}
+                        ${t.list.map(i => `<div class="bg-gray-50 px-4 py-3 rounded-xl text-sm font-medium text-gray-700 border border-transparent hover:border-gray-200 hover:bg-white hover:shadow-sm transition-all cursor-default flex items-center gap-2"><i class="fa fa-check text-xs text-blue-300"></i> ${i}</div>`).join('')}
                     </div>
                 </div>`).join('');
 
             // Contact
-            document.getElementById('t-contact').textContent = st.contact;
-            const cf = ui.contact_form || { title: "Message", label_name: "Name", label_email: "Email", label_msg: "Message", btn_send: "Send", msg_required: "Required" };
-            const cl = ui.contact_labels || { email: "Email", location: "Location" };
+            const cf = ui.contact_form;
+            const cl = ui.contact_labels;
             const formAction = cf.form_id ? `https://formspree.io/f/${cf.form_id}` : '';
             const onSubmitAttr = formAction ? '' : `onsubmit="event.preventDefault(); alert('${currentLang === 'zh' ? '请在后台配置 Form ID' : 'Please config Form ID'}')"`;
+            
             document.getElementById('contact-area').innerHTML = `
-                <div class="grid md:grid-cols-2 gap-8">
-                    <div>
-                        <h3 class="font-semibold text-xl text-gray-700 mb-6">${st.contact_info}</h3>
-                        <div class="space-y-4">
-                            <div class="flex items-start gap-4"><div class="bg-primary/10 p-3 rounded-full text-primary print:border print:bg-white"><i class="fa fa-envelope"></i></div><div><h4 class="font-medium text-gray-700">${cl.email}</h4><p class="text-gray-500">${basic.email}</p></div></div>
-                            <div class="flex items-start gap-4"><div class="bg-primary/10 p-3 rounded-full text-primary print:border print:bg-white"><i class="fa fa-map-marker"></i></div><div><h4 class="font-medium text-gray-700">${cl.location}</h4><p class="text-gray-500">${basic.location}</p></div></div>
-                            <div class="flex items-start gap-4"><div class="bg-primary/10 p-3 rounded-full text-primary print:border print:bg-white"><i class="fa fa-briefcase"></i></div><div><h4 class="font-medium text-gray-700">${basic.objective.label}</h4>${basic.objective.items.map(o => `<p class="text-gray-500">${o}</p>`).join('')}</div></div>
-                        </div>
+                <div class="text-center mb-10">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-2">${ui.section_titles.contact}</h2>
+                </div>
+                <div class="grid md:grid-cols-2 gap-12">
+                    <div class="space-y-6">
+                         <div class="flex items-start gap-4 p-5 rounded-2xl bg-white border border-gray-100 shadow-sm hover:shadow-md transition">
+                            <div class="w-10 h-10 rounded-full bg-purple-50 text-purple-500 flex items-center justify-center shrink-0"><i class="fa fa-briefcase"></i></div>
+                            <div>
+                                <div class="text-xs text-gray-400 uppercase font-bold tracking-wider mb-1">${basic.objective.label}</div>
+                                ${basic.objective.items.map(o => `<div class="text-gray-800 font-medium mb-1">${o}</div>`).join('')}
+                            </div>
+                         </div>
+
+                         <div class="flex items-center gap-4 p-5 rounded-2xl bg-white border border-gray-100 shadow-sm hover:shadow-md transition">
+                            <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-500 flex items-center justify-center shrink-0"><i class="fa fa-envelope"></i></div>
+                            <div><div class="text-xs text-gray-400 uppercase font-bold tracking-wider mb-1">${cl.email}</div><div class="text-gray-800 font-medium">${basic.email}</div></div>
+                         </div>
+                         <div class="flex items-center gap-4 p-5 rounded-2xl bg-white border border-gray-100 shadow-sm hover:shadow-md transition">
+                            <div class="w-10 h-10 rounded-full bg-green-50 text-green-500 flex items-center justify-center shrink-0"><i class="fa fa-map-marker"></i></div>
+                            <div><div class="text-xs text-gray-400 uppercase font-bold tracking-wider mb-1">${cl.location}</div><div class="text-gray-800 font-medium">${basic.location}</div></div>
+                         </div>
                     </div>
-                    <div class="print:hidden">
-                        <h3 class="font-semibold text-xl text-gray-700 mb-6">${cf.title}</h3>
-                        <form class="space-y-4" action="${formAction}" method="POST" ${onSubmitAttr}>
-                            <div><label class="block text-gray-600 mb-2 text-sm">${cf.label_name}</label><input type="text" name="name" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors" required oninvalid="this.setCustomValidity('${cf.msg_required}')" oninput="this.setCustomValidity('')"></div>
-                            <div><label class="block text-gray-600 mb-2 text-sm">${cf.label_email}</label><input type="email" name="email" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors" required oninvalid="this.setCustomValidity('${cf.msg_required}')" oninput="this.setCustomValidity('')"></div>
-                            <div><label class="block text-gray-600 mb-2 text-sm">${cf.label_msg}</label><textarea name="message" rows="4" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors" required oninvalid="this.setCustomValidity('${cf.msg_required}')" oninput="this.setCustomValidity('')"></textarea></div>
-                            <button type="submit" class="w-full bg-primary hover:bg-primary/90 text-white py-3 rounded-lg transition-colors flex items-center justify-center gap-2"><i class="fa fa-paper-plane"></i> <span>${cf.btn_send}</span></button>
-                        </form>
-                    </div>
+                    <form class="space-y-4" action="${formAction}" method="POST" ${onSubmitAttr}>
+                        <input type="text" name="name" placeholder="${cf.label_name}" class="w-full px-5 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all" required>
+                        <input type="email" name="email" placeholder="${cf.label_email}" class="w-full px-5 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all" required>
+                        <textarea name="message" rows="4" placeholder="${cf.label_msg}" class="w-full px-5 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all" required></textarea>
+                        <button type="submit" class="w-full bg-black text-white py-3 rounded-xl font-medium hover:bg-gray-800 transition-all transform hover:scale-[1.02] shadow-lg shadow-black/20">${cf.btn_send}</button>
+                    </form>
                 </div>`;
+
+            // Footer
             document.getElementById('f-name').textContent = basic.name;
             document.getElementById('f-desc').textContent = basic.footer_text;
             document.getElementById('social-icons').innerHTML = basic.social_links.map(s => {
-                const btnClass = "w-10 h-10 rounded-full bg-gray-700 hover:bg-white hover:text-gray-900 flex items-center justify-center transition-all duration-300 transform hover:-translate-y-1";
+                const btnClass = "w-10 h-10 rounded-full bg-gray-200 text-gray-600 hover:bg-black hover:text-white flex items-center justify-center transition-all duration-300 transform hover:-translate-y-1";
                 if(s.type === 'modal') return `<button onclick="showModal('${s.modal_img}', '${s.modal_text}')" class="${btnClass}"><i class="fa ${s.icon}"></i></button>`;
                 return `<a href="${s.url}" target="_blank" class="${btnClass}"><i class="fa ${s.icon}"></i></a>`;
             }).join('');
@@ -379,17 +502,10 @@
         window.showModal = (img, text) => {
             document.getElementById('modal-qr').src = img;
             document.getElementById('modal-text').textContent = text;
-            
-            // Dynamic text update
             const isZh = currentLang === 'zh';
             document.getElementById('modal-title').textContent = isZh ? '扫描二维码' : 'Scan QR Code';
-            document.getElementById('modal-close').textContent = isZh ? '关闭' : 'Close';
-
             document.getElementById('wechatModal').classList.remove('hidden');
         }
     </script>
-    <button id="backToTop" class="fixed bottom-6 right-6 bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg opacity-0 invisible transition-all duration-300 z-50">
-        <i class="fa fa-arrow-up"></i>
-    </button>
 </body>
 </html>
