@@ -77,7 +77,7 @@
         "label_email": "您的邮箱",
         "label_msg": "消息内容",
         "btn_send": "发送消息",
-        "form_id": "maqyvrjy"
+        "form_id": "YOUR_FORMSPREE_ID_HERE",
         "msg_required": "请填写此字段"
       }
     },
@@ -400,7 +400,7 @@
         "label_email": "Your Email",
         "label_msg": "Message",
         "btn_send": "Send Message",
-        "form_id": "maqyvrjy"
+        "form_id": "YOUR_FORMSPREE_ID_HERE",
         "msg_required": "Please fill out this field"
       }
     },
