@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>双语后台 (V14.1 修复版)</title>
+    <title>双语后台 (V14.2 最终修正版)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <style>
@@ -51,7 +51,7 @@
     <div class="bg-white shadow z-50 px-4 py-2 border-b border-gray-200 shrink-0">
         <div class="flex flex-col md:flex-row justify-between items-center max-w-[1920px] mx-auto gap-4 py-1">
             <h1 class="font-bold text-gray-800 text-lg flex items-center gap-2 select-none">
-                <i class="fa fa-cogs text-blue-600"></i> 双语后台 <span class="text-xs bg-gray-100 text-gray-600 px-2 rounded border border-gray-200">V14.1</span>
+                <i class="fa fa-cogs text-blue-600"></i> 双语后台 <span class="text-xs bg-gray-100 text-gray-600 px-2 rounded border border-gray-200">V14.2</span>
             </h1>
             <div class="flex-1"></div>
             <div class="flex flex-wrap gap-2 items-center">
@@ -77,7 +77,7 @@
                  <button onclick="globalToggle(false)" class="hover:text-blue-600 transition flex items-center gap-1"><i class="fa fa-compress"></i> 全部折叠</button>
             </div>
             <div id="status-bar" class="font-mono font-bold text-blue-600 transition-all">Waiting for action...</div>
-            <div class="text-gray-400 italic">V14.1 Fixed</div>
+            <div class="text-gray-400 italic">V14.2</div>
         </div>
     </div>
     <div class="flex-1 overflow-y-auto bg-gray-50 relative scroll-smooth" id="scroll-container">
@@ -270,7 +270,7 @@
             try {
                 const owner = document.getElementById('gh_owner').value; const repo = document.getElementById('gh_repo').value; const token = document.getElementById('gh_token').value;
                 const content = window.btoa(unescape(encodeURIComponent(JSON.stringify(appData, null, 2))));
-                const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/data.json`, { method: 'PUT', headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ message: "Update via Admin V14", content, sha: fileSha }) });
+                const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/data.json`, { method: 'PUT', headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ message: "Update via Admin V14.2", content, sha: fileSha }) });
                 if(!res.ok) throw new Error((await res.json()).message);
                 const json = await res.json(); fileSha = json.content.sha; updateStatus("✅ Saved!", "text-green-600");
             } catch(e) { alert(e.message); updateStatus("❌ Save Failed", "text-red-600"); } finally { setLoading(false); }
