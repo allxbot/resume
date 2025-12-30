@@ -101,20 +101,6 @@
         }
       ]
     },
-    "capability_matrix": [
-      {
-        "category": "技术专家视点",
-        "content": "<strong>3C / 半导体精密工艺</strong>（激光切割、PVD、HAF 贴合、组装、封装等）；<strong>智能产线全流程架构设计</strong>；设备定位精度 <strong>1-2μm</strong>、运动系统 <strong>20g+</strong> 加速度；<strong>DFM/DFMA 设计</strong>、<strong>MFD</strong>（制造为设计）解决方案开发、FAT/SAT 验证、<strong>DOE 工艺优化</strong>；热学组件装配工艺优化、散热结构 DFM 分析；系统装配公差分析（<strong>GD&T</strong> 深化应用）、产品外观（cosmetic）质量管控。"
-      },
-      {
-        "category": "项目与运营",
-        "content": "<strong>智能工厂 0-1 筹建</strong>；自动化产线规划与量产导入；闭环数据管理系统搭建；<strong>OEE / 良率 / 成本优化</strong>；产能爬坡加速；<strong>KISS 原则落地</strong>（简化设计与制造流程）；<strong>SPC</strong>（统计过程控制）数据驱动的良率与成本优化；<strong>NUDD</strong> 风险管理应用实践。"
-      },
-      {
-        "category": "团队与领导力",
-        "content": "<strong>跨国跨职能团队管理</strong>（中/新/德）；<strong>敏捷开发 + Stage-Gate 流程</strong>推行；供应商标准化开发体系构建；<strong>精益生产</strong>（单线流/模块化）落地；跨文化协同研发与供应商协作。"
-      }
-    ],
     "skills": {
       "chart": {
         "labels": [
@@ -139,36 +125,33 @@
           "title": "技术专家视点",
           "icon": "fa-flask",
           "items": [
-            "3C / 半导体精密工艺",
-            "智能产线全流程架构设计",
-            "设备定位精度1-2μm、运动系统20g+",
-            "DFM/DFMA设计、MFD解决方案",
-            "热学组件装配工艺优化",
-            "GD&T深化应用"
+            "<strong>3C / 半导体精密工艺</strong>（激光切割、PVD、HAF 贴合、组装、封装等）",
+            "<strong>智能产线全流程架构设计</strong>",
+            "设备定位精度 <strong>1-2μm</strong>、运动系统 <strong>20g+</strong> 加速度",
+            "<strong>DFM/DFMA 设计</strong>、<strong>MFD</strong> 解决方案开发、FAT/SAT 验证",
+            "<strong>DOE 工艺优化</strong>、热学组件装配工艺优化、散热结构 DFM 分析",
+            "系统装配公差分析（<strong>GD&T</strong> 深化应用）、产品外观（cosmetic）质量管控"
           ]
         },
         {
           "title": "项目与运营",
           "icon": "fa-tasks",
           "items": [
-            "智能工厂0-1筹建",
-            "自动化产线规划与量产导入",
-            "闭环数据管理系统搭建",
-            "OEE / 良率 / 成本优化",
-            "KISS原则落地",
-            "SPC数据驱动"
+            "<strong>智能工厂 0-1 筹建</strong>；自动化产线规划与量产导入",
+            "闭环数据管理系统搭建；<strong>OEE / 良率 / 成本优化</strong>",
+            "产能爬坡加速；<strong>KISS 原则落地</strong>（简化设计与制造流程）",
+            "<strong>SPC</strong>（统计过程控制）数据驱动的良率与成本优化",
+            "<strong>NUDD</strong> 风险管理应用实践"
           ]
         },
         {
           "title": "团队与领导力",
           "icon": "fa-users",
           "items": [
-            "跨国跨职能团队管理",
-            "敏捷开发 + Stage-Gate",
-            "供应商标准化开发体系",
-            "精益生产落地",
-            "跨文化协同研发",
-            "组建并领导跨职能团队"
+            "<strong>跨国跨职能团队管理</strong>（中/新/德）；<strong>敏捷开发 + Stage-Gate 流程</strong>推行",
+            "供应商标准化开发体系构建",
+            "<strong>精益生产</strong>（单线流/模块化）落地",
+            "跨文化协同研发与供应商协作"
           ]
         }
       ]
@@ -420,20 +403,6 @@
         }
       ]
     },
-    "capability_matrix": [
-      {
-        "category": "Technical Expert View",
-        "content": "<strong>3C / Semi Precision Process</strong> (Laser, PVD, HAF, Assy); <strong>Smart Line Architecture</strong>; Equip Positioning Accuracy <strong>1-2μm</strong>, Motion System <strong>20g+</strong> Acceleration; <strong>DFM/DFMA</strong>, <strong>MFD</strong> Solutions, FAT/SAT, <strong>DOE Optimization</strong>; Thermal module assembly, Thermal DFM; <strong>GD&T</strong> Analysis, Cosmetic QC."
-      },
-      {
-        "category": "Project & Operations",
-        "content": "<strong>Smart Factory 0-to-1</strong>; Auto Line NPI; Closed-loop Data System; <strong>OEE / Yield / Cost Opt</strong>; Ramp-up Acceleration; <strong>KISS Principle</strong> (Simplify Design & Mfg); <strong>SPC</strong> Data-driven Opt; <strong>NUDD</strong> Risk Management."
-      },
-      {
-        "category": "Leadership",
-        "content": "<strong>Global Team Mgmt</strong> (CN/SG/DE); <strong>Agile + Stage-Gate</strong>; Supplier Standardization; <strong>Lean Manufacturing</strong> (One-piece Flow) Implementation; Cross-cultural R&D Collaboration."
-      }
-    ],
     "skills": {
       "chart": {
         "labels": [
@@ -458,33 +427,33 @@
           "title": "Technical Expertise",
           "icon": "fa-flask",
           "items": [
-            "3C/Semi Precision Process",
-            "Smart Line Architecture",
-            "High Precision Motion (1μm)",
-            "DFM / MFD / DOE",
-            "Thermal / GD&T Analysis"
+            "<strong>3C/Semi Precision Process</strong> (Laser, PVD, HAF, Assy)",
+            "<strong>Smart Line Architecture</strong>",
+            "High Precision Motion (1-2μm, 20g+)",
+            "<strong>DFM / MFD / DOE</strong>",
+            "Thermal / <strong>GD&T</strong> Analysis / Cosmetic QC"
           ]
         },
         {
           "title": "Project & Ops",
           "icon": "fa-tasks",
           "items": [
-            "Smart Factory 0-to-1",
-            "NPI Full Process",
-            "OEE / Yield / Cost Opt",
-            "KISS Principle",
-            "SPC Data-Driven"
+            "<strong>Smart Factory 0-to-1</strong>",
+            "Auto Line NPI Full Process",
+            "<strong>OEE / Yield / Cost Opt</strong>",
+            "<strong>KISS Principle</strong> (Simplify Design)",
+            "<strong>SPC</strong> Data-Driven Opt / NUDD"
           ]
         },
         {
           "title": "Leadership",
           "icon": "fa-users",
           "items": [
-            "Global Team Mgmt",
-            "Agile + Stage-Gate",
-            "Supplier System",
-            "Lean Mfg",
-            "Cross-cultural Collab"
+            "<strong>Global Team Mgmt</strong> (CN/SG/DE)",
+            "<strong>Agile + Stage-Gate</strong>",
+            "Supplier Standardization System",
+            "<strong>Lean Mfg</strong> (One-piece Flow)",
+            "Cross-cultural R&D Collaboration"
           ]
         }
       ]
