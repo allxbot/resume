@@ -44,6 +44,7 @@
       ]
     },
     "ui": {
+      "theme": "apple",
       "nav": [
         "个人概述",
         "核心能力",
@@ -346,6 +347,7 @@
       ]
     },
     "ui": {
+      "theme": "apple",
       "nav": [
         "Profile",
         "Skills",
