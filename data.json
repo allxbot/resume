@@ -4,7 +4,7 @@
       "name": "徐咏智",
       "titles": "研发制造总监 | 供应链技术总监 | 智能制造设备工艺专家 | 消费电子 NPI 负责人",
       "avatar": "/pic/hero-avatar.jpeg",
-      "location": "成都 / 深圳 . 中国",
+      "location": "成都 / 深圳.中国",
       "email": "xuyongzhi@antmy.com",
       "tags": ["16年高精智能制造经验", "3C消费电子", "半导体后道封装", "智能工厂规划"],
       "objective": {
@@ -43,6 +43,20 @@
         { "title": "战略管理", "icon": "fa-sitemap", "desc": "擅长协同研发与供应商团队突破制造瓶颈，确保设计与制造无缝衔接，精通从战略规划到量产交付的全链条管控。" }
       ]
     },
+    "capability_matrix": [
+      {
+        "category": "技术专家视点",
+        "content": "<strong>3C / 半导体精密工艺</strong>（激光切割、PVD、HAF 贴合、组装、封装等）；<strong>智能产线全流程架构设计</strong>；设备定位精度 <strong>1-2μm</strong>、运动系统 <strong>20g+</strong> 加速度；<strong>DFM/DFMA 设计</strong>、<strong>MFD</strong>（制造为设计）解决方案开发、FAT/SAT 验证、<strong>DOE 工艺优化</strong>；热学组件装配工艺优化、散热结构 DFM 分析；系统装配公差分析（<strong>GD&T</strong> 深化应用）、产品外观（cosmetic）质量管控。"
+      },
+      {
+        "category": "项目与运营",
+        "content": "<strong>智能工厂 0-1 筹建</strong>；自动化产线规划与量产导入；闭环数据管理系统搭建；<strong>OEE / 良率 / 成本优化</strong>；产能爬坡加速；<strong>KISS 原则落地</strong>（简化设计与制造流程）；<strong>SPC</strong>（统计过程控制）数据驱动的良率与成本优化；<strong>NUDD</strong> 风险管理应用实践。"
+      },
+      {
+        "category": "团队与领导力",
+        "content": "<strong>跨国跨职能团队管理</strong>（中/新/德）；<strong>敏捷开发 + Stage-Gate 流程</strong>推行；供应商标准化开发体系构建；<strong>精益生产</strong>（单线流/模块化）落地；跨文化协同研发与供应商协作。"
+      }
+    ],
     "skills": {
       "chart": {
         "labels": ["自动化产线设计", "DFM/MFD工艺优化", "智能工厂规划", "跨国团队管理", "半导体封装工艺", "数据分析与优化"],
@@ -51,37 +65,15 @@
       "card_groups": [
         {
           "title": "技术专家视点", "icon": "fa-flask",
-          "items": [
-            "<strong>3C / 半导体精密工艺</strong>（激光切割、PVD、HAF 贴合、组装、封装等）",
-            "<strong>智能产线全流程架构设计</strong>",
-            "设备定位精度 <strong>1-2μm</strong>、运动系统 <strong>20g+</strong> 加速度",
-            "<strong>DFM/DFMA 设计</strong>、<strong>MFD</strong>（制造为设计）解决方案开发、FAT/SAT 验证、<strong>DOE 工艺优化</strong>",
-            "热学组件装配工艺优化、散热结构 DFM 分析",
-            "系统装配公差分析（<strong>GD&T</strong> 深化应用）、产品外观（cosmetic）质量管控"
-          ]
+          "items": ["3C / 半导体精密工艺", "智能产线全流程架构设计", "设备定位精度1-2μm、运动系统20g+", "DFM/DFMA设计、MFD解决方案", "热学组件装配工艺优化", "GD&T深化应用"]
         },
         {
           "title": "项目与运营", "icon": "fa-tasks",
-          "items": [
-            "<strong>智能工厂 0-1 筹建</strong>",
-            "自动化产线规划与量产导入",
-            "闭环数据管理系统搭建",
-            "<strong>OEE / 良率 / 成本优化</strong>",
-            "产能爬坡加速",
-            "<strong>KISS 原则落地</strong>（简化设计与制造流程）",
-            "<strong>SPC</strong>（统计过程控制）数据驱动的良率与成本优化",
-            "<strong>NUDD</strong> 风险管理应用实践"
-          ]
+          "items": ["智能工厂0-1筹建", "自动化产线规划与量产导入", "闭环数据管理系统搭建", "OEE / 良率 / 成本优化", "KISS原则落地", "SPC数据驱动"]
         },
         {
           "title": "团队与领导力", "icon": "fa-users",
-          "items": [
-            "<strong>跨国跨职能团队管理</strong>（中/新/德）",
-            "<strong>敏捷开发 + Stage-Gate 流程</strong>推行",
-            "供应商标准化开发体系构建",
-            "<strong>精益生产</strong>（单线流/模块化）落地",
-            "跨文化协同研发与供应商协作"
-          ]
+          "items": ["跨国跨职能团队管理", "敏捷开发 + Stage-Gate", "供应商标准化开发体系", "精益生产落地", "跨文化协同研发", "组建并领导跨职能团队"]
         }
       ]
     },
@@ -222,49 +214,41 @@
       "contact_form": { "title": "Send Message", "label_name": "Name", "label_email": "Email", "label_msg": "Message", "btn_send": "Send", "form_id": "maqyvrjy", "msg_required": "Required" }
     },
     "profile": {
-      "summary": "<strong>16-year Expert in High-Precision Smart Manufacturing</strong>, deeply rooted in <strong>3C Consumer Electronics (Apple Core Supply Chain)</strong> and <strong>Semiconductor Packaging</strong>. Expertise in NPI full-process control, DFM/MFD optimization, Smart Factory planning, and cross-functional global team management.",
+      "summary": "<strong>16-year Expert in High-Precision Smart Manufacturing</strong>, deeply rooted in <strong>3C Consumer Electronics (Apple Core Supply Chain)</strong> and <strong>Semiconductor Packaging</strong>. Expertise in NPI full-process control, DFM/MFD optimization, Smart Factory planning, and global team management.",
       "cards": [
         { "title": "Tech Leadership", "icon": "fa-cogs", "desc": "Led NPI and ramp-up for 50+ high-precision automation lines and drove 2 smart factories from scratch." },
         { "title": "Key Performance", "icon": "fa-line-chart", "desc": "Achieved 85%+ OEE, 90%+ capacity increase, and 99.6%+ yield via DFM and lean manufacturing." },
         { "title": "Strategy", "icon": "fa-sitemap", "desc": "Skilled in R&D-Supplier collaboration, breaking bottlenecks, and managing the full lifecycle from planning to delivery." }
       ]
     },
+    "capability_matrix": [
+      {
+        "category": "Technical Expert View",
+        "content": "<strong>3C / Semi Precision Process</strong> (Laser, PVD, HAF, Assy); <strong>Smart Line Architecture</strong>; Equip Positioning Accuracy <strong>1-2μm</strong>, Motion System <strong>20g+</strong> Acceleration; <strong>DFM/DFMA</strong>, <strong>MFD</strong> Solutions, FAT/SAT, <strong>DOE Optimization</strong>; Thermal module assembly, Thermal DFM; <strong>GD&T</strong> Analysis, Cosmetic QC."
+      },
+      {
+        "category": "Project & Operations",
+        "content": "<strong>Smart Factory 0-to-1</strong>; Auto Line NPI; Closed-loop Data System; <strong>OEE / Yield / Cost Opt</strong>; Ramp-up Acceleration; <strong>KISS Principle</strong> (Simplify Design & Mfg); <strong>SPC</strong> Data-driven Opt; <strong>NUDD</strong> Risk Management."
+      },
+      {
+        "category": "Leadership",
+        "content": "<strong>Global Team Mgmt</strong> (CN/SG/DE); <strong>Agile + Stage-Gate</strong>; Supplier Standardization; <strong>Lean Manufacturing</strong> (One-piece Flow) Implementation; Cross-cultural R&D Collaboration."
+      }
+    ],
     "skills": {
       "chart": { "labels": ["Auto Line Design", "DFM/MFD Opt", "Factory Planning", "Global Mgmt", "Semi Pkg Process", "Data Analysis"], "data": [95, 90, 90, 90, 95, 90] },
       "card_groups": [
         {
           "title": "Technical Expertise", "icon": "fa-flask",
-          "items": [
-            "<strong>3C / Semi Precision Process</strong> (Laser, PVD, HAF, Assy)",
-            "<strong>Smart Line Architecture</strong>",
-            "Equip Positioning Accuracy <strong>1-2μm</strong>, Motion System <strong>20g+</strong> Acceleration",
-            "<strong>DFM/DFMA</strong>, <strong>MFD</strong> Solutions, FAT/SAT, <strong>DOE Optimization</strong>",
-            "Thermal module assembly, Thermal DFM",
-            "<strong>GD&T</strong> Analysis, Cosmetic QC"
-          ]
+          "items": ["3C/Semi Precision Process", "Smart Line Architecture", "High Precision Motion (1μm)", "DFM / MFD / DOE", "Thermal / GD&T Analysis"]
         },
         {
-          "title": "Project & Operations", "icon": "fa-tasks",
-          "items": [
-            "<strong>Smart Factory 0-to-1</strong>",
-            "Auto Line NPI",
-            "Closed-loop Data System",
-            "<strong>OEE / Yield / Cost Opt</strong>",
-            "Ramp-up Acceleration",
-            "<strong>KISS Principle</strong> (Simplify Design & Mfg)",
-            "<strong>SPC</strong> Data-driven Opt",
-            "<strong>NUDD</strong> Risk Management"
-          ]
+          "title": "Project & Ops", "icon": "fa-tasks",
+          "items": ["Smart Factory 0-to-1", "NPI Full Process", "OEE / Yield / Cost Opt", "KISS Principle", "SPC Data-Driven"]
         },
         {
           "title": "Leadership", "icon": "fa-users",
-          "items": [
-            "<strong>Global Team Mgmt</strong> (CN/SG/DE)",
-            "<strong>Agile + Stage-Gate</strong>",
-            "Supplier Standardization",
-            "<strong>Lean Manufacturing</strong> (One-piece Flow) Implementation",
-            "Cross-cultural R&D Collaboration"
-          ]
+          "items": ["Global Team Mgmt", "Agile + Stage-Gate", "Supplier System", "Lean Mfg", "Cross-cultural Collab"]
         }
       ]
     },
@@ -275,32 +259,32 @@
         "date": "2017.07 - Present",
         "location": "Chengdu / Shenzhen . China",
         "projects": [
-          { "title": "Phase I: iPhone / Watch Mfg (2019 - Present)", "details": ["<strong>Pioneering Line Dev:</strong> Led first UV-curing low-pressure molding auto line. Reduced cost/footprint by 80% via modular design.", "<strong>Standardized Line R&D:</strong> Led frame assembly line R&D. Achieved <50μm accuracy, +90% capacity, 99.6% yield.", "<strong>Thermal Structure Opt:</strong> Optimized UV module. Ensured uniform light & thermal balance for consistent quality.", "<strong>Closed-loop Data:</strong> Built SPC-based data system. Reduced ramp-up from 4 weeks to 4 days.", "<strong>Multi-factory Mgmt:</strong> Managed 50+ lines across 3 factories. Provided DFM & risk assessment.", "<strong>FATP Full-Process:</strong> Led Watch FATP dev. Optimized structure & ink solutions. Established full traceability."] },
-          { "title": "Phase II: Brittle Material Process (2017 - 2019)", "details": ["<strong>Laser Innovation:</strong> Developed sapphire laser filamentation cutting. Controlled ink fracture ≤0.1mm.", "<strong>Auto Upgrade:</strong> Upgraded 100+ glass cover lines. Innovated 20+ equipment types. Saved 10% manpower.", "<strong>Precision Mechanism:</strong> Developed sapphire pad printing & handling mechanisms. Saved 60% manpower. Defect <0.1%.", "<strong>Bottleneck Breakthrough:</strong> Overcame sapphire assembly defects. Increased capacity by 20%+, yield >99%."] }
+          { "title": "Phase I: iPhone / Watch Mfg", "details": ["<strong>Pioneering Line Dev:</strong> Led first UV-curing low-pressure molding auto line. Reduced cost/footprint by 80% via modular design.", "<strong>Standardized Line R&D:</strong> Led frame assembly line R&D. Achieved <50μm accuracy, +90% capacity, 99.6% yield.", "<strong>Thermal Structure Opt:</strong> Optimized UV module. Ensured uniform light & thermal balance for consistent quality.", "<strong>Closed-loop Data:</strong> Built SPC-based data system. Reduced ramp-up from 4 weeks to 4 days.", "<strong>Multi-factory Mgmt:</strong> Managed 50+ lines across 3 factories. Provided DFM & risk assessment.", "<strong>FATP Full-Process:</strong> Led Watch FATP dev. Optimized structure & ink solutions. Established full traceability."] },
+          { "title": "Phase II: Brittle Material Process", "details": ["<strong>Laser Innovation:</strong> Developed sapphire laser filamentation cutting. Controlled ink fracture ≤0.1mm.", "<strong>Auto Upgrade:</strong> Upgraded 100+ glass cover lines. Innovated 20+ equipment types. Saved 10% manpower.", "<strong>Precision Mechanism:</strong> Developed sapphire pad printing & handling mechanisms. Saved 60% manpower. Defect <0.1%.", "<strong>Bottleneck Breakthrough:</strong> Overcame sapphire assembly defects. Increased capacity by 20%+, yield >99%."] }
         ]
       },
       {
-        "company": "Chengdu Guimu Robot", "role": "R&D Manager", "date": "2017.02 - 2017.06", "location": "Chengdu . China",
+        "company": "Guimu Robot", "role": "R&D Manager", "date": "2017.02 - 2017.06", "location": "Chengdu",
         "projects": [{ "title": "", "details": ["<strong>Product 0-to-1:</strong> Led road inspection robot chassis dev.", "<strong>Complex System:</strong> Designed wall-climbing and demining robots.", "<strong>Commercialization:</strong> Secured projects via tech demos."] }]
       },
       {
-        "company": "ASMPT", "role": "Mech Engineer / R&D Manager", "date": "2009.10 - 2017.02", "location": "Chengdu . China / Singapore",
+        "company": "ASMPT", "role": "Mech Engineer / R&D Manager", "date": "2009.10 - 2017.02", "location": "Chengdu / Singapore",
         "projects": [
-          { "title": "Phase I: Independent R&D Team (Chengdu)", "details": ["<strong>Team Building:</strong> Built 7+ person cross-functional team. Implemented Agile + Stage-Gate.", "<strong>Standardization:</strong> Led JEDEC feeder R&D. Built knowledge base.", "<strong>Global Collab:</strong> Supported SIPLACE core modules. Achieved 30μm accuracy & 4g accel.", "<strong>Ultra-High Precision:</strong> Led TCB/Laser Dicing alignment (2μm accuracy). Localized linear motors."] },
-          { "title": "Phase II: Singapore R&D (2011 - 2014)", "details": ["<strong>Precision Equip:</strong> Designed SMT SPI equipment (frame & conveyor).", "<strong>Customized Delivery:</strong> Led AOI dev for wire bonders.", "<strong>Micron Accuracy:</strong> Achieved 15μm for SMT Printer & 1μm for Exposure Equip.", "<strong>High-Speed Motion:</strong> Upgraded soldering equip XY stage to 20g accel."] },
-          { "title": "Phase III: Chengdu R&D (2009 - 2011)", "details": ["<strong>System Design:</strong> Designed CO2/Fiber Laser Marker. Solved thermal & optical challenges.", "<strong>Heavy Equip:</strong> Collaborated on 40T/80T encapsulation press.", "<strong>Parametric Design:</strong> Introduced Top-Down & Parametric methods."] }
+          { "title": "Phase I: R&D Team Lead", "details": ["<strong>Team Building:</strong> Built 7+ person cross-functional team. Implemented Agile + Stage-Gate.", "<strong>Standardization:</strong> Led JEDEC feeder R&D. Built knowledge base.", "<strong>Global Collab:</strong> Supported SIPLACE core modules. Achieved 30μm accuracy & 4g accel.", "<strong>Ultra-High Precision:</strong> Led TCB/Laser Dicing alignment (2μm accuracy). Localized linear motors."] },
+          { "title": "Phase II: Singapore R&D", "details": ["<strong>Precision Equip:</strong> Designed SMT SPI equipment (frame & conveyor).", "<strong>Customized Delivery:</strong> Led AOI dev for wire bonders.", "<strong>Micron Accuracy:</strong> Achieved 15μm for SMT Printer & 1μm for Exposure Equip.", "<strong>High-Speed Motion:</strong> Upgraded soldering equip XY stage to 20g accel."] },
+          { "title": "Phase III: Chengdu R&D", "details": ["<strong>System Design:</strong> Designed CO2/Fiber Laser Marker. Solved thermal & optical challenges.", "<strong>Heavy Equip:</strong> Collaborated on 40T/80T encapsulation press.", "<strong>Parametric Design:</strong> Introduced Top-Down & Parametric methods."] }
         ]
       },
       {
-        "company": "Chengdu Tool Research Institute", "role": "Mech Engineer", "date": "2009.07 - 2009.10", "location": "Chengdu . China",
+        "company": "CTRI", "role": "Mech Engineer", "date": "2009.07 - 2009.10", "location": "Chengdu",
         "projects": [{ "title": "", "details": ["Designed customized cutting tools.", "Managed full production lifecycle from requirement to delivery."] }]
       }
     ],
-    "education": [{ "school": "SWUST", "degree": "B.S. in Mech Design & Automation", "date": "2005 - 2009", "location": "Mianyang . China" }],
+    "education": [{ "school": "SWUST", "degree": "B.S. in Mech Design & Automation", "date": "2005 - 2009", "location": "Mianyang" }],
     "hobbies": { "desc": "Applying maker-mindset to precision process optimization.", "items": ["Hiking", "Mechatronics DIY", "3D Printing", "Wood Carving", "Interior Design"] },
     "tools": [
       { "group": "Design Tools", "icon": "fa-wrench", "list": ["UG NX", "SolidWorks", "AutoCAD", "CAE", "E-Plan", "GD&T"] },
-      { "group": "Project & Data Tools", "icon": "fa-tasks", "list": ["Agile PLM", "JMP", "Python", "HTML&Web", "SPC", "NUDD"] }
+      { "group": "Project & Data Tools", "icon": "fa-tasks", "list": ["Agile PLM", "SharePoint", "Office", "JMP", "Tableau", "Python", "HTML&Web", "SPC", "NUDD"] }
     ]
   }
 }
