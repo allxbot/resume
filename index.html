@@ -65,12 +65,23 @@
                 <div class="flex flex-wrap justify-center md:justify-start gap-2 mb-8" id="hero-tags"></div>
                 <div class="flex flex-wrap justify-center md:justify-start gap-4 print:hidden" id="hero-btns"></div>
             </div>
+            
             <div class="md:w-1/2 flex justify-center">
-                <div class="w-48 h-48 md:w-80 md:h-80 rounded-full bg-gradient-to-br from-primary to-secondary p-1 shadow-xl">
-                    <img id="hero-avatar" src="" class="w-full h-full rounded-full object-cover bg-white border-4 border-white">
+                <div class="relative">
+                    <div class="w-64 h-64 md:w-80 md:h-80 rounded-full bg-gradient-to-br from-primary to-secondary p-1 shadow-xl">
+                        <div class="w-full h-full rounded-full bg-white flex items-center justify-center overflow-hidden border-4 border-white">
+                            <img id="hero-avatar" src="" alt="Profile Photo" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                    <div class="absolute -bottom-4 -right-4 bg-white p-3 rounded-lg shadow-lg print:hidden border border-gray-100">
+                        <div class="flex items-center gap-2">
+                            <i class="fa fa-map-marker text-primary text-xl"></i>
+                            <span class="text-gray-600 font-medium" id="hero-location"></span>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+            </div>
     </section>
 
     <section id="profile" class="py-16 bg-white print:py-5 scroll-mt-20">
@@ -137,6 +148,9 @@
             <button onclick="document.getElementById('wechatModal').classList.add('hidden')" class="mt-6 text-sm text-gray-400 hover:text-gray-600 underline">Close</button>
         </div>
     </div>
+    <button id="backToTop" class="fixed bottom-6 right-6 bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg opacity-0 invisible transition-all duration-300 z-50">
+    <i class="fa fa-arrow-up"></i>
+    </button>
 
     <script>
         let currentLang = localStorage.getItem('lang') || 'zh';
@@ -149,7 +163,7 @@
             document.getElementById('langSwitch').addEventListener('click', toggleLanguage);
             // 移动端语言切换
             document.getElementById('langSwitchMobile').addEventListener('click', toggleLanguage);
-            // --- 滚动交互 ---
+             // --- 滚动交互 ---
         const navbar = document.getElementById('navbar');
         const backToTop = document.getElementById('backToTop');
         
@@ -170,6 +184,7 @@
         backToTop.addEventListener('click', () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
+
             // 移动端菜单切换逻辑
             const btn = document.getElementById('mobile-menu-btn');
             const menu = document.getElementById('mobile-menu');
@@ -221,7 +236,10 @@
                 <a href="#experience" class="bg-white border border-gray-200 text-gray-700 hover:text-primary hover:border-primary px-6 py-3 rounded-lg flex items-center gap-2 transition hover:-translate-y-1 hover:shadow-md"><i class="fa fa-briefcase"></i> ${ui.buttons.exp}</a>
                 <button onclick="window.print()" class="bg-white border border-gray-200 text-gray-700 hover:text-primary hover:border-primary px-6 py-3 rounded-lg flex items-center gap-2 transition hover:-translate-y-1 hover:shadow-md"><i class="fa fa-print"></i> ${ui.buttons.print}</button>
             `;
+            
+            // Avatar & Location Binding
             document.getElementById('hero-avatar').src = basic.avatar;
+            document.getElementById('hero-location').textContent = basic.location;
 
             // 3. Profile
             document.getElementById('t-profile').textContent = st.profile;
@@ -311,7 +329,6 @@
                 </div>
             `;
             
-            // 使用 st.academic
             document.getElementById('edu-col-left').innerHTML = `<h3 class="font-bold text-xl mb-6 text-gray-800 flex items-center gap-2"><i class="fa fa-graduation-cap text-primary"></i> ${st.academic}</h3>${eduHTML}${hobbiesHTML}`;
 
             // Right: Tools
@@ -391,8 +408,5 @@
             document.getElementById('wechatModal').classList.remove('hidden');
         }
     </script>
-    <button id="backToTop" class="fixed bottom-6 right-6 bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg opacity-0 invisible transition-all duration-300 z-50">
-    <i class="fa fa-arrow-up"></i>
-    </button>
 </body>
 </html>
