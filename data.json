@@ -169,12 +169,12 @@
           {
             "title": "阶段一：手机 / 手表制造（2019 - 至今）",
             "details": [
-              "首创产线开发：主导行业首个光固化低压注塑成型自动化产线开发，遵循 KISS 原则采用模块化+单线流简化设计，减少冗余工站，设备成本、占地面积及治具用量下降 80%+，成功量产导入。",
-              "标准化产线研发：牵头框架组装标准化产线研发，集成贴膜、点胶等工艺，实现 50μm 内组装精度，CT 提升 76%、产能提升 90%，自动化率 90%+，良率稳定 99.6%+。",
-              "热学结构优化：主导光固化模块设计，通过光学结构优化与散热冷却系统精准匹配，实现光强均匀性与热能平衡控制，保障高效固化效果，稳定量产阶段产品热性能一致性；",
-              "闭环数据系统搭建：搭建基于 SPC（统计过程控制） 逻辑的闭环数据系统（OEE 采集+自动 FACA 分析），推动设备预测性维护，通过数据追溯快速定位制造缺陷，产能爬坡周期从 3-4 周缩短至 4 天，良率从 95% 提升至 99.6%。",
-              "多工厂统筹管理：统筹 3 大工厂 50+ 生产线设备开发，协同硬件工程团队、热学/机械供应商开展同步工程，从产品概念阶段介入，提供 DFM 可行性分析与制造风险评估，输出 30+ 项设计优化建议（如公差调整、工艺简化），管理单产线超百工站，支撑日产能百万级交付。",
-              "FATP 全流程开发：参与手表FATP全流程开发与验证，优化组装工站结构动作及公差控制，迭代油墨喷印固化方案；建立PCBA至成品的全链路问题追溯生产过程优化，保障产品顺利迭代量产。"
+              "<strong>首创产线开发：</strong>主导行业首个光固化低压注塑成型自动化产线开发，遵循 KISS 原则采用模块化+单线流简化设计，减少冗余工站，设备成本、占地面积及治具用量下降 80%+，成功量产导入。",
+              "<strong>标准化产线研发：</strong>牵头框架组装标准化产线研发，集成贴膜、点胶等工艺，实现 50μm 内组装精度，CT 提升 76%、产能提升 90%，自动化率 90%+，良率稳定 99.6%+。",
+              "<strong>热学结构优化：</strong>主导光固化模块设计，通过光学结构优化与散热冷却系统精准匹配，实现光强均匀性与热能平衡控制，保障高效固化效果，稳定量产阶段产品热性能一致性；",
+              "<strong>闭环数据系统搭建：</strong>搭建基于 SPC（统计过程控制） 逻辑的闭环数据系统（OEE 采集+自动 FACA 分析），推动设备预测性维护，通过数据追溯快速定位制造缺陷，产能爬坡周期从 3-4 周缩短至 4 天，良率从 95% 提升至 99.6%。",
+              "<strong>多工厂统筹管理：</strong>统筹 3 大工厂 50+ 生产线设备开发，协同硬件工程团队、热学/机械供应商开展同步工程，从产品概念阶段介入，提供 DFM 可行性分析与制造风险评估，输出 30+ 项设计优化建议（如公差调整、工艺简化），管理单产线超百工站，支撑日产能百万级交付。",
+              "<strong>FATP 全流程开发：</strong>参与手表FATP全流程开发与验证，优化组装工站结构动作及公差控制，迭代油墨喷印固化方案；建立PCBA至成品的全链路问题追溯生产过程优化，保障产品顺利迭代量产。"
             ]
           },
           {
@@ -494,12 +494,12 @@
           {
             "title": "Phase I: iPhone / Apple Watch Mfg (2019 - Present)",
             "details": [
-              "Pioneering Line Development: Led the development of the industry's first UV-curing low-pressure molding automation line. Adhered to the KISS principle by using modular + one-piece flow design to eliminate redundant stations, reducing equipment cost, floor space, and fixture usage by 80%+, successfully launching into mass production.",
-              "Standardized Line R&D: Spearheaded the R&D of a standardized frame assembly line, integrating processes like lamination and dispensing. Achieved assembly accuracy within 50μm, improved CT by 76%, increased capacity by 90%, achieved 90%+ automation rate, and stabilized yield at 99.6%+.",
-              "Thermal Structure Optimization: Led the design of the UV-curing module. Through optical structure optimization and precise cooling system matching, achieved uniform light intensity and thermal energy balance control, ensuring efficient curing effects and consistent thermal performance in mass production.",
-              "Closed-loop Data System: Built a closed-loop data system based on SPC logic (OEE collection + Auto FACA analysis), driving predictive maintenance. Reduced capacity ramp-up cycle from 3-4 weeks to 4 days and improved yield from 95% to 99.6% through rapid data traceability.",
-              "Multi-Factory Management: Orchestrated equipment development for 50+ production lines across 3 major factories. Collaborated with Hardware Engineering and Thermal/Mechanical suppliers on simultaneous engineering, engaging from the concept phase to provide DFM feasibility analysis and manufacturing risk assessment. Delivered 30+ design optimization proposals (e.g., tolerance adjustment, process simplification), managing 100+ stations per line to support million-level daily capacity.",
-              "FATP Full-Process Development: Responsible for Watch FATP full-process development and validation. Optimized assembly station structural movements and tolerance controls, and iterated ink jetting/curing solutions. Established full-link issue traceability from PCBA to Finished Goods to optimize production processes and ensure successful product iteration and ramp-up."
+              "<strong>Pioneering Line Development: </strong>Led the development of the industry's first UV-curing low-pressure molding automation line. Adhered to the KISS principle by using modular + one-piece flow design to eliminate redundant stations, reducing equipment cost, floor space, and fixture usage by 80%+, successfully launching into mass production.",
+              "<strong>Standardized Line R&D:</strong> Spearheaded the R&D of a standardized frame assembly line, integrating processes like lamination and dispensing. Achieved assembly accuracy within 50μm, improved CT by 76%, increased capacity by 90%, achieved 90%+ automation rate, and stabilized yield at 99.6%+.",
+              "<strong>Thermal Structure Optimization:</strong> Led the design of the UV-curing module. Through optical structure optimization and precise cooling system matching, achieved uniform light intensity and thermal energy balance control, ensuring efficient curing effects and consistent thermal performance in mass production.",
+              "<strong>Closed-loop Data System:</strong> Built a closed-loop data system based on SPC logic (OEE collection + Auto FACA analysis), driving predictive maintenance. Reduced capacity ramp-up cycle from 3-4 weeks to 4 days and improved yield from 95% to 99.6% through rapid data traceability.",
+              "<strong>Multi-Factory Management: </strong>Orchestrated equipment development for 50+ production lines across 3 major factories. Collaborated with Hardware Engineering and Thermal/Mechanical suppliers on simultaneous engineering, engaging from the concept phase to provide DFM feasibility analysis and manufacturing risk assessment. Delivered 30+ design optimization proposals (e.g., tolerance adjustment, process simplification), managing 100+ stations per line to support million-level daily capacity.",
+              "<strong>FATP Full-Process Development: </strong>Responsible for Watch FATP full-process development and validation. Optimized assembly station structural movements and tolerance controls, and iterated ink jetting/curing solutions. Established full-link issue traceability from PCBA to Finished Goods to optimize production processes and ensure successful product iteration and ramp-up."
             ]
           },
           {
