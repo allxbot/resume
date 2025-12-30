@@ -46,43 +46,113 @@
         .tilt-container { perspective: 1000px; transform-style: preserve-3d; }
 
         /* =========================================
-           🖨️ A4 纯文本打印模式 (Pure Text Print Mode)
+           🖨️ A4 纯文本打印模式 (Markdown 风格适配)
            ========================================= */
-        /* 默认隐藏打印视图 */
         #print-view { display: none; }
 
         @media print {
-            /* 1. 隐藏所有网页 UI */
-            #screen-view, header, #backToTop, #wechatModal, .no-print { 
+            /* 1. 隐藏屏幕元素 */
+            #screen-view, header, #backToTop, #wechatModal, .no-print, .tilt-container { 
                 display: none !important; 
             }
 
-            /* 2. 显示并重置打印视图 */
+            /* 2. 显示打印视图 */
             #print-view { 
                 display: block !important; 
                 background-color: white;
-                color: black;
-                font-family: "Microsoft YaHei", "Segoe UI", sans-serif; /* 使用更适合文档的字体 */
-                font-size: 11pt;
-                line-height: 1.5;
-                padding: 0 1cm;
+                color: #000;
+                font-family: "Inter", "Microsoft YaHei", sans-serif;
+                font-size: 10.5pt; /* 正文五号字大小 */
+                line-height: 1.4;
+                padding: 0 0.5cm; /* 左右留白 */
             }
 
-            /* 3. 打印排版重置 */
-            @page { margin: 1.5cm 1.5cm; size: A4; }
-            body { background-color: white !important; }
+            @page { margin: 1.2cm 1.5cm; size: A4; }
             
-            /* 打印样式细节 */
-            .print-h1 { font-size: 22pt; font-weight: bold; margin-bottom: 0.5rem; border-bottom: none; }
-            .print-h2 { font-size: 14pt; font-weight: bold; border-bottom: 2px solid #333; margin-top: 1.5rem; margin-bottom: 0.8rem; padding-bottom: 0.2rem; }
-            .print-meta { font-size: 10pt; color: #444; margin-bottom: 1.5rem; }
-            .print-job-header { display: flex; justify-content: space-between; font-weight: bold; margin-top: 1rem; }
-            .print-job-sub { display: flex; justify-content: space-between; font-style: italic; color: #555; margin-bottom: 0.5rem; }
-            .print-list { list-style-type: disc; padding-left: 1.2rem; }
+            /* --- 排版细节 --- */
+            
+            /* 标题体系 */
+            .print-h1 { 
+                font-size: 20pt; 
+                font-weight: bold; 
+                margin-bottom: 0.2rem; 
+                color: #000;
+            }
+            
+            .print-h2 { 
+                font-size: 14pt; 
+                font-weight: bold; 
+                border-bottom: 2px solid #000; /* 分割线 */
+                margin-top: 1.2rem; 
+                margin-bottom: 0.6rem; 
+                padding-bottom: 0.2rem;
+            }
+
+            .print-h3 {
+                font-size: 11pt;
+                font-weight: bold;
+                margin-top: 1rem;
+                margin-bottom: 0.2rem;
+                display: flex;
+                justify-content: space-between;
+            }
+
+            /* 顶部元数据 */
+            .print-meta { font-size: 10pt; margin-bottom: 1.2rem; }
+            
+            /* 核心能力矩阵表格 */
+            .print-table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-bottom: 1rem;
+                font-size: 10pt;
+            }
+            .print-table th, .print-table td {
+                border: 1px solid #000;
+                padding: 6px 8px;
+                vertical-align: top;
+            }
+            .print-table th {
+                background-color: #f0f0f0 !important;
+                font-weight: bold;
+                text-align: left;
+                -webkit-print-color-adjust: exact;
+            }
+            .print-table td:first-child {
+                font-weight: bold;
+                white-space: nowrap; /* 第一列不换行 */
+                background-color: #fafafa;
+                -webkit-print-color-adjust: exact;
+            }
+
+            /* 列表样式 */
+            .print-list { 
+                list-style-type: disc; 
+                padding-left: 1.2rem; 
+                margin-top: 0.3rem;
+            }
             .print-list li { margin-bottom: 0.2rem; }
-            .print-section { break-inside: avoid; } /* 尽量不把一个模块切断 */
             
-            a { text-decoration: none !important; color: black !important; }
+            /* 工作经历细节 */
+            .job-sub-row { 
+                font-weight: bold; 
+                font-size: 10.5pt; 
+                margin-bottom: 0.4rem;
+                display: flex; 
+                justify-content: space-between;
+                border-bottom: 1px dashed #ccc;
+                padding-bottom: 2px;
+            }
+            .job-phase-title {
+                font-weight: bold;
+                margin-top: 0.6rem;
+                margin-bottom: 0.2rem;
+                font-size: 10.5pt;
+            }
+
+            /* 辅助类 */
+            .no-break { break-inside: avoid; }
+            a { text-decoration: none !important; color: #000 !important; }
         }
 
         #mobile-menu { transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease; max-height: 0; opacity: 0; overflow: hidden; }
@@ -303,7 +373,6 @@
                 }
                 const data = fullData[currentLang];
                 render(data);
-                // 关键一步：生成打印专用的纯文本视图
                 renderPrintView(data, fullData[currentLang].ui); 
                 
                 setTimeout(() => {
@@ -313,72 +382,93 @@
             } catch(e) { console.error(e); }
         }
 
-        // --- 核心功能：渲染打印视图 ---
+        // --- 核心功能：渲染 Markdown 风格打印视图 (完全动态版) ---
         function renderPrintView(data, ui) {
             const basic = data.basic_info;
             const st = ui.section_titles;
             
+            const matrixRows = data.capability_matrix ? data.capability_matrix.map(row => `
+                <tr>
+                    <td>${row.category}</td>
+                    <td>${row.content}</td>
+                </tr>
+            `).join('') : '<tr><td colspan="2">No capability matrix data found in JSON.</td></tr>';
+
+            const toolsHtml = data.tools.map(t => `
+                <li><strong>${t.group}：</strong> ${t.list.join(', ')}</li>
+            `).join('');
+
             let html = `
                 <div class="print-h1">${basic.name}</div>
                 <div class="print-meta">
-                    ${basic.titles} <br>
-                    ${basic.location} | ${basic.email} <br>
-                    ${basic.social_links.find(s=>s.name==='领英'||s.name==='LinkedIn')?.url || ''}
+                    <ul class="print-list" style="margin:0; padding-left: 1.2rem;">
+                        <li><strong>${basic.objective.label}：</strong> ${basic.objective.items.join(' | ')}</li>
+                        <li><strong>所在地：</strong> ${basic.location.split('.')[0]} | <strong>联系方式：</strong> ${basic.email}</li>
+                    </ul>
                 </div>
 
                 <div class="print-section">
                     <div class="print-h2">${st.profile}</div>
-                    <p>${data.profile.summary}</p>
+                    <div style="text-align: justify;">
+                        ${data.profile.summary}
+                    </div>
                 </div>
 
                 <div class="print-section">
                     <div class="print-h2">${st.skills}</div>
-                    <ul class="print-list">
-                        <li><strong>${st.chart}:</strong> ${data.skills.chart.labels.join(', ')}</li>
-                        ${data.skills.card_groups.map(g => `<li><strong>${g.title}:</strong> ${g.items.join(', ')}</li>`).join('')}
-                    </ul>
+                    <table class="print-table">
+                        <thead>
+                            <tr>
+                                <th width="18%">能力类别</th>
+                                <th>核心内容</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${matrixRows}
+                        </tbody>
+                    </table>
                 </div>
 
                 <div class="print-section">
                     <div class="print-h2">${st.experience}</div>
                     ${data.experience.map(exp => `
-                        <div style="margin-bottom: 1rem;">
-                            <div class="print-job-header">
+                        <div class="no-break" style="margin-bottom: 1.2rem;">
+                            <div class="print-h3">
                                 <span>${exp.company}</span>
-                                <span>${exp.date}</span>
                             </div>
-                            <div class="print-job-sub">
+                            <div class="job-sub-row">
                                 <span>${exp.role}</span>
-                                <span>${exp.location}</span>
+                                <span>${exp.location} | ${exp.date}</span>
                             </div>
-                            <ul class="print-list">
-                                ${exp.projects.map(p => `
-                                    <li>${p.title ? `<strong>${p.title}:</strong> ` : ''}${p.details.join('; ')}</li>
-                                `).join('')}
-                            </ul>
+                            
+                            ${exp.projects.map(p => `
+                                <div style="margin-top: 0.5rem;">
+                                    ${p.title ? `<div class="job-phase-title">${p.title}</div>` : ''}
+                                    <ul class="print-list">
+                                        ${p.details.map(d => `<li>${d}</li>`).join('')}
+                                    </ul>
+                                </div>
+                            `).join('')}
                         </div>
                     `).join('')}
                 </div>
 
-                <div class="print-section">
+                <div class="print-section no-break">
                     <div class="print-h2">${st.education}</div>
                     ${data.education.map(edu => `
-                        <div class="print-job-header">
-                            <span>${edu.school}</span>
-                            <span>${edu.date}</span>
-                        </div>
-                        <div class="print-job-sub">
-                            <span>${edu.degree}</span>
-                            <span>${edu.location}</span>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 10.5pt;">
+                            <div><strong>${edu.school}</strong> | ${edu.degree}</div>
+                            <div>${edu.location} | ${edu.date}</div>
                         </div>
                     `).join('')}
                 </div>
 
-                <div class="print-section">
-                    <div class="print-h2">Tools & Hobbies</div>
+                <div class="print-section no-break">
+                    <div class="print-h2">技能与兴趣</div>
                     <ul class="print-list">
-                        ${data.tools.map(t => `<li><strong>${t.group}:</strong> ${t.list.join(', ')}</li>`).join('')}
-                        <li><strong>${st.hobbies}:</strong> ${data.hobbies.items.join(', ')}</li>
+                        ${toolsHtml}
+                        <li><strong>跨学科技术：</strong> 机械+电气+软件设计复合能力；机器人与视觉应用；热学组件装配工艺优化、散热结构 DFM 分析；系统装配公差分析、产品外观（cosmetic）质量管控</li>
+                        <li><strong>${st.hobbies}：</strong> ${data.hobbies.items.join('、')}，${data.hobbies.desc}</li>
                     </ul>
                 </div>
             `;
@@ -407,6 +497,7 @@
             document.getElementById('hero-title').textContent = basic.titles;
             document.getElementById('hero-tags').innerHTML = basic.tags.map(t => `<span class="bg-white/80 backdrop-blur border border-gray-200 text-gray-600 px-4 py-1.5 rounded-full text-sm font-medium shadow-sm">${t}</span>`).join('');
             
+            // Buttons
             document.getElementById('hero-btns').innerHTML = `
                 <a href="#contact" class="bg-black text-white px-8 py-3 rounded-full font-medium hover:bg-gray-800 hover:scale-105 transition-all duration-300 shadow-lg shadow-black/20"><i class="fa fa-envelope mr-2"></i> ${ui.buttons.contact}</a>
                 <a href="#experience" class="bg-white text-gray-900 border border-gray-200 px-8 py-3 rounded-full font-medium hover:bg-gray-50 hover:border-gray-300 transition-all hover:scale-105 shadow-sm"><i class="fa fa-briefcase mr-2"></i> ${ui.buttons.exp}</a>
@@ -430,7 +521,7 @@
             const bentoContainer = document.getElementById('skills-bento-container');
             const chartData = data.skills.chart;
             
-            // 1. Radar Chart
+            // 1. Radar Chart (lg:col-span-3)
             let bentoHTML = `
                 <div class="col-span-1 md:col-span-1 lg:col-span-3 bg-white rounded-[2rem] p-6 shadow-apple border border-gray-100 flex flex-col relative overflow-hidden reveal-hidden hover:shadow-apple-hover transition-all">
                     <div class="flex items-center gap-3 mb-4 z-10">
@@ -445,7 +536,7 @@
                 </div>
             `;
 
-            // 2. Levels
+            // 2. Levels (lg:col-span-3)
             bentoHTML += `
                 <div class="col-span-1 md:col-span-1 lg:col-span-3 bg-white rounded-[2rem] p-6 shadow-apple border border-gray-100 reveal-hidden hover:shadow-apple-hover transition-all">
                     <div class="flex items-center gap-3 mb-6 pb-3 border-b border-gray-50">
@@ -466,7 +557,7 @@
                 </div>
             `;
             
-            // 3. Card Groups
+            // 3. Card Groups (lg:col-span-2)
             const iconColors = ['text-orange-500', 'text-purple-500', 'text-teal-500'];
             data.skills.card_groups.forEach((g, idx) => {
                 bentoHTML += `
