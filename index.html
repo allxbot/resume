@@ -12,7 +12,7 @@
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <script>
         tailwind.config = { 
@@ -73,6 +73,14 @@
                         'theme-normal': '400',
                         'theme-medium': '500',
                         'theme-bold': '600'
+                    },
+                    fontSize: {
+                        // 定义 Apple 标准字号
+                        'apple-base': ['17px', '1.47059'], 
+                        'apple-lg': ['19px', '1.47059']
+                    },
+                    letterSpacing: {
+                        'apple': '-0.022em'
                     }
                 } 
             } 
@@ -96,35 +104,66 @@
         }
 
         /* =================================================================
-           🎨 样式模版定义
+           🎨 样式模版定义 (Style Templates)
            ================================================================= */
         
         :root { --border-color: transparent; }
 
-        /* ---------------- 1.  Apple Style ---------------- */
+        /* ---------------- 1.  Apple Style (Official Specs) ---------------- */
         :root[data-theme='apple'] {
-            --font-family: "SF Pro Text", "SF Pro Icons", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-            --fw-body: 300;           
+            /* [Font] Apple Official Stack */
+            --font-family: "SF Pro Text", "SF Pro Icons", "PingFang SC", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+            
+            /* [Font Weight] Regular (400) & Semibold (600) */
+            --fw-body: 400;           
             --fw-title: 600;          
             
-            --bg-page: #ffffff; --bg-card: #ffffff; --bg-subtle: #f5f5f7; --bg-hover: #ffffff;
+            /* [Backgrounds] */
+            --bg-page: #ffffff;       
+            --bg-card: #ffffff;
+            --bg-subtle: #f5f5f7;     
+            --bg-hover: #ffffff;
             --bg-nav-sticky: rgba(255, 255, 255, 0.8);
-            --glass-bg: rgba(255, 255, 255, 0.6); --glass-blur: 30px;
+            
+            --glass-bg: rgba(255, 255, 255, 0.6);
+            --glass-blur: 30px;
             --hero-glow: rgba(0, 113, 227, 0.04); 
 
-            --text-title: #1d1d1f; --text-body: #6e6e73; --text-muted: #86868b; --text-accent: #0066cc;   
-            --btn-bg: #1d1d1f; --btn-text: #ffffff;
+            /* [Text] Official Colors */
+            --text-title: #1d1d1f;    /* Apple Standard Black */
+            --text-body: #1d1d1f;     /* Apple Standard Text (Same as title for high contrast) */
+            --text-muted: #86868b;    /* Apple Muted Grey */
+            --text-accent: #0066cc;   /* Apple Link Blue */
+
+            /* [Buttons] */
+            --btn-bg: #1d1d1f;        
+            --btn-text: #ffffff;
             
-            --tag-bg: #f5f5f7; --tag-txt: #1d1d1f;
-            --hero-badge-bg: rgba(255, 255, 255, 0.9); --hero-badge-txt: #1d1d1f;
+            /* [Tags & Badges] */
+            --tag-bg: #f5f5f7;
+            --tag-txt: #1d1d1f;
+            --hero-badge-bg: rgba(255, 255, 255, 0.95);
+            --hero-badge-txt: #1d1d1f;
 
-            --date-bg: rgba(0, 113, 227, 0.1); --date-txt: #0071e3; --line-color: #f5f5f7; --check-color: #86868b;
+            /* [Timeline] */
+            --date-bg: rgba(0, 113, 227, 0.1); 
+            --date-txt: #0071e3;               
+            --line-color: #f5f5f7;             
+            --check-color: #86868b;
 
-            --icon-def: #1d1d1f; --ico-1: #f56300; --ico-2: #a34ec7; --ico-3: #0090aa; 
+            /* [Icons] */
+            --icon-def: #1d1d1f;
+            --ico-1: #f56300; 
+            --ico-2: #a34ec7; 
+            --ico-3: #0090aa; 
 
-            --border-color: transparent; --input-border: rgba(0,0,0,0.12);
-            --radius-card: 24px; --radius-btn: 980px;      
-            --shadow-card: 0 12px 40px -8px rgba(0,0,0,0.04); --shadow-hover: 0 24px 60px -12px rgba(0,0,0,0.08);
+            /* [Shape & Shadow] */
+            --border-color: rgba(0,0,0,0);
+            --input-border: rgba(0,0,0,0.12);
+            --radius-card: 24px;      
+            --radius-btn: 980px;      
+            --shadow-card: 0 12px 40px -8px rgba(0,0,0,0.04); 
+            --shadow-hover: 0 24px 60px -12px rgba(0,0,0,0.08);
         }
 
         /* ---------------- 2. 🔷 Modern Theme ---------------- */
@@ -143,7 +182,8 @@
             
             --date-bg: #dbeafe; --date-txt: #1d4ed8;
             --line-color: #e2e8f0; --check-color: #3b82f6;
-            --icon-def: #3b82f6; --ico-1: #3b82f6; --ico-2: #3b82f6; --ico-3: #3b82f6; 
+            --icon-def: #3b82f6; 
+            --ico-1: #3b82f6; --ico-2: #3b82f6; --ico-3: #3b82f6; 
             
             --border-color: #e2e8f0; --input-border: #e2e8f0;
             --radius-card: 0.75rem; --radius-btn: 0.5rem;
@@ -153,38 +193,69 @@
         /* ---------------- 3. 🌑 Dark Theme ---------------- */
         :root[data-theme='dark'] {
             --font-family: 'Inter', sans-serif;
-            --fw-body: 300; --fw-title: 600;
+            --fw-body: 400; --fw-title: 600;
             --bg-page: #000000; --bg-card: #1c1c1e; --bg-subtle: #1c1c1e; --bg-hover: #2c2c2e;
             --bg-nav-sticky: rgba(28, 28, 30, 0.9);
             --glass-bg: rgba(28, 28, 30, 0.8); --glass-blur: 20px;
             --hero-glow: rgba(255, 255, 255, 0.08);
 
-            --text-title: #f5f5f7; --text-body: #d1d1d6; --text-muted: #86868b; --text-accent: #0a84ff;
+            --text-title: #f5f5f7; --text-body: #f5f5f7; /* Apple Dark Mode Text */
+            --text-muted: #86868b; --text-accent: #0a84ff;
             --btn-bg: #ffffff; --btn-text: #000000;
             --tag-bg: #3a3a3c; --tag-txt: #f5f5f7;
             --hero-badge-bg: rgba(58, 58, 60, 0.8); --hero-badge-txt: #f5f5f7;
             
             --date-bg: #3a3a3c; --date-txt: #0a84ff;
             --line-color: #38383a; --check-color: #86868b;
-            --icon-def: #0a84ff; --ico-1: #0a84ff; --ico-2: #5e5ce6; --ico-3: #30b0c7; 
+            --icon-def: #0a84ff;
+            --ico-1: #0a84ff; --ico-2: #5e5ce6; --ico-3: #30b0c7; 
 
             --border-color: #2c2c2e; --input-border: #3a3a3c;
             --radius-card: 22px; --radius-btn: 9999px;
             --shadow-card: 0 0 0 1px rgba(255,255,255,0.1); --shadow-hover: 0 0 0 1px rgba(255,255,255,0.25);
         }
 
-        body { font-family: var(--font-family); background-color: var(--bg-page); color: var(--text-body); transition: background-color 0.4s ease, color 0.4s ease; }
+        /* --- Global Styles --- */
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-page);
+            color: var(--text-body);
+            transition: background-color 0.4s ease, color 0.4s ease;
+            
+            /* Apple Typography Specs */
+            font-size: 17px; 
+            line-height: 1.47059;
+            letter-spacing: -0.022em;
+        }
+        
+        /* Larger screens: 19px for Apple feel */
+        @media (min-width: 1024px) {
+            :root[data-theme='apple'] body {
+                font-size: 19px;
+            }
+        }
+
         h1, h2, h3, h4 { color: var(--text-title); }
 
-        .card-base { background-color: var(--bg-card); border-radius: var(--radius-card); box-shadow: var(--shadow-card); border: 1px solid var(--border-color); transition: box-shadow 0.3s ease, transform 0.3s ease; }
+        /* Components */
+        .card-base {
+            background-color: var(--bg-card);
+            border-radius: var(--radius-card);
+            box-shadow: var(--shadow-card);
+            border: 1px solid var(--border-color);
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+        }
         .card-base:hover { box-shadow: var(--shadow-hover); }
+
         .btn-main { background-color: var(--btn-bg); color: var(--btn-text); border-radius: var(--radius-btn); }
         .btn-ghost { background-color: var(--bg-card); color: var(--text-title); border: 1px solid var(--border-color); border-radius: var(--radius-btn); }
 
+        /* Theme Menu Animation */
         #theme-menu { transform-origin: bottom right; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
         #theme-menu.hidden { transform: scale(0.9); opacity: 0; pointer-events: none; }
         #theme-menu:not(.hidden) { transform: scale(1); opacity: 1; pointer-events: auto; }
 
+        /* Mobile Menu Transitions */
         #mobile-menu { transition: max-height 0.3s ease, opacity 0.3s ease; }
         #mobile-menu:not(.open) { max-height: 0; opacity: 0; overflow: hidden; }
         #mobile-menu.open { max-height: 400px; opacity: 1; }
@@ -193,17 +264,38 @@
         .reveal-visible { opacity: 1; transform: translateY(0) scale(1); }
         .tilt-container { perspective: 1000px; transform-style: preserve-3d; }
 
+        /* Print */
         #print-view { display: none; }
-        @media print { #screen-view, #theme-fab-container { display: none !important; } @page { size: A4; margin: 15mm 15mm; } html, body { width: 210mm; height: auto; margin: 0 !important; padding: 0 !important; background-color: white !important; color: #000 !important; overflow: visible !important; font-family: sans-serif !important; } #print-view { display: block !important; width: 100%; font-size: 9.5pt; line-height: 1.35; text-align: justify; } .print-h1 { font-size: 20pt; font-weight: bold; line-height: 1.2; margin-bottom: 4pt; color: #000; } .print-h2 { font-size: 12pt; font-weight: bold; border-bottom: 1pt solid #000; margin-top: 10pt; margin-bottom: 4pt; padding-bottom: 2pt; page-break-after: avoid; } .print-h3 { font-size: 10pt; font-weight: bold; margin-top: 6pt; margin-bottom: 2pt; display: flex; justify-content: space-between; page-break-after: avoid; } .print-meta { font-size: 9pt; margin-bottom: 8pt; line-height: 1.4; } .print-table { width: 100%; border-collapse: collapse; margin-bottom: 8pt; font-size: 9pt; page-break-inside: auto; } .print-table th, .print-table td { border: 1pt solid #333; padding: 3pt 5pt; vertical-align: top; } .print-table td:first-child { font-weight: bold; white-space: nowrap; background-color: #f2f2f2 !important; width: 1%; } .print-list { list-style-type: disc; padding-left: 1.2em; margin-top: 2pt; margin-bottom: 0; } .print-list li { margin-bottom: 2pt; } .job-sub-row { font-weight: bold; font-size: 9.5pt; margin-bottom: 3pt; display: flex; justify-content: space-between; border-bottom: 0.5pt dashed #999; padding-bottom: 2pt; } .job-phase-title { font-weight: bold; margin-top: 4pt; margin-bottom: 2pt; font-size: 9.5pt; } section, .print-section { page-break-inside: auto !important; break-inside: auto !important; } .no-break { page-break-inside: auto; break-inside: auto; margin-bottom: 8pt; } a { text-decoration: none !important; color: #000 !important; } }
+        @media print {
+            #screen-view, #theme-fab-container { display: none !important; }
+            @page { size: A4; margin: 15mm 15mm; }
+            html, body { width: 210mm; height: auto; margin: 0 !important; padding: 0 !important; background-color: white !important; color: #000 !important; overflow: visible !important; font-family: sans-serif !important; }
+            #print-view { display: block !important; width: 100%; font-size: 9.5pt; line-height: 1.35; text-align: justify; }
+            .print-h1 { font-size: 20pt; font-weight: bold; line-height: 1.2; margin-bottom: 4pt; color: #000; }
+            .print-h2 { font-size: 12pt; font-weight: bold; border-bottom: 1pt solid #000; margin-top: 10pt; margin-bottom: 4pt; padding-bottom: 2pt; page-break-after: avoid; }
+            .print-h3 { font-size: 10pt; font-weight: bold; margin-top: 6pt; margin-bottom: 2pt; display: flex; justify-content: space-between; page-break-after: avoid; }
+            .print-meta { font-size: 9pt; margin-bottom: 8pt; line-height: 1.4; }
+            .print-table { width: 100%; border-collapse: collapse; margin-bottom: 8pt; font-size: 9pt; page-break-inside: auto; }
+            .print-table th, .print-table td { border: 1pt solid #333; padding: 3pt 5pt; vertical-align: top; }
+            .print-table td:first-child { font-weight: bold; white-space: nowrap; background-color: #f2f2f2 !important; width: 1%; }
+            .print-list { list-style-type: disc; padding-left: 1.2em; margin-top: 2pt; margin-bottom: 0; }
+            .print-list li { margin-bottom: 2pt; }
+            .job-sub-row { font-weight: bold; font-size: 9.5pt; margin-bottom: 3pt; display: flex; justify-content: space-between; border-bottom: 0.5pt dashed #999; padding-bottom: 2pt; }
+            .job-phase-title { font-weight: bold; margin-top: 4pt; margin-bottom: 2pt; font-size: 9.5pt; }
+            section, .print-section { page-break-inside: auto !important; break-inside: auto !important; }
+            .no-break { page-break-inside: auto; break-inside: auto; margin-bottom: 8pt; }
+            a { text-decoration: none !important; color: #000 !important; }
+        }
     </style>
 </head>
-<body class="selection:bg-theme-accent/20 selection:text-theme-accent font-theme">
+<body class="selection:bg-theme-accent/20 selection:text-theme-accent font-theme tracking-apple">
 
     <div id="screen-view">
         <header id="navbar" class="fixed w-full top-0 left-0 transition-all duration-300 z-50 py-4 bg-transparent print:hidden">
             <div class="container mx-auto px-4 md:px-6">
                 <div class="flex justify-between items-center">
                     <a href="#" class="text-xl font-theme-title text-theme-title tracking-tight flex items-center gap-2" id="nav-name"></a>
+                    
                     <div class="hidden md:flex items-center gap-1 px-2" id="nav-pill">
                         <nav class="flex text-sm font-theme-body text-theme-body space-x-1" id="nav-menu-desktop"></nav>
                         <div class="w-px h-4 bg-theme-border mx-3"></div>
@@ -211,6 +303,7 @@
                             <i class="fa fa-globe"></i> <span id="langLabel">EN</span>
                         </button>
                     </div>
+
                     <div class="flex items-center gap-4 md:hidden">
                         <button id="langSwitchMobile" class="border border-theme-border px-2 py-1 rounded text-xs font-medium hover:border-theme-accent text-theme-body">
                             <span id="langLabelMobile">EN</span>
@@ -218,6 +311,7 @@
                         <button id="mobile-menu-btn" class="text-theme-body hover:text-theme-title focus:outline-none transition p-1"><i class="fa fa-bars text-2xl"></i></button>
                     </div>
                 </div>
+                
                 <div id="mobile-menu" class="md:hidden border-t mt-3 border-theme-border">
                     <nav class="flex flex-col space-y-2 py-4" id="nav-menu-mobile"></nav>
                 </div>
@@ -226,6 +320,7 @@
 
         <section class="pt-40 pb-20 relative overflow-hidden print:pt-10">
             <div id="hero-bg-blur" class="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] rounded-[100%] blur-3xl -z-10 opacity-60 print:hidden transition-colors" style="background: linear-gradient(to bottom, var(--hero-glow), transparent);"></div>
+            
             <div class="container mx-auto px-4 md:px-6 flex flex-col md:flex-row items-center gap-12 md:gap-20">
                 <div class="md:w-1/2 text-center md:text-left z-10">
                     <h1 class="text-4xl md:text-6xl font-theme-title text-theme-title mb-6 leading-tight tracking-tight reveal-hidden" id="hero-name"></h1>
@@ -252,7 +347,7 @@
             <div class="container mx-auto px-4 md:px-6 max-w-5xl">
                 <div class="text-center mb-12"><h2 class="text-3xl font-theme-title text-theme-title" id="t-profile"></h2></div>
                 <div class="card-base p-8 md:p-12">
-                    <p class="text-[15px] font-theme-light text-theme-body leading-relaxed mb-8" id="profile-summary"></p>
+                    <p class="font-theme-body text-theme-body leading-relaxed mb-14" id="profile-summary"></p>
                     <div class="grid md:grid-cols-3 gap-6" id="profile-cards"></div>
                 </div>
             </div>
@@ -301,12 +396,10 @@
                 <button onclick="setTheme('modern')" class="px-3 py-2 text-sm text-left hover:bg-theme-subtle rounded-lg flex items-center gap-2 text-theme-body"><i class="fa fa-cube"></i> Modern</button>
                 <button onclick="setTheme('dark')" class="px-3 py-2 text-sm text-left hover:bg-theme-subtle rounded-lg flex items-center gap-2 text-theme-body"><i class="fa fa-moon-o"></i> Dark</button>
             </div>
-            
-            <button onclick="document.getElementById('theme-menu').classList.toggle('hidden')" class="w-12 h-12 bg-theme-card border border-theme-border rounded-full shadow-theme hover:shadow-theme-hover flex items-center justify-center text-theme-body hover:text-theme-title hover:scale-110 transition-all duration-300 z-20 flex-shrink-0">
+            <button onclick="document.getElementById('theme-menu').classList.toggle('hidden')" class="w-12 h-12 bg-theme-card border border-theme-border rounded-full shadow-theme hover:shadow-theme-hover flex items-center justify-center text-theme-body hover:text-theme-title hover:scale-110 transition-all duration-300 z-20 flex-shrink-0 mb-3">
                 <i class="fa fa-paint-brush"></i>
             </button>
-
-            <div id="backToTopWrapper" class="transition-all duration-500 h-0 opacity-0 overflow-hidden w-12 flex justify-center mt-0">
+            <div id="backToTopWrapper" class="transition-all duration-500 overflow-hidden max-h-0 opacity-0 w-12 flex justify-center mt-0">
                 <button id="backToTop" class="w-12 h-12 bg-theme-card border border-theme-border rounded-full shadow-theme hover:shadow-theme-hover flex items-center justify-center text-theme-body hover:text-theme-title hover:scale-110 transition-all duration-300 flex-shrink-0">
                     <i class="fa fa-arrow-up"></i>
                 </button>
@@ -343,6 +436,7 @@
             const backToTopBtn = document.getElementById('backToTop'); 
 
             window.addEventListener('scroll', handleScroll);
+            
             document.getElementById('mobile-menu-btn').addEventListener('click', () => { 
                 mobileMenu.classList.toggle('open'); 
                 handleScroll(); 
@@ -350,7 +444,6 @@
             backToTopBtn.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
         });
 
-        // 核心修正：滚动时处理浮动按钮位置
         function handleScroll() {
             const navbar = document.getElementById('navbar');
             const mobileMenu = document.getElementById('mobile-menu');
@@ -367,13 +460,12 @@
                 navbar.classList.remove('nav-sticky', 'py-3');
             }
             
-            // 按钮逻辑：滚动 > 300 时，Wrapper 展开高度并增加 margin-top，顶起上方的 Theme Button
             if (window.scrollY > 300) { 
-                wrapper.classList.remove('h-0', 'opacity-0', 'mt-0');
-                wrapper.classList.add('h-12', 'opacity-100', 'mt-3'); 
+                wrapper.classList.remove('max-h-0', 'opacity-0');
+                wrapper.classList.add('max-h-16', 'opacity-100'); 
             } else { 
-                wrapper.classList.add('h-0', 'opacity-0', 'mt-0');
-                wrapper.classList.remove('h-12', 'opacity-100', 'mt-3');
+                wrapper.classList.add('max-h-0', 'opacity-0');
+                wrapper.classList.remove('max-h-16', 'opacity-100');
             }
         }
 
@@ -435,7 +527,7 @@
 
             document.getElementById('hero-name').textContent = basic.name;
             document.getElementById('hero-title').textContent = basic.titles;
-            document.getElementById('hero-tags').innerHTML = basic.tags.map(t => `<span class="bg-theme-tag-bg border border-theme-border text-theme-tag-txt px-4 py-1.5 rounded-full text-sm font-normal shadow-sm">${t}</span>`).join('');
+            document.getElementById('hero-tags').innerHTML = basic.tags.map(t => `<span class="bg-theme-tag-bg border border-theme-border text-theme-tag-txt px-4 py-1.5 rounded-full text-sm font-theme-body shadow-sm">${t}</span>`).join('');
             
             document.getElementById('hero-btns').innerHTML = `
                 <a href="#contact" class="btn-main px-8 py-3 font-theme-body hover:opacity-90 hover:scale-105 transition-all duration-300 shadow-lg flex items-center"><i class="fa fa-envelope mr-2"></i> ${ui.buttons.contact}</a>
@@ -457,7 +549,7 @@
                 <div class="group bg-theme-subtle rounded-theme p-6 transition-all duration-300 reveal-hidden hover:bg-theme-card hover:shadow-theme-hover border border-transparent hover:border-theme-border" style="transition-delay: ${i*100}ms">
                     <div class="w-10 h-10 rounded-xl bg-theme-tag-bg flex items-center justify-center text-lg mb-4 group-hover:scale-110 transition-transform"><i class="fa ${c.icon} ${iconClass}"></i></div>
                     <h3 class="font-theme-title text-theme-title mb-2">${c.title}</h3>
-                    <p class="text-[15px] font-theme-light text-theme-body leading-relaxed">${c.desc}</p>
+                    <p class="font-theme-body text-theme-body leading-relaxed">${c.desc}</p>
                 </div>`
             }).join('');
 
@@ -485,7 +577,7 @@
                     <div class="space-y-6">
                         ${chartData.labels.map((l, i) => `
                             <div>
-                                <div class="flex justify-between mb-1.5 text-base font-normal text-theme-body">
+                                <div class="flex justify-between mb-1.5 font-theme-body text-theme-body">
                                     <span>${l}</span>
                                     <span class="text-theme-accent">${chartData.data[i]}%</span>
                                 </div>
@@ -507,7 +599,7 @@
                         <h3 class="font-theme-title text-theme-title">${g.title}</h3>
                     </div>
                     <ul class="space-y-3">
-                        ${g.items.slice(0, 5).map(item => `<li class="flex items-start gap-2 text-[15px] font-theme-light text-theme-body"><span class="w-1.5 h-1.5 rounded-full bg-gray-300 mt-1.5 shrink-0"></span><span class="leading-snug">${stripHtml(item)}</span></li>`).join('')}
+                        ${g.items.slice(0, 5).map(item => `<li class="flex items-start gap-2 font-theme-body text-theme-body"><span class="w-1.5 h-1.5 rounded-full bg-gray-300 mt-1.5 shrink-0"></span><span class="leading-snug">${stripHtml(item)}</span></li>`).join('')}
                     </ul>
                 </div>`;
             });
@@ -549,6 +641,7 @@
             });
 
             document.getElementById('t-exp').textContent = ui.section_titles.experience;
+            // 修正：字体大小 text-base
             document.getElementById('exp-list').innerHTML = data.experience.map(job => `
                 <div class="relative pl-0 md:pl-0 reveal-hidden">
                     <div class="flex flex-col md:flex-row gap-8 md:gap-16">
@@ -556,7 +649,7 @@
                             <div class="sticky top-28 transition-all">
                                 <h3 class="font-theme-title text-2xl text-theme-title tracking-tight">${job.company}</h3>
                                 <div class="text-theme-date-txt font-semibold text-sm mt-1 mb-2 inline-block bg-theme-date-bg px-3 py-1 rounded-full">${job.date}</div>
-                                <p class="text-theme-body font-normal mb-1">${job.role}</p>
+                                <p class="text-theme-body font-theme-body mb-1">${job.role}</p>
                                 <p class="text-theme-muted text-xs flex items-center md:justify-end gap-1"><i class="fa fa-map-marker"></i> ${job.location}</p>
                             </div>
                         </div>
@@ -565,7 +658,7 @@
                                 <div class="group">
                                     ${p.title ? `<h4 class="font-theme-title text-theme-title mb-3 text-lg flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-theme-accent"></span> ${p.title}</h4>` : ''}
                                     <ul class="space-y-4">
-                                        ${p.details.map(d => `<li class="flex items-start gap-3 text-[15px] text-theme-body font-theme-light leading-relaxed group-hover:text-theme-title transition-colors"><i class="fa fa-check mt-1 shrink-0 text-xs text-theme-check"></i><span>${d}</span></li>`).join('')}
+                                        ${p.details.map(d => `<li class="flex items-start gap-3 font-theme-body text-theme-body leading-relaxed group-hover:text-theme-title transition-colors"><i class="fa fa-check mt-1 shrink-0 text-xs text-theme-check"></i><span>${d}</span></li>`).join('')}
                                     </ul>
                                 </div>
                             `).join('')}
@@ -578,11 +671,11 @@
                 <h3 class="font-theme-title text-xl mb-8 text-theme-title flex items-center gap-3"><span class="bg-blue-100 text-blue-600 w-8 h-8 rounded-lg flex items-center justify-center text-sm"><i class="fa fa-graduation-cap"></i></span> ${ui.section_titles.academic}</h3>
                 <div class="space-y-8">
                 ${data.education.map(e => `
-                    <div><h4 class="font-theme-title text-lg text-theme-title">${e.school}</h4><p class="text-theme-body font-normal">${e.degree}</p><p class="text-theme-muted text-sm mt-1 flex items-center gap-2"><i class="fa fa-calendar-o"></i> ${e.date} &nbsp;•&nbsp; ${e.location}</p></div>`).join('')}
+                    <div><h4 class="font-theme-title text-lg text-theme-title">${e.school}</h4><p class="text-theme-body font-theme-body">${e.degree}</p><p class="text-theme-muted text-sm mt-1 flex items-center gap-2"><i class="fa fa-calendar-o"></i> ${e.date} &nbsp;•&nbsp; ${e.location}</p></div>`).join('')}
                 </div>
                 <div class="mt-12 pt-8 border-t border-theme-border">
                     <h3 class="font-theme-title text-lg mb-4 text-theme-title flex items-center gap-2"><i class="fa fa-heart text-red-400"></i> ${ui.section_titles.hobbies}</h3>
-                    <div class="flex flex-wrap gap-2 mb-4">${data.hobbies.items.map(h => `<span class="bg-theme-subtle px-4 py-2 rounded-xl text-sm font-normal text-theme-body border border-transparent hover:border-theme-border transition">${h}</span>`).join('')}</div>
+                    <div class="flex flex-wrap gap-2 mb-4">${data.hobbies.items.map(h => `<span class="bg-theme-subtle px-4 py-2 rounded-xl text-sm font-theme-body text-theme-body border border-transparent hover:border-theme-border transition">${h}</span>`).join('')}</div>
                     <p class="text-sm text-theme-body bg-theme-subtle p-4 rounded-xl italic border border-theme-border">"${data.hobbies.desc}"</p>
                 </div>`;
             
@@ -594,7 +687,7 @@
                 <div class="mb-8 last:mb-0">
                     <h3 class="font-theme-title text-lg mb-5 text-theme-title flex items-center gap-2"><i class="fa ${t.icon} ${iconClass}"></i> ${t.group}</h3>
                     <div class="grid grid-cols-2 gap-3">
-                        ${t.list.map(i => `<div class="bg-theme-subtle px-4 py-2 rounded-xl text-sm font-normal text-theme-body border border-transparent hover:border-theme-border hover:bg-theme-card hover:shadow-sm transition-all cursor-default flex items-center gap-2"><i class="fa fa-check text-xs text-theme-check"></i> ${i}</div>`).join('')}
+                        ${t.list.map(i => `<div class="bg-theme-subtle px-4 py-2 rounded-xl text-sm font-theme-body text-theme-body border border-transparent hover:border-theme-border hover:bg-theme-card hover:shadow-sm transition-all cursor-default flex items-center gap-2"><i class="fa fa-check text-xs text-theme-check"></i> ${i}</div>`).join('')}
                     </div>
                 </div>`
             }).join('');
@@ -631,7 +724,7 @@
             document.getElementById('f-desc').textContent = basic.footer_text;
             document.getElementById('social-icons').innerHTML = basic.social_links.map(s => {
                 const btnClass = "w-10 h-10 rounded-full bg-theme-card text-theme-muted hover:text-white flex items-center justify-center transition-all duration-300 transform hover:-translate-y-1 shadow-sm";
-                
+                // 修复：底部图标品牌色悬停
                 let hoverColor = 'hover:bg-black';
                 if(s.name.toLowerCase().includes('link') || s.name.includes('领英')) hoverColor = 'hover:bg-[#0077b5]';
                 else if(s.name.toLowerCase().includes('chat') || s.name.includes('微信')) hoverColor = 'hover:bg-[#09b83e]';
