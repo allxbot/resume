@@ -19,29 +19,39 @@
             theme: { 
                 extend: { 
                     colors: { 
-                        // --- 语义化颜色映射 (Semantic Colors) ---
-                        // 这些类名对应 CSS 变量，实现一键换肤
+                        // --- 语义化颜色系统 ( Semantic Color System ) ---
                         theme: {
-                            page: 'var(--bg-page)',       /* 页面背景 */
+                            page: 'var(--bg-page)',       /* 全局背景 */
                             card: 'var(--bg-card)',       /* 卡片背景 */
                             subtle: 'var(--bg-subtle)',   /* 次级背景(如底栏) */
-                            hover: 'var(--bg-hover)',     /* 悬停背景 */
+                            hover: 'var(--bg-hover)',     /* 悬停高亮背景 */
                             
-                            title: 'var(--text-title)',   /* 主标题 */
+                            title: 'var(--text-title)',   /* h1-h3 标题 */
                             body: 'var(--text-body)',     /* 正文 */
                             muted: 'var(--text-muted)',   /* 弱化文字 */
-                            accent: 'var(--text-accent)', /* 强调色(链接/高亮) */
+                            accent: 'var(--text-accent)', /* 品牌强调色 */
                             
-                            btn: 'var(--btn-bg)',         /* 按钮背景 */
-                            'btn-txt': 'var(--btn-text)', /* 按钮文字 */
+                            btn: 'var(--btn-bg)',         /* 主按钮背景 */
+                            'btn-txt': 'var(--btn-text)', /* 主按钮文字 */
                             
-                            border: 'var(--border-color)',/* 边框色 */
+                            border: 'var(--border-color)',/* 边框 */
                             line: 'var(--line-color)',    /* 时间轴线 */
                             
-                            // 功能色
-                            'tag-bg': 'var(--tag-bg)',    /* 标签背景 */
-                            'tag-txt': 'var(--tag-txt)',  /* 标签文字 */
-                            'icon-def': 'var(--icon-def)' /* 默认图标色 */
+                            // --- 特征元素 ---
+                            'tag-bg': 'var(--tag-bg)',    /* 技能标签背景 */
+                            'tag-txt': 'var(--tag-txt)',  /* 技能标签文字 */
+                            'badge-bg': 'var(--hero-badge-bg)', /* 头像位置胶囊背景 */
+                            'badge-txt': 'var(--hero-badge-txt)', /* 头像位置胶囊文字 */
+                            
+                            'date-bg': 'var(--date-bg)',
+                            'date-txt': 'var(--date-txt)',
+                            
+                            // --- 图标动态色 ---
+                            'icon-def': 'var(--icon-def)',
+                            'icon-1': 'var(--ico-1)', 
+                            'icon-2': 'var(--ico-2)', 
+                            'icon-3': 'var(--ico-3)',
+                            'check': 'var(--check-color)'
                         }
                     },
                     boxShadow: { 
@@ -62,101 +72,115 @@
 
     <style type="text/tailwindcss">
         @layer utilities { 
-            /* 进度条渐变 */
             .progress-bar { height: 6px; background: linear-gradient(90deg, var(--text-accent) var(--progress), var(--bg-subtle) var(--progress)); border-radius: 4px; } 
             
-            /* 玻璃拟态通用类 */
-            .glass-effect {
+            /* 玻璃拟态 (用于Apple/Modern风格) */
+            .glass-panel {
                 background-color: var(--glass-bg);
                 backdrop-filter: blur(var(--glass-blur));
+                border: 1px solid var(--border-color);
             }
         }
 
         /* =================================================================
-           🎨 样式模版定义 (Style Templates)
-           所有视觉特征均在此定义，HTML只负责结构
+           🎨 全特征模版定义 (Full Feature Style Templates)
            ================================================================= */
 
-        /* ---------------- 1.  Apple Style (Reference: Apple Official) ---------------- */
+        /* ---------------- 1.  Apple Style (Official Reference) ---------------- */
         :root[data-theme='apple'] {
-            /* [字体] SF Pro / Inter, 紧凑且清晰 */
+            /* [Font] Apple System Fonts */
             --font-family: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
             
-            /* [背景] Apple 标志性的灰白调 */
-            --bg-page: #f5f5f7;       /* 官网背景灰 */
-            --bg-card: #ffffff;       /* 纯白卡片 */
-            --bg-subtle: #f5f5f7;     /* 浅灰区块 */
-            --bg-hover: #fbfbfd;      /* 悬停微亮 */
-            --glass-bg: rgba(255, 255, 255, 0.7);
+            /* [Backgrounds] */
+            --bg-page: #f5f5f7;       /* Apple Official Grey */
+            --bg-card: #ffffff;
+            --bg-subtle: #f5f5f7;     /* Footer/Blocks */
+            --bg-hover: #fbfbfd;
+            --glass-bg: rgba(255, 255, 255, 0.6); /* 通透磨砂 */
             --glass-blur: 20px;
-            --hero-glow: rgba(0, 113, 227, 0.15); /* 顶部蓝色光晕 */
+            --hero-glow: rgba(0, 113, 227, 0.15); /* Blue glow */
 
-            /* [文字] 高对比度灰阶 */
-            --text-title: #1d1d1f;    /* 接近纯黑的深灰 */
-            --text-body: #424245;     /* 次级深灰，阅读舒适 */
-            --text-muted: #86868b;    /* 浅灰，用于辅助信息 */
+            /* [Text] High Contrast & Readable */
+            --text-title: #1d1d1f;    /* Black-ish */
+            --text-body: #424245;     /* Dark Grey */
+            --text-muted: #86868b;    /* Light Grey */
             --text-accent: #0066cc;   /* Apple Link Blue */
 
-            /* [组件] */
-            --btn-bg: #1d1d1f;        /* 黑色按钮 */
+            /* [Buttons] */
+            --btn-bg: #1d1d1f;        /* Pure Black */
             --btn-text: #ffffff;
-            --tag-bg: #e8e8ed;        /* 标签浅灰底 */
+            
+            /* [Tags & Badges] */
+            --tag-bg: #e8e8ed;        /* Pill bg */
             --tag-txt: #1d1d1f;
-            
-            /* [线条与边框] */
-            --border-color: rgba(0,0,0,0.0); /* Apple风格通常无边框，靠阴影 */
-            --line-color: #d2d2d7;    /* 时间轴线 */
-            
-            /* [图标] */
-            --icon-def: #1d1d1f;
-            --check-color: #86868b;
+            --hero-badge-bg: rgba(255, 255, 255, 0.85); /* 修复：高不透明度白底，解决文字不清 */
+            --hero-badge-txt: #1d1d1f; /* 深色文字 */
 
-            /* [形状] */
-            --radius-card: 1.5rem;    /* 适中的大圆角 */
-            --radius-btn: 9999px;     /* 胶囊按钮 */
-            --shadow-card: 0 4px 12px rgba(0,0,0,0.08); /* 柔和弥散阴影 */
-            --shadow-hover: 0 8px 24px rgba(0,0,0,0.12);
+            /* [Timeline & Lists] */
+            --date-bg: #eff6ff;       /* Blue-50 */
+            --date-txt: #0066cc;      /* Blue-600 */
+            --line-color: #d2d2d7;
+            --check-color: #86868b;   /* Gray Check */
+
+            /* [Icons - Multicolor] */
+            --icon-def: #1d1d1f;
+            --ico-1: #f97316; /* Orange */
+            --ico-2: #a855f7; /* Purple */
+            --ico-3: #14b8a6; /* Teal */
+
+            /* [Shape & Shadow] */
+            --border-color: rgba(0,0,0,0); /* No borders, just shadow */
+            --radius-card: 1.8rem;    /* Smooth large radius */
+            --radius-btn: 9999px;     /* Pill */
+            --shadow-card: 0 4px 24px rgba(0,0,0,0.06);
+            --shadow-hover: 0 8px 32px rgba(0,0,0,0.12);
         }
 
-        /* ---------------- 2. 🔷 Modern Theme (SaaS/Clean) ---------------- */
+        /* ---------------- 2. 🔷 Modern Theme (Clean SaaS) ---------------- */
         :root[data-theme='modern'] {
             --font-family: 'Inter', sans-serif;
             
-            --bg-page: #f8fafc;       /* 蓝调灰白 */
+            --bg-page: #f8fafc;
             --bg-card: #ffffff;
             --bg-subtle: #f1f5f9;
             --bg-hover: #ffffff;
-            --glass-bg: rgba(255, 255, 255, 0.9);
+            --glass-bg: rgba(255, 255, 255, 0.95);
             --glass-blur: 0px;
             --hero-glow: rgba(59, 130, 246, 0.1);
 
-            --text-title: #0f172a;    /* Slate-900 */
-            --text-body: #334155;     /* Slate-700 */
-            --text-muted: #64748b;    /* Slate-500 */
-            --text-accent: #3b82f6;   /* Blue-500 */
+            --text-title: #0f172a;
+            --text-body: #334155;
+            --text-muted: #64748b;
+            --text-accent: #3b82f6;
 
             --btn-bg: #3b82f6;
             --btn-text: #ffffff;
+            
             --tag-bg: #eff6ff;
             --tag-txt: #1d4ed8;
+            --hero-badge-bg: #ffffff;
+            --hero-badge-txt: #3b82f6;
 
-            --border-color: #e2e8f0;
+            --date-bg: #dbeafe;
+            --date-txt: #1d4ed8;
             --line-color: #cbd5e1;
-            
-            --icon-def: #3b82f6;
             --check-color: #3b82f6;
 
-            --radius-card: 0.75rem;   /* 标准圆角 */
+            --icon-def: #3b82f6;
+            --ico-1: #3b82f6; --ico-2: #3b82f6; --ico-3: #3b82f6;
+
+            --border-color: #e2e8f0;
+            --radius-card: 0.75rem;
             --radius-btn: 0.5rem;
             --shadow-card: 0 1px 3px rgba(0,0,0,0.1);
             --shadow-hover: 0 10px 15px -3px rgba(0,0,0,0.1);
         }
 
-        /* ---------------- 3. 🎩 Classic Theme (Business/Serif) ---------------- */
+        /* ---------------- 3. 🎩 Classic Theme (Serif) ---------------- */
         :root[data-theme='classic'] {
-            --font-family: 'Playfair Display', serif; /* 衬线体 */
+            --font-family: 'Playfair Display', serif;
             
-            --bg-page: #fafaf9;       /* 暖色调白 */
+            --bg-page: #fafaf9;
             --bg-card: #ffffff;
             --bg-subtle: #f5f5f4;
             --bg-hover: #ffffff;
@@ -164,107 +188,125 @@
             --glass-blur: 0px;
             --hero-glow: rgba(120, 113, 108, 0.1);
 
-            --text-title: #1c1917;    /* Stone-900 */
-            --text-body: #44403c;     /* Stone-700 */
-            --text-muted: #78716c;    /* Stone-500 */
-            --text-accent: #b45309;   /* Amber-700 */
+            --text-title: #1c1917;
+            --text-body: #44403c;
+            --text-muted: #78716c;
+            --text-accent: #b45309;
 
             --btn-bg: #1c1917;
             --btn-text: #ffffff;
+            
             --tag-bg: #f5f5f4;
             --tag-txt: #1c1917;
+            --hero-badge-bg: #1c1917;
+            --hero-badge-txt: #ffffff;
 
-            --border-color: #d6d3d1;
+            --date-bg: #e7e5e4;
+            --date-txt: #1c1917;
             --line-color: #d6d3d1;
-            
-            --icon-def: #b45309;
             --check-color: #b45309;
 
-            --radius-card: 2px;       /* 近乎直角 */
+            --icon-def: #b45309;
+            --ico-1: #b45309; --ico-2: #b45309; --ico-3: #b45309;
+
+            --border-color: #d6d3d1;
+            --radius-card: 2px;
             --radius-btn: 2px;
             --shadow-card: 0 1px 2px rgba(0,0,0,0.05);
             --shadow-hover: 0 4px 6px -1px rgba(0,0,0,0.1);
         }
 
-        /* ---------------- 4. 💻 Geek Theme (Terminal) ---------------- */
+        /* ---------------- 4. 💻 Geek Theme (Dark/Green) ---------------- */
         :root[data-theme='geek'] {
             --font-family: 'JetBrains Mono', monospace;
             
-            --bg-page: #0d1117;       /* GitHub Dark Dimmed */
+            --bg-page: #0d1117;
             --bg-card: #161b22;
             --bg-subtle: #0d1117;
-            --bg-hover: #161b22;
+            --bg-hover: #21262d;
             --glass-bg: #161b22;
             --glass-blur: 0px;
-            --hero-glow: rgba(46, 160, 67, 0.1);
+            --hero-glow: rgba(46, 160, 67, 0.15);
 
-            --text-title: #e6edf3;    /* 亮白 */
-            --text-body: #8b949e;     /* 终端灰 */
+            --text-title: #e6edf3;
+            --text-body: #8b949e;
             --text-muted: #6e7681;
-            --text-accent: #2ea043;   /* Terminal Green */
+            --text-accent: #2ea043;
 
             --btn-bg: #238636;
             --btn-text: #ffffff;
-            --tag-bg: #1f6feb;        /* Blue accent for tags */
-            --tag-txt: #ffffff;
-
-            --border-color: #30363d;
-            --line-color: #30363d;
             
-            --icon-def: #2ea043;
+            --tag-bg: rgba(56, 139, 253, 0.15);
+            --tag-txt: #58a6ff;
+            --hero-badge-bg: #21262d;
+            --hero-badge-txt: #2ea043;
+
+            --date-bg: rgba(46, 160, 67, 0.2);
+            --date-txt: #3fb950;
+            --line-color: #30363d;
             --check-color: #2ea043;
 
+            --icon-def: #2ea043;
+            --ico-1: #2ea043; --ico-2: #2ea043; --ico-3: #2ea043;
+
+            --border-color: #30363d;
             --radius-card: 6px;
             --radius-btn: 6px;
             --shadow-card: none;
-            --shadow-hover: 0 0 0 2px #2ea043; /* 绿色描边 */
+            --shadow-hover: 0 0 0 2px #2ea043;
         }
 
-        /* ---------------- 5. 🌑 Dark Theme (New! Premium Dark) ---------------- */
+        /* ---------------- 5. 🌑 Dark Theme (Premium) ---------------- */
         :root[data-theme='dark'] {
             --font-family: 'Inter', sans-serif;
             
-            --bg-page: #000000;       /* 纯黑 */
-            --bg-card: #1c1c1e;       /* Apple Dark Grey */
+            --bg-page: #000000;
+            --bg-card: #1c1c1e;
             --bg-subtle: #1c1c1e;
             --bg-hover: #2c2c2e;
             --glass-bg: rgba(28, 28, 30, 0.8);
             --glass-blur: 20px;
             --hero-glow: rgba(255, 255, 255, 0.1);
 
-            --text-title: #f5f5f7;    /* 亮白 */
-            --text-body: #d1d1d6;     /* 浅灰 */
-            --text-muted: #86868b;    /* 暗灰 */
-            --text-accent: #0a84ff;   /* iOS Dark Blue */
+            --text-title: #f5f5f7;
+            --text-body: #d1d1d6;
+            --text-muted: #86868b;
+            --text-accent: #0a84ff;
 
-            --btn-bg: #ffffff;        /* 白色按钮 */
+            --btn-bg: #ffffff;
             --btn-text: #000000;
-            --tag-bg: #2c2c2e;
-            --tag-txt: #f5f5f7;
-
-            --border-color: #38383a;
-            --line-color: #38383a;
             
-            --icon-def: #0a84ff;
+            --tag-bg: #3a3a3c;
+            --tag-txt: #f5f5f7;
+            --hero-badge-bg: rgba(58, 58, 60, 0.8);
+            --hero-badge-txt: #f5f5f7;
+
+            --date-bg: #3a3a3c;
+            --date-txt: #0a84ff;
+            --line-color: #38383a;
             --check-color: #86868b;
 
+            --icon-def: #0a84ff;
+            --ico-1: #0a84ff; --ico-2: #5e5ce6; --ico-3: #30b0c7; /* Dark mode colorful icons */
+
+            --border-color: #2c2c2e;
             --radius-card: 1.5rem;
             --radius-btn: 9999px;
-            --shadow-card: 0 0 0 1px rgba(255,255,255,0.1); /* 微弱白边替代阴影 */
-            --shadow-hover: 0 0 0 1px rgba(255,255,255,0.3);
+            --shadow-card: 0 0 0 1px rgba(255,255,255,0.1);
+            --shadow-hover: 0 0 0 1px rgba(255,255,255,0.25);
         }
 
-        /* --- 全局样式重置 --- */
+        /* --- 全局样式应用 --- */
         body {
             font-family: var(--font-family);
             background-color: var(--bg-page);
             color: var(--text-body);
-            transition: background-color 0.3s ease, color 0.3s ease;
+            transition: background-color 0.4s ease, color 0.4s ease;
         }
 
-        h1, h2, h3, h4, h5, h6 { color: var(--text-title); }
-        
-        /* 交互类 */
+        h1, h2, h3, h4 { color: var(--text-title); }
+
+        /* 组件通用类 */
         .card-base {
             background-color: var(--bg-card);
             border-radius: var(--radius-card);
@@ -273,29 +315,25 @@
         }
         .card-base:hover { box-shadow: var(--shadow-hover); }
 
-        .btn-main {
-            background-color: var(--btn-bg);
-            color: var(--btn-text);
-            border-radius: var(--radius-btn);
-        }
-        .btn-ghost {
-            background-color: var(--bg-card);
-            color: var(--text-title);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-btn);
-        }
+        .btn-main { background-color: var(--btn-bg); color: var(--btn-text); border-radius: var(--radius-btn); }
+        .btn-ghost { background-color: var(--bg-card); color: var(--text-title); border: 1px solid var(--border-color); border-radius: var(--radius-btn); }
+
+        /* 主题切换菜单 */
+        #theme-menu { transform-origin: bottom right; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+        #theme-menu.hidden { transform: scale(0.9); opacity: 0; pointer-events: none; }
+        #theme-menu:not(.hidden) { transform: scale(1); opacity: 1; pointer-events: auto; }
 
         /* 动画类 */
         .reveal-hidden { opacity: 0; transform: translateY(30px) scale(0.98); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform, opacity; }
         .reveal-visible { opacity: 1; transform: translateY(0) scale(1); }
         .tilt-container { perspective: 1000px; transform-style: preserve-3d; }
 
-        /* 打印样式 (保持不变，使用黑白高对比) */
+        /* 打印样式 */
         #print-view { display: none; }
         @media print {
-            #screen-view, header, #backToTop, #wechatModal, .no-print, .tilt-container { display: none !important; }
+            #screen-view, #theme-fab-container { display: none !important; }
             @page { size: A4; margin: 15mm 15mm; }
-            html, body { width: 210mm; height: auto; margin: 0 !important; padding: 0 !important; background-color: white !important; color: #000 !important; overflow: visible !important; font-family: "Microsoft YaHei", sans-serif !important; }
+            html, body { width: 210mm; height: auto; margin: 0 !important; padding: 0 !important; background-color: white !important; color: #000 !important; overflow: visible !important; font-family: sans-serif !important; }
             #print-view { display: block !important; width: 100%; font-size: 9.5pt; line-height: 1.35; text-align: justify; }
             .print-h1 { font-size: 20pt; font-weight: bold; line-height: 1.2; margin-bottom: 4pt; color: #000; }
             .print-h2 { font-size: 12pt; font-weight: bold; border-bottom: 1pt solid #000; margin-top: 10pt; margin-bottom: 4pt; padding-bottom: 2pt; page-break-after: avoid; }
@@ -312,8 +350,6 @@
             .no-break { page-break-inside: auto; break-inside: auto; margin-bottom: 8pt; }
             a { text-decoration: none !important; color: #000 !important; }
         }
-        #mobile-menu { transition: max-height 0.4s; max-height: 0; opacity: 0; overflow: hidden; }
-        #mobile-menu.open { max-height: 400px; opacity: 1; }
     </style>
 </head>
 <body class="selection:bg-theme-accent/20 selection:text-theme-accent font-theme">
@@ -356,19 +392,19 @@
                 <div class="md:w-1/2 flex justify-center tilt-container reveal-hidden" style="transition-delay: 200ms">
                     <div id="hero-tilt" class="relative w-64 h-64 md:w-80 md:h-80 transition-transform duration-100 ease-out cursor-pointer group">
                         <div class="absolute inset-0 rounded-full bg-gradient-to-tr from-theme-accent/20 to-theme-accent/5 blur-2xl opacity-40 group-hover:opacity-60 transition-opacity duration-500 print:hidden"></div>
-                        <div class="w-full h-full rounded-full bg-theme-card p-1.5 shadow-theme relative overflow-hidden border border-white/20">
+                        <div class="w-full h-full rounded-full bg-theme-card p-1.5 shadow-theme relative overflow-hidden border border-theme-border/50">
                             <img id="hero-avatar" src="" alt="Profile" class="w-full h-full rounded-full object-cover">
                         </div>
-                        <div class="absolute bottom-4 right-4 bg-theme-card/90 backdrop-blur shadow-lg px-4 py-2 rounded-full border border-theme-border flex items-center gap-2 transform translate-z-10 group-hover:scale-105 transition print:hidden">
+                        <div class="absolute bottom-4 right-4 bg-theme-badge-bg backdrop-blur-md shadow-lg px-4 py-2 rounded-full border border-theme-border flex items-center gap-2 transform translate-z-10 group-hover:scale-105 transition print:hidden">
                             <i class="fa fa-map-marker text-red-500"></i>
-                            <span class="text-xs font-semibold text-theme-title" id="hero-location"></span>
+                            <span class="text-xs font-semibold text-theme-badge-txt" id="hero-location"></span>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="profile" class="py-20 glass-effect reveal-hidden print:py-5">
+        <section id="profile" class="py-20 glass-panel reveal-hidden print:py-5 border-y border-transparent">
             <div class="container mx-auto px-4 md:px-6 max-w-5xl">
                 <div class="text-center mb-12"><h2 class="text-3xl font-bold text-theme-title" id="t-profile"></h2></div>
                 <div class="card-base p-8 md:p-12">
@@ -385,7 +421,7 @@
             </div>
         </section>
 
-        <section id="experience" class="py-20 glass-effect print:py-5">
+        <section id="experience" class="py-20 glass-panel print:py-5 border-y border-transparent">
             <div class="container mx-auto px-4 md:px-6">
                 <div class="text-center mb-16"><h2 class="text-3xl font-bold text-theme-title" id="t-exp"></h2></div>
                 <div class="max-w-5xl mx-auto space-y-12" id="exp-list"></div>
@@ -408,16 +444,30 @@
             </div>
         </section>
 
-        <footer class="bg-theme-subtle text-theme-muted py-12 print:hidden text-center border-t border-theme-border">
+        <footer class="bg-theme-subtle text-theme-foot py-12 print:hidden text-center border-t border-theme-border">
             <h3 class="text-lg font-bold text-theme-title mb-2" id="f-name"></h3>
             <p class="text-sm mb-6" id="f-desc"></p>
             <div class="flex justify-center space-x-6 mb-8" id="social-icons"></div>
             <p class="text-xs opacity-60">© 2026 <span id="copyright-name"></span>. All rights reserved.</p>
         </footer>
 
-        <button id="backToTop" class="fixed bottom-8 right-8 w-12 h-12 bg-theme-card backdrop-blur-md border border-theme-border rounded-full shadow-lg flex items-center justify-center text-theme-muted hover:text-theme-title hover:scale-110 hover:-translate-y-1 transition-all duration-500 z-40 opacity-0 invisible translate-y-4 group">
-            <i class="fa fa-arrow-up transition-transform duration-300 group-hover:-translate-y-0.5"></i>
-        </button>
+        <div id="theme-fab-container" class="fixed bottom-8 right-8 z-50 flex flex-col gap-3">
+            <div id="theme-menu" class="hidden bg-theme-card border border-theme-border rounded-xl shadow-theme-hover p-2 mb-2 flex flex-col gap-1 min-w-[140px] transform origin-bottom-right transition-all">
+                <button onclick="setTheme('apple')" class="px-3 py-2 text-sm text-left hover:bg-theme-subtle rounded-lg flex items-center gap-2 text-theme-body"><i class="fa fa-apple"></i> Apple</button>
+                <button onclick="setTheme('modern')" class="px-3 py-2 text-sm text-left hover:bg-theme-subtle rounded-lg flex items-center gap-2 text-theme-body"><i class="fa fa-cube"></i> Modern</button>
+                <button onclick="setTheme('classic')" class="px-3 py-2 text-sm text-left hover:bg-theme-subtle rounded-lg flex items-center gap-2 text-theme-body"><i class="fa fa-coffee"></i> Classic</button>
+                <button onclick="setTheme('geek')" class="px-3 py-2 text-sm text-left hover:bg-theme-subtle rounded-lg flex items-center gap-2 text-theme-body"><i class="fa fa-terminal"></i> Geek</button>
+                <button onclick="setTheme('dark')" class="px-3 py-2 text-sm text-left hover:bg-theme-subtle rounded-lg flex items-center gap-2 text-theme-body"><i class="fa fa-moon-o"></i> Dark</button>
+            </div>
+
+            <button onclick="document.getElementById('theme-menu').classList.toggle('hidden')" class="w-12 h-12 bg-theme-card border border-theme-border rounded-full shadow-lg flex items-center justify-center text-theme-body hover:text-theme-title hover:scale-110 transition-all duration-300">
+                <i class="fa fa-paint-brush"></i>
+            </button>
+
+            <button id="backToTop" class="w-12 h-12 bg-theme-card border border-theme-border rounded-full shadow-lg flex items-center justify-center text-theme-body hover:text-theme-title hover:scale-110 transition-all duration-300 opacity-0 invisible translate-y-4">
+                <i class="fa fa-arrow-up"></i>
+            </button>
+        </div>
 
         <div id="wechatModal" class="hidden fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-md p-4 transition-opacity duration-300" onclick="this.classList.add('hidden')">
             <div class="bg-theme-card p-8 rounded-theme shadow-2xl max-w-sm w-full text-center transform scale-100 transition-transform duration-300" onclick="event.stopPropagation()">
@@ -446,6 +496,8 @@
             
             const navbar = document.getElementById('navbar');
             const mobileMenu = document.getElementById('mobile-menu');
+            const backToTop = document.getElementById('backToTop');
+
             window.addEventListener('scroll', () => {
                 const isScrolled = window.scrollY > 50;
                 const isMenuOpen = mobileMenu.classList.contains('open');
@@ -457,32 +509,50 @@
                     navbar.classList.remove('bg-theme-page/90', 'backdrop-blur-xl', 'border-b', 'border-theme-border', 'py-3');
                 }
                 
-                const backToTop = document.getElementById('backToTop');
-                if (window.scrollY > 300) { backToTop.classList.remove('opacity-0', 'invisible', 'translate-y-4'); backToTop.classList.add('opacity-100', 'visible', 'translate-y-0'); } 
-                else { backToTop.classList.add('opacity-0', 'invisible', 'translate-y-4'); backToTop.classList.remove('opacity-100', 'visible', 'translate-y-0'); }
+                if (window.scrollY > 300) { 
+                    backToTop.classList.remove('opacity-0', 'invisible', 'translate-y-4'); 
+                } else { 
+                    backToTop.classList.add('opacity-0', 'invisible', 'translate-y-4'); 
+                }
             });
             document.getElementById('mobile-menu-btn').addEventListener('click', () => { mobileMenu.classList.toggle('open'); });
-            document.getElementById('backToTop').addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+            backToTop.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
         });
 
+        // Intersection Observer
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('reveal-visible'); observer.unobserve(entry.target); } });
         }, { threshold: 0.1 });
 
-        // Cache Busting: 添加时间戳防止缓存
-        async function loadResume() {
+        // Theme Switching Logic
+        function setTheme(themeName) {
+            document.documentElement.setAttribute('data-theme', themeName);
+            document.getElementById('theme-menu').classList.add('hidden');
+            // Re-render chart to update colors
+            loadResume(false); 
+        }
+
+        async function loadResume(fetchData = true) {
             try {
-                // 强制刷新数据
-                const res = await fetch(`./data.json?t=${new Date().getTime()}`);
-                const fullData = await res.json();
-                const data = fullData[currentLang];
-                
-                const theme = fullData[currentLang].ui.theme || 'apple';
-                document.documentElement.setAttribute('data-theme', theme);
-                
-                if(fullData['en']) document.getElementById('copyright-name').textContent = fullData['en'].basic_info.name;
-                render(data, theme);
-                renderPrintView(data, fullData[currentLang].ui); 
+                let data;
+                if (fetchData || !window.cachedData) {
+                    // Timestamp to prevent caching
+                    const res = await fetch(`./data.json?t=${new Date().getTime()}`);
+                    const fullData = await res.json();
+                    window.cachedData = fullData; // Cache in memory
+                    data = fullData[currentLang];
+                    
+                    // Set initial theme from JSON if not manually overridden, or default to apple
+                    const initialTheme = document.documentElement.getAttribute('data-theme') || fullData[currentLang].ui.theme || 'apple';
+                    document.documentElement.setAttribute('data-theme', initialTheme);
+                    
+                    if(fullData['en']) document.getElementById('copyright-name').textContent = fullData['en'].basic_info.name;
+                } else {
+                    data = window.cachedData[currentLang];
+                }
+
+                render(data);
+                renderPrintView(data, window.cachedData[currentLang].ui); 
                 
                 setTimeout(() => { document.querySelectorAll('.reveal-hidden').forEach(el => observer.observe(el)); }, 100);
             } catch(e) { console.error(e); }
@@ -491,13 +561,14 @@
         function toggleLanguage() {
             currentLang = currentLang === 'zh' ? 'en' : 'zh';
             localStorage.setItem('lang', currentLang);
-            loadResume();
+            loadResume(false); // No need to re-fetch
         }
 
-        function render(data, theme) {
+        function render(data) {
             const basic = data.basic_info;
             const ui = data.ui;
             const labelLang = currentLang === 'zh' ? 'EN' : '中文';
+            const currentTheme = document.documentElement.getAttribute('data-theme');
             
             document.title = `${basic.name} - ${currentLang === 'zh' ? '简历' : 'Resume'}`;
             document.getElementById('langLabel').textContent = labelLang;
@@ -505,7 +576,7 @@
             document.getElementById('nav-name').textContent = basic.name;
             
             const links = ['profile','skills','experience','education','contact'];
-            const navHTML = ui.nav.map((n, i) => `<a href="#${links[i]}" class="px-3 py-2 rounded-full hover:bg-theme-subtle hover:text-theme-title transition-colors rounded-btn" onclick="document.getElementById('mobile-menu').classList.remove('open');">${n}</a>`).join('');
+            const navHTML = ui.nav.map((n, i) => `<a href="#${links[i]}" class="px-3 py-2 rounded-full hover:bg-theme-subtle hover:text-theme-title transition-colors rounded-btn text-theme-body" onclick="document.getElementById('mobile-menu').classList.remove('open');">${n}</a>`).join('');
             document.getElementById('nav-menu-desktop').innerHTML = navHTML;
             document.getElementById('nav-menu-mobile').innerHTML = navHTML;
 
@@ -513,7 +584,6 @@
             document.getElementById('hero-title').textContent = basic.titles;
             document.getElementById('hero-tags').innerHTML = basic.tags.map(t => `<span class="bg-theme-tag-bg border border-theme-border text-theme-tag-txt px-4 py-1.5 rounded-full text-sm font-medium shadow-sm">${t}</span>`).join('');
             
-            // 按钮: 使用语义类名 btn-main / btn-ghost
             document.getElementById('hero-btns').innerHTML = `
                 <a href="#contact" class="btn-main px-8 py-3 font-medium hover:opacity-90 hover:scale-105 transition-all duration-300 shadow-lg flex items-center"><i class="fa fa-envelope mr-2"></i> ${ui.buttons.contact}</a>
                 <a href="#experience" class="btn-ghost px-8 py-3 font-medium hover:bg-theme-subtle transition-all hover:scale-105 shadow-sm flex items-center"><i class="fa fa-briefcase mr-2"></i> ${ui.buttons.exp}</a>
@@ -566,14 +636,15 @@
                 </div>
             `;
             
-            // 图标颜色循环 logic now handled by CSS variables --ico-1, 2, 3
-            // In Apple theme, these are Orange, Purple, Teal. In others, they are monochrome.
-            const iconVars = ['text-ico-1', 'text-ico-2', 'text-ico-3'];
+            const iconVars = ['text-icon-1', 'text-icon-2', 'text-icon-3'];
             data.skills.card_groups.forEach((g, idx) => {
+                let iconClass = 'text-icon-def';
+                if(currentTheme === 'apple' || currentTheme === 'dark') iconClass = iconVars[idx%3]; // Use colorful icons for Apple/Dark
+                
                 bentoHTML += `
                 <div class="col-span-1 md:col-span-1 lg:col-span-2 card-base p-6 hover:-translate-y-1 transition-all duration-300 reveal-hidden" style="transition-delay: ${(idx+1)*100}ms">
                     <div class="flex items-center gap-3 mb-4 pb-3 border-b border-theme-border">
-                        <i class="fa ${g.icon} ${iconVars[idx%3]} text-lg"></i>
+                        <i class="fa ${g.icon} ${iconClass} text-lg"></i>
                         <h3 class="font-bold text-theme-title">${g.title}</h3>
                     </div>
                     <ul class="space-y-3">
@@ -584,9 +655,13 @@
             bentoContainer.innerHTML = bentoHTML;
 
             if(myChart) myChart.destroy();
-            const gridColor = theme === 'geek' || theme === 'dark' ? '#333' : '#f0f0f0';
-            const pointColor = theme === 'geek' || theme === 'dark' ? '#fff' : '#333';
             
+            const isDark = currentTheme === 'geek' || currentTheme === 'dark';
+            const gridColor = isDark ? '#333' : '#f0f0f0';
+            const pointColor = isDark ? '#fff' : '#333';
+            const radarColor = currentTheme === 'geek' ? '#2ea043' : (currentTheme === 'classic' ? '#1e3a8a' : '#0071e3');
+            const radarBg = currentTheme === 'geek' ? 'rgba(46, 160, 67, 0.2)' : 'rgba(0, 113, 227, 0.2)';
+
             myChart = new Chart(document.getElementById('skillsChart'), {
                 type: 'radar',
                 data: {
@@ -594,10 +669,10 @@
                     datasets: [{ 
                         label: 'Level', 
                         data: chartData.data, 
-                        backgroundColor: theme === 'geek' ? 'rgba(46, 160, 67, 0.2)' : 'rgba(0, 113, 227, 0.2)', 
-                        borderColor: theme === 'geek' ? '#2ea043' : (theme === 'classic' ? '#1e3a8a' : '#0071e3'), 
+                        backgroundColor: radarBg, 
+                        borderColor: radarColor, 
                         pointBackgroundColor: pointColor, 
-                        pointBorderColor: theme === 'geek' ? '#2ea043' : '#0071e3', 
+                        pointBorderColor: radarColor, 
                         borderWidth: 2 
                     }]
                 },
@@ -632,7 +707,7 @@
                                 <div class="group">
                                     ${p.title ? `<h4 class="font-bold text-theme-title mb-3 text-lg flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-theme-accent"></span> ${p.title}</h4>` : ''}
                                     <ul class="space-y-4">
-                                        ${p.details.map(d => `<li class="flex items-start gap-3 text-[15px] text-theme-body leading-relaxed group-hover:text-theme-title transition-colors"><i class="fa fa-check mt-1 shrink-0 text-xs text-check"></i><span>${d}</span></li>`).join('')}
+                                        ${p.details.map(d => `<li class="flex items-start gap-3 text-[15px] text-theme-body leading-relaxed group-hover:text-theme-title transition-colors"><i class="fa fa-check mt-1 shrink-0 text-xs text-theme-check"></i><span>${d}</span></li>`).join('')}
                                     </ul>
                                 </div>
                             `).join('')}
@@ -657,7 +732,7 @@
                 <div class="mb-8 last:mb-0">
                     <h3 class="font-bold text-lg mb-5 text-theme-title flex items-center gap-2"><i class="fa ${t.icon} text-theme-muted"></i> ${t.group}</h3>
                     <div class="grid grid-cols-2 gap-3">
-                        ${t.list.map(i => `<div class="bg-theme-subtle px-4 py-3 rounded-xl text-sm font-medium text-theme-body border border-transparent hover:border-theme-border hover:bg-theme-card hover:shadow-sm transition-all cursor-default flex items-center gap-2"><i class="fa fa-check text-xs text-check"></i> ${i}</div>`).join('')}
+                        ${t.list.map(i => `<div class="bg-theme-subtle px-4 py-3 rounded-xl text-sm font-medium text-theme-body border border-transparent hover:border-theme-border hover:bg-theme-card hover:shadow-sm transition-all cursor-default flex items-center gap-2"><i class="fa fa-check text-xs text-theme-check"></i> ${i}</div>`).join('')}
                     </div>
                 </div>`).join('');
 
