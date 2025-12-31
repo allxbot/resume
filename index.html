@@ -35,6 +35,7 @@
                             
                             border: 'var(--border-color)',
                             line: 'var(--line-color)',
+                            'input-border': 'var(--input-border)',
                             
                             'tag-bg': 'var(--tag-bg)',
                             'tag-txt': 'var(--tag-txt)',
@@ -45,6 +46,10 @@
                             'date-txt': 'var(--date-txt)',
                             
                             'icon-def': 'var(--icon-def)',
+                            'icon-1': 'var(--ico-1)', 
+                            'icon-2': 'var(--ico-2)', 
+                            'icon-3': 'var(--ico-3)',
+                            
                             'check': 'var(--check-color)'
                         }
                     },
@@ -60,8 +65,10 @@
                         'theme': 'var(--font-family)'
                     },
                     fontWeight: {
-                        'theme-body': 'var(--fw-body)',
-                        'theme-title': 'var(--fw-title)'
+                        'theme-light': '300',
+                        'theme-normal': '400',
+                        'theme-medium': '500',
+                        'theme-bold': '600'
                     }
                 } 
             } 
@@ -72,12 +79,13 @@
         @layer utilities { 
             .progress-bar { height: 5px; background: linear-gradient(90deg, var(--text-accent) var(--progress), var(--bg-subtle) var(--progress)); border-radius: 99px; } 
             
+            /* 修正：移除了 border，解决页面刷新出现横线的问题 */
             .glass-panel {
                 background-color: var(--glass-bg);
                 backdrop-filter: blur(var(--glass-blur));
-                border: 1px solid var(--border-color);
             }
 
+            /* 导航栏吸顶样式 */
             .nav-sticky {
                 background-color: var(--bg-nav-sticky);
                 backdrop-filter: blur(20px);
@@ -89,12 +97,13 @@
            🎨 样式模版定义
            ================================================================= */
 
-        /* ---------------- 1.  Apple Style ---------------- */
+        /* ---------------- 1.  Apple Style (Airy & Light) ---------------- */
         :root[data-theme='apple'] {
             --font-family: "SF Pro Text", "SF Pro Icons", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
             --fw-body: 300;           
             --fw-title: 600;          
             
+            /* 背景 */
             --bg-page: #ffffff;       
             --bg-card: #ffffff;
             --bg-subtle: #f5f5f7;     
@@ -105,32 +114,41 @@
             --glass-blur: 30px;
             --hero-glow: rgba(0, 113, 227, 0.04); 
 
+            /* 文字 */
             --text-title: #1d1d1f;    
             --text-body: #6e6e73;     
             --text-muted: #86868b;    
             --text-accent: #0066cc;   
 
+            /* 按钮 */
             --btn-bg: #1d1d1f;        
             --btn-text: #ffffff;
             
+            /* 标签/徽章 */
             --tag-bg: #f5f5f7;
             --tag-txt: #1d1d1f;
             --hero-badge-bg: rgba(255, 255, 255, 0.9);
             --hero-badge-txt: #1d1d1f;
 
+            /* 时间轴 */
             --date-bg: rgba(0, 113, 227, 0.1); 
             --date-txt: #0071e3;               
             --line-color: #f5f5f7;             
             --check-color: #86868b;
 
+            /* 图标 */
             --icon-def: #1d1d1f;
             --ico-1: #f56300; 
             --ico-2: #a34ec7; 
             --ico-3: #0090aa; 
 
-            --border-color: rgba(0,0,0,0.08);
+            /* 形状与阴影 */
+            --border-color: rgba(0,0,0,0.06); /* 极淡边框 */
+            --input-border: rgba(0,0,0,0.12); /* 输入框专用 */
+            
             --radius-card: 24px;      
             --radius-btn: 980px;      
+            
             --shadow-card: 0 12px 40px -8px rgba(0,0,0,0.04); 
             --shadow-hover: 0 24px 60px -12px rgba(0,0,0,0.08);
         }
@@ -154,7 +172,7 @@
             --icon-def: #3b82f6; 
             --ico-1: #3b82f6; --ico-2: #3b82f6; --ico-3: #3b82f6; 
             
-            --border-color: #e2e8f0;
+            --border-color: #e2e8f0; --input-border: #e2e8f0;
             --radius-card: 0.75rem; --radius-btn: 0.5rem;
             --shadow-card: 0 1px 3px rgba(0,0,0,0.1); --shadow-hover: 0 10px 15px -3px rgba(0,0,0,0.1);
         }
@@ -178,7 +196,7 @@
             --icon-def: #0a84ff;
             --ico-1: #0a84ff; --ico-2: #5e5ce6; --ico-3: #30b0c7; 
 
-            --border-color: #2c2c2e;
+            --border-color: #2c2c2e; --input-border: #3a3a3c;
             --radius-card: 22px; --radius-btn: 9999px;
             --shadow-card: 0 0 0 1px rgba(255,255,255,0.1); --shadow-hover: 0 0 0 1px rgba(255,255,255,0.25);
         }
@@ -352,13 +370,11 @@
                 <button onclick="setTheme('modern')" class="px-3 py-2 text-sm text-left hover:bg-theme-subtle rounded-lg flex items-center gap-2 text-theme-body"><i class="fa fa-cube"></i> Modern</button>
                 <button onclick="setTheme('dark')" class="px-3 py-2 text-sm text-left hover:bg-theme-subtle rounded-lg flex items-center gap-2 text-theme-body"><i class="fa fa-moon-o"></i> Dark</button>
             </div>
-
             <button onclick="document.getElementById('theme-menu').classList.toggle('hidden')" class="w-12 h-12 bg-theme-card border border-theme-border rounded-full shadow-lg flex items-center justify-center text-theme-body hover:text-theme-title hover:scale-110 transition-all duration-300 z-20 flex-shrink-0 mb-3">
                 <i class="fa fa-paint-brush"></i>
             </button>
-
             <div id="backToTopWrapper" class="transition-all duration-500 overflow-hidden max-h-0 opacity-0 w-12 flex justify-center">
-                <button id="backToTop" class="w-12 h-12 bg-theme-card border border-theme-border rounded-full shadow-lg flex items-center justify-center text-theme-body hover:text-theme-title hover:scale-110 transition-all duration-300 flex-shrink-0">
+                <button id="backToTop" class="w-12 h-12 bg-theme-card border border-theme-border rounded-full shadow-theme flex items-center justify-center text-theme-body hover:text-theme-title hover:scale-110 transition-all duration-300 flex-shrink-0">
                     <i class="fa fa-arrow-up"></i>
                 </button>
             </div>
@@ -391,10 +407,7 @@
             
             const navbar = document.getElementById('navbar');
             const mobileMenu = document.getElementById('mobile-menu');
-            const backToTopBtn = document.getElementById('backToTop'); // 按钮本身
-            
-            // Initial Check
-            handleScroll();
+            const backToTopBtn = document.getElementById('backToTop'); 
 
             window.addEventListener('scroll', handleScroll);
             
@@ -409,12 +422,11 @@
         function handleScroll() {
             const navbar = document.getElementById('navbar');
             const mobileMenu = document.getElementById('mobile-menu');
-            const wrapper = document.getElementById('backToTopWrapper'); // 获取包裹容器
+            const wrapper = document.getElementById('backToTopWrapper'); 
             
             const isScrolled = window.scrollY > 50;
             const isMenuOpen = mobileMenu.classList.contains('open');
 
-            // 1. Navbar Logic
             if (isScrolled || isMenuOpen) {
                 navbar.classList.remove('bg-transparent', 'py-4');
                 navbar.classList.add('nav-sticky', 'py-3');
@@ -423,13 +435,10 @@
                 navbar.classList.remove('nav-sticky', 'py-3');
             }
             
-            // 2. BackToTop Logic (Animate Wrapper Height)
             if (window.scrollY > 300) { 
-                // 展开容器高度，淡入
                 wrapper.classList.remove('max-h-0', 'opacity-0');
-                wrapper.classList.add('max-h-16', 'opacity-100'); // 足够的高度(3rem + margin)
+                wrapper.classList.add('max-h-16', 'opacity-100'); 
             } else { 
-                // 收缩容器高度，淡出
                 wrapper.classList.add('max-h-0', 'opacity-0');
                 wrapper.classList.remove('max-h-16', 'opacity-100');
             }
@@ -607,7 +616,6 @@
             });
 
             document.getElementById('t-exp').textContent = ui.section_titles.experience;
-            // 修正：字体 text-[16px] (text-base), 细体 font-theme-light (300)
             document.getElementById('exp-list').innerHTML = data.experience.map(job => `
                 <div class="relative pl-0 md:pl-0 reveal-hidden">
                     <div class="flex flex-col md:flex-row gap-8 md:gap-16">
@@ -690,7 +698,7 @@
             document.getElementById('f-desc').textContent = basic.footer_text;
             document.getElementById('social-icons').innerHTML = basic.social_links.map(s => {
                 const btnClass = "w-10 h-10 rounded-full bg-theme-card text-theme-muted hover:text-white flex items-center justify-center transition-all duration-300 transform hover:-translate-y-1 shadow-sm";
-                // 修复：底部图标品牌色悬停
+                
                 let hoverColor = 'hover:bg-black';
                 if(s.name.toLowerCase().includes('link') || s.name.includes('领英')) hoverColor = 'hover:bg-[#0077b5]';
                 else if(s.name.toLowerCase().includes('chat') || s.name.includes('微信')) hoverColor = 'hover:bg-[#09b83e]';
