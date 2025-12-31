@@ -16,13 +16,6 @@
 
     <script>
         tailwind.config = { 
-            // 关键修复：添加 safelist 强制生成动态图标颜色类
-            safelist: [
-                'text-theme-icon-1',
-                'text-theme-icon-2',
-                'text-theme-icon-3',
-                'text-theme-icon-def'
-            ],
             theme: { 
                 extend: { 
                     colors: { 
@@ -41,7 +34,6 @@
                             'btn-txt': 'var(--btn-text)',
                             
                             border: 'var(--border-color)',
-                            'input-border': 'var(--input-border)',
                             line: 'var(--line-color)',
                             
                             'tag-bg': 'var(--tag-bg)',
@@ -72,10 +64,8 @@
                         'theme': 'var(--font-family)'
                     },
                     fontWeight: {
-                        'theme-light': '300',
-                        'theme-normal': '400',
-                        'theme-medium': '500',
-                        'theme-bold': '600'
+                        'theme-body': 'var(--fw-body)',
+                        'theme-title': 'var(--fw-title)'
                     }
                 } 
             } 
@@ -119,38 +109,30 @@
             --glass-blur: 30px;
             --hero-glow: rgba(0, 113, 227, 0.04); 
 
-            /* 文字 */
             --text-title: #1d1d1f;    
             --text-body: #6e6e73;     
             --text-muted: #86868b;    
             --text-accent: #0066cc;   
 
-            /* 按钮 */
             --btn-bg: #1d1d1f;        
             --btn-text: #ffffff;
             
-            /* 标签 */
             --tag-bg: #f5f5f7;
             --tag-txt: #1d1d1f;
             --hero-badge-bg: rgba(255, 255, 255, 0.9);
             --hero-badge-txt: #1d1d1f;
 
-            /* 时间轴 */
             --date-bg: rgba(0, 113, 227, 0.1); 
             --date-txt: #0071e3;               
             --line-color: #f5f5f7;             
             --check-color: #86868b;
 
-            /* 图标彩色定义 */
             --icon-def: #1d1d1f;
-            --ico-1: #f56300; /* 橙 */
-            --ico-2: #a34ec7; /* 紫 */
-            --ico-3: #0090aa; /* 青 */
+            --ico-1: #f56300; 
+            --ico-2: #a34ec7; 
+            --ico-3: #0090aa; 
 
-            /* 形状 */
-            --border-color: transparent; 
-            --input-border: rgba(0,0,0,0.1); /* 输入框浅色边框 */
-            
+            --border-color: rgba(0,0,0,0.08);
             --radius-card: 24px;      
             --radius-btn: 980px;      
             --shadow-card: 0 12px 40px -8px rgba(0,0,0,0.04); 
@@ -173,11 +155,10 @@
             
             --date-bg: #dbeafe; --date-txt: #1d4ed8;
             --line-color: #e2e8f0; --check-color: #3b82f6;
-            
             --icon-def: #3b82f6; 
             --ico-1: #3b82f6; --ico-2: #3b82f6; --ico-3: #3b82f6; 
             
-            --border-color: #e2e8f0; --input-border: #e2e8f0;
+            --border-color: #e2e8f0;
             --radius-card: 0.75rem; --radius-btn: 0.5rem;
             --shadow-card: 0 1px 3px rgba(0,0,0,0.1); --shadow-hover: 0 10px 15px -3px rgba(0,0,0,0.1);
         }
@@ -198,11 +179,10 @@
             
             --date-bg: #3a3a3c; --date-txt: #0a84ff;
             --line-color: #38383a; --check-color: #86868b;
-            
             --icon-def: #0a84ff;
             --ico-1: #0a84ff; --ico-2: #5e5ce6; --ico-3: #30b0c7; 
 
-            --border-color: #2c2c2e; --input-border: #3a3a3c;
+            --border-color: #2c2c2e;
             --radius-card: 22px; --radius-btn: 9999px;
             --shadow-card: 0 0 0 1px rgba(255,255,255,0.1); --shadow-hover: 0 0 0 1px rgba(255,255,255,0.25);
         }
@@ -370,16 +350,18 @@
             <p class="text-xs opacity-60">© 2026 <span id="copyright-name"></span>. All rights reserved.</p>
         </footer>
 
-        <div id="theme-fab-container" class="fixed bottom-8 right-8 z-50 flex flex-col gap-3 items-end">
-            <div id="theme-menu" class="hidden bg-theme-card border border-theme-border rounded-xl shadow-theme-hover p-2 mb-2 flex flex-col gap-1 min-w-[140px] transform origin-bottom-right transition-all">
+        <div id="theme-fab-container" class="fixed bottom-8 right-8 z-50 flex flex-col items-end">
+            <div id="theme-menu" class="hidden bg-theme-card border border-theme-border rounded-xl shadow-theme-hover p-2 mb-3 flex flex-col gap-1 min-w-[140px] transform origin-bottom-right transition-all">
                 <button onclick="setTheme('apple')" class="px-3 py-2 text-sm text-left hover:bg-theme-subtle rounded-lg flex items-center gap-2 text-theme-body"><i class="fa fa-apple"></i> Apple</button>
                 <button onclick="setTheme('modern')" class="px-3 py-2 text-sm text-left hover:bg-theme-subtle rounded-lg flex items-center gap-2 text-theme-body"><i class="fa fa-cube"></i> Modern</button>
                 <button onclick="setTheme('dark')" class="px-3 py-2 text-sm text-left hover:bg-theme-subtle rounded-lg flex items-center gap-2 text-theme-body"><i class="fa fa-moon-o"></i> Dark</button>
             </div>
-            <button onclick="document.getElementById('theme-menu').classList.toggle('hidden')" class="w-12 h-12 bg-theme-card border border-theme-border rounded-full shadow-lg flex items-center justify-center text-theme-body hover:text-theme-title hover:scale-110 transition-all duration-300">
+
+            <button onclick="document.getElementById('theme-menu').classList.toggle('hidden')" class="w-12 h-12 bg-theme-card border border-theme-border rounded-full shadow-lg flex items-center justify-center text-theme-body hover:text-theme-title hover:scale-110 transition-all duration-300 mb-3">
                 <i class="fa fa-paint-brush"></i>
             </button>
-            <button id="backToTop" class="w-12 h-12 bg-theme-card border border-theme-border rounded-full shadow-lg flex items-center justify-center text-theme-body hover:text-theme-title hover:scale-110 transition-all duration-300 opacity-0 invisible translate-y-4">
+
+            <button id="backToTop" class="w-12 rounded-full shadow-lg flex items-center justify-center bg-theme-card border border-theme-border text-theme-body hover:text-theme-title hover:scale-110 transition-all duration-500 overflow-hidden max-h-0 opacity-0 mt-0">
                 <i class="fa fa-arrow-up"></i>
             </button>
         </div>
@@ -437,10 +419,15 @@
                 navbar.classList.remove('nav-sticky', 'py-3');
             }
             
+            // Interaction logic for Floating Buttons
             if (window.scrollY > 300) { 
-                backToTop.classList.remove('opacity-0', 'invisible', 'translate-y-4'); 
+                // Show BackToTop: expand height, opacity 1, add margin
+                backToTop.classList.remove('max-h-0', 'opacity-0', 'mt-0');
+                backToTop.classList.add('max-h-12', 'opacity-100', 'mt-3');
             } else { 
-                backToTop.classList.add('opacity-0', 'invisible', 'translate-y-4'); 
+                // Hide BackToTop: collapse height, opacity 0, remove margin
+                backToTop.classList.add('max-h-0', 'opacity-0', 'mt-0');
+                backToTop.classList.remove('max-h-12', 'opacity-100', 'mt-3');
             }
         }
 
@@ -574,7 +561,7 @@
                         <h3 class="font-theme-title text-theme-title">${g.title}</h3>
                     </div>
                     <ul class="space-y-3">
-                        ${g.items.slice(0, 5).map(item => `<li class="flex items-start gap-2 text-sm text-theme-body font-theme-body"><span class="w-1.5 h-1.5 rounded-full bg-gray-300 mt-1.5 shrink-0"></span><span class="leading-snug">${stripHtml(item)}</span></li>`).join('')}
+                        ${g.items.slice(0, 5).map(item => `<li class="flex items-start gap-2 text-base text-theme-body font-theme-light"><span class="w-1.5 h-1.5 rounded-full bg-gray-300 mt-1.5 shrink-0"></span><span class="leading-snug">${stripHtml(item)}</span></li>`).join('')}
                     </ul>
                 </div>`;
             });
@@ -616,7 +603,6 @@
             });
 
             document.getElementById('t-exp').textContent = ui.section_titles.experience;
-            // 修正：字体大小 text-[16px], 细体 font-theme-light (300)
             document.getElementById('exp-list').innerHTML = data.experience.map(job => `
                 <div class="relative pl-0 md:pl-0 reveal-hidden">
                     <div class="flex flex-col md:flex-row gap-8 md:gap-16">
@@ -699,7 +685,7 @@
             document.getElementById('f-desc').textContent = basic.footer_text;
             document.getElementById('social-icons').innerHTML = basic.social_links.map(s => {
                 const btnClass = "w-10 h-10 rounded-full bg-theme-card text-theme-muted hover:text-white flex items-center justify-center transition-all duration-300 transform hover:-translate-y-1 shadow-sm";
-                // 修复：底部图标品牌色悬停
+                
                 let hoverColor = 'hover:bg-black';
                 if(s.name.toLowerCase().includes('link') || s.name.includes('领英')) hoverColor = 'hover:bg-[#0077b5]';
                 else if(s.name.toLowerCase().includes('chat') || s.name.includes('微信')) hoverColor = 'hover:bg-[#09b83e]';
