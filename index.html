@@ -12,7 +12,7 @@
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <script>
         tailwind.config = { 
@@ -66,7 +66,7 @@
 
     <style type="text/tailwindcss">
         @layer utilities { 
-            .progress-bar { height: 6px; background: linear-gradient(90deg, var(--text-accent) var(--progress), var(--bg-subtle) var(--progress)); border-radius: 4px; } 
+            .progress-bar { height: 5px; background: linear-gradient(90deg, var(--text-accent) var(--progress), var(--bg-subtle) var(--progress)); border-radius: 99px; } 
             
             .glass-panel {
                 background-color: var(--glass-bg);
@@ -77,50 +77,51 @@
             .nav-sticky {
                 background-color: var(--bg-nav-sticky);
                 backdrop-filter: blur(20px);
-                border-bottom: 1px solid var(--border-color);
+                /* Apple导航栏底部分割线非常淡 */
+                border-bottom: 1px solid rgba(0,0,0,0.03); 
             }
         }
 
         /* =================================================================
-           🎨 样式模版定义
+           🎨 样式模版定义 (Style Templates)
            ================================================================= */
 
-        /* ---------------- 1.  Apple Style (Final Refinement) ---------------- */
+        /* ---------------- 1.  Apple Style (Airy & Light) ---------------- */
         :root[data-theme='apple'] {
             --font-family: "SF Pro Text", "SF Pro Icons", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
             
-            /* [Backgrounds] 更亮、更通透 */
-            --bg-page: #fbfbfd;       /* 修正：更白的灰底，非 f5f5f7 */
+            /* [Backgrounds] 极致通透 */
+            --bg-page: #ffffff;       /* 纯白背景，去除灰色沉闷感 */
             --bg-card: #ffffff;
-            --bg-subtle: #f5f5f7;     
+            --bg-subtle: #f5f5f7;     /* 极淡的灰，用于区分区块 */
             --bg-hover: #ffffff;
-            --bg-nav-sticky: rgba(251, 251, 253, 0.8); 
+            --bg-nav-sticky: rgba(255, 255, 255, 0.8); /* 纯白半透明 */
             
             --glass-bg: rgba(255, 255, 255, 0.6);
-            --glass-blur: 24px;
-            --hero-glow: rgba(0, 113, 227, 0.06); /* 修正：极淡的光晕，避免背景太深 */
+            --glass-blur: 30px;
+            --hero-glow: rgba(0, 113, 227, 0.04); /* 几乎不可见的极淡蓝光 */
 
-            /* [Text] 颜色更浅、更柔和 */
-            --text-title: #1d1d1f;    /* 标题保持深灰 */
-            --text-body: #6e6e73;     /* 修正：正文使用更浅的灰色，非 #424245 */
+            /* [Text] 颜色更浅、更细 */
+            --text-title: #1d1d1f;    /* 标题深灰 */
+            --text-body: #6e6e73;     /* 正文次级灰，关键修改点 */
             --text-muted: #86868b;    /* 辅助信息 */
-            --text-accent: #0066cc;   
+            --text-accent: #0066cc;   /* 链接蓝 */
 
             /* [Buttons] */
             --btn-bg: #1d1d1f;        /* 纯黑 */
             --btn-text: #ffffff;
             
             /* [Tags & Badges] */
-            --tag-bg: #ffffff;
-            --tag-txt: #1d1d1f;
-            --hero-badge-bg: rgba(255, 255, 255, 0.8); /* 提高不透明度，确保文字清晰 */
+            --tag-bg: #f5f5f7;        /* 浅灰底 */
+            --tag-txt: #1d1d1f;       /* 深色字 */
+            --hero-badge-bg: rgba(255, 255, 255, 0.9); /* 高不透明度 */
             --hero-badge-txt: #1d1d1f;
 
             /* [Timeline] */
-            --date-bg: #ffffff;
-            --date-txt: #1d1d1f;
-            --line-color: #ebebeb;    /* 修正：极浅的线条 */
-            --check-color: #d2d2d7;   /* 修正：极浅的勾选框 */
+            --date-bg: #f5f5f7;       /* 浅灰底，非蓝色 */
+            --date-txt: #1d1d1f;      /* 深色字，非蓝色 */
+            --line-color: #f5f5f7;    /* 极浅线条 */
+            --check-color: #86868b;   /* 灰色勾选 */
 
             /* [Icons] */
             --icon-def: #1d1d1f;
@@ -128,12 +129,13 @@
             --ico-2: #a34ec7; 
             --ico-3: #0090aa; 
 
-            /* [Shape] */
-            --border-color: rgba(0,0,0,0.04); 
-            --radius-card: 22px;      
+            /* [Shape & Shadow] 空气感核心 */
+            --border-color: rgba(0,0,0,0); /* 无边框 */
+            --radius-card: 24px;      
             --radius-btn: 980px;      
-            --shadow-card: 0 4px 24px rgba(0,0,0,0.04); 
-            --shadow-hover: 0 12px 40px rgba(0,0,0,0.08);
+            /* 扩散极大、浓度极低的阴影 */
+            --shadow-card: 0 12px 40px -8px rgba(0,0,0,0.04); 
+            --shadow-hover: 0 24px 60px -12px rgba(0,0,0,0.08);
         }
 
         /* ---------------- 2. 🔷 Modern Theme ---------------- */
@@ -209,7 +211,7 @@
             --tag-bg: #3a3a3c; --tag-txt: #f5f5f7;
             --hero-badge-bg: rgba(58, 58, 60, 0.8); --hero-badge-txt: #f5f5f7;
             --date-bg: #3a3a3c; --date-txt: #0a84ff;
-            --line-color: #38383a; --check-color: #636366;
+            --line-color: #38383a; --check-color: #86868b;
             --icon-def: #0a84ff; --ico-1: #0a84ff; --ico-2: #5e5ce6; --ico-3: #30b0c7;
             --border-color: #2c2c2e;
             --radius-card: 22px; --radius-btn: 9999px;
@@ -253,6 +255,7 @@
         .reveal-visible { opacity: 1; transform: translateY(0) scale(1); }
         .tilt-container { perspective: 1000px; transform-style: preserve-3d; }
 
+        /* Print */
         #print-view { display: none; }
         @media print {
             #screen-view, #theme-fab-container { display: none !important; }
@@ -466,7 +469,7 @@
             entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('reveal-visible'); observer.unobserve(entry.target); } });
         }, { threshold: 0.1 });
 
-        // Theme Switching
+        // Theme Switching Logic
         function setTheme(themeName) {
             document.documentElement.setAttribute('data-theme', themeName);
             document.getElementById('theme-menu').classList.add('hidden');
