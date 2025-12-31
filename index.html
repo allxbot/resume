@@ -45,10 +45,6 @@
                             'date-txt': 'var(--date-txt)',
                             
                             'icon-def': 'var(--icon-def)',
-                            'icon-1': 'var(--ico-1)', 
-                            'icon-2': 'var(--ico-2)', 
-                            'icon-3': 'var(--ico-3)',
-                            
                             'check': 'var(--check-color)'
                         }
                     },
@@ -350,20 +346,22 @@
             <p class="text-xs opacity-60">© 2026 <span id="copyright-name"></span>. All rights reserved.</p>
         </footer>
 
-        <div id="theme-fab-container" class="fixed bottom-8 right-8 z-50 flex flex-col items-end">
+        <div id="theme-fab-container" class="fixed bottom-8 right-8 z-50 flex flex-col items-end gap-0">
             <div id="theme-menu" class="hidden bg-theme-card border border-theme-border rounded-xl shadow-theme-hover p-2 mb-3 flex flex-col gap-1 min-w-[140px] transform origin-bottom-right transition-all">
                 <button onclick="setTheme('apple')" class="px-3 py-2 text-sm text-left hover:bg-theme-subtle rounded-lg flex items-center gap-2 text-theme-body"><i class="fa fa-apple"></i> Apple</button>
                 <button onclick="setTheme('modern')" class="px-3 py-2 text-sm text-left hover:bg-theme-subtle rounded-lg flex items-center gap-2 text-theme-body"><i class="fa fa-cube"></i> Modern</button>
                 <button onclick="setTheme('dark')" class="px-3 py-2 text-sm text-left hover:bg-theme-subtle rounded-lg flex items-center gap-2 text-theme-body"><i class="fa fa-moon-o"></i> Dark</button>
             </div>
 
-            <button onclick="document.getElementById('theme-menu').classList.toggle('hidden')" class="w-12 h-12 bg-theme-card border border-theme-border rounded-full shadow-lg flex items-center justify-center text-theme-body hover:text-theme-title hover:scale-110 transition-all duration-300 mb-3">
+            <button onclick="document.getElementById('theme-menu').classList.toggle('hidden')" class="w-12 h-12 bg-theme-card border border-theme-border rounded-full shadow-lg flex items-center justify-center text-theme-body hover:text-theme-title hover:scale-110 transition-all duration-300 z-20 flex-shrink-0 mb-3">
                 <i class="fa fa-paint-brush"></i>
             </button>
 
-            <button id="backToTop" class="w-12 rounded-full shadow-lg flex items-center justify-center bg-theme-card border border-theme-border text-theme-body hover:text-theme-title hover:scale-110 transition-all duration-500 overflow-hidden max-h-0 opacity-0 mt-0">
-                <i class="fa fa-arrow-up"></i>
-            </button>
+            <div id="backToTopWrapper" class="transition-all duration-500 overflow-hidden max-h-0 opacity-0 w-12 flex justify-center">
+                <button id="backToTop" class="w-12 h-12 bg-theme-card border border-theme-border rounded-full shadow-lg flex items-center justify-center text-theme-body hover:text-theme-title hover:scale-110 transition-all duration-300 flex-shrink-0">
+                    <i class="fa fa-arrow-up"></i>
+                </button>
+            </div>
         </div>
 
         <div id="wechatModal" class="hidden fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-md p-4 transition-opacity duration-300" onclick="this.classList.add('hidden')">
@@ -393,24 +391,30 @@
             
             const navbar = document.getElementById('navbar');
             const mobileMenu = document.getElementById('mobile-menu');
-            const backToTop = document.getElementById('backToTop');
+            const backToTopBtn = document.getElementById('backToTop'); // 按钮本身
+            
+            // Initial Check
+            handleScroll();
 
-            window.addEventListener('scroll', updateNavbarStyle);
+            window.addEventListener('scroll', handleScroll);
+            
             document.getElementById('mobile-menu-btn').addEventListener('click', () => { 
                 mobileMenu.classList.toggle('open'); 
-                updateNavbarStyle(); 
+                handleScroll(); 
             });
-            backToTop.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+            backToTopBtn.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
         });
 
-        function updateNavbarStyle() {
+        // 统一滚动处理函数
+        function handleScroll() {
             const navbar = document.getElementById('navbar');
             const mobileMenu = document.getElementById('mobile-menu');
-            const backToTop = document.getElementById('backToTop');
+            const wrapper = document.getElementById('backToTopWrapper'); // 获取包裹容器
             
             const isScrolled = window.scrollY > 50;
             const isMenuOpen = mobileMenu.classList.contains('open');
 
+            // 1. Navbar Logic
             if (isScrolled || isMenuOpen) {
                 navbar.classList.remove('bg-transparent', 'py-4');
                 navbar.classList.add('nav-sticky', 'py-3');
@@ -419,15 +423,15 @@
                 navbar.classList.remove('nav-sticky', 'py-3');
             }
             
-            // Interaction logic for Floating Buttons
+            // 2. BackToTop Logic (Animate Wrapper Height)
             if (window.scrollY > 300) { 
-                // Show BackToTop: expand height, opacity 1, add margin
-                backToTop.classList.remove('max-h-0', 'opacity-0', 'mt-0');
-                backToTop.classList.add('max-h-12', 'opacity-100', 'mt-3');
+                // 展开容器高度，淡入
+                wrapper.classList.remove('max-h-0', 'opacity-0');
+                wrapper.classList.add('max-h-16', 'opacity-100'); // 足够的高度(3rem + margin)
             } else { 
-                // Hide BackToTop: collapse height, opacity 0, remove margin
-                backToTop.classList.add('max-h-0', 'opacity-0', 'mt-0');
-                backToTop.classList.remove('max-h-12', 'opacity-100', 'mt-3');
+                // 收缩容器高度，淡出
+                wrapper.classList.add('max-h-0', 'opacity-0');
+                wrapper.classList.remove('max-h-16', 'opacity-100');
             }
         }
 
@@ -483,7 +487,7 @@
             document.getElementById('nav-name').textContent = basic.name;
             
             const links = ['profile','skills','experience','education','contact'];
-            const navHTML = ui.nav.map((n, i) => `<a href="#${links[i]}" class="px-3 py-2 rounded-full hover:bg-theme-subtle hover:text-theme-title transition-colors rounded-btn text-theme-body" onclick="document.getElementById('mobile-menu').classList.remove('open'); updateNavbarStyle();">${n}</a>`).join('');
+            const navHTML = ui.nav.map((n, i) => `<a href="#${links[i]}" class="px-3 py-2 rounded-full hover:bg-theme-subtle hover:text-theme-title transition-colors rounded-btn text-theme-body" onclick="document.getElementById('mobile-menu').classList.remove('open'); handleScroll();">${n}</a>`).join('');
             document.getElementById('nav-menu-desktop').innerHTML = navHTML;
             document.getElementById('nav-menu-mobile').innerHTML = navHTML;
 
@@ -603,6 +607,7 @@
             });
 
             document.getElementById('t-exp').textContent = ui.section_titles.experience;
+            // 修正：字体 text-[16px] (text-base), 细体 font-theme-light (300)
             document.getElementById('exp-list').innerHTML = data.experience.map(job => `
                 <div class="relative pl-0 md:pl-0 reveal-hidden">
                     <div class="flex flex-col md:flex-row gap-8 md:gap-16">
@@ -685,7 +690,7 @@
             document.getElementById('f-desc').textContent = basic.footer_text;
             document.getElementById('social-icons').innerHTML = basic.social_links.map(s => {
                 const btnClass = "w-10 h-10 rounded-full bg-theme-card text-theme-muted hover:text-white flex items-center justify-center transition-all duration-300 transform hover:-translate-y-1 shadow-sm";
-                
+                // 修复：底部图标品牌色悬停
                 let hoverColor = 'hover:bg-black';
                 if(s.name.toLowerCase().includes('link') || s.name.includes('领英')) hoverColor = 'hover:bg-[#0077b5]';
                 else if(s.name.toLowerCase().includes('chat') || s.name.includes('微信')) hoverColor = 'hover:bg-[#09b83e]';
