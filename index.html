@@ -12,10 +12,14 @@
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <script>
         tailwind.config = { 
+            // 强制生成图标颜色类
+            safelist: [
+                'text-theme-icon-1', 'text-theme-icon-2', 'text-theme-icon-3', 'text-theme-icon-def'
+            ],
             theme: { 
                 extend: { 
                     colors: { 
@@ -82,7 +86,6 @@
             .glass-panel {
                 background-color: var(--glass-bg);
                 backdrop-filter: blur(var(--glass-blur));
-                border: 1px solid var(--border-color);
             }
 
             .nav-sticky {
@@ -104,47 +107,24 @@
             --fw-body: 300;           
             --fw-title: 600;          
             
-            --bg-page: #ffffff;       
-            --bg-card: #ffffff;
-            --bg-subtle: #f5f5f7;     
-            --bg-hover: #ffffff;
+            --bg-page: #ffffff; --bg-card: #ffffff; --bg-subtle: #f5f5f7; --bg-hover: #ffffff;
             --bg-nav-sticky: rgba(255, 255, 255, 0.8);
-            
-            --glass-bg: rgba(255, 255, 255, 0.6);
-            --glass-blur: 30px;
+            --glass-bg: rgba(255, 255, 255, 0.6); --glass-blur: 30px;
             --hero-glow: rgba(0, 113, 227, 0.04); 
 
-            --text-title: #1d1d1f;    
-            --text-body: #6e6e73;     
-            --text-muted: #86868b;    
-            --text-accent: #0066cc;   
-
-            --btn-bg: #1d1d1f;        
-            --btn-text: #ffffff;
+            --text-title: #1d1d1f; --text-body: #6e6e73; --text-muted: #86868b; --text-accent: #0066cc;   
+            --btn-bg: #1d1d1f; --btn-text: #ffffff;
             
-            --tag-bg: #f5f5f7;
-            --tag-txt: #1d1d1f;
-            --hero-badge-bg: rgba(255, 255, 255, 0.9);
-            --hero-badge-txt: #1d1d1f;
+            --tag-bg: #f5f5f7; --tag-txt: #1d1d1f;
+            --hero-badge-bg: rgba(255, 255, 255, 0.9); --hero-badge-txt: #1d1d1f;
 
-            --date-bg: rgba(0, 113, 227, 0.1); 
-            --date-txt: #0071e3;               
-            --line-color: #f5f5f7;             
-            --check-color: #86868b;
+            --date-bg: rgba(0, 113, 227, 0.1); --date-txt: #0071e3; --line-color: #f5f5f7; --check-color: #86868b;
 
-            --icon-def: #1d1d1f;
-            --ico-1: #f56300; 
-            --ico-2: #a34ec7; 
-            --ico-3: #0090aa; 
+            --icon-def: #1d1d1f; --ico-1: #f56300; --ico-2: #a34ec7; --ico-3: #0090aa; 
 
-            --border-color: transparent; 
-            --input-border: rgba(0,0,0,0.12);
-            
-            --radius-card: 24px;      
-            --radius-btn: 980px;      
-            
-            --shadow-card: 0 12px 40px -8px rgba(0,0,0,0.04); 
-            --shadow-hover: 0 24px 60px -12px rgba(0,0,0,0.08);
+            --border-color: transparent; --input-border: rgba(0,0,0,0.12);
+            --radius-card: 24px; --radius-btn: 980px;      
+            --shadow-card: 0 12px 40px -8px rgba(0,0,0,0.04); --shadow-hover: 0 24px 60px -12px rgba(0,0,0,0.08);
         }
 
         /* ---------------- 2. 🔷 Modern Theme ---------------- */
@@ -163,8 +143,7 @@
             
             --date-bg: #dbeafe; --date-txt: #1d4ed8;
             --line-color: #e2e8f0; --check-color: #3b82f6;
-            --icon-def: #3b82f6; 
-            --ico-1: #3b82f6; --ico-2: #3b82f6; --ico-3: #3b82f6; 
+            --icon-def: #3b82f6; --ico-1: #3b82f6; --ico-2: #3b82f6; --ico-3: #3b82f6; 
             
             --border-color: #e2e8f0; --input-border: #e2e8f0;
             --radius-card: 0.75rem; --radius-btn: 0.5rem;
@@ -187,43 +166,25 @@
             
             --date-bg: #3a3a3c; --date-txt: #0a84ff;
             --line-color: #38383a; --check-color: #86868b;
-            --icon-def: #0a84ff;
-            --ico-1: #0a84ff; --ico-2: #5e5ce6; --ico-3: #30b0c7; 
+            --icon-def: #0a84ff; --ico-1: #0a84ff; --ico-2: #5e5ce6; --ico-3: #30b0c7; 
 
             --border-color: #2c2c2e; --input-border: #3a3a3c;
             --radius-card: 22px; --radius-btn: 9999px;
             --shadow-card: 0 0 0 1px rgba(255,255,255,0.1); --shadow-hover: 0 0 0 1px rgba(255,255,255,0.25);
         }
 
-        /* --- Global Styles --- */
-        body {
-            font-family: var(--font-family);
-            background-color: var(--bg-page);
-            color: var(--text-body);
-            transition: background-color 0.4s ease, color 0.4s ease;
-        }
-
+        body { font-family: var(--font-family); background-color: var(--bg-page); color: var(--text-body); transition: background-color 0.4s ease, color 0.4s ease; }
         h1, h2, h3, h4 { color: var(--text-title); }
 
-        /* Components */
-        .card-base {
-            background-color: var(--bg-card);
-            border-radius: var(--radius-card);
-            box-shadow: var(--shadow-card);
-            border: 1px solid var(--border-color);
-            transition: box-shadow 0.3s ease, transform 0.3s ease;
-        }
+        .card-base { background-color: var(--bg-card); border-radius: var(--radius-card); box-shadow: var(--shadow-card); border: 1px solid var(--border-color); transition: box-shadow 0.3s ease, transform 0.3s ease; }
         .card-base:hover { box-shadow: var(--shadow-hover); }
-
         .btn-main { background-color: var(--btn-bg); color: var(--btn-text); border-radius: var(--radius-btn); }
         .btn-ghost { background-color: var(--bg-card); color: var(--text-title); border: 1px solid var(--border-color); border-radius: var(--radius-btn); }
 
-        /* Theme Menu Animation */
         #theme-menu { transform-origin: bottom right; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
         #theme-menu.hidden { transform: scale(0.9); opacity: 0; pointer-events: none; }
         #theme-menu:not(.hidden) { transform: scale(1); opacity: 1; pointer-events: auto; }
 
-        /* Mobile Menu Transitions */
         #mobile-menu { transition: max-height 0.3s ease, opacity 0.3s ease; }
         #mobile-menu:not(.open) { max-height: 0; opacity: 0; overflow: hidden; }
         #mobile-menu.open { max-height: 400px; opacity: 1; }
@@ -232,28 +193,8 @@
         .reveal-visible { opacity: 1; transform: translateY(0) scale(1); }
         .tilt-container { perspective: 1000px; transform-style: preserve-3d; }
 
-        /* Print */
         #print-view { display: none; }
-        @media print {
-            #screen-view, #theme-fab-container { display: none !important; }
-            @page { size: A4; margin: 15mm 15mm; }
-            html, body { width: 210mm; height: auto; margin: 0 !important; padding: 0 !important; background-color: white !important; color: #000 !important; overflow: visible !important; font-family: sans-serif !important; }
-            #print-view { display: block !important; width: 100%; font-size: 9.5pt; line-height: 1.35; text-align: justify; }
-            .print-h1 { font-size: 20pt; font-weight: bold; line-height: 1.2; margin-bottom: 4pt; color: #000; }
-            .print-h2 { font-size: 12pt; font-weight: bold; border-bottom: 1pt solid #000; margin-top: 10pt; margin-bottom: 4pt; padding-bottom: 2pt; page-break-after: avoid; }
-            .print-h3 { font-size: 10pt; font-weight: bold; margin-top: 6pt; margin-bottom: 2pt; display: flex; justify-content: space-between; page-break-after: avoid; }
-            .print-meta { font-size: 9pt; margin-bottom: 8pt; line-height: 1.4; }
-            .print-table { width: 100%; border-collapse: collapse; margin-bottom: 8pt; font-size: 9pt; page-break-inside: auto; }
-            .print-table th, .print-table td { border: 1pt solid #333; padding: 3pt 5pt; vertical-align: top; }
-            .print-table td:first-child { font-weight: bold; white-space: nowrap; background-color: #f2f2f2 !important; width: 1%; }
-            .print-list { list-style-type: disc; padding-left: 1.2em; margin-top: 2pt; margin-bottom: 0; }
-            .print-list li { margin-bottom: 2pt; }
-            .job-sub-row { font-weight: bold; font-size: 9.5pt; margin-bottom: 3pt; display: flex; justify-content: space-between; border-bottom: 0.5pt dashed #999; padding-bottom: 2pt; }
-            .job-phase-title { font-weight: bold; margin-top: 4pt; margin-bottom: 2pt; font-size: 9.5pt; }
-            section, .print-section { page-break-inside: auto !important; break-inside: auto !important; }
-            .no-break { page-break-inside: auto; break-inside: auto; margin-bottom: 8pt; }
-            a { text-decoration: none !important; color: #000 !important; }
-        }
+        @media print { #screen-view, #theme-fab-container { display: none !important; } @page { size: A4; margin: 15mm 15mm; } html, body { width: 210mm; height: auto; margin: 0 !important; padding: 0 !important; background-color: white !important; color: #000 !important; overflow: visible !important; font-family: sans-serif !important; } #print-view { display: block !important; width: 100%; font-size: 9.5pt; line-height: 1.35; text-align: justify; } .print-h1 { font-size: 20pt; font-weight: bold; line-height: 1.2; margin-bottom: 4pt; color: #000; } .print-h2 { font-size: 12pt; font-weight: bold; border-bottom: 1pt solid #000; margin-top: 10pt; margin-bottom: 4pt; padding-bottom: 2pt; page-break-after: avoid; } .print-h3 { font-size: 10pt; font-weight: bold; margin-top: 6pt; margin-bottom: 2pt; display: flex; justify-content: space-between; page-break-after: avoid; } .print-meta { font-size: 9pt; margin-bottom: 8pt; line-height: 1.4; } .print-table { width: 100%; border-collapse: collapse; margin-bottom: 8pt; font-size: 9pt; page-break-inside: auto; } .print-table th, .print-table td { border: 1pt solid #333; padding: 3pt 5pt; vertical-align: top; } .print-table td:first-child { font-weight: bold; white-space: nowrap; background-color: #f2f2f2 !important; width: 1%; } .print-list { list-style-type: disc; padding-left: 1.2em; margin-top: 2pt; margin-bottom: 0; } .print-list li { margin-bottom: 2pt; } .job-sub-row { font-weight: bold; font-size: 9.5pt; margin-bottom: 3pt; display: flex; justify-content: space-between; border-bottom: 0.5pt dashed #999; padding-bottom: 2pt; } .job-phase-title { font-weight: bold; margin-top: 4pt; margin-bottom: 2pt; font-size: 9.5pt; } section, .print-section { page-break-inside: auto !important; break-inside: auto !important; } .no-break { page-break-inside: auto; break-inside: auto; margin-bottom: 8pt; } a { text-decoration: none !important; color: #000 !important; } }
     </style>
 </head>
 <body class="selection:bg-theme-accent/20 selection:text-theme-accent font-theme">
@@ -263,7 +204,6 @@
             <div class="container mx-auto px-4 md:px-6">
                 <div class="flex justify-between items-center">
                     <a href="#" class="text-xl font-theme-title text-theme-title tracking-tight flex items-center gap-2" id="nav-name"></a>
-                    
                     <div class="hidden md:flex items-center gap-1 px-2" id="nav-pill">
                         <nav class="flex text-sm font-theme-body text-theme-body space-x-1" id="nav-menu-desktop"></nav>
                         <div class="w-px h-4 bg-theme-border mx-3"></div>
@@ -271,7 +211,6 @@
                             <i class="fa fa-globe"></i> <span id="langLabel">EN</span>
                         </button>
                     </div>
-
                     <div class="flex items-center gap-4 md:hidden">
                         <button id="langSwitchMobile" class="border border-theme-border px-2 py-1 rounded text-xs font-medium hover:border-theme-accent text-theme-body">
                             <span id="langLabelMobile">EN</span>
@@ -279,7 +218,6 @@
                         <button id="mobile-menu-btn" class="text-theme-body hover:text-theme-title focus:outline-none transition p-1"><i class="fa fa-bars text-2xl"></i></button>
                     </div>
                 </div>
-                
                 <div id="mobile-menu" class="md:hidden border-t mt-3 border-theme-border">
                     <nav class="flex flex-col space-y-2 py-4" id="nav-menu-mobile"></nav>
                 </div>
@@ -288,7 +226,6 @@
 
         <section class="pt-40 pb-20 relative overflow-hidden print:pt-10">
             <div id="hero-bg-blur" class="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] rounded-[100%] blur-3xl -z-10 opacity-60 print:hidden transition-colors" style="background: linear-gradient(to bottom, var(--hero-glow), transparent);"></div>
-            
             <div class="container mx-auto px-4 md:px-6 flex flex-col md:flex-row items-center gap-12 md:gap-20">
                 <div class="md:w-1/2 text-center md:text-left z-10">
                     <h1 class="text-4xl md:text-6xl font-theme-title text-theme-title mb-6 leading-tight tracking-tight reveal-hidden" id="hero-name"></h1>
@@ -315,7 +252,7 @@
             <div class="container mx-auto px-4 md:px-6 max-w-5xl">
                 <div class="text-center mb-12"><h2 class="text-3xl font-theme-title text-theme-title" id="t-profile"></h2></div>
                 <div class="card-base p-8 md:p-12">
-                    <p class="text-[15px] font-theme-light text-theme-body leading-relaxed" id="profile-summary"></p>
+                    <p class="text-[15px] font-theme-light text-theme-body leading-relaxed mb-14" id="profile-summary"></p>
                     <div class="grid md:grid-cols-3 gap-6" id="profile-cards"></div>
                 </div>
             </div>
@@ -364,10 +301,12 @@
                 <button onclick="setTheme('modern')" class="px-3 py-2 text-sm text-left hover:bg-theme-subtle rounded-lg flex items-center gap-2 text-theme-body"><i class="fa fa-cube"></i> Modern</button>
                 <button onclick="setTheme('dark')" class="px-3 py-2 text-sm text-left hover:bg-theme-subtle rounded-lg flex items-center gap-2 text-theme-body"><i class="fa fa-moon-o"></i> Dark</button>
             </div>
-            <button onclick="document.getElementById('theme-menu').classList.toggle('hidden')" class="w-12 h-12 bg-theme-card border border-theme-border rounded-full shadow-theme hover:shadow-theme-hover flex items-center justify-center text-theme-body hover:text-theme-title hover:scale-110 transition-all duration-300 z-20 flex-shrink-0 mb-3">
+            
+            <button onclick="document.getElementById('theme-menu').classList.toggle('hidden')" class="w-12 h-12 bg-theme-card border border-theme-border rounded-full shadow-theme hover:shadow-theme-hover flex items-center justify-center text-theme-body hover:text-theme-title hover:scale-110 transition-all duration-300 z-20 flex-shrink-0">
                 <i class="fa fa-paint-brush"></i>
             </button>
-            <div id="backToTopWrapper" class="transition-all duration-500 opacity-0 pointer-events-none w-12 flex justify-center translate-y-4">
+
+            <div id="backToTopWrapper" class="transition-all duration-500 h-0 opacity-0 overflow-hidden w-12 flex justify-center mt-0">
                 <button id="backToTop" class="w-12 h-12 bg-theme-card border border-theme-border rounded-full shadow-theme hover:shadow-theme-hover flex items-center justify-center text-theme-body hover:text-theme-title hover:scale-110 transition-all duration-300 flex-shrink-0">
                     <i class="fa fa-arrow-up"></i>
                 </button>
@@ -404,7 +343,6 @@
             const backToTopBtn = document.getElementById('backToTop'); 
 
             window.addEventListener('scroll', handleScroll);
-            
             document.getElementById('mobile-menu-btn').addEventListener('click', () => { 
                 mobileMenu.classList.toggle('open'); 
                 handleScroll(); 
@@ -412,7 +350,7 @@
             backToTopBtn.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
         });
 
-        // 统一滚动处理函数
+        // 核心修正：滚动时处理浮动按钮位置
         function handleScroll() {
             const navbar = document.getElementById('navbar');
             const mobileMenu = document.getElementById('mobile-menu');
@@ -429,12 +367,13 @@
                 navbar.classList.remove('nav-sticky', 'py-3');
             }
             
+            // 按钮逻辑：滚动 > 300 时，Wrapper 展开高度并增加 margin-top，顶起上方的 Theme Button
             if (window.scrollY > 300) { 
-                wrapper.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-4');
-                wrapper.classList.add('opacity-100', 'translate-y-0');
+                wrapper.classList.remove('h-0', 'opacity-0', 'mt-0');
+                wrapper.classList.add('h-12', 'opacity-100', 'mt-3'); 
             } else { 
-                wrapper.classList.add('opacity-0', 'pointer-events-none', 'translate-y-4');
-                wrapper.classList.remove('opacity-100', 'translate-y-0');
+                wrapper.classList.add('h-0', 'opacity-0', 'mt-0');
+                wrapper.classList.remove('h-12', 'opacity-100', 'mt-3');
             }
         }
 
@@ -600,9 +539,9 @@
                     scales: { 
                         r: { 
                             min: 0, max: 100, 
-                            ticks: { display: true, stepSize: 20, backdropColor: 'transparent', font: { size: 14 }, color: '#999' },
+                            ticks: { display: true, stepSize: 20, backdropColor: 'transparent', font: { size: 13 }, color: '#999' },
                             grid: { color: gridColor },
-                            pointLabels: { font: { size: 14, weight: '600', family: 'var(--font-family)' }, color: 'var(--text-muted)' }
+                            pointLabels: { font: { size: 13, weight: '600', family: 'var(--font-family)' }, color: 'var(--text-muted)' }
                         } 
                     }, 
                     plugins: { legend: { display: false }, tooltip: { callbacks: { label: (context) => context.raw + '%' } } } 
