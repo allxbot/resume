@@ -96,10 +96,6 @@
            🎨 样式模版定义
            ================================================================= */
         
-        /* 关键修复：全局默认变量初始化
-           这确保了在 JS 加载主题之前，边框默认为透明，
-           防止页面刷新瞬间出现灰色的横线 (FOUC 问题) 
-        */
         :root {
             --border-color: transparent; 
         }
@@ -143,7 +139,6 @@
             --ico-2: #a34ec7; 
             --ico-3: #0090aa; 
 
-            /* Apple模式下主边框透明，只有输入框有浅色边框 */
             --border-color: transparent; 
             --input-border: rgba(0,0,0,0.12);
             
@@ -365,17 +360,19 @@
             <p class="text-xs opacity-60">© 2026 <span id="copyright-name"></span>. All rights reserved.</p>
         </footer>
 
-        <div id="theme-fab-container" class="fixed bottom-8 right-8 z-50 flex flex-col gap-3 items-end">
+        <div id="theme-fab-container" class="fixed bottom-8 right-8 z-50 flex flex-col items-end gap-0">
             <div id="theme-menu" class="hidden bg-theme-card border border-theme-border rounded-xl shadow-theme-hover p-2 mb-3 flex flex-col gap-1 min-w-[140px] transform origin-bottom-right transition-all">
                 <button onclick="setTheme('apple')" class="px-3 py-2 text-sm text-left hover:bg-theme-subtle rounded-lg flex items-center gap-2 text-theme-body"><i class="fa fa-apple"></i> Apple</button>
                 <button onclick="setTheme('modern')" class="px-3 py-2 text-sm text-left hover:bg-theme-subtle rounded-lg flex items-center gap-2 text-theme-body"><i class="fa fa-cube"></i> Modern</button>
                 <button onclick="setTheme('dark')" class="px-3 py-2 text-sm text-left hover:bg-theme-subtle rounded-lg flex items-center gap-2 text-theme-body"><i class="fa fa-moon-o"></i> Dark</button>
             </div>
-            <button onclick="document.getElementById('theme-menu').classList.toggle('hidden')" class="w-12 h-12 bg-theme-card border border-theme-border rounded-full shadow-lg flex items-center justify-center text-theme-body hover:text-theme-title hover:scale-110 transition-all duration-300 z-20 flex-shrink-0 mb-3">
+            
+            <button onclick="document.getElementById('theme-menu').classList.toggle('hidden')" class="w-12 h-12 bg-theme-card border border-theme-border rounded-full shadow-theme hover:shadow-theme-hover flex items-center justify-center text-theme-body hover:text-theme-title hover:scale-110 transition-all duration-300 z-20 flex-shrink-0 mb-3">
                 <i class="fa fa-paint-brush"></i>
             </button>
-            <div id="backToTopWrapper" class="transition-all duration-500 overflow-hidden max-h-0 opacity-0 w-12 flex justify-center">
-                <button id="backToTop" class="w-12 h-12 bg-theme-card border border-theme-border rounded-full shadow-theme flex items-center justify-center text-theme-body hover:text-theme-title hover:scale-110 transition-all duration-300 flex-shrink-0">
+
+            <div id="backToTopWrapper" class="transition-all duration-500 opacity-0 pointer-events-none w-12 flex justify-center translate-y-4">
+                <button id="backToTop" class="w-12 h-12 bg-theme-card border border-theme-border rounded-full shadow-theme hover:shadow-theme-hover flex items-center justify-center text-theme-body hover:text-theme-title hover:scale-110 transition-all duration-300 flex-shrink-0">
                     <i class="fa fa-arrow-up"></i>
                 </button>
             </div>
@@ -437,11 +434,13 @@
             }
             
             if (window.scrollY > 300) { 
-                wrapper.classList.remove('max-h-0', 'opacity-0');
-                wrapper.classList.add('max-h-16', 'opacity-100'); 
+                // Show: Reset transform, add opacity and pointer-events
+                wrapper.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-4');
+                wrapper.classList.add('opacity-100', 'translate-y-0');
             } else { 
-                wrapper.classList.add('max-h-0', 'opacity-0');
-                wrapper.classList.remove('max-h-16', 'opacity-100');
+                // Hide: Add transform down, fade out, disable clicks
+                wrapper.classList.add('opacity-0', 'pointer-events-none', 'translate-y-4');
+                wrapper.classList.remove('opacity-100', 'translate-y-0');
             }
         }
 
