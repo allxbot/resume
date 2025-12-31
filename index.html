@@ -58,6 +58,10 @@
                     },
                     fontFamily: {
                         'theme': 'var(--font-family)'
+                    },
+                    fontWeight: {
+                        'theme-body': 'var(--fw-body)',
+                        'theme-title': 'var(--fw-title)'
                     }
                 } 
             } 
@@ -77,8 +81,7 @@
             .nav-sticky {
                 background-color: var(--bg-nav-sticky);
                 backdrop-filter: blur(20px);
-                /* Apple导航栏底部分割线非常淡 */
-                border-bottom: 1px solid rgba(0,0,0,0.03); 
+                border-bottom: 1px solid var(--border-color);
             }
         }
 
@@ -89,51 +92,49 @@
         /* ---------------- 1.  Apple Style (Airy & Light) ---------------- */
         :root[data-theme='apple'] {
             --font-family: "SF Pro Text", "SF Pro Icons", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+            --fw-body: 400;           /* 字体更细 */
+            --fw-title: 600;          /* 标题半粗 */
             
-            /* [Backgrounds] 极致通透 */
-            --bg-page: #ffffff;       /* 纯白背景，去除灰色沉闷感 */
+            /* [Backgrounds] */
+            --bg-page: #ffffff;       /* 纯白底，极致通透 */
             --bg-card: #ffffff;
-            --bg-subtle: #f5f5f7;     /* 极淡的灰，用于区分区块 */
+            --bg-subtle: #f5f5f7;     /* 浅灰区块 */
             --bg-hover: #ffffff;
-            --bg-nav-sticky: rgba(255, 255, 255, 0.8); /* 纯白半透明 */
+            --bg-nav-sticky: rgba(255, 255, 255, 0.8);
             
             --glass-bg: rgba(255, 255, 255, 0.6);
             --glass-blur: 30px;
-            --hero-glow: rgba(0, 113, 227, 0.04); /* 几乎不可见的极淡蓝光 */
+            --hero-glow: rgba(0, 113, 227, 0.04); 
 
-            /* [Text] 颜色更浅、更细 */
+            /* [Text] 颜色更浅 (Light Grey) */
             --text-title: #1d1d1f;    /* 标题深灰 */
-            --text-body: #6e6e73;     /* 正文次级灰，关键修改点 */
+            --text-body: #6e6e73;     /* 正文浅灰，营造空气感 */
             --text-muted: #86868b;    /* 辅助信息 */
-            --text-accent: #0066cc;   /* 链接蓝 */
+            --text-accent: #0066cc;   
 
             /* [Buttons] */
             --btn-bg: #1d1d1f;        /* 纯黑 */
             --btn-text: #ffffff;
             
             /* [Tags & Badges] */
-            --tag-bg: #f5f5f7;        /* 浅灰底 */
-            --tag-txt: #1d1d1f;       /* 深色字 */
-            --hero-badge-bg: rgba(255, 255, 255, 0.9); /* 高不透明度 */
+            --tag-bg: #f5f5f7;
+            --tag-txt: #1d1d1f;
+            --hero-badge-bg: rgba(255, 255, 255, 0.9);
             --hero-badge-txt: #1d1d1f;
 
-            /* [Timeline] */
-            --date-bg: #f5f5f7;       /* 浅灰底，非蓝色 */
-            --date-txt: #1d1d1f;      /* 深色字，非蓝色 */
-            --line-color: #f5f5f7;    /* 极浅线条 */
-            --check-color: #86868b;   /* 灰色勾选 */
+            /* [Timeline] 还原：蓝字浅蓝底 */
+            --date-bg: rgba(0, 113, 227, 0.08); /* 浅蓝底 */
+            --date-txt: #0071e3;                /* 蓝字 */
+            --line-color: #f5f5f7;              /* 极浅线条 */
+            --check-color: #86868b;
 
             /* [Icons] */
             --icon-def: #1d1d1f;
-            --ico-1: #f56300; 
-            --ico-2: #a34ec7; 
-            --ico-3: #0090aa; 
 
-            /* [Shape & Shadow] 空气感核心 */
-            --border-color: rgba(0,0,0,0); /* 无边框 */
+            /* [Shape & Shadow] */
+            --border-color: rgba(0,0,0,0);
             --radius-card: 24px;      
             --radius-btn: 980px;      
-            /* 扩散极大、浓度极低的阴影 */
             --shadow-card: 0 12px 40px -8px rgba(0,0,0,0.04); 
             --shadow-hover: 0 24px 60px -12px rgba(0,0,0,0.08);
         }
@@ -141,6 +142,7 @@
         /* ---------------- 2. 🔷 Modern Theme ---------------- */
         :root[data-theme='modern'] {
             --font-family: 'Inter', sans-serif;
+            --fw-body: 400; --fw-title: 600;
             --bg-page: #f8fafc; --bg-card: #ffffff; --bg-subtle: #f1f5f9; --bg-hover: #ffffff;
             --bg-nav-sticky: rgba(248, 250, 252, 0.9);
             --glass-bg: rgba(255, 255, 255, 0.95); --glass-blur: 0px;
@@ -150,9 +152,11 @@
             --btn-bg: #3b82f6; --btn-text: #ffffff;
             --tag-bg: #eff6ff; --tag-txt: #1d4ed8;
             --hero-badge-bg: #ffffff; --hero-badge-txt: #3b82f6;
+            
             --date-bg: #dbeafe; --date-txt: #1d4ed8;
             --line-color: #e2e8f0; --check-color: #3b82f6;
-            --icon-def: #3b82f6; --ico-1: #3b82f6; --ico-2: #3b82f6; --ico-3: #3b82f6;
+            --icon-def: #3b82f6; 
+            
             --border-color: #e2e8f0;
             --radius-card: 0.75rem; --radius-btn: 0.5rem;
             --shadow-card: 0 1px 3px rgba(0,0,0,0.1); --shadow-hover: 0 10px 15px -3px rgba(0,0,0,0.1);
@@ -161,6 +165,7 @@
         /* ---------------- 3. 🎩 Classic Theme ---------------- */
         :root[data-theme='classic'] {
             --font-family: 'Playfair Display', serif;
+            --fw-body: 400; --fw-title: 700;
             --bg-page: #fafaf9; --bg-card: #ffffff; --bg-subtle: #f5f5f4; --bg-hover: #ffffff;
             --bg-nav-sticky: rgba(250, 250, 249, 0.95);
             --glass-bg: #ffffff; --glass-blur: 0px;
@@ -170,9 +175,11 @@
             --btn-bg: #1c1917; --btn-text: #ffffff;
             --tag-bg: #f5f5f4; --tag-txt: #1c1917;
             --hero-badge-bg: #1c1917; --hero-badge-txt: #ffffff;
+            
             --date-bg: #e7e5e4; --date-txt: #1c1917;
             --line-color: #e7e5e4; --check-color: #b45309;
-            --icon-def: #b45309; --ico-1: #b45309; --ico-2: #b45309; --ico-3: #b45309;
+            --icon-def: #b45309;
+
             --border-color: #d6d3d1;
             --radius-card: 2px; --radius-btn: 2px;
             --shadow-card: 0 1px 2px rgba(0,0,0,0.05); --shadow-hover: 0 4px 6px -1px rgba(0,0,0,0.1);
@@ -181,6 +188,7 @@
         /* ---------------- 4. 💻 Geek Theme ---------------- */
         :root[data-theme='geek'] {
             --font-family: 'JetBrains Mono', monospace;
+            --fw-body: 400; --fw-title: 700;
             --bg-page: #0d1117; --bg-card: #161b22; --bg-subtle: #0d1117; --bg-hover: #21262d;
             --bg-nav-sticky: rgba(13, 17, 23, 0.95);
             --glass-bg: #161b22; --glass-blur: 0px;
@@ -190,9 +198,11 @@
             --btn-bg: #238636; --btn-text: #ffffff;
             --tag-bg: rgba(56, 139, 253, 0.15); --tag-txt: #58a6ff;
             --hero-badge-bg: #21262d; --hero-badge-txt: #2ea043;
+            
             --date-bg: rgba(46, 160, 67, 0.2); --date-txt: #3fb950;
             --line-color: #30363d; --check-color: #2ea043;
-            --icon-def: #2ea043; --ico-1: #2ea043; --ico-2: #2ea043; --ico-3: #2ea043;
+            --icon-def: #2ea043;
+
             --border-color: #30363d;
             --radius-card: 6px; --radius-btn: 6px;
             --shadow-card: none; --shadow-hover: 0 0 0 2px #2ea043;
@@ -201,6 +211,7 @@
         /* ---------------- 5. 🌑 Dark Theme ---------------- */
         :root[data-theme='dark'] {
             --font-family: 'Inter', sans-serif;
+            --fw-body: 300; --fw-title: 600;
             --bg-page: #000000; --bg-card: #1c1c1e; --bg-subtle: #1c1c1e; --bg-hover: #2c2c2e;
             --bg-nav-sticky: rgba(28, 28, 30, 0.9);
             --glass-bg: rgba(28, 28, 30, 0.8); --glass-blur: 20px;
@@ -210,9 +221,11 @@
             --btn-bg: #ffffff; --btn-text: #000000;
             --tag-bg: #3a3a3c; --tag-txt: #f5f5f7;
             --hero-badge-bg: rgba(58, 58, 60, 0.8); --hero-badge-txt: #f5f5f7;
+            
             --date-bg: #3a3a3c; --date-txt: #0a84ff;
             --line-color: #38383a; --check-color: #86868b;
-            --icon-def: #0a84ff; --ico-1: #0a84ff; --ico-2: #5e5ce6; --ico-3: #30b0c7;
+            --icon-def: #0a84ff;
+
             --border-color: #2c2c2e;
             --radius-card: 22px; --radius-btn: 9999px;
             --shadow-card: 0 0 0 1px rgba(255,255,255,0.1); --shadow-hover: 0 0 0 1px rgba(255,255,255,0.25);
@@ -285,10 +298,10 @@
         <header id="navbar" class="fixed w-full top-0 left-0 transition-all duration-300 z-50 py-4 bg-transparent print:hidden">
             <div class="container mx-auto px-4 md:px-6">
                 <div class="flex justify-between items-center">
-                    <a href="#" class="text-xl font-bold text-theme-title tracking-tight flex items-center gap-2" id="nav-name"></a>
+                    <a href="#" class="text-xl font-theme-title text-theme-title tracking-tight flex items-center gap-2" id="nav-name"></a>
                     
                     <div class="hidden md:flex items-center gap-1 px-2" id="nav-pill">
-                        <nav class="flex text-sm font-normal text-theme-body space-x-1" id="nav-menu-desktop"></nav>
+                        <nav class="flex text-sm font-theme-body text-theme-body space-x-1" id="nav-menu-desktop"></nav>
                         <div class="w-px h-4 bg-theme-border mx-3"></div>
                         <button id="langSwitch" class="flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-semibold hover:bg-theme-hover transition text-theme-body hover:text-theme-title border border-transparent">
                             <i class="fa fa-globe"></i> <span id="langLabel">EN</span>
@@ -314,8 +327,8 @@
             
             <div class="container mx-auto px-4 md:px-6 flex flex-col md:flex-row items-center gap-12 md:gap-20">
                 <div class="md:w-1/2 text-center md:text-left z-10">
-                    <h1 class="text-4xl md:text-6xl font-semibold text-theme-title mb-6 leading-tight tracking-tight reveal-hidden" id="hero-name"></h1>
-                    <p class="text-xl md:text-2xl text-theme-muted mb-8 font-normal reveal-hidden" style="transition-delay: 100ms" id="hero-title"></p>
+                    <h1 class="text-4xl md:text-6xl font-theme-title text-theme-title mb-6 leading-tight tracking-tight reveal-hidden" id="hero-name"></h1>
+                    <p class="text-xl md:text-2xl text-theme-muted mb-8 font-theme-body reveal-hidden" style="transition-delay: 100ms" id="hero-title"></p>
                     <div class="flex flex-wrap justify-center md:justify-start gap-3 mb-10 reveal-hidden" style="transition-delay: 200ms" id="hero-tags"></div>
                     <div class="flex flex-wrap justify-center md:justify-start gap-4 print:hidden reveal-hidden" style="transition-delay: 300ms" id="hero-btns"></div>
                 </div>
@@ -336,9 +349,9 @@
 
         <section id="profile" class="py-20 glass-panel reveal-hidden print:py-5 border-y border-transparent">
             <div class="container mx-auto px-4 md:px-6 max-w-5xl">
-                <div class="text-center mb-12"><h2 class="text-3xl font-semibold text-theme-title" id="t-profile"></h2></div>
+                <div class="text-center mb-12"><h2 class="text-3xl font-theme-title text-theme-title" id="t-profile"></h2></div>
                 <div class="card-base p-8 md:p-12">
-                    <p class="text-theme-body mb-10 leading-relaxed text-lg" id="profile-summary"></p>
+                    <p class="text-theme-body mb-10 leading-relaxed text-lg font-theme-body" id="profile-summary"></p>
                     <div class="grid md:grid-cols-3 gap-6" id="profile-cards"></div>
                 </div>
             </div>
@@ -346,21 +359,21 @@
 
         <section id="skills" class="py-20 reveal-hidden print:py-5 print:break-inside-avoid">
             <div class="container mx-auto px-4 md:px-6">
-                <div class="text-center mb-12"><h2 class="text-3xl font-semibold text-theme-title" id="t-skills"></h2></div>
+                <div class="text-center mb-12"><h2 class="text-3xl font-theme-title text-theme-title" id="t-skills"></h2></div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6" id="skills-bento-container"></div>
             </div>
         </section>
 
         <section id="experience" class="py-20 glass-panel print:py-5 border-y border-transparent">
             <div class="container mx-auto px-4 md:px-6">
-                <div class="text-center mb-16"><h2 class="text-3xl font-semibold text-theme-title" id="t-exp"></h2></div>
+                <div class="text-center mb-16"><h2 class="text-3xl font-theme-title text-theme-title" id="t-exp"></h2></div>
                 <div class="max-w-5xl mx-auto space-y-12" id="exp-list"></div>
             </div>
         </section>
 
         <section id="education" class="py-20 print:py-5 print:break-inside-avoid">
             <div class="container mx-auto px-4 md:px-6">
-                <div class="text-center mb-16"><h2 class="text-3xl font-semibold text-theme-title" id="t-edu"></h2></div>
+                <div class="text-center mb-16"><h2 class="text-3xl font-theme-title text-theme-title" id="t-edu"></h2></div>
                 <div class="grid md:grid-cols-2 gap-8" id="edu-container">
                     <div class="card-base p-8 h-full reveal-hidden" id="edu-col-left"></div>
                     <div class="card-base p-8 h-full reveal-hidden" style="transition-delay: 100ms" id="edu-col-right"></div>
@@ -375,7 +388,7 @@
         </section>
 
         <footer class="bg-theme-subtle text-theme-muted py-12 print:hidden text-center border-t border-theme-border">
-            <h3 class="text-lg font-semibold text-theme-title mb-2" id="f-name"></h3>
+            <h3 class="text-lg font-theme-title text-theme-title mb-2" id="f-name"></h3>
             <p class="text-sm mb-6" id="f-desc"></p>
             <div class="flex justify-center space-x-6 mb-8" id="social-icons"></div>
             <p class="text-xs opacity-60">© 2026 <span id="copyright-name"></span>. All rights reserved.</p>
@@ -389,11 +402,9 @@
                 <button onclick="setTheme('geek')" class="px-3 py-2 text-sm text-left hover:bg-theme-subtle rounded-lg flex items-center gap-2 text-theme-body"><i class="fa fa-terminal"></i> Geek</button>
                 <button onclick="setTheme('dark')" class="px-3 py-2 text-sm text-left hover:bg-theme-subtle rounded-lg flex items-center gap-2 text-theme-body"><i class="fa fa-moon-o"></i> Dark</button>
             </div>
-
             <button onclick="document.getElementById('theme-menu').classList.toggle('hidden')" class="w-12 h-12 bg-theme-card border border-theme-border rounded-full shadow-lg flex items-center justify-center text-theme-body hover:text-theme-title hover:scale-110 transition-all duration-300">
                 <i class="fa fa-paint-brush"></i>
             </button>
-
             <button id="backToTop" class="w-12 h-12 bg-theme-card border border-theme-border rounded-full shadow-lg flex items-center justify-center text-theme-body hover:text-theme-title hover:scale-110 transition-all duration-300 opacity-0 invisible translate-y-4">
                 <i class="fa fa-arrow-up"></i>
             </button>
@@ -401,7 +412,7 @@
 
         <div id="wechatModal" class="hidden fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-md p-4 transition-opacity duration-300" onclick="this.classList.add('hidden')">
             <div class="bg-theme-card p-8 rounded-theme shadow-2xl max-w-sm w-full text-center transform scale-100 transition-transform duration-300" onclick="event.stopPropagation()">
-                <h3 id="modal-title" class="text-xl font-bold mb-6 text-theme-title">Scan QR Code</h3>
+                <h3 id="modal-title" class="text-xl font-theme-title mb-6 text-theme-title">Scan QR Code</h3>
                 <div class="bg-gray-100 p-3 rounded-xl inline-block mb-6 shadow-inner">
                     <img id="modal-qr" src="" class="w-48 h-48 object-contain mix-blend-multiply">
                 </div>
@@ -428,19 +439,14 @@
             const mobileMenu = document.getElementById('mobile-menu');
             const backToTop = document.getElementById('backToTop');
 
-            // Scroll Handler
             window.addEventListener('scroll', updateNavbarStyle);
-            
-            // Mobile Menu Handler
             document.getElementById('mobile-menu-btn').addEventListener('click', () => { 
                 mobileMenu.classList.toggle('open'); 
-                updateNavbarStyle(); // Update background immediately
+                updateNavbarStyle(); 
             });
-            
             backToTop.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
         });
 
-        // Fixed Navbar Logic
         function updateNavbarStyle() {
             const navbar = document.getElementById('navbar');
             const mobileMenu = document.getElementById('mobile-menu');
@@ -449,7 +455,6 @@
             const isScrolled = window.scrollY > 50;
             const isMenuOpen = mobileMenu.classList.contains('open');
 
-            // Apply nav-sticky if scrolled OR menu is open
             if (isScrolled || isMenuOpen) {
                 navbar.classList.remove('bg-transparent', 'py-4');
                 navbar.classList.add('nav-sticky', 'py-3');
@@ -469,7 +474,6 @@
             entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('reveal-visible'); observer.unobserve(entry.target); } });
         }, { threshold: 0.1 });
 
-        // Theme Switching Logic
         function setTheme(themeName) {
             document.documentElement.setAttribute('data-theme', themeName);
             document.getElementById('theme-menu').classList.add('hidden');
@@ -527,9 +531,9 @@
             document.getElementById('hero-tags').innerHTML = basic.tags.map(t => `<span class="bg-theme-tag-bg border border-theme-border text-theme-tag-txt px-4 py-1.5 rounded-full text-sm font-normal shadow-sm">${t}</span>`).join('');
             
             document.getElementById('hero-btns').innerHTML = `
-                <a href="#contact" class="btn-main px-8 py-3 font-normal hover:opacity-90 hover:scale-105 transition-all duration-300 shadow-lg flex items-center"><i class="fa fa-envelope mr-2"></i> ${ui.buttons.contact}</a>
-                <a href="#experience" class="btn-ghost px-8 py-3 font-normal hover:bg-theme-subtle transition-all hover:scale-105 shadow-sm flex items-center"><i class="fa fa-briefcase mr-2"></i> ${ui.buttons.exp}</a>
-                <button onclick="window.print()" class="btn-ghost px-8 py-3 font-normal hover:bg-theme-subtle transition-all hover:scale-105 shadow-sm flex items-center gap-2"><i class="fa fa-print"></i> ${ui.buttons.print}</button>
+                <a href="#contact" class="btn-main px-8 py-3 font-theme-body hover:opacity-90 hover:scale-105 transition-all duration-300 shadow-lg flex items-center"><i class="fa fa-envelope mr-2"></i> ${ui.buttons.contact}</a>
+                <a href="#experience" class="btn-ghost px-8 py-3 font-theme-body hover:bg-theme-subtle transition-all hover:scale-105 shadow-sm flex items-center"><i class="fa fa-briefcase mr-2"></i> ${ui.buttons.exp}</a>
+                <button onclick="window.print()" class="btn-ghost px-8 py-3 font-theme-body hover:bg-theme-subtle transition-all hover:scale-105 shadow-sm flex items-center gap-2"><i class="fa fa-print"></i> ${ui.buttons.print}</button>
             `;
             document.getElementById('hero-avatar').src = basic.avatar;
             document.getElementById('hero-location').textContent = basic.location;
@@ -539,7 +543,7 @@
             document.getElementById('profile-cards').innerHTML = data.profile.cards.map((c, i) => `
                 <div class="group bg-theme-subtle rounded-theme p-6 transition-all duration-300 reveal-hidden hover:bg-theme-card hover:shadow-theme-hover border border-transparent hover:border-theme-border" style="transition-delay: ${i*100}ms">
                     <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-lg mb-4 group-hover:scale-110 transition-transform"><i class="fa ${c.icon}"></i></div>
-                    <h3 class="font-semibold text-theme-title mb-2">${c.title}</h3>
+                    <h3 class="font-theme-title text-theme-title mb-2">${c.title}</h3>
                     <p class="text-sm text-theme-body leading-relaxed">${c.desc}</p>
                 </div>`).join('');
 
@@ -551,7 +555,7 @@
                 <div class="col-span-1 md:col-span-1 lg:col-span-3 card-base p-6 flex flex-col relative overflow-hidden reveal-hidden">
                     <div class="flex items-center gap-3 mb-4 z-10">
                         <div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center"><i class="fa fa-pie-chart"></i></div>
-                        <h3 class="font-semibold text-theme-title">${ui.section_titles.chart} (Radar)</h3>
+                        <h3 class="font-theme-title text-theme-title">${ui.section_titles.chart} (Radar)</h3>
                     </div>
                     <div class="flex-1 min-h-[300px] flex items-center justify-center min-w-0">
                         <div class="relative w-full h-full">
@@ -562,7 +566,7 @@
                 <div class="col-span-1 md:col-span-1 lg:col-span-3 card-base p-6 reveal-hidden">
                     <div class="flex items-center gap-3 mb-6 pb-3 border-b border-theme-border">
                         <div class="w-8 h-8 rounded-lg bg-green-50 text-green-600 flex items-center justify-center"><i class="fa fa-sliders"></i></div>
-                        <h3 class="font-semibold text-theme-title">${ui.section_titles.chart} (Levels)</h3>
+                        <h3 class="font-theme-title text-theme-title">${ui.section_titles.chart} (Levels)</h3>
                     </div>
                     <div class="space-y-6">
                         ${chartData.labels.map((l, i) => `
@@ -578,16 +582,17 @@
                 </div>
             `;
             
-            const iconVars = ['text-icon-1', 'text-icon-2', 'text-icon-3'];
+            const iconVars = ['text-ico-1', 'text-ico-2', 'text-ico-3'];
             data.skills.card_groups.forEach((g, idx) => {
                 let iconClass = 'text-icon-def';
+                // 开启彩色图标逻辑
                 if(currentTheme === 'apple' || currentTheme === 'dark') iconClass = iconVars[idx%3]; 
                 
                 bentoHTML += `
                 <div class="col-span-1 md:col-span-1 lg:col-span-2 card-base p-6 hover:-translate-y-1 transition-all duration-300 reveal-hidden" style="transition-delay: ${(idx+1)*100}ms">
                     <div class="flex items-center gap-3 mb-4 pb-3 border-b border-theme-border">
                         <i class="fa ${g.icon} ${iconClass} text-lg"></i>
-                        <h3 class="font-semibold text-theme-title">${g.title}</h3>
+                        <h3 class="font-theme-title text-theme-title">${g.title}</h3>
                     </div>
                     <ul class="space-y-3">
                         ${g.items.slice(0, 5).map(item => `<li class="flex items-start gap-2 text-sm text-theme-body"><span class="w-1.5 h-1.5 rounded-full bg-gray-300 mt-1.5 shrink-0"></span><span class="leading-snug">${stripHtml(item)}</span></li>`).join('')}
@@ -637,7 +642,7 @@
                     <div class="flex flex-col md:flex-row gap-8 md:gap-16">
                         <div class="md:w-1/3 text-left md:text-right relative">
                             <div class="sticky top-28 transition-all">
-                                <h3 class="font-semibold text-2xl text-theme-title tracking-tight">${job.company}</h3>
+                                <h3 class="font-theme-title text-2xl text-theme-title tracking-tight">${job.company}</h3>
                                 <div class="text-date-txt font-semibold text-sm mt-1 mb-2 inline-block bg-date-bg px-3 py-1 rounded-full">${job.date}</div>
                                 <p class="text-theme-body font-normal mb-1">${job.role}</p>
                                 <p class="text-theme-muted text-xs flex items-center md:justify-end gap-1"><i class="fa fa-map-marker"></i> ${job.location}</p>
@@ -646,9 +651,9 @@
                         <div class="md:w-2/3 border-l-2 border-theme-line pl-8 py-2 space-y-8">
                             ${job.projects.map(p => `
                                 <div class="group">
-                                    ${p.title ? `<h4 class="font-semibold text-theme-title mb-3 text-lg flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-theme-accent"></span> ${p.title}</h4>` : ''}
+                                    ${p.title ? `<h4 class="font-theme-title text-theme-title mb-3 text-lg flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-theme-accent"></span> ${p.title}</h4>` : ''}
                                     <ul class="space-y-4">
-                                        ${p.details.map(d => `<li class="flex items-start gap-3 text-[15px] text-theme-body leading-relaxed group-hover:text-theme-title transition-colors"><i class="fa fa-check mt-1 shrink-0 text-xs text-theme-check"></i><span>${d}</span></li>`).join('')}
+                                        ${p.details.map(d => `<li class="flex items-start gap-3 text-[15px] text-theme-body leading-relaxed group-hover:text-theme-title transition-colors"><i class="fa fa-check mt-1 shrink-0 text-xs text-check"></i><span>${d}</span></li>`).join('')}
                                     </ul>
                                 </div>
                             `).join('')}
@@ -658,22 +663,22 @@
 
             document.getElementById('t-edu').textContent = ui.section_titles.education;
             document.getElementById('edu-col-left').innerHTML = `
-                <h3 class="font-semibold text-xl mb-8 text-theme-title flex items-center gap-3"><span class="bg-blue-100 text-blue-600 w-8 h-8 rounded-lg flex items-center justify-center text-sm"><i class="fa fa-graduation-cap"></i></span> ${ui.section_titles.academic}</h3>
+                <h3 class="font-theme-title text-xl mb-8 text-theme-title flex items-center gap-3"><span class="bg-blue-100 text-blue-600 w-8 h-8 rounded-lg flex items-center justify-center text-sm"><i class="fa fa-graduation-cap"></i></span> ${ui.section_titles.academic}</h3>
                 <div class="space-y-8">
                 ${data.education.map(e => `
-                    <div><h4 class="font-semibold text-lg text-theme-title">${e.school}</h4><p class="text-theme-body font-normal">${e.degree}</p><p class="text-theme-muted text-sm mt-1 flex items-center gap-2"><i class="fa fa-calendar-o"></i> ${e.date} &nbsp;•&nbsp; ${e.location}</p></div>`).join('')}
+                    <div><h4 class="font-theme-title text-lg text-theme-title">${e.school}</h4><p class="text-theme-body font-normal">${e.degree}</p><p class="text-theme-muted text-sm mt-1 flex items-center gap-2"><i class="fa fa-calendar-o"></i> ${e.date} &nbsp;•&nbsp; ${e.location}</p></div>`).join('')}
                 </div>
                 <div class="mt-12 pt-8 border-t border-theme-border">
-                    <h3 class="font-semibold text-lg mb-4 text-theme-title flex items-center gap-2"><i class="fa fa-heart text-red-400"></i> ${ui.section_titles.hobbies}</h3>
+                    <h3 class="font-theme-title text-lg mb-4 text-theme-title flex items-center gap-2"><i class="fa fa-heart text-red-400"></i> ${ui.section_titles.hobbies}</h3>
                     <div class="flex flex-wrap gap-2 mb-4">${data.hobbies.items.map(h => `<span class="bg-theme-subtle px-3 py-1 rounded-full text-xs font-normal text-theme-body border border-transparent hover:border-theme-border transition">${h}</span>`).join('')}</div>
                     <p class="text-sm text-theme-body bg-theme-subtle p-4 rounded-xl italic border border-theme-border">"${data.hobbies.desc}"</p>
                 </div>`;
             
             document.getElementById('edu-col-right').innerHTML = data.tools.map(t => `
                 <div class="mb-8 last:mb-0">
-                    <h3 class="font-semibold text-lg mb-5 text-theme-title flex items-center gap-2"><i class="fa ${t.icon} text-theme-muted"></i> ${t.group}</h3>
+                    <h3 class="font-theme-title text-lg mb-5 text-theme-title flex items-center gap-2"><i class="fa ${t.icon} text-theme-muted"></i> ${t.group}</h3>
                     <div class="grid grid-cols-2 gap-3">
-                        ${t.list.map(i => `<div class="bg-theme-subtle px-4 py-3 rounded-xl text-sm font-normal text-theme-body border border-transparent hover:border-theme-border hover:bg-theme-card hover:shadow-sm transition-all cursor-default flex items-center gap-2"><i class="fa fa-check text-xs text-theme-check"></i> ${i}</div>`).join('')}
+                        ${t.list.map(i => `<div class="bg-theme-subtle px-4 py-3 rounded-xl text-sm font-normal text-theme-body border border-transparent hover:border-theme-border hover:bg-theme-card hover:shadow-sm transition-all cursor-default flex items-center gap-2"><i class="fa fa-check text-xs text-check"></i> ${i}</div>`).join('')}
                     </div>
                 </div>`).join('');
 
@@ -681,7 +686,7 @@
             const formAction = cf.form_id ? `https://formspree.io/f/${cf.form_id}` : '';
             const onSubmitAttr = formAction ? '' : `onsubmit="event.preventDefault(); alert('Please config Form ID')"`;
             document.getElementById('contact-area').innerHTML = `
-                <div class="text-center mb-10"><h2 class="text-3xl font-semibold text-theme-title mb-2">${ui.section_titles.contact}</h2></div>
+                <div class="text-center mb-10"><h2 class="text-3xl font-theme-title text-theme-title mb-2">${ui.section_titles.contact}</h2></div>
                 <div class="grid md:grid-cols-2 gap-12 items-stretch">
                     <div class="space-y-6 flex flex-col">
                          <div class="flex items-start gap-4 p-5 rounded-2xl bg-theme-card border border-theme-border shadow-sm hover:shadow-md transition">
