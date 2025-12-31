@@ -44,6 +44,7 @@
                             'date-bg': 'var(--date-bg)',
                             'date-txt': 'var(--date-txt)',
                             
+                            // 动态图标颜色
                             'icon-def': 'var(--icon-def)',
                             'icon-1': 'var(--ico-1)', 
                             'icon-2': 'var(--ico-2)', 
@@ -64,11 +65,10 @@
                         'theme': 'var(--font-family)'
                     },
                     fontWeight: {
-                        'theme-body': 'var(--fw-body)',
-                        'theme-title': 'var(--fw-title)'
-                    },
-                    fontSize: {
-                        'exp-body': 'var(--fs-exp-body)' /* 新增工作内容字体大小变量 */
+                        'theme-light': '300',
+                        'theme-normal': '400',
+                        'theme-medium': '500',
+                        'theme-bold': '600'
                     }
                 } 
             } 
@@ -93,20 +93,19 @@
         }
 
         /* =================================================================
-           🎨 样式模版定义
+           🎨 样式模版定义 (Style Templates)
            ================================================================= */
 
-        /* ---------------- 1.  Apple Style (Final Corrected) ---------------- */
+        /* ---------------- 1.  Apple Style (Final Polish) ---------------- */
         :root[data-theme='apple'] {
             --font-family: "SF Pro Text", "SF Pro Icons", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-            --fw-body: 400;           
-            --fw-title: 600;
-            --fs-exp-body: 15px;      /* 工作内容字体加大 */
+            --fw-body: 300;           /* 正文使用细体 (Light) */
+            --fw-title: 600;          /* 标题使用半粗 (SemiBold) */
             
             /* [Backgrounds] */
-            --bg-page: #ffffff;       
+            --bg-page: #ffffff;       /* 纯白底 */
             --bg-card: #ffffff;
-            --bg-subtle: #f5f5f7;     
+            --bg-subtle: #f5f5f7;     /* 浅灰区块 */
             --bg-hover: #ffffff;
             --bg-nav-sticky: rgba(255, 255, 255, 0.8);
             
@@ -115,13 +114,13 @@
             --hero-glow: rgba(0, 113, 227, 0.04); 
 
             /* [Text] */
-            --text-title: #1d1d1f;    
-            --text-body: #6e6e73;     
-            --text-muted: #86868b;    
+            --text-title: #1d1d1f;    /* 标题深灰 */
+            --text-body: #6e6e73;     /* 正文浅灰，空气感 */
+            --text-muted: #86868b;    /* 辅助信息 */
             --text-accent: #0066cc;   
 
             /* [Buttons] */
-            --btn-bg: #1d1d1f;        
+            --btn-bg: #1d1d1f;        /* 纯黑按钮 */
             --btn-text: #ffffff;
             
             /* [Tags & Badges] */
@@ -130,7 +129,7 @@
             --hero-badge-bg: rgba(255, 255, 255, 0.9);
             --hero-badge-txt: #1d1d1f;
 
-            /* [Timeline] 还原蓝字浅蓝底 */
+            /* [Timeline] 蓝字 + 浅蓝底 */
             --date-bg: rgba(0, 113, 227, 0.1); 
             --date-txt: #0071e3;               
             --line-color: #f5f5f7;             
@@ -143,7 +142,7 @@
             --ico-3: #0090aa; /* 青 */
 
             /* [Shape & Shadow] */
-            --border-color: rgba(0,0,0,0.06); /* 微弱边框，解决输入框看不见 */
+            --border-color: rgba(0,0,0,0.08); /* 微弱边框，解决输入框可视性 */
             --radius-card: 24px;      
             --radius-btn: 980px;      
             --shadow-card: 0 12px 40px -8px rgba(0,0,0,0.04); 
@@ -153,7 +152,7 @@
         /* ---------------- 2. 🔷 Modern Theme ---------------- */
         :root[data-theme='modern'] {
             --font-family: 'Inter', sans-serif;
-            --fw-body: 400; --fw-title: 600; --fs-exp-body: 15px;
+            --fw-body: 400; --fw-title: 600;
             --bg-page: #f8fafc; --bg-card: #ffffff; --bg-subtle: #f1f5f9; --bg-hover: #ffffff;
             --bg-nav-sticky: rgba(248, 250, 252, 0.9);
             --glass-bg: rgba(255, 255, 255, 0.95); --glass-blur: 0px;
@@ -177,7 +176,7 @@
         /* ---------------- 3. 🎩 Classic Theme ---------------- */
         :root[data-theme='classic'] {
             --font-family: 'Playfair Display', serif;
-            --fw-body: 400; --fw-title: 700; --fs-exp-body: 15px;
+            --fw-body: 400; --fw-title: 700;
             --bg-page: #fafaf9; --bg-card: #ffffff; --bg-subtle: #f5f5f4; --bg-hover: #ffffff;
             --bg-nav-sticky: rgba(250, 250, 249, 0.95);
             --glass-bg: #ffffff; --glass-blur: 0px;
@@ -201,7 +200,7 @@
         /* ---------------- 4. 💻 Geek Theme ---------------- */
         :root[data-theme='geek'] {
             --font-family: 'JetBrains Mono', monospace;
-            --fw-body: 400; --fw-title: 700; --fs-exp-body: 14px;
+            --fw-body: 400; --fw-title: 700;
             --bg-page: #0d1117; --bg-card: #161b22; --bg-subtle: #0d1117; --bg-hover: #21262d;
             --bg-nav-sticky: rgba(13, 17, 23, 0.95);
             --glass-bg: #161b22; --glass-blur: 0px;
@@ -225,7 +224,7 @@
         /* ---------------- 5. 🌑 Dark Theme ---------------- */
         :root[data-theme='dark'] {
             --font-family: 'Inter', sans-serif;
-            --fw-body: 300; --fw-title: 600; --fs-exp-body: 15px;
+            --fw-body: 300; --fw-title: 600;
             --bg-page: #000000; --bg-card: #1c1c1e; --bg-subtle: #1c1c1e; --bg-hover: #2c2c2e;
             --bg-nav-sticky: rgba(28, 28, 30, 0.9);
             --glass-bg: rgba(28, 28, 30, 0.8); --glass-blur: 20px;
@@ -556,12 +555,11 @@
             document.getElementById('t-profile').textContent = ui.section_titles.profile;
             document.getElementById('profile-summary').innerHTML = data.profile.summary;
             
-            // 修正：Profile Cards 使用彩色循环图标
+            // 修正：Profile Cards 使用彩色图标
             const iconVars = ['text-theme-icon-1', 'text-theme-icon-2', 'text-theme-icon-3'];
             document.getElementById('profile-cards').innerHTML = data.profile.cards.map((c, i) => {
                  let iconClass = 'text-theme-icon-def';
-                 // 强制彩色
-                 iconClass = iconVars[i%3];
+                 if(currentTheme === 'apple' || currentTheme === 'dark') iconClass = iconVars[i%3];
                  
                  return `
                 <div class="group bg-theme-subtle rounded-theme p-6 transition-all duration-300 reveal-hidden hover:bg-theme-card hover:shadow-theme-hover border border-transparent hover:border-theme-border" style="transition-delay: ${i*100}ms">
@@ -607,7 +605,8 @@
             `;
             
             data.skills.card_groups.forEach((g, idx) => {
-                let iconClass = iconVars[idx%3]; // 强制彩色
+                let iconClass = 'text-theme-icon-def';
+                if(currentTheme === 'apple' || currentTheme === 'dark') iconClass = iconVars[idx%3]; 
                 
                 bentoHTML += `
                 <div class="col-span-1 md:col-span-1 lg:col-span-2 card-base p-6 hover:-translate-y-1 transition-all duration-300 reveal-hidden" style="transition-delay: ${(idx+1)*100}ms">
@@ -658,7 +657,7 @@
             });
 
             document.getElementById('t-exp').textContent = ui.section_titles.experience;
-            // 修复：字体加大 text-[15px]
+            // 修复：字体 text-[16px] (text-base), 细体 font-theme-light (300)
             document.getElementById('exp-list').innerHTML = data.experience.map(job => `
                 <div class="relative pl-0 md:pl-0 reveal-hidden">
                     <div class="flex flex-col md:flex-row gap-8 md:gap-16">
@@ -675,7 +674,7 @@
                                 <div class="group">
                                     ${p.title ? `<h4 class="font-theme-title text-theme-title mb-3 text-lg flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-theme-accent"></span> ${p.title}</h4>` : ''}
                                     <ul class="space-y-4">
-                                        ${p.details.map(d => `<li class="flex items-start gap-3 text-[15px] text-theme-body font-theme-body leading-relaxed group-hover:text-theme-title transition-colors"><i class="fa fa-check mt-1 shrink-0 text-xs text-theme-check"></i><span>${d}</span></li>`).join('')}
+                                        ${p.details.map(d => `<li class="flex items-start gap-3 text-base text-theme-body font-theme-light leading-relaxed group-hover:text-theme-title transition-colors"><i class="fa fa-check mt-1 shrink-0 text-xs text-theme-check"></i><span>${d}</span></li>`).join('')}
                                     </ul>
                                 </div>
                             `).join('')}
@@ -697,7 +696,9 @@
                 </div>`;
             
             document.getElementById('edu-col-right').innerHTML = data.tools.map((t, idx) => {
-                 let iconClass = iconVars[idx%3]; // 强制彩色
+                 // 修复：工具栏也使用彩色图标
+                 let iconClass = 'text-theme-icon-def';
+                 if(currentTheme === 'apple' || currentTheme === 'dark') iconClass = iconVars[idx%3]; 
 
                  return `
                 <div class="mb-8 last:mb-0">
@@ -717,24 +718,15 @@
                     <div class="space-y-6 flex flex-col">
                          <div class="flex items-start gap-4 p-5 rounded-2xl bg-theme-card border border-theme-border shadow-sm hover:shadow-md transition">
                             <div class="w-10 h-10 rounded-full bg-purple-50 text-purple-500 flex items-center justify-center shrink-0"><i class="fa fa-briefcase"></i></div>
-                            <div>
-                                <div class="text-xs text-theme-muted uppercase font-bold tracking-wider mb-1">${basic.objective.label}</div>
-                                ${basic.objective.items.map(o => `<div class="text-base text-theme-body font-semibold mb-1">${o}</div>`).join('')}
-                            </div>
+                            <div><div class="text-xs text-theme-muted uppercase font-bold tracking-wider mb-1">${basic.objective.label}</div>${basic.objective.items.map(o => `<div class="text-base font-semibold text-theme-body mb-1">${o}</div>`).join('')}</div>
                          </div>
                          <div class="flex items-center gap-4 p-5 rounded-2xl bg-theme-card border border-theme-border shadow-sm hover:shadow-md transition">
                             <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-500 flex items-center justify-center shrink-0"><i class="fa fa-envelope"></i></div>
-                            <div>
-                                <div class="text-xs text-theme-muted uppercase font-bold tracking-wider mb-1">${cl.email}</div>
-                                <div class="text-base text-theme-body font-semibold">${basic.email}</div>
-                            </div>
+                            <div><div class="text-xs text-theme-muted uppercase font-bold tracking-wider mb-1">${cl.email}</div><div class="text-base font-semibold text-theme-body">${basic.email}</div></div>
                          </div>
                          <div class="flex items-center gap-4 p-5 rounded-2xl bg-theme-card border border-theme-border shadow-sm hover:shadow-md transition">
                             <div class="w-10 h-10 rounded-full bg-green-50 text-green-500 flex items-center justify-center shrink-0"><i class="fa fa-map-marker"></i></div>
-                            <div>
-                                <div class="text-xs text-theme-muted uppercase font-bold tracking-wider mb-1">${cl.location}</div>
-                                <div class="text-base text-theme-body font-semibold">${basic.location}</div>
-                            </div>
+                            <div><div class="text-xs text-theme-muted uppercase font-bold tracking-wider mb-1">${cl.location}</div><div class="text-base font-semibold text-theme-body">${basic.location}</div></div>
                          </div>
                     </div>
                     <form class="h-full flex flex-col gap-4" action="${formAction}" method="POST" ${onSubmitAttr}>
@@ -747,20 +739,16 @@
 
             document.getElementById('f-name').textContent = basic.name;
             document.getElementById('f-desc').textContent = basic.footer_text;
-            
-            // 修正：社交图标使用官方品牌色 hover
-            const brandColors = {
-                'fa-linkedin': 'hover:bg-[#0077b5] hover:text-white',
-                'fa-wechat': 'hover:bg-[#07c160] hover:text-white',
-                'fa-facebook': 'hover:bg-[#1877f2] hover:text-white'
-            };
-
             document.getElementById('social-icons').innerHTML = basic.social_links.map(s => {
-                const hoverClass = brandColors[s.icon] || 'hover:bg-black hover:text-white';
-                const btnClass = `w-10 h-10 rounded-full bg-theme-card text-theme-muted flex items-center justify-center transition-all duration-300 transform hover:-translate-y-1 shadow-sm ${hoverClass}`;
+                const btnClass = "w-10 h-10 rounded-full bg-theme-card text-theme-muted hover:text-white flex items-center justify-center transition-all duration-300 transform hover:-translate-y-1 shadow-sm";
+                // 修复：底部图标品牌色悬停
+                let hoverColor = 'hover:bg-black';
+                if(s.name.toLowerCase().includes('link') || s.name.includes('领英')) hoverColor = 'hover:bg-[#0077b5]';
+                else if(s.name.toLowerCase().includes('chat') || s.name.includes('微信')) hoverColor = 'hover:bg-[#09b83e]';
+                else if(s.name.toLowerCase().includes('face') || s.name.includes('脸书')) hoverColor = 'hover:bg-[#1877f2]';
                 
-                if(s.type === 'modal') return `<button onclick="showModal('${s.modal_img}', '${s.modal_text}')" class="${btnClass}"><i class="fa ${s.icon}"></i></button>`;
-                return `<a href="${s.url}" target="_blank" class="${btnClass}"><i class="fa ${s.icon}"></i></a>`;
+                if(s.type === 'modal') return `<button onclick="showModal('${s.modal_img}', '${s.modal_text}')" class="${btnClass} ${hoverColor}"><i class="fa ${s.icon}"></i></button>`;
+                return `<a href="${s.url}" target="_blank" class="${btnClass} ${hoverColor}"><i class="fa ${s.icon}"></i></a>`;
             }).join('');
         }
         
