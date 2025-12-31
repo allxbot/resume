@@ -12,7 +12,7 @@
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
     <script>
         tailwind.config = { 
@@ -96,9 +96,7 @@
            🎨 样式模版定义
            ================================================================= */
         
-        :root {
-            --border-color: transparent; 
-        }
+        :root { --border-color: transparent; }
 
         /* ---------------- 1.  Apple Style ---------------- */
         :root[data-theme='apple'] {
@@ -317,7 +315,7 @@
             <div class="container mx-auto px-4 md:px-6 max-w-5xl">
                 <div class="text-center mb-12"><h2 class="text-3xl font-theme-title text-theme-title" id="t-profile"></h2></div>
                 <div class="card-base p-8 md:p-12">
-                    <p class="text-theme-body mb-10 leading-relaxed text-lg font-theme-body" id="profile-summary"></p>
+                    <p class="text-[15px] font-theme-light text-theme-body leading-relaxed" id="profile-summary"></p>
                     <div class="grid md:grid-cols-3 gap-6" id="profile-cards"></div>
                 </div>
             </div>
@@ -366,11 +364,9 @@
                 <button onclick="setTheme('modern')" class="px-3 py-2 text-sm text-left hover:bg-theme-subtle rounded-lg flex items-center gap-2 text-theme-body"><i class="fa fa-cube"></i> Modern</button>
                 <button onclick="setTheme('dark')" class="px-3 py-2 text-sm text-left hover:bg-theme-subtle rounded-lg flex items-center gap-2 text-theme-body"><i class="fa fa-moon-o"></i> Dark</button>
             </div>
-            
             <button onclick="document.getElementById('theme-menu').classList.toggle('hidden')" class="w-12 h-12 bg-theme-card border border-theme-border rounded-full shadow-theme hover:shadow-theme-hover flex items-center justify-center text-theme-body hover:text-theme-title hover:scale-110 transition-all duration-300 z-20 flex-shrink-0 mb-3">
                 <i class="fa fa-paint-brush"></i>
             </button>
-
             <div id="backToTopWrapper" class="transition-all duration-500 opacity-0 pointer-events-none w-12 flex justify-center translate-y-4">
                 <button id="backToTop" class="w-12 h-12 bg-theme-card border border-theme-border rounded-full shadow-theme hover:shadow-theme-hover flex items-center justify-center text-theme-body hover:text-theme-title hover:scale-110 transition-all duration-300 flex-shrink-0">
                     <i class="fa fa-arrow-up"></i>
@@ -434,11 +430,9 @@
             }
             
             if (window.scrollY > 300) { 
-                // Show: Reset transform, add opacity and pointer-events
                 wrapper.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-4');
                 wrapper.classList.add('opacity-100', 'translate-y-0');
             } else { 
-                // Hide: Add transform down, fade out, disable clicks
                 wrapper.classList.add('opacity-0', 'pointer-events-none', 'translate-y-4');
                 wrapper.classList.remove('opacity-100', 'translate-y-0');
             }
@@ -524,7 +518,7 @@
                 <div class="group bg-theme-subtle rounded-theme p-6 transition-all duration-300 reveal-hidden hover:bg-theme-card hover:shadow-theme-hover border border-transparent hover:border-theme-border" style="transition-delay: ${i*100}ms">
                     <div class="w-10 h-10 rounded-xl bg-theme-tag-bg flex items-center justify-center text-lg mb-4 group-hover:scale-110 transition-transform"><i class="fa ${c.icon} ${iconClass}"></i></div>
                     <h3 class="font-theme-title text-theme-title mb-2">${c.title}</h3>
-                    <p class="text-sm text-theme-body font-theme-body leading-relaxed">${c.desc}</p>
+                    <p class="text-[15px] font-theme-light text-theme-body leading-relaxed">${c.desc}</p>
                 </div>`
             }).join('');
 
@@ -552,7 +546,7 @@
                     <div class="space-y-6">
                         ${chartData.labels.map((l, i) => `
                             <div>
-                                <div class="flex justify-between mb-1.5 text-sm font-normal text-theme-body">
+                                <div class="flex justify-between mb-1.5 text-base font-normal text-theme-body">
                                     <span>${l}</span>
                                     <span class="text-theme-accent">${chartData.data[i]}%</span>
                                 </div>
@@ -574,7 +568,7 @@
                         <h3 class="font-theme-title text-theme-title">${g.title}</h3>
                     </div>
                     <ul class="space-y-3">
-                        ${g.items.slice(0, 5).map(item => `<li class="flex items-start gap-2 text-base text-theme-body font-theme-light"><span class="w-1.5 h-1.5 rounded-full bg-gray-300 mt-1.5 shrink-0"></span><span class="leading-snug">${stripHtml(item)}</span></li>`).join('')}
+                        ${g.items.slice(0, 5).map(item => `<li class="flex items-start gap-2 text-[15px] font-theme-light text-theme-body"><span class="w-1.5 h-1.5 rounded-full bg-gray-300 mt-1.5 shrink-0"></span><span class="leading-snug">${stripHtml(item)}</span></li>`).join('')}
                     </ul>
                 </div>`;
             });
@@ -606,9 +600,9 @@
                     scales: { 
                         r: { 
                             min: 0, max: 100, 
-                            ticks: { display: true, stepSize: 20, backdropColor: 'transparent', font: { size: 10 }, color: '#999' },
+                            ticks: { display: true, stepSize: 20, backdropColor: 'transparent', font: { size: 14 }, color: '#999' },
                             grid: { color: gridColor },
-                            pointLabels: { font: { size: 12, weight: '600', family: 'var(--font-family)' }, color: 'var(--text-muted)' }
+                            pointLabels: { font: { size: 14, weight: '600', family: 'var(--font-family)' }, color: 'var(--text-muted)' }
                         } 
                     }, 
                     plugins: { legend: { display: false }, tooltip: { callbacks: { label: (context) => context.raw + '%' } } } 
@@ -616,7 +610,6 @@
             });
 
             document.getElementById('t-exp').textContent = ui.section_titles.experience;
-            // 修正：字体 text-[16px] (text-base), 细体 font-theme-light (300)
             document.getElementById('exp-list').innerHTML = data.experience.map(job => `
                 <div class="relative pl-0 md:pl-0 reveal-hidden">
                     <div class="flex flex-col md:flex-row gap-8 md:gap-16">
@@ -633,7 +626,7 @@
                                 <div class="group">
                                     ${p.title ? `<h4 class="font-theme-title text-theme-title mb-3 text-lg flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-theme-accent"></span> ${p.title}</h4>` : ''}
                                     <ul class="space-y-4">
-                                        ${p.details.map(d => `<li class="flex items-start gap-3 text-base text-theme-body font-theme-light leading-relaxed group-hover:text-theme-title transition-colors"><i class="fa fa-check mt-1 shrink-0 text-xs text-theme-check"></i><span>${d}</span></li>`).join('')}
+                                        ${p.details.map(d => `<li class="flex items-start gap-3 text-[15px] text-theme-body font-theme-light leading-relaxed group-hover:text-theme-title transition-colors"><i class="fa fa-check mt-1 shrink-0 text-xs text-theme-check"></i><span>${d}</span></li>`).join('')}
                                     </ul>
                                 </div>
                             `).join('')}
@@ -650,7 +643,7 @@
                 </div>
                 <div class="mt-12 pt-8 border-t border-theme-border">
                     <h3 class="font-theme-title text-lg mb-4 text-theme-title flex items-center gap-2"><i class="fa fa-heart text-red-400"></i> ${ui.section_titles.hobbies}</h3>
-                    <div class="flex flex-wrap gap-2 mb-4">${data.hobbies.items.map(h => `<span class="bg-theme-subtle px-3 py-1 rounded-full text-xs font-normal text-theme-body border border-transparent hover:border-theme-border transition">${h}</span>`).join('')}</div>
+                    <div class="flex flex-wrap gap-2 mb-4">${data.hobbies.items.map(h => `<span class="bg-theme-subtle px-4 py-2 rounded-xl text-sm font-normal text-theme-body border border-transparent hover:border-theme-border transition">${h}</span>`).join('')}</div>
                     <p class="text-sm text-theme-body bg-theme-subtle p-4 rounded-xl italic border border-theme-border">"${data.hobbies.desc}"</p>
                 </div>`;
             
@@ -662,7 +655,7 @@
                 <div class="mb-8 last:mb-0">
                     <h3 class="font-theme-title text-lg mb-5 text-theme-title flex items-center gap-2"><i class="fa ${t.icon} ${iconClass}"></i> ${t.group}</h3>
                     <div class="grid grid-cols-2 gap-3">
-                        ${t.list.map(i => `<div class="bg-theme-subtle px-4 py-3 rounded-xl text-sm font-normal text-theme-body border border-transparent hover:border-theme-border hover:bg-theme-card hover:shadow-sm transition-all cursor-default flex items-center gap-2"><i class="fa fa-check text-xs text-theme-check"></i> ${i}</div>`).join('')}
+                        ${t.list.map(i => `<div class="bg-theme-subtle px-4 py-2 rounded-xl text-sm font-normal text-theme-body border border-transparent hover:border-theme-border hover:bg-theme-card hover:shadow-sm transition-all cursor-default flex items-center gap-2"><i class="fa fa-check text-xs text-theme-check"></i> ${i}</div>`).join('')}
                     </div>
                 </div>`
             }).join('');
@@ -676,15 +669,15 @@
                     <div class="space-y-6 flex flex-col">
                          <div class="flex items-start gap-4 p-5 rounded-2xl bg-theme-card border border-theme-border shadow-sm hover:shadow-md transition">
                             <div class="w-10 h-10 rounded-full bg-purple-50 text-purple-500 flex items-center justify-center shrink-0"><i class="fa fa-briefcase"></i></div>
-                            <div><div class="text-xs text-theme-muted uppercase font-bold tracking-wider mb-1">${basic.objective.label}</div>${basic.objective.items.map(o => `<div class="text-base font-semibold text-theme-body mb-1">${o}</div>`).join('')}</div>
+                            <div><div class="text-xs text-theme-muted uppercase font-bold tracking-wider mb-1">${basic.objective.label}</div>${basic.objective.items.map(o => `<div class="text-lg font-medium text-theme-title mb-1">${o}</div>`).join('')}</div>
                          </div>
                          <div class="flex items-center gap-4 p-5 rounded-2xl bg-theme-card border border-theme-border shadow-sm hover:shadow-md transition">
                             <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-500 flex items-center justify-center shrink-0"><i class="fa fa-envelope"></i></div>
-                            <div><div class="text-xs text-theme-muted uppercase font-bold tracking-wider mb-1">${cl.email}</div><div class="text-theme-body font-semibold text-base">${basic.email}</div></div>
+                            <div><div class="text-xs text-theme-muted uppercase font-bold tracking-wider mb-1">${cl.email}</div><div class="text-lg font-medium text-theme-title">${basic.email}</div></div>
                          </div>
                          <div class="flex items-center gap-4 p-5 rounded-2xl bg-theme-card border border-theme-border shadow-sm hover:shadow-md transition">
                             <div class="w-10 h-10 rounded-full bg-green-50 text-green-500 flex items-center justify-center shrink-0"><i class="fa fa-map-marker"></i></div>
-                            <div><div class="text-xs text-theme-muted uppercase font-bold tracking-wider mb-1">${cl.location}</div><div class="text-theme-body font-semibold text-base">${basic.location}</div></div>
+                            <div><div class="text-xs text-theme-muted uppercase font-bold tracking-wider mb-1">${cl.location}</div><div class="text-lg font-medium text-theme-title">${basic.location}</div></div>
                          </div>
                     </div>
                     <form class="h-full flex flex-col gap-4" action="${formAction}" method="POST" ${onSubmitAttr}>
@@ -699,7 +692,7 @@
             document.getElementById('f-desc').textContent = basic.footer_text;
             document.getElementById('social-icons').innerHTML = basic.social_links.map(s => {
                 const btnClass = "w-10 h-10 rounded-full bg-theme-card text-theme-muted hover:text-white flex items-center justify-center transition-all duration-300 transform hover:-translate-y-1 shadow-sm";
-                // 修复：底部图标品牌色悬停
+                
                 let hoverColor = 'hover:bg-black';
                 if(s.name.toLowerCase().includes('link') || s.name.includes('领英')) hoverColor = 'hover:bg-[#0077b5]';
                 else if(s.name.toLowerCase().includes('chat') || s.name.includes('微信')) hoverColor = 'hover:bg-[#09b83e]';
