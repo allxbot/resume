@@ -74,68 +74,67 @@
                 border: 1px solid var(--border-color);
             }
 
-            /* 导航栏吸顶/打开时的样式 */
             .nav-sticky {
                 background-color: var(--bg-nav-sticky);
                 backdrop-filter: blur(20px);
                 border-bottom: 1px solid var(--border-color);
-                box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
+                box-shadow: 0 4px 30px rgba(0, 0, 0, 0.02);
             }
         }
 
         /* =================================================================
-           🎨 样式模版定义
+           🎨 样式模版定义 (Style Templates)
            ================================================================= */
 
-        /* ---------------- 1.  Apple Style (Reference: cv.allxbot.com) ---------------- */
+        /* ---------------- 1.  Apple Style (Refined - Lighter & Softer) ---------------- */
         :root[data-theme='apple'] {
             --font-family: "SF Pro Text", "SF Pro Icons", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
             
-            /* [Backgrounds] 官网标准灰底 */
+            /* [背景] 保持极简灰白 */
             --bg-page: #f5f5f7;
             --bg-card: #ffffff;
-            --bg-subtle: #f5f5f7; 
-            --bg-hover: #fbfbfd;
-            --bg-nav-sticky: rgba(245, 245, 247, 0.72); /* 导航栏半透明背景 */
+            --bg-subtle: #fbfbfd;     
+            --bg-hover: #ffffff;
+            --bg-nav-sticky: rgba(251, 251, 253, 0.8); /* 更通透的导航栏 */
             
-            --glass-bg: rgba(255, 255, 255, 0.6);
-            --glass-blur: 20px;
-            --hero-glow: rgba(0, 113, 227, 0.15);
+            --glass-bg: rgba(255, 255, 255, 0.5); /* 降低不透明度，增加通透感 */
+            --glass-blur: 24px;
+            --hero-glow: rgba(0, 113, 227, 0.12);
 
-            /* [Text] 官网标准字色 */
-            --text-title: #1d1d1f;    /* 几乎纯黑 */
-            --text-body: #1d1d1f;     /* 正文也是深色，但字重不同 */
-            --text-muted: #86868b;    /* 辅助信息灰 */
-            --text-accent: #0066cc;   /* 链接蓝 */
+            /* [文字] 整体调浅，更柔和 */
+            --text-title: #1d1d1f;    /* 标题保持深色以维持层级 */
+            --text-body: #515154;     /* 正文调浅 (原 #1d1d1f -> #515154) */
+            --text-muted: #86868b;    /* 辅助信息保持经典浅灰 */
+            --text-accent: #2997ff;   /* 链接蓝调亮一点点，更轻盈 */
 
-            /* [Buttons] */
-            --btn-bg: #000000;        /* 纯黑按钮 */
+            /* [按钮] */
+            --btn-bg: #1d1d1f;        /* 保持纯黑，这是设计语言核心 */
             --btn-text: #ffffff;
             
             /* [Tags & Badges] */
-            --tag-bg: #ffffff;        /* 白底标签 */
+            --tag-bg: #ffffff;
             --tag-txt: #1d1d1f;
-            --hero-badge-bg: rgba(255, 255, 255, 0.7); /* 半透明白底，解决文字不清 */
+            --hero-badge-bg: rgba(255, 255, 255, 0.6); 
             --hero-badge-txt: #1d1d1f;
 
-            /* [Timeline] */
-            --date-bg: #ffffff;       /* 日期白底 */
-            --date-txt: #1d1d1f;      /* 日期深色字 */
-            --line-color: #d2d2d7;    /* 时间轴灰线 */
-            --check-color: #86868b;   /* 勾选图标灰 */
+            /* [Timeline] 线条大幅度调浅 */
+            --date-bg: #ffffff;
+            --date-txt: #1d1d1f;
+            --line-color: #ebebeb;    /* 极浅的线条 (原 #d2d2d7 -> #ebebeb) */
+            --check-color: #d2d2d7;   /* 勾选图标调浅 */
 
-            /* [Icons] 恢复彩色 */
+            /* [Icons] 彩色保持 */
             --icon-def: #1d1d1f;
-            --ico-1: #f56300; /* Orange */
-            --ico-2: #a34ec7; /* Purple */
-            --ico-3: #0090aa; /* Teal */
+            --ico-1: #f56300;
+            --ico-2: #a34ec7;
+            --ico-3: #0090aa;
 
-            /* [Shape] */
-            --border-color: #d2d2d7;  /* 边框色 */
-            --radius-card: 20px;      /* 稍小的圆角，更精致 */
-            --radius-btn: 980px;      /* 胶囊 */
-            --shadow-card: 0 4px 20px rgba(0,0,0,0.04); /* 极淡阴影 */
-            --shadow-hover: 0 10px 40px rgba(0,0,0,0.08);
+            /* [Shape & Shadow] 阴影更自然，扩散更大，颜色更淡 */
+            --border-color: rgba(0,0,0,0.03); /* 几乎不可见的边框 */
+            --radius-card: 24px;      /* 圆角加大一点点，更圆润 */
+            --radius-btn: 980px;
+            --shadow-card: 0 8px 30px rgba(0,0,0,0.04); /* 阴影更淡、扩散更远 */
+            --shadow-hover: 0 20px 40px rgba(0,0,0,0.08);
         }
 
         /* ---------------- 2. 🔷 Modern Theme ---------------- */
@@ -218,7 +217,7 @@
             --shadow-card: 0 0 0 1px rgba(255,255,255,0.1); --shadow-hover: 0 0 0 1px rgba(255,255,255,0.25);
         }
 
-        /* --- 全局样式 --- */
+        /* --- Global Styles --- */
         body {
             font-family: var(--font-family);
             background-color: var(--bg-page);
@@ -228,44 +227,36 @@
 
         h1, h2, h3, h4 { color: var(--text-title); }
 
-        /* 组件通用类 */
+        /* Components */
         .card-base {
             background-color: var(--bg-card);
             border-radius: var(--radius-card);
             box-shadow: var(--shadow-card);
             border: 1px solid var(--border-color);
+            transition: box-shadow 0.3s ease, border-color 0.3s ease;
         }
         .card-base:hover { box-shadow: var(--shadow-hover); }
 
         .btn-main { background-color: var(--btn-bg); color: var(--btn-text); border-radius: var(--radius-btn); }
         .btn-ghost { background-color: var(--bg-card); color: var(--text-title); border: 1px solid var(--border-color); border-radius: var(--radius-btn); }
 
-        /* 主题切换菜单动画 */
+        /* Theme Menu Animation */
         #theme-menu { transform-origin: bottom right; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
         #theme-menu.hidden { transform: scale(0.9); opacity: 0; pointer-events: none; }
         #theme-menu:not(.hidden) { transform: scale(1); opacity: 1; pointer-events: auto; }
 
-        /* 移动端菜单初始状态修正 */
-        #mobile-menu {
-            transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
-        }
-        /* 默认折叠状态 */
-        #mobile-menu:not(.open) {
-            max-height: 0;
-            opacity: 0;
-            overflow: hidden;
-        }
-        /* 打开状态 */
-        #mobile-menu.open {
-            max-height: 400px;
-            opacity: 1;
-        }
+        /* Mobile Menu */
+        #mobile-menu { transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease; }
+        /* Default Closed State */
+        #mobile-menu:not(.open) { max-height: 0; opacity: 0; overflow: hidden; }
+        /* Open State */
+        #mobile-menu.open { max-height: 400px; opacity: 1; }
 
         .reveal-hidden { opacity: 0; transform: translateY(30px) scale(0.98); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform, opacity; }
         .reveal-visible { opacity: 1; transform: translateY(0) scale(1); }
         .tilt-container { perspective: 1000px; transform-style: preserve-3d; }
 
-        /* 打印样式 */
+        /* Print */
         #print-view { display: none; }
         @media print {
             #screen-view, #theme-fab-container { display: none !important; }
@@ -310,7 +301,7 @@
                         <button id="mobile-menu-btn" class="text-theme-body hover:text-theme-title focus:outline-none transition p-1"><i class="fa fa-bars text-2xl"></i></button>
                     </div>
                 </div>
-                <div id="mobile-menu" class="md:hidden border-t mt-3 border-theme-border">
+                <div id="mobile-menu" class="md:hidden border-t mt-3 border-theme-border max-h-0 opacity-0 overflow-hidden">
                     <nav class="flex flex-col space-y-2 py-4" id="nav-menu-mobile"></nav>
                 </div>
             </div>
@@ -438,11 +429,13 @@
             window.addEventListener('scroll', updateNavbarStyle);
             document.getElementById('mobile-menu-btn').addEventListener('click', () => { 
                 mobileMenu.classList.toggle('open'); 
-                updateNavbarStyle(); // 立即更新导航栏背景状态
+                // 立即触发样式更新，确保菜单打开时背景不透明
+                updateNavbarStyle();
             });
             backToTop.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
         });
 
+        // 导航栏逻辑修正：打开菜单时强制应用 nav-sticky
         function updateNavbarStyle() {
             const navbar = document.getElementById('navbar');
             const mobileMenu = document.getElementById('mobile-menu');
@@ -451,7 +444,6 @@
             const isScrolled = window.scrollY > 50;
             const isMenuOpen = mobileMenu.classList.contains('open');
 
-            // 修正：菜单打开时强制使用 nav-sticky，解决顶部透明问题
             if (isScrolled || isMenuOpen) {
                 navbar.classList.remove('bg-transparent', 'py-4');
                 navbar.classList.add('nav-sticky', 'py-3');
@@ -467,7 +459,6 @@
             }
         }
 
-        // Intersection Observer
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('reveal-visible'); observer.unobserve(entry.target); } });
         }, { threshold: 0.1 });
@@ -476,7 +467,6 @@
         function setTheme(themeName) {
             document.documentElement.setAttribute('data-theme', themeName);
             document.getElementById('theme-menu').classList.add('hidden');
-            // Re-render chart to update colors
             loadResume(false); 
         }
 
@@ -484,13 +474,11 @@
             try {
                 let data;
                 if (fetchData || !window.cachedData) {
-                    // Timestamp to prevent caching
                     const res = await fetch(`./data.json?t=${new Date().getTime()}`);
                     const fullData = await res.json();
-                    window.cachedData = fullData; // Cache in memory
+                    window.cachedData = fullData; 
                     data = fullData[currentLang];
                     
-                    // Set initial theme
                     const initialTheme = document.documentElement.getAttribute('data-theme') || fullData[currentLang].ui.theme || 'apple';
                     document.documentElement.setAttribute('data-theme', initialTheme);
                     
@@ -509,7 +497,7 @@
         function toggleLanguage() {
             currentLang = currentLang === 'zh' ? 'en' : 'zh';
             localStorage.setItem('lang', currentLang);
-            loadResume(false); // No need to re-fetch
+            loadResume(false); 
         }
 
         function render(data) {
@@ -603,7 +591,6 @@
             bentoContainer.innerHTML = bentoHTML;
 
             if(myChart) myChart.destroy();
-            
             const isDark = currentTheme === 'geek' || currentTheme === 'dark';
             const gridColor = isDark ? '#333' : '#f0f0f0';
             const pointColor = isDark ? '#fff' : '#333';
@@ -727,7 +714,6 @@
             document.getElementById('wechatModal').classList.remove('hidden');
         }
 
-        // Print view remains standardized black & white
         function renderPrintView(data, ui) {
             const basic = data.basic_info; const st = ui.section_titles;
             const separator = currentLang === 'zh' ? '；' : '; ';
