@@ -79,13 +79,12 @@
         @layer utilities { 
             .progress-bar { height: 5px; background: linear-gradient(90deg, var(--text-accent) var(--progress), var(--bg-subtle) var(--progress)); border-radius: 99px; } 
             
-            /* 修正：移除了 border，解决页面刷新出现横线的问题 */
             .glass-panel {
                 background-color: var(--glass-bg);
                 backdrop-filter: blur(var(--glass-blur));
+                border: 1px solid var(--border-color);
             }
 
-            /* 导航栏吸顶样式 */
             .nav-sticky {
                 background-color: var(--bg-nav-sticky);
                 backdrop-filter: blur(20px);
@@ -96,14 +95,21 @@
         /* =================================================================
            🎨 样式模版定义
            ================================================================= */
+        
+        /* 关键修复：全局默认变量初始化
+           这确保了在 JS 加载主题之前，边框默认为透明，
+           防止页面刷新瞬间出现灰色的横线 (FOUC 问题) 
+        */
+        :root {
+            --border-color: transparent; 
+        }
 
-        /* ---------------- 1.  Apple Style (Airy & Light) ---------------- */
+        /* ---------------- 1.  Apple Style ---------------- */
         :root[data-theme='apple'] {
             --font-family: "SF Pro Text", "SF Pro Icons", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
             --fw-body: 300;           
             --fw-title: 600;          
             
-            /* 背景 */
             --bg-page: #ffffff;       
             --bg-card: #ffffff;
             --bg-subtle: #f5f5f7;     
@@ -114,37 +120,32 @@
             --glass-blur: 30px;
             --hero-glow: rgba(0, 113, 227, 0.04); 
 
-            /* 文字 */
             --text-title: #1d1d1f;    
             --text-body: #6e6e73;     
             --text-muted: #86868b;    
             --text-accent: #0066cc;   
 
-            /* 按钮 */
             --btn-bg: #1d1d1f;        
             --btn-text: #ffffff;
             
-            /* 标签/徽章 */
             --tag-bg: #f5f5f7;
             --tag-txt: #1d1d1f;
             --hero-badge-bg: rgba(255, 255, 255, 0.9);
             --hero-badge-txt: #1d1d1f;
 
-            /* 时间轴 */
             --date-bg: rgba(0, 113, 227, 0.1); 
             --date-txt: #0071e3;               
             --line-color: #f5f5f7;             
             --check-color: #86868b;
 
-            /* 图标 */
             --icon-def: #1d1d1f;
             --ico-1: #f56300; 
             --ico-2: #a34ec7; 
             --ico-3: #0090aa; 
 
-            /* 形状与阴影 */
-            --border-color: rgba(0,0,0,0.06); /* 极淡边框 */
-            --input-border: rgba(0,0,0,0.12); /* 输入框专用 */
+            /* Apple模式下主边框透明，只有输入框有浅色边框 */
+            --border-color: transparent; 
+            --input-border: rgba(0,0,0,0.12);
             
             --radius-card: 24px;      
             --radius-btn: 980px;      
@@ -364,7 +365,7 @@
             <p class="text-xs opacity-60">© 2026 <span id="copyright-name"></span>. All rights reserved.</p>
         </footer>
 
-        <div id="theme-fab-container" class="fixed bottom-8 right-8 z-50 flex flex-col items-end gap-0">
+        <div id="theme-fab-container" class="fixed bottom-8 right-8 z-50 flex flex-col gap-3 items-end">
             <div id="theme-menu" class="hidden bg-theme-card border border-theme-border rounded-xl shadow-theme-hover p-2 mb-3 flex flex-col gap-1 min-w-[140px] transform origin-bottom-right transition-all">
                 <button onclick="setTheme('apple')" class="px-3 py-2 text-sm text-left hover:bg-theme-subtle rounded-lg flex items-center gap-2 text-theme-body"><i class="fa fa-apple"></i> Apple</button>
                 <button onclick="setTheme('modern')" class="px-3 py-2 text-sm text-left hover:bg-theme-subtle rounded-lg flex items-center gap-2 text-theme-body"><i class="fa fa-cube"></i> Modern</button>
@@ -616,6 +617,7 @@
             });
 
             document.getElementById('t-exp').textContent = ui.section_titles.experience;
+            // 修正：字体 text-[16px] (text-base), 细体 font-theme-light (300)
             document.getElementById('exp-list').innerHTML = data.experience.map(job => `
                 <div class="relative pl-0 md:pl-0 reveal-hidden">
                     <div class="flex flex-col md:flex-row gap-8 md:gap-16">
@@ -698,7 +700,7 @@
             document.getElementById('f-desc').textContent = basic.footer_text;
             document.getElementById('social-icons').innerHTML = basic.social_links.map(s => {
                 const btnClass = "w-10 h-10 rounded-full bg-theme-card text-theme-muted hover:text-white flex items-center justify-center transition-all duration-300 transform hover:-translate-y-1 shadow-sm";
-                
+                // 修复：底部图标品牌色悬停
                 let hoverColor = 'hover:bg-black';
                 if(s.name.toLowerCase().includes('link') || s.name.includes('领英')) hoverColor = 'hover:bg-[#0077b5]';
                 else if(s.name.toLowerCase().includes('chat') || s.name.includes('微信')) hoverColor = 'hover:bg-[#09b83e]';
