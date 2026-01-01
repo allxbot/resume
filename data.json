@@ -79,16 +79,16 @@
         "label_msg": "消息内容",
         "btn_send": "发送消息",
         "form_id": "maqyvrjy",
-        "msg_required": "请填写信息"
+        "msg_required": "请填写正确信息"
       }
     },
     "profile": {
-      "summary": "<strong>16年高精智能制造专家</strong>，深耕 <strong>3C消费电子（苹果核心供应链）</strong> 与 <strong>半导体后道封装</strong> 领域。兼具消费类产品 <strong>NPI 全流程管控</strong>、<strong>DFM/MFD 工艺优化</strong>、<strong>智能工厂规划落地</strong> 及跨国跨职能团队管理经验。",
+      "summary": "<strong>16年高精智能制造专家</strong>，深耕 <strong>3C消费电子</strong>（苹果核心供应链）与 <strong>半导体后道封装</strong> 领域。兼具消费类产品NPI 全流程管控、DFM/MFD 工艺优化、<strong>智能工厂规划落地</strong> 及跨国跨职能团队管理经验。",
       "cards": [
         {
           "title": "技术统筹",
           "icon": "fa-cogs",
-          "desc": "主导 50+条 高精密自动化产线（含机械/电子组件）NPI 量产导入，推动 2个 智能工厂从 0 到 1 筹建。"
+          "desc": "主导 50+条高精密自动化产线NPI量产导入，推动2个智能工厂从0到1筹建。"
         },
         {
           "title": "核心业绩",
@@ -114,9 +114,9 @@
         ],
         "data": [
           95,
+          95,
           90,
-          90,
-          90,
+          95,
           95,
           90
         ]
@@ -129,9 +129,9 @@
             "<strong>3C / 半导体精密工艺</strong>（激光切割、PVD、HAF 贴合、组装、封装等）",
             "<strong>智能产线全流程架构设计</strong>",
             "设备定位精度 <strong>1-2μm</strong>、运动系统 <strong>20g+</strong> 加速度",
-            "<strong>DFM/DFMA 设计</strong>、<strong>MFD</strong> 解决方案开发、FAT/SAT 验证",
-            "<strong>DOE 工艺优化</strong>、热学组件装配工艺优化、散热结构 DFM 分析",
-            "系统装配公差分析（<strong>GD&T</strong> 深化应用）、产品外观（cosmetic）质量管控"
+            "<strong>DFM/DFMA 设计</strong>、<strong>MFD</strong> 开发、FAT/SAT 验证、DOE工艺优化",
+            "<strong>热学组件装配工艺优化</strong>、散热结构 DFM 分析",
+            "系统装配公差分析（<strong>GD&T</strong> 深化应用）、产品外观质量管控"
           ]
         },
         {
@@ -149,9 +149,10 @@
           "title": "团队与领导力",
           "icon": "fa-users",
           "items": [
-            "<strong>跨国跨职能团队管理</strong>（中/新/德）；<strong>敏捷开发 + Stage-Gate 流程</strong>推行",
+            "跨国跨职能团队管理（中/新/德）",
+            "<strong>敏捷开发</strong> + Stage-Gate 流程推行",
             "供应商标准化开发体系构建",
-            "<strong>精益生产</strong>（单线流/模块化）落地",
+            "<strong>精益生产（</strong>单线流/模块化）落地",
             "跨文化协同研发与供应商协作"
           ]
         }
@@ -318,11 +319,11 @@
       "objective": {
         "label": "Objective",
         "items": [
-          "R&D / Mfg Director | Supply Chain Tech Lead",
-          "Smart Mfg Expert | NPI Lead"
+          "R&D / Mfg Director | Supply Chain Tech Director",
+          "Smart Mfg Expert | Cons Elec NPI Lead"
         ]
       },
-      "footer_text": "High-Precision Smart Manufacturing Expert | 16 Years Exp.",
+      "footer_text": "High-Precision Smart Mfg Expert | 16 Years Exp.",
       "social_links": [
         {
           "name": "LinkedIn",
@@ -365,11 +366,11 @@
         "skills": "Capability Matrix",
         "chart": "Skill Proficiency",
         "experience": "Experience",
-        "education": "Education",
+        "education": "Education & Skill",
         "hobbies": "Hobbies",
         "contact": "Contact",
         "academic": "Academic",
-        "contact_info": "Info"
+        "contact_info": "Contact Information"
       },
       "contact_labels": {
         "email": "Email",
@@ -377,16 +378,16 @@
       },
       "contact_form": {
         "title": "Send Message",
-        "label_name": "Name",
-        "label_email": "Email",
+        "label_name": "Your Name",
+        "label_email": "Your Email",
         "label_msg": "Message",
         "btn_send": "Send",
         "form_id": "maqyvrjy",
-        "msg_required": "Required"
+        "msg_required": "Please enter the correct information"
       }
     },
     "profile": {
-      "summary": "<strong>16-year Expert in High-Precision Smart Manufacturing</strong>, deeply rooted in <strong>3C Consumer Electronics (Apple Core Supply Chain)</strong> and <strong>Semiconductor Packaging</strong>. Expertise in NPI full-process control, DFM/MFD optimization, Smart Factory planning, and global team management.",
+      "summary": "<strong>16-year Expert in High-Precision Smart Manufacturing</strong>, deeply rooted in <strong>3C Consumer Electronics</strong>(Apple Core Supply Chain) and <strong>Semiconductor Packaging</strong>. Expertise in NPI full-process control, DFM/MFD optimization, <strong>Smart Factory planning</strong>, and global team management.",
       "cards": [
         {
           "title": "Tech Leadership",
@@ -396,10 +397,10 @@
         {
           "title": "Key Performance",
           "icon": "fa-line-chart",
-          "desc": "Achieved 85%+ OEE, 90%+ capacity increase, and 99.6%+ yield via DFM and lean manufacturing."
+          "desc": "Achieved 85%+ OEE, 90%+ capacity increase, and 99.6%+ yield via DFM/lean Mfg Opt and modular design."
         },
         {
-          "title": "Strategy",
+          "title": "Strategy Mgmt",
           "icon": "fa-sitemap",
           "desc": "Skilled in R&D-Supplier collaboration, breaking bottlenecks, and managing the full lifecycle from planning to delivery."
         }
@@ -417,9 +418,9 @@
         ],
         "data": [
           95,
+          95,
           90,
-          90,
-          90,
+          95,
           95,
           90
         ]
@@ -431,29 +432,30 @@
           "items": [
             "<strong>3C/Semi Precision Process</strong> (Laser, PVD, HAF, Assy)",
             "<strong>Smart Line Architecture</strong>",
-            "High Precision Motion (1-2μm, 20g+)",
-            "<strong>DFM / MFD / DOE</strong>",
-            "Thermal / <strong>GD&T</strong> Analysis / Cosmetic QC"
+            "High Precision Motion <strong>(1-2μm, 20g+)</strong>",
+            "DFM/DFMA、 MFD、FAT/SAT validation",
+            "Thermal component assy opt, Thermal structure DFM analysis",
+            "System assy tolerance analysis (GD&T application), Product Cos quality control."
           ]
         },
         {
           "title": "Project & Ops",
           "icon": "fa-tasks",
           "items": [
-            "<strong>Smart Factory 0-to-1</strong>",
-            "Auto Line NPI Full Process",
-            "<strong>OEE / Yield / Cost Opt</strong>",
-            "<strong>KISS Principle</strong> (Simplify Design)",
-            "<strong>SPC</strong> Data-Driven Opt / NUDD"
+            "<strong>Smart Factory 0-to-1</strong>; Auto Lines Planning & MP Ramp Up",
+            "Closed-loop data mgmt system construction; <strong>OEE / Yield / Cost Opt</strong>",
+            "Capacity Ramp-up, <strong>KISS Principle</strong> (Simplify Design)",
+            "SPC data-driven yield and cost optimization",
+            "NUDD risk management application."
           ]
         },
         {
           "title": "Leadership",
           "icon": "fa-users",
           "items": [
-            "<strong>Global Team Mgmt</strong> (CN/SG/DE)",
-            "<strong>Agile + Stage-Gate</strong>",
-            "Supplier Standardization System",
+            "Cross-national&functional Team mgmt (CN/SG/DE)",
+            "<strong>Agile + Stage-Gate</strong> process implementation",
+            "Supplier Standardization Development System",
             "<strong>Lean Mfg</strong> (One-piece Flow)",
             "Cross-cultural R&D Collaboration"
           ]
