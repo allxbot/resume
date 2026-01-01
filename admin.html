@@ -133,9 +133,9 @@
                 <div class="flex items-center gap-2 border-r pr-3 mr-1 border-gray-300">
                     <span class="text-xs font-bold text-gray-500"><i class="fa fa-paint-brush"></i> 风格:</span>
                     <select id="theme-selector" class="border border-gray-300 p-1.5 rounded text-xs outline-none focus:border-blue-500 bg-gray-50 hover:bg-white transition cursor-pointer font-bold text-gray-700" onchange="updateTheme(this.value)">
-                        <option value="apple">Apple</option>
-                        <option value="modern">Modern</option>
-                        <option value="dark">Dark</option>
+                        <option value="light">浅色 (Light)</option>
+                        <option value="modern">现代 (Modern)</option>
+                        <option value="dark">深色 (Dark)</option>
                     </select>
                 </div>
 
@@ -158,7 +158,7 @@
                  <button onclick="globalToggle(false)" class="hover:text-blue-600 transition flex items-center gap-1"><i class="fa fa-compress"></i> 全部折叠</button>
             </div>
             <div id="status-bar" class="font-mono font-bold text-blue-600 transition-all">Waiting for action...</div>
-            <div class="text-gray-400 italic">V15 (5 Themes + Cache Busting)</div>
+            <div class="text-gray-400 italic">V15 (3 Themes + Cache Busting)</div>
         </div>
     </div>
 
@@ -262,7 +262,6 @@
             try {
                 let jsonContent = "";
                 if (owner && repo && token) {
-                    // Cache busting: Add timestamp to GitHub API request
                     const url = `https://api.github.com/repos/${owner}/${repo}/contents/data.json?t=${Date.now()}`;
                     const res = await fetch(url, { headers: { 'Authorization': `token ${token}` } });
                     if (!res.ok) throw new Error(`GitHub Error: ${res.status}`);
@@ -281,7 +280,7 @@
                 try { appData = JSON.parse(jsonContent); } catch(e) { throw new Error("JSON Parse Error"); }
                 if(!appData.zh) appData.zh = {}; if(!appData.en) appData.en = {};
                 
-                const currentTheme = appData.zh.ui?.theme || 'apple';
+                const currentTheme = appData.zh.ui?.theme || 'light';
                 document.getElementById('theme-selector').value = currentTheme;
 
                 renderUI();
@@ -471,7 +470,6 @@
             try {
                 const owner = document.getElementById('gh_owner').value; const repo = document.getElementById('gh_repo').value; const token = document.getElementById('gh_token').value;
                 const content = window.btoa(unescape(encodeURIComponent(JSON.stringify(appData, null, 2))));
-                // Cache busting here as well just in case
                 const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/data.json`, { method: 'PUT', headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ message: "Update via Admin V15", content, sha: fileSha }) });
                 if(!res.ok) throw new Error((await res.json()).message);
                 const json = await res.json(); fileSha = json.content.sha; updateStatus("✅ Saved!", "text-green-600");
