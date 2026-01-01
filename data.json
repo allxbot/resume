@@ -60,7 +60,7 @@
       "section_titles": {
         "profile": "个人概述",
         "skills": "核心能力矩阵",
-        "chart": "专业技能熟练度",
+        "chart": "<strong>专业技能熟练度</strong>",
         "experience": "工作经历",
         "education": "教育背景与技能",
         "contact": "联系方式",
@@ -86,17 +86,17 @@
       "summary": "<strong>16年高精智能制造专家</strong>，深耕 <strong>3C消费电子</strong>（苹果核心供应链）与 <strong>半导体后道封装</strong> 领域。兼具消费类产品NPI 全流程管控、DFM/MFD 工艺优化、<strong>智能工厂规划落地</strong> 及跨国跨职能团队管理经验。",
       "cards": [
         {
-          "title": "技术统筹",
+          "title": "<strong>技术统筹</strong>",
           "icon": "fa-cogs",
           "desc": "主导 50+条高精密自动化产线NPI量产导入，推动2个智能工厂从0到1筹建。"
         },
         {
-          "title": "核心业绩",
+          "title": "<strong>核心业绩</strong>",
           "icon": "fa-line-chart",
           "desc": "通过 DFM 优化、模块化设计与精益生产，实现 OEE 提升至 85%+、产能提升 90%+、良率稳定 99.6%+。"
         },
         {
-          "title": "战略管理",
+          "title": "<strong>战略管理</strong>",
           "icon": "fa-sitemap",
           "desc": "擅长协同研发与供应商团队突破制造瓶颈，确保设计与制造无缝衔接，精通从战略规划到量产交付的全链条管控。"
         }
@@ -123,7 +123,7 @@
       },
       "card_groups": [
         {
-          "title": "技术专家视点",
+          "title": "<strong>技术专家视点</strong>",
           "icon": "fa-flask",
           "items": [
             "<strong>3C / 半导体精密工艺</strong>（激光切割、PVD、HAF 贴合、组装、封装等）",
@@ -135,7 +135,7 @@
           ]
         },
         {
-          "title": "项目与运营",
+          "title": "<strong>项目与运营</strong>",
           "icon": "fa-tasks",
           "items": [
             "<strong>智能工厂 0-1 筹建</strong>；自动化产线规划与量产导入",
@@ -146,7 +146,7 @@
           ]
         },
         {
-          "title": "团队与领导力",
+          "title": "<strong>团队与领导力</strong>",
           "icon": "fa-users",
           "items": [
             "跨国跨职能团队管理（中/新/德）",
@@ -166,7 +166,7 @@
         "location": "成都 / 深圳 . 中国",
         "projects": [
           {
-            "title": "阶段一：手机 / 手表制造（2019 - 至今）",
+            "title": "<strong>阶段一：手机 / 手表制造（2019 - 至今）</strong>",
             "details": [
               "<strong>首创产线开发：</strong>主导行业首个光固化低压注塑成型自动化产线开发，遵循 KISS 原则采用模块化+单线流简化设计，减少冗余工站，设备成本、占地面积及治具用量下降 80%+，成功量产导入。",
               "<strong>标准化产线研发：</strong>牵头框架组装标准化产线研发，集成贴膜、点胶等工艺，实现 50μm 内组装精度，CT 提升 76%、产能提升 90%，自动化率 90%+，良率稳定 99.6%。",
@@ -177,7 +177,7 @@
             ]
           },
           {
-            "title": "阶段二：脆性材料精密工艺与自动化开发（2017 - 2019）",
+            "title": "<strong>阶段二：脆性材料精密工艺与自动化开发（2017 - 2019）</strong>",
             "details": [
               "<strong>激光工艺创新：</strong>创新研发蓝宝石带油墨镀膜激光切割工艺，通过独特光学结构和工艺流程实现激光成丝切割，精准控制受热断裂油墨区域≤0.1mm；主导搭建全自动化产线，人力节省 80%+，树立行业精密加工标杆；",
               "<strong>产线自动化升级：</strong>主导 2 个工厂超百条玻璃盖板产线自动化升级，创新 20 余种设备，人力节省 10%+，生产一致性显著提升。",
@@ -210,7 +210,7 @@
         "location": "成都 . 中国 / 新加坡",
         "projects": [
           {
-            "title": "阶段一：独立研发项目组（成都，2014 - 2017）",
+            "title": "<strong>阶段一：独立研发项目组（成都，2014 - 2017）</strong>",
             "details": [
               "<strong>团队与流程建设：</strong>组建并领导 7+ 人跨职能（机械/电子/软件/测试）团队，推行 敏捷开发 + Stage-Gate 流程，关键节点交付率 100%。",
               "<strong>标准化建立：</strong>主导 JEDEC 喂料器、自动化 NG 流水线、物料仓储设备研发交付，建立标准化知识库加速团队产出。",
@@ -219,7 +219,7 @@
             ]
           },
           {
-            "title": "阶段二：新加坡研发中心（2011 - 2014）",
+            "title": "<strong>阶段二：新加坡研发中心（2011 - 2014）</strong>",
             "details": [
               "<strong>精密设备开发：</strong>负责 SMT 锡膏检测设备机械设计，主导机架及流水线开发，协作完成 15μm 精度 龙门对位系统和光学系统设计。",
               "<strong>定制化交付：</strong>主导半导体焊线机自动化光学检测设备开发，为马来西亚客户定制交付，负责光学系统与 XY 平台设计。",
@@ -228,7 +228,7 @@
             ]
           },
           {
-            "title": "阶段三：成都研发中心（2009 - 2011）",
+            "title": "<strong>阶段三：成都研发中心（2009 - 2011）</strong>",
             "details": [
               "<strong>整机系统设计：</strong>负责 CO₂/光纤激光器整机系统设计，攻克热学结构与精密光学装配难点，实现微米级激光打标工艺。",
               "<strong>重型设备协作：</strong>协作开发 40吨/80吨 封装注塑压力机，负责底盘结构与铰链设计。",
@@ -364,7 +364,7 @@
       "section_titles": {
         "profile": "Profile Summary",
         "skills": "Capability Matrix",
-        "chart": "Skill Proficiency",
+        "chart": "<strong>Skill Proficiency</strong>",
         "experience": "Experience",
         "education": "Education & Skill",
         "hobbies": "Hobbies",
@@ -390,17 +390,17 @@
       "summary": "<strong>16-year Expert in High-Precision Smart Manufacturing</strong>, deeply rooted in <strong>3C Consumer Electronics</strong>(Apple Core Supply Chain) and <strong>Semiconductor Packaging</strong>. Expertise in NPI full-process control, DFM/MFD optimization, <strong>Smart Factory planning</strong>, and global team management.",
       "cards": [
         {
-          "title": "Tech Leadership",
+          "title": "<strong>Tech Leadership</strong>",
           "icon": "fa-cogs",
           "desc": "Led NPI and ramp-up for 50+ high-precision automation lines and drove 2 smart factories from scratch."
         },
         {
-          "title": "Key Performance",
+          "title": "<strong>Key Performance</strong>",
           "icon": "fa-line-chart",
           "desc": "Achieved 85%+ OEE, 90%+ capacity increase, and 99.6%+ yield via DFM/lean Mfg Opt and modular design."
         },
         {
-          "title": "Strategy Mgmt",
+          "title": "<strong>Strategy Mgmt</strong>",
           "icon": "fa-sitemap",
           "desc": "Skilled in R&D-Supplier collaboration, breaking bottlenecks, and managing the full lifecycle from planning to delivery."
         }
@@ -427,7 +427,7 @@
       },
       "card_groups": [
         {
-          "title": "Technical Expertise",
+          "title": "<strong>Technical Expertise</strong>",
           "icon": "fa-flask",
           "items": [
             "<strong>3C/Semi Precision Process</strong> (Laser, PVD, HAF, Assy)",
@@ -439,7 +439,7 @@
           ]
         },
         {
-          "title": "Project & Ops",
+          "title": "<strong>Project & Ops</strong>",
           "icon": "fa-tasks",
           "items": [
             "<strong>Smart Factory 0-to-1</strong>; Auto Lines Planning & MP Ramp Up",
@@ -450,7 +450,7 @@
           ]
         },
         {
-          "title": "Leadership",
+          "title": "<strong>Leadership</strong>",
           "icon": "fa-users",
           "items": [
             "Cross-national&functional Team mgmt (CN/SG/DE)",
@@ -470,7 +470,7 @@
         "location": "Chengdu / Shenzhen . China",
         "projects": [
           {
-            "title": "Phase I: iPhone / Watch Mfg",
+            "title": "<strong>Phase I: iPhone / Watch Mfg</strong>",
             "details": [
               "<strong>Pioneering Line Dev:</strong> Led first UV-curing low-pressure molding auto line. Reduced cost/footprint by 80% via modular design.",
               "<strong>Standardized Line R&D:</strong> Led frame assembly line R&D. Achieved <50μm accuracy, +90% capacity, 99.6% yield.",
@@ -481,7 +481,7 @@
             ]
           },
           {
-            "title": "Phase II: Brittle Material Process",
+            "title": "<strong>Phase II: Brittle Material Process</strong>",
             "details": [
               "<strong>Laser Innovation:</strong> Developed sapphire laser filamentation cutting. Controlled ink fracture ≤0.1mm.",
               "<strong>Auto Upgrade:</strong> Upgraded 100+ glass cover lines. Innovated 20+ equipment types. Saved 10% manpower.",
@@ -514,7 +514,7 @@
         "location": "Chengdu / Singapore",
         "projects": [
           {
-            "title": "Phase I: R&D Team Lead",
+            "title": "<strong>Phase I: R&D Team Lead</strong>",
             "details": [
               "<strong>Team Building:</strong> Built 7+ person cross-functional team. Implemented Agile + Stage-Gate.",
               "<strong>Standardization:</strong> Led JEDEC feeder R&D. Built knowledge base.",
@@ -523,7 +523,7 @@
             ]
           },
           {
-            "title": "Phase II: Singapore R&D",
+            "title": "<strong>Phase II: Singapore R&D (2011 - 2014）</strong>",
             "details": [
               "<strong>Precision Equip:</strong> Designed SMT SPI equipment (frame & conveyor).",
               "<strong>Customized Delivery:</strong> Led AOI dev for wire bonders.",
@@ -532,7 +532,7 @@
             ]
           },
           {
-            "title": "Phase III: Chengdu R&D",
+            "title": "<strong>Phase III: Chengdu R&D (2009 - 2011)</strong>",
             "details": [
               "<strong>System Design:</strong> Designed CO2/Fiber Laser Marker. Solved thermal & optical challenges.",
               "<strong>Heavy Equip:</strong> Collaborated on 40T/80T encapsulation press.",
