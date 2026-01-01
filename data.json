@@ -492,7 +492,7 @@
         ]
       },
       {
-        "company": "Guimu Robot",
+        "company": "Chengdu Guimu Robot ",
         "role": "R&D Manager",
         "date": "2017.02 - 2017.06",
         "location": "Chengdu",
@@ -508,7 +508,7 @@
         ]
       },
       {
-        "company": "ASMPT",
+        "company": "ASMPT ( ASM Pacific Technology)",
         "role": "Mech Engineer / R&D Manager",
         "date": "2009.10 - 2017.02",
         "location": "Chengdu / Singapore",
@@ -560,10 +560,10 @@
     ],
     "education": [
       {
-        "school": "SWUST",
-        "degree": "B.S. in Mech Design & Automation",
+        "school": "Southwest University of Science and Technology",
+        "degree": "B.S. in Mechanical Design Manufacturing and Automation",
         "date": "2005 - 2009",
-        "location": "Mianyang"
+        "location": "Mianyang . China"
       }
     ],
     "hobbies": {
@@ -582,6 +582,7 @@
         "icon": "fa-wrench",
         "list": [
           "UG NX",
+          "Solid Edge",
           "SolidWorks",
           "AutoCAD",
           "CAE",
